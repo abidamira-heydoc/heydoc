@@ -1,0 +1,33 @@
+{
+  "name": "heydoc",
+  "version": "1.0.0",
+  "description": "AI-powered health assistant with natural remedy guidance",
+  "private": true,
+  "scripts": {
+    "web": "cd web && npm run dev",
+    "mobile": "cd mobile && npx expo start",
+    "functions": "cd functions && npm run serve",
+    "install:all": "npm install && cd web && npm install && cd ../mobile && npm install && cd ../functions && npm install",
+    "deploy": "firebase deploy",
+    "deploy:functions": "firebase deploy --only functions",
+    "deploy:firestore": "firebase deploy --only firestore",
+    "deploy:storage": "firebase deploy --only storage",
+    "build:web": "cd web && npm run build",
+    "build:functions": "cd functions && npm run build",
+    "test:emergency": "echo 'Type emergency keywords in chat: chest pain, can\\'t breathe, severe bleeding'",
+    "setup": "echo 'Run: npm run install:all'"
+  },
+  "keywords": [
+    "health",
+    "ai",
+    "medical",
+    "natural-remedies",
+    "telehealth",
+    "firebase",
+    "openai",
+    "react",
+    "react-native"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}

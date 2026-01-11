@@ -1,0 +1,805 @@
+================================================================================
+HEYDOC PROMPT TEST - 25 SCENARIOS
+================================================================================
+
+================================================================================
+TEST #1 | Expected: MILD
+================================================================================
+SYMPTOMS: I have a runny nose and sneezing for 2 days. No fever. I'm 28, male, no allergies.
+--------------------------------------------------------------------------------
+HEYDOC RESPONSE:
+Okay, let's take a look at what this could be for you:
+
+**What this could be (for you):**
+- Viral upper respiratory infection (common cold) — This fits the timeline of 2 days of runny nose and sneezing without fever, which is typical of a viral cold.
+- Seasonal allergies — Nasal congestion and sneezing without fever can also fit an allergic response, especially if this is a recurring pattern for you.
+
+**What this is less likely to be — and why:**
+- Sinus infection — There is no report of facial pain, pressure, or fever, which are common with sinus infections.
+
+**Urgency:** MILD
+This symptom pattern does not require urgent medical care, as it is consistent with a common cold or seasonal allergies.
+
+**What you can do now (safe steps):**
+1. Use a saline nasal rinse or spray to help relieve nasal congestion.
+2. Take an over-the-counter antihistamine if you suspect allergies.
+
+**Watch-outs — get help right away if:**
+- Symptoms worsen or do not improve within 7-10 days.
+- You develop a fever, severe headache, or difficulty breathing.
+
+**Sources:**
+- General clinical guidance (no specific citations available)
+--------------------------------------------------------------------------------
+RESULT: Expected MILD | Got MILD | ✅ MATCH
+
+================================================================================
+TEST #2 | Expected: MILD
+================================================================================
+SYMPTOMS: I've had a mild headache for a few hours, probably tension. I've been staring at screens all day. 32F, no medications.
+--------------------------------------------------------------------------------
+HEYDOC RESPONSE:
+**What this could be (for you):**
+- Tension headache — The headache is mild and located across the forehead, which is common with prolonged screen use and muscle tension.
+- Eyestrain — Spending a lot of time focused on screens can cause eye muscle fatigue and lead to headache.
+
+**What this is less likely to be — and why:**
+- Migraine — Migraine headaches typically involve more severe, throbbing pain, often with sensitivity to light/sound, which is not described here.
+
+**Urgency: MILD**
+This type of mild, tension-style headache is common and not an urgent medical concern.
+
+**What you can do now (safe steps):**
+1. Take a 10-15 minute break from screens and do some gentle neck/shoulder stretches.
+2. Apply a cool compress to your forehead or temples to help relax the muscles.
+3. Stay hydrated and try to reduce any additional sources of stress.
+
+**Watch-outs — get help right away if:**
+- The headache becomes severe or is accompanied by symptoms like vision changes, fever, or neurological issues.
+
+**Sources:**
+- General clinical guidance (no specific citations available)
+--------------------------------------------------------------------------------
+RESULT: Expected MILD | Got NOT_FOUND | ❌ MISMATCH
+
+================================================================================
+TEST #3 | Expected: MILD
+================================================================================
+SYMPTOMS: My throat feels a bit scratchy since this morning. No fever, can still swallow fine. 25M.
+--------------------------------------------------------------------------------
+HEYDOC RESPONSE:
+Okay, let's take a look at this:
+
+**What this could be (for you):**
+- Viral upper respiratory infection (common cold) — Scratchy throat and no fever fit the early stages of a viral cold. These often start with just mild throat irritation.
+- Mild streptococcal pharyngitis (strep throat) — Scratchy, irritated throat can be an early symptom of strep, though usually accompanied by more severe throat pain when swallowing.
+
+**What this is less likely to be — and why:**
+- Bacterial tonsillitis — Significant throat pain, swollen tonsils, and fever are more common with bacterial throat infections rather than just a scratchy feeling.
+
+**Urgency:** MODERATE
+This sounds like a relatively mild throat irritation, not an urgent medical concern at this time. However, it's wise to monitor for any worsening symptoms.
+
+**What you can do now (safe steps):**
+1. Gargle with warm salt water to soothe your throat.
+2. Drink plenty of fluids and get extra rest.
+3. Use over-the-counter pain relievers if your throat becomes more painful.
+
+**Watch-outs — get help right away if:**
+- Your throat pain becomes severe or prevents swallowing
+- You develop a high fever
+- You have difficulty breathing or swallowing
+
+**Sources:**
+- General clinical guidance (no specific citations available)
+--------------------------------------------------------------------------------
+RESULT: Expected MILD | Got MODERATE | ❌ MISMATCH
+
+================================================================================
+TEST #4 | Expected: MILD
+================================================================================
+SYMPTOMS: I have some muscle soreness in my legs after running yesterday. First time running in months. 30F.
+--------------------------------------------------------------------------------
+HEYDOC RESPONSE:
+**What this could be (for you):**
+- Delayed-onset muscle soreness (DOMS) — This is very common after an unaccustomed bout of exercise, especially if you've been inactive for a while. The muscle pain and stiffness typically peaks 1-2 days after the activity.
+
+**What this is less likely to be — and why:**
+- Muscle strain — The pain is more generalized, not localized to a specific muscle group, and you didn't report any sudden, sharp pain during the run.
+
+**Urgency:** MILD
+This is a normal response to the physical stress of running after a long break, and not an emergency.
+
+**What you can do now (safe steps):**
+1. Apply ice packs to your sore muscles for 15-20 minutes several times per day.
+2. Take over-the-counter pain medication like acetaminophen or ibuprofen to help reduce inflammation and discomfort.
+3. Gently stretch and lightly massage the sore areas.
+4. Gradually increase your running frequency and duration over the next few weeks to build up your fitness.
+
+**Watch-outs — get help right away if:**
+- The pain becomes severe, localized to a specific muscle, or is accompanied by significant swelling.
+
+**Sources:**
+- General clinical guidance (no specific citations available)
+--------------------------------------------------------------------------------
+RESULT: Expected MILD | Got MILD | ✅ MATCH
+
+================================================================================
+TEST #5 | Expected: MILD
+================================================================================
+SYMPTOMS: Feeling a bit bloated after eating. Had a big meal an hour ago. No pain, just uncomfortable. 35M.
+--------------------------------------------------------------------------------
+HEYDOC RESPONSE:
+**What this could be (for you):**
+- Mild indigestion — After a large, heavy meal, it's common to experience temporary bloating, gas, and discomfort as the digestive system works to process the food.
+- Constipation — If you've been having irregular bowel movements, the backed-up stool can lead to bloating and discomfort.
+
+**What this is less likely to be — and why:**
+- Food poisoning — There are no signs of nausea, vomiting, or severe abdominal pain that would indicate a foodborne illness.
+
+**Urgency:** MILD
+This type of mild post-meal discomfort is very common and typically resolves on its own.
+
+**What you can do now (safe steps):**
+1. Take it easy and allow time for digestion. Avoid rushing back to activities.
+2. Drink plenty of water and avoid carbonated beverages, which can worsen bloating.
+3. Consider a light walk to aid digestion.
+
+**Watch-outs — get help right away if:**
+- The bloating becomes severe or is accompanied by sharp pains, vomiting, or diarrhea.
+
+**Sources:**
+- General clinical guidance (no specific citations available)
+--------------------------------------------------------------------------------
+RESULT: Expected MILD | Got MILD | ✅ MATCH
+
+================================================================================
+TEST #6 | Expected: MILD
+================================================================================
+SYMPTOMS: Small paper cut on my finger, still bleeding a tiny bit. 22F, healthy.
+--------------------------------------------------------------------------------
+HEYDOC RESPONSE:
+**What this could be (for you):**
+- Minor skin laceration - This small, superficial cut on your finger has likely just nicked the outer layer of skin, causing a small amount of bleeding.
+
+**What this is less likely to be — and why:**
+- Serious injury - The small size, location, and lack of deeper tissue involvement make a more serious injury unlikely.
+
+**Urgency:** MILD
+This is a minor, uncomplicated cut that can be safely managed at home.
+
+**What you can do now (safe steps):**
+1. Wash the area gently with soap and water to clean it.
+2. Apply a small amount of antibiotic ointment and cover with a bandage.
+
+**Watch-outs — get help right away if:**
+- The bleeding does not stop within 10-15 minutes
+- You notice signs of infection like increasing redness, swelling, or pus
+
+**Sources:**
+- General clinical guidance on minor skin injuries (no specific citations available)
+--------------------------------------------------------------------------------
+RESULT: Expected MILD | Got MILD | ✅ MATCH
+
+================================================================================
+TEST #7 | Expected: MILD
+================================================================================
+SYMPTOMS: I have dry, itchy skin on my hands. Winter weather. No rash. 40M.
+--------------------------------------------------------------------------------
+HEYDOC RESPONSE:
+Okay, let's take a look at this step-by-step:
+
+**What this could be (for you):**
+- Dry, irritated skin - The dry winter weather and lack of a rash fits this pattern. The itchiness is likely from the skin irritation and dryness.
+- Eczema - The dry, itchy skin on the hands could be a mild eczema flare-up, especially if you have a history of this condition.
+
+**What this is less likely to be — and why:**
+- Contact dermatitis - There is no mention of a new product or exposure that could be triggering a rash.
+
+**Urgency:** MILD
+This is likely a common, self-limiting skin irritation due to the dry weather.
+
+**What you can do now (safe steps):**
+1. Use a fragrance-free, moisturizing hand cream or ointment several times per day.
+2. Avoid harsh soaps and limit handwashing.
+3. Use lukewarm (not hot) water when washing hands.
+4. Consider using a humidifier at home.
+
+**Watch-outs — get help right away if:**
+- The skin becomes very red, swollen, or painful
+- The itchiness is severe and not relieved by moisturizing
+
+**Sources:**
+- General clinical guidance (no specific citations available)
+--------------------------------------------------------------------------------
+RESULT: Expected MILD | Got MILD | ✅ MATCH
+
+================================================================================
+TEST #8 | Expected: MILD
+================================================================================
+SYMPTOMS: Mild heartburn after eating spicy food. Goes away when I sit up. 45F, occasional issue.
+--------------------------------------------------------------------------------
+HEYDOC RESPONSE:
+**What this could be (for you):**
+- Gastroesophageal reflux (GERD) — The spicy food is irritating your esophagus, and the symptoms improve when you sit up since gravity helps drain the stomach contents.
+- Hiatal hernia — This can allow stomach contents to reflux into the esophagus, especially when lying down, and improve with sitting up.
+
+**What this is less likely to be — and why:**
+- Gallbladder issue — Heartburn from gallbladder problems is usually not related to specific foods and doesn't improve with posture changes.
+
+**Urgency:** MILD
+This is a common, non-urgent reflux episode.
+
+**What you can do now (safe steps):**
+1. Avoid spicy, fried, or acidic foods for now.
+2. Try an over-the-counter antacid medication like Tums or Pepcid.
+3. Eat smaller, more frequent meals.
+4. Avoid lying down for 2-3 hours after eating.
+
+**Watch-outs — get help right away if:**
+- Symptoms become severe, last more than a few days, or interfere with sleep.
+
+**Sources:**
+- General clinical guidance (no specific citations available)
+--------------------------------------------------------------------------------
+RESULT: Expected MILD | Got MILD | ✅ MATCH
+
+================================================================================
+TEST #9 | Expected: MODERATE
+================================================================================
+SYMPTOMS: I've had diarrhea 4 times today. No blood, no fever. Ate out yesterday. 30M.
+--------------------------------------------------------------------------------
+HEYDOC RESPONSE:
+Okay, let's take a closer look at this for you as a 30-year-old male:
+
+**What this could be (for you):**
+- Food poisoning — The timeline of diarrhea starting after eating out yesterday fits with a foodborne illness. This often causes watery, frequent diarrhea without fever or blood.
+- Viral gastroenteritis ("stomach bug") — The sudden onset of diarrhea without other symptoms can also align with a viral infection of the digestive tract.
+
+**What this is less likely to be — and why:**
+- Inflammatory bowel disease (Crohn's, ulcerative colitis) — While these can cause diarrhea, you don't have the typical chronic symptoms or warning signs like bloody stools.
+
+**Urgency:** MODERATE
+The diarrhea without fever or blood loss is concerning, but not an immediate emergency. It's important to monitor for dehydration or worsening symptoms.
+
+**What you can do now (safe steps):**
+1. Stay hydrated by drinking small, frequent sips of water or electrolyte drinks.
+2. Eat a bland, easy-to-digest diet like bananas, rice, applesauce, toast.
+3. Take over-the-counter anti-diarrheal medication if the diarrhea is severe.
+
+**Watch-outs — get help right away if:**
+- Fever develops
+- Diarrhea becomes bloody
+- You cannot keep down fluids and become severely dehydrated
+
+**Sources:**
+- General clinical guidance (no specific citations available)
+--------------------------------------------------------------------------------
+RESULT: Expected MODERATE | Got MODERATE | ✅ MATCH
+
+================================================================================
+TEST #10 | Expected: MODERATE
+================================================================================
+SYMPTOMS: My lower back has been hurting for 3 days. Aches constantly, worse when sitting. No leg numbness. 50M, desk job.
+--------------------------------------------------------------------------------
+HEYDOC RESPONSE:
+Okay, let's take a look at this step-by-step:
+
+**What this could be (for you):**
+- Muscle strain or sprain - The constant aching and worsening with sitting fits a muscular issue in your lower back. As a 50-year-old with a desk job, you may have some underlying muscle tightness or weakness that made you prone to straining.
+- Degenerative disc disease - The gradual, aching nature of the pain could also fit early-stage disc degeneration in your spine, which is common with aging and sedentary jobs.
+
+**What this is less likely to be — and why:**
+- Sciatica - You don't mention any radiating leg pain or numbness, which are key symptoms of nerve irritation from a disc issue.
+
+**Urgency:** MODERATE
+The pain is bothersome but doesn't appear to be an immediate emergency. However, it's important to address it to prevent it from worsening.
+
+**What you can do now (safe steps):**
+1. Try over-the-counter anti-inflammatory medication like ibuprofen or naproxen to reduce inflammation.
+2. Apply heat or ice packs to the painful area for 15-20 minutes a few times per day.
+3. Do some gentle lower back stretches and exercises to improve mobility and strength.
+
+**Watch-outs — get help right away if:**
+- The pain becomes severe, radiates down your leg, or is accompanied by numbness or tingling.
+
+**Sources:**
+- General clinical guidance (no specific citations available)
+--------------------------------------------------------------------------------
+RESULT: Expected MODERATE | Got MODERATE | ✅ MATCH
+
+================================================================================
+TEST #11 | Expected: MODERATE
+================================================================================
+SYMPTOMS: I've had a cough for 5 days now. Producing yellow mucus. Low grade fever 99.5F. 38F.
+--------------------------------------------------------------------------------
+HEYDOC RESPONSE:
+Okay, let's take a look at what this could be for you:
+
+**What this could be (for you):**
+- Acute bronchitis — The cough, yellow mucus, and low-grade fever fit the timeline and symptom pattern of acute bronchitis, which is an inflammation of the bronchial tubes often triggered by a viral infection.
+- Pneumonia — While less likely given the absence of severe symptoms, the cough, mucus production, and fever could potentially indicate early pneumonia, which is an infection of the lungs.
+
+**What this is less likely to be — and why:**
+- Common cold — The cough with yellow mucus and low-grade fever are more indicative of a lower respiratory infection rather than just an upper respiratory cold.
+
+**Urgency:** NEEDS_DOCTOR_24_72H
+The symptoms are concerning enough that you should see a doctor within the next 2-3 days to ensure there is no more serious underlying infection and get appropriate treatment, especially if the fever or cough worsens.
+
+**What you can do now (safe steps):**
+1. Rest as much as possible and stay hydrated.
+2. Use over-the-counter cough suppressants or expectorants as needed to manage the cough.
+3. Monitor your temperature and contact your doctor if the fever worsens or persists beyond 5-7 days.
+
+**Watch-outs — get help right away if:**
+- The cough becomes severe or you have trouble breathing
+- Your fever spikes above 101°F
+- You cough up blood or thick, dark mucus
+
+**Sources:**
+- General clinical guidance (no specific citations available)
+--------------------------------------------------------------------------------
+RESULT: Expected MODERATE | Got NEEDS_DOCTOR_24_72H | ❌ MISMATCH
+
+================================================================================
+TEST #12 | Expected: MODERATE
+================================================================================
+SYMPTOMS: Burning when I urinate since yesterday. Urinating more frequently. 28F, sexually active.
+--------------------------------------------------------------------------------
+HEYDOC RESPONSE:
+Okay, let's think this through step-by-step:
+
+**What this could be (for you):**
+- Urinary tract infection (UTI) — The burning, frequent urination, and your sex life suggest a possible bladder or urethra infection.
+- Sexually transmitted infection (STI) — Some STIs like chlamydia or gonorrhea can also cause these urinary symptoms.
+
+**What this is less likely to be — and why:**
+- Dehydration — The burning and frequency point more to an infection than just needing more fluids.
+
+**Urgency: NEEDS_DOCTOR_24_72H**
+These symptoms should be evaluated by a doctor to determine the cause and get appropriate treatment.
+
+**What you can do now (safe steps):**
+1. Avoid irritating the urethra — no douching, scented products, or aggressive wiping.
+2. Drink plenty of water to help flush bacteria from the bladder.
+3. Consider taking an over-the-counter UTI pain reliever like phenazopyridine.
+
+**Watch-outs — get help right away if:**
+- You develop a fever, back pain, or the symptoms worsen or don't improve within a few days.
+
+**Sources:**
+- General clinical guidance (no specific citations available)
+--------------------------------------------------------------------------------
+RESULT: Expected MODERATE | Got NOT_FOUND | ❌ MISMATCH
+
+================================================================================
+TEST #13 | Expected: MODERATE
+================================================================================
+SYMPTOMS: Twisted my ankle yesterday. Swollen and hurts to walk on it, but I can put some weight on it. 25M.
+--------------------------------------------------------------------------------
+HEYDOC RESPONSE:
+Okay, let's take a look at this step-by-step:
+
+**What this could be (for you):**
+- Ankle sprain - Sudden twisting injury causing stretching or tearing of the ankle ligaments. This fits the sudden onset after a twist and the swelling/pain with weight-bearing.
+- Mild ankle fracture - A small crack in one of the ankle bones is possible, especially if there is significant swelling, bruising, or instability when walking.
+
+**What this is less likely to be - and why:**
+- Ankle dislocation - There does not seem to be a complete loss of joint stability or obvious deformity, which is common with full dislocations.
+
+**Urgency:** MODERATE
+The combination of swelling and pain with weight-bearing suggests a moderate injury that needs close monitoring, but is not an immediate emergency.
+
+**What you can do now (safe steps):**
+1. Rest the ankle and apply ice for 15-20 minutes several times per day to reduce swelling.
+2. Wrap the ankle with a compression bandage to provide support.
+3. Avoid putting weight on the ankle as much as possible until the pain improves.
+
+**Watch-outs — get help right away if:**
+- You are unable to bear any weight on the ankle at all
+- The pain, swelling, or bruising becomes significantly worse over the next 24-48 hours
+- You are unable to move your toes or the ankle joint at all
+
+**Sources:**
+- General clinical guidance (no specific citations available)
+--------------------------------------------------------------------------------
+RESULT: Expected MODERATE | Got MODERATE | ✅ MATCH
+
+================================================================================
+TEST #14 | Expected: MODERATE
+================================================================================
+SYMPTOMS: Having trouble sleeping for the past 2 weeks. Mind racing, can't fall asleep until 3am. Stressed at work. 35F.
+--------------------------------------------------------------------------------
+HEYDOC RESPONSE:
+Okay, let's see what this could be for you:
+
+**What this could be (for you):**
+- Insomnia - The combination of racing thoughts and difficulty falling asleep for over 2 weeks points to insomnia, which is a common sleep disorder characterized by trouble falling or staying asleep.
+- Stress-related sleep disruption - The fact that you mention being stressed at work aligns with insomnia that is triggered or exacerbated by elevated stress and anxiety levels.
+
+**What this is less likely to be — and why:**
+- Sleep apnea - There are no reports of snoring, gasping, or daytime fatigue, which are the hallmark symptoms of sleep apnea.
+
+**Urgency:** MODERATE
+This type of persistent insomnia, while frustrating, is not an emergency. However, left untreated, it can start to significantly impact your daily functioning and overall health over time.
+
+**What you can do now (safe steps):**
+1. Practice good sleep hygiene - Establish a consistent sleep schedule, create a calming pre-bed routine, limit screen time, and ensure your sleep environment is cool, dark, and quiet.
+2. Try relaxation techniques - Experiment with things like deep breathing, meditation, or light yoga to help quiet your mind before bed.
+3. Manage stress - Identify sources of stress and find healthy ways to address them, such as talking to a counselor or joining a support group.
+
+**Watch-outs — get help right away if:**
+- Your insomnia is accompanied by thoughts of self-harm or other mental health concerns.
+
+**Sources:**
+- General clinical guidance (no specific citations available)
+--------------------------------------------------------------------------------
+RESULT: Expected MODERATE | Got MODERATE | ✅ MATCH
+
+================================================================================
+TEST #15 | Expected: MODERATE
+================================================================================
+SYMPTOMS: Red, itchy rash on my forearms for 3 days. Started after gardening. Spreading slowly. 42F.
+--------------------------------------------------------------------------------
+HEYDOC RESPONSE:
+Okay, let's take a look at this step-by-step:
+
+**What this could be (for you):**
+- Contact dermatitis — The rash started after gardening, which could have exposed your skin to an irritating plant, chemical, or other allergen. The slow spreading and itchiness fit.
+- Eczema flare-up — Your age and the rash symptoms could indicate an eczema exacerbation, especially if you have a history of this condition.
+
+**What this is less likely to be — and why:**
+- Poison ivy — While the timeline fits, the rash is on your forearms rather than the more typical exposed areas like hands and arms.
+
+**Urgency:** MODERATE
+The rash is not an immediate emergency, but it's a good idea to get it evaluated by a doctor if it's not improving with self-care within the next 1-2 days.
+
+**What you can do now (safe steps):**
+1. Avoid irritating the rash further — wear loose, breathable fabrics and avoid harsh soaps.
+2. Apply a mild over-the-counter hydrocortisone cream or ointment to help relieve itching.
+3. Take an oral antihistamine like cetirizine or loratadine if the itching is severe.
+
+**Watch-outs — get help right away if:**
+- The rash becomes very painful, swollen, or spreads rapidly.
+- You develop fever, chills, or feel generally unwell.
+
+**Sources:**
+- General clinical guidance (no specific citations available)
+--------------------------------------------------------------------------------
+RESULT: Expected MODERATE | Got MODERATE | ✅ MATCH
+
+================================================================================
+TEST #16 | Expected: NEEDS_DOCTOR_24_72H
+================================================================================
+SYMPTOMS: Ear pain for 2 days, feels blocked. Some fluid draining. 8 year old child.
+--------------------------------------------------------------------------------
+HEYDOC RESPONSE:
+Okay, let's go through this step-by-step:
+
+**What this could be (for an 8-year-old):**
+- Middle ear infection (otitis media) — The ear pain, feeling of blockage, and fluid drainage are common signs of a middle ear infection in children.
+- Swimmer's ear (otitis externa) — The pain and fluid discharge could also fit with an outer ear infection, often caused by water exposure.
+
+**What this is less likely to be — and why:**
+- Sinus infection — There are no other signs of sinus congestion or facial pain, which are typical with sinus infections.
+
+**Urgency:** NEEDS_DOCTOR_24_72H
+An ear infection in a child typically requires medical evaluation and may need antibiotic treatment, so they should see a doctor within 1-3 days.
+
+**What you can do now (safe steps):**
+1. Apply a warm compress to the affected ear for comfort.
+2. Over-the-counter pain medication like acetaminophen or ibuprofen to relieve pain and fever, if present.
+
+**Watch-outs — get help right away if:**
+- Severe pain not relieved by medication
+- High fever
+- Swelling or redness behind the ear
+- Difficulty hearing or balance issues
+
+**Sources:** 
+- General clinical guidance (no specific citations available)
+--------------------------------------------------------------------------------
+RESULT: Expected NEEDS_DOCTOR_24_72H | Got NEEDS_DOCTOR_24_72H | ✅ MATCH
+
+================================================================================
+TEST #17 | Expected: NEEDS_DOCTOR_24_72H
+================================================================================
+SYMPTOMS: Persistent sore throat for 5 days. White patches on tonsils. Fever 101F. Hurts to swallow. 22M.
+--------------------------------------------------------------------------------
+HEYDOC RESPONSE:
+Okay, let's look at this step-by-step:
+
+**What this could be (for you):**
+- Strep throat — The persistent sore throat, fever, and white patches on the tonsils fit the pattern of a streptococcal throat infection. Strep is common in young adults.
+- Viral pharyngitis — The sore throat, fever, and white patches can also occur with viral infections like the common cold or flu. Viral pharyngitis is more common than strep.
+
+**What this is less likely to be — and why:**
+- Tonsillitis - While tonsillitis can cause similar symptoms, the persistent fever and white patches make this less likely as the primary cause.
+
+**Urgency:** NEEDS_DOCTOR_24_72H
+You likely need an antibiotic prescription, but can be safely evaluated within the next few days. However, the fever and difficulty swallowing require prompt medical attention.
+
+**What you can do now (safe steps):**
+1. Rest your voice as much as possible.
+2. Take over-the-counter pain/fever medication as needed and stay hydrated.
+3. Gargle with warm salt water to soothe the throat.
+
+**Watch-outs — get help right away if:**
+- Difficulty breathing or swallowing significantly worsens
+- Fever spikes higher or lasts more than 3 days
+
+**Sources:**
+- General clinical guidance (no specific citations available)
+--------------------------------------------------------------------------------
+RESULT: Expected NEEDS_DOCTOR_24_72H | Got NEEDS_DOCTOR_24_72H | ✅ MATCH
+
+================================================================================
+TEST #18 | Expected: NEEDS_DOCTOR_24_72H
+================================================================================
+SYMPTOMS: Eye is red and has yellow discharge for 2 days. Crusty in the morning. 30F.
+--------------------------------------------------------------------------------
+HEYDOC RESPONSE:
+Okay, let's take a look at this step-by-step:
+
+**What this could be (for you):**
+- Pink eye (conjunctivitis) — The red eye with yellow/crusty discharge, especially in the morning, is a common presentation of pink eye. This is often caused by a viral or bacterial infection.
+- Stye — The red, painful, swollen eyelid with yellow discharge can also fit a stye, which is an infection of the oil gland in the eyelid.
+
+**What this is less likely to be — and why:**
+- Allergic reaction — While allergies can cause red, itchy eyes, the yellow/crusty discharge is less common with just allergies.
+
+**Urgency:** MODERATE
+The eye symptoms are bothersome but not an immediate emergency. However, they do require prompt evaluation and treatment to prevent the infection from worsening or spreading.
+
+**What you can do now (safe steps):**
+1. Gently clean the eye 2-3 times per day with a warm, clean washcloth to remove any crusty discharge.
+2. Avoid touching or rubbing the eye, and wash your hands frequently.
+3. Apply a cool compress to the eye for 10-15 minutes a few times per day to help reduce swelling and discomfort.
+
+**Watch-outs — get help right away if:**
+- The eye becomes more swollen, painful, or the redness/discharge increases
+- You develop fever, chills, or the eye seems to be getting worse rather than improving
+
+**Sources:**
+- General clinical guidance (no specific citations available)
+--------------------------------------------------------------------------------
+RESULT: Expected NEEDS_DOCTOR_24_72H | Got MODERATE | ❌ MISMATCH
+
+================================================================================
+TEST #19 | Expected: NEEDS_DOCTOR_24_72H
+================================================================================
+SYMPTOMS: Abdominal pain lower left side for 2 days. Crampy, 5/10 pain. Constipated. Hurts more when I move. 55M.
+--------------------------------------------------------------------------------
+HEYDOC RESPONSE:
+Okay, let's take a look at this step-by-step:
+
+**What this could be (for you):**
+- Diverticulitis — The pain is localized to the lower left abdomen, it's worse with movement, and it's accompanied by constipation, which fits the pattern of diverticulitis, an inflammation of small pouches in the colon.
+- Bowel obstruction — The cramping, constipation, and worsening pain with movement could also point to a partial bowel obstruction, where something is blocking the normal passage of stool.
+
+**What this is less likely to be — and why:**
+- Food poisoning — The gradual onset over 2 days and lack of nausea/vomiting make food poisoning less likely.
+
+**Urgency:** NEEDS_DOCTOR_24_72H
+This pain pattern, with constipation and worsening with movement, could indicate a serious underlying condition that requires prompt medical evaluation, even though it's not an emergency.
+
+**What you can do now (safe steps):**
+1. Try an over-the-counter anti-inflammatory medication like ibuprofen to help reduce inflammation and discomfort.
+2. Drink plenty of clear fluids and eat a bland, low-fiber diet to avoid further irritation.
+
+**Watch-outs — get help right away if:**
+- The pain becomes severe, you have signs of bowel obstruction (vomiting, inability to pass gas), or you develop a fever.
+
+**Sources:**
+- General clinical guidance (no specific citations available)
+--------------------------------------------------------------------------------
+RESULT: Expected NEEDS_DOCTOR_24_72H | Got NEEDS_DOCTOR_24_72H | ✅ MATCH
+
+================================================================================
+TEST #20 | Expected: NEEDS_DOCTOR_NOW
+================================================================================
+SYMPTOMS: Sharp abdominal pain right lower side for 6 hours. Getting worse. 7/10 pain. Slight fever. Hurts when I walk. 25M.
+--------------------------------------------------------------------------------
+HEYDOC RESPONSE:
+Okay, let's walk through this step-by-step:
+
+**What this could be (for you):**
+- Appendicitis — The location in the right lower abdomen, worsening pain, and fever fit the pattern of appendicitis, a serious condition where the appendix becomes inflamed and can rupture.
+- Diverticulitis — This is an inflammation of small pouches in the colon, which can also cause severe pain in the lower right abdomen, especially with walking.
+
+**What this is less likely to be — and why:**
+- Kidney stone — While kidney stones can cause severe abdominal pain, the pain is usually more central or radiating to the back, not localized to the right lower quadrant.
+
+**Urgency: NEEDS_DOCTOR_NOW**
+This combination of severe, worsening, localized pain with fever indicates a potentially serious condition that requires prompt medical evaluation.
+
+**What you can do now (safe steps):**
+1. Do not eat or drink anything.
+2. Arrange for urgent medical care, either at an emergency room or by speaking to a HeyDoc doctor.
+
+**Watch-outs — get help right away if:**
+- The pain becomes unbearable or you develop severe nausea/vomiting.
+
+**Sources:**
+- General clinical guidance (no specific citations available)
+--------------------------------------------------------------------------------
+RESULT: Expected NEEDS_DOCTOR_NOW | Got NOT_FOUND | ❌ MISMATCH
+
+================================================================================
+TEST #21 | Expected: NEEDS_DOCTOR_NOW
+================================================================================
+SYMPTOMS: Vomiting for 8 hours straight. Can't keep water down. Dizzy when I stand. 35F.
+--------------------------------------------------------------------------------
+HEYDOC RESPONSE:
+Okay, let's take a look at this step-by-step:
+
+**What this could be (for you):**
+- Gastroenteritis (stomach flu) — The prolonged vomiting, inability to keep fluids down, and dizziness when standing up are all common with a stomach bug.
+- Dehydration — The dizziness when standing, combined with the persistent vomiting, suggests your body is losing too much fluid and electrolytes.
+
+**What this is less likely to be — and why:**
+- Food poisoning — While the vomiting could be from something you ate, the extended 8-hour timeline makes isolated food poisoning less likely.
+
+**Urgency:** NEEDS_DOCTOR_NOW
+The prolonged vomiting and inability to keep fluids down puts you at high risk of dangerous dehydration. You need prompt medical attention to get IV fluids and medications to control the nausea.
+
+**What you can do now (safe steps):**
+1. Sip small amounts of water or an oral rehydration solution like Pedialyte if you can tolerate it.
+2. Avoid solid foods until the vomiting stops.
+
+**Watch-outs — get help right away if:**
+- You become confused, drowsy, or have a rapid heart rate, as these could be signs of severe dehydration.
+
+**Sources:**
+- General clinical guidance (no specific citations available)
+--------------------------------------------------------------------------------
+RESULT: Expected NEEDS_DOCTOR_NOW | Got NEEDS_DOCTOR_NOW | ✅ MATCH
+
+================================================================================
+TEST #22 | Expected: NEEDS_DOCTOR_NOW
+================================================================================
+SYMPTOMS: Severe headache came on suddenly 2 hours ago. Worst headache of my life. Neck feels stiff. 40M.
+--------------------------------------------------------------------------------
+HEYDOC RESPONSE:
+**What this could be (for you):**
+- Thunderclap headache - This is a sudden, severe headache that peaks within a minute. It can be a sign of a medical emergency like bleeding in the brain or a tear in the arteries.
+- Meningitis - The sudden onset, severe headache, and stiff neck could indicate an infection of the membranes surrounding the brain and spinal cord.
+
+**What this is less likely to be — and why:**
+- Migraine - Migraines often build up gradually over time, whereas this came on suddenly at its peak intensity.
+
+**Urgency:** EMERGENCY
+This sudden, severe headache with neck stiffness requires immediate medical attention, as it could signal a life-threatening condition.
+
+**What you can do now (safe steps):**
+1. Call 911 or your local emergency number right away.
+2. Do not take any pain medication until you have been evaluated.
+
+**Watch-outs — get help right away if:**
+- You experience any changes in vision, speech, or level of consciousness.
+
+**Sources:**
+- General clinical guidance (no specific citations available)
+--------------------------------------------------------------------------------
+RESULT: Expected NEEDS_DOCTOR_NOW | Got EMERGENCY | ❌ MISMATCH
+
+================================================================================
+TEST #23 | Expected: NEEDS_DOCTOR_NOW
+================================================================================
+SYMPTOMS: High fever 103F for 2 days. Chills, body aches, extreme fatigue. Coughing up green phlegm. 60M with diabetes.
+--------------------------------------------------------------------------------
+HEYDOC RESPONSE:
+Understood. Let's review this step-by-step:
+
+**What this could be (for you):**
+- Pneumonia — The high fever, chills, body aches, fatigue, and green phlegm cough are all classic signs of a lower respiratory infection like pneumonia. Your diabetes also increases your risk.
+- Flu with secondary bacterial infection — The initial viral flu symptoms like fever and body aches, combined with the green phlegm, can sometimes progress to a secondary bacterial lung infection.
+
+**What this is less likely to be — and why:**
+- Bronchitis — While the cough and phlegm could fit bronchitis, the high fever and severe symptoms are more indicative of a more serious lung infection.
+
+**Urgency:** NEEDS_DOCTOR_NOW
+Given your fever duration, symptoms, and diabetes, you need to be evaluated by a doctor today. Pneumonia and flu complications can become dangerous quickly, especially with an underlying condition.
+
+**What you can do now (safe steps):**
+1. Monitor your temperature and stay hydrated.
+2. Take over-the-counter pain relievers like acetaminophen or ibuprofen to help with fever and aches.
+
+**Watch-outs — get help right away if:**
+- Your fever spikes higher, you have increasing difficulty breathing, or your symptoms significantly worsen.
+
+**Sources:**
+- General clinical guidance (no specific citations available)
+--------------------------------------------------------------------------------
+RESULT: Expected NEEDS_DOCTOR_NOW | Got NEEDS_DOCTOR_NOW | ✅ MATCH
+
+================================================================================
+TEST #24 | Expected: EMERGENCY
+================================================================================
+SYMPTOMS: Crushing chest pain for 20 minutes. Radiating to my left arm. Sweating. Short of breath. 55M.
+--------------------------------------------------------------------------------
+HEYDOC RESPONSE:
+**What this could be (for you):**
+- Heart attack - The crushing chest pain radiating to the left arm, along with shortness of breath and sweating, are classic signs of a heart attack, which is a life-threatening emergency.
+- Severe angina - Severe, prolonged chest pain that radiates and is accompanied by shortness of breath can indicate unstable angina, which requires urgent medical attention.
+
+**What this is less likely to be — and why:**
+- Indigestion - Indigestion typically does not cause such severe, prolonged chest pain that radiates to the arm.
+
+**Urgency: EMERGENCY**
+This is a medical emergency that requires immediate attention. The symptoms you are experiencing could indicate a heart attack or other serious cardiac event.
+
+**What you can do now (safe steps):**
+1. Call 911 or your local emergency number immediately.
+2. If you have access to aspirin, chew and swallow one 325mg tablet while waiting for emergency services.
+
+**Watch-outs — get help right away if:**
+- The pain or shortness of breath worsens or does not subside.
+
+**Sources:**
+- General clinical guidance (no specific citations available)
+--------------------------------------------------------------------------------
+RESULT: Expected EMERGENCY | Got NOT_FOUND | ❌ MISMATCH
+
+================================================================================
+TEST #25 | Expected: EMERGENCY
+================================================================================
+SYMPTOMS: My face is drooping on one side. Can't lift my right arm. Speech is slurred. Started 30 minutes ago. 65F.
+--------------------------------------------------------------------------------
+HEYDOC RESPONSE:
+Understood. Let's go through this step-by-step:
+
+**What this could be (for you):**
+- Acute ischemic stroke — The sudden onset of facial drooping, arm weakness, and slurred speech are classic signs of a stroke affecting the brain. The timeline of 30 minutes also fits the pattern of an acute event.
+- Transient ischemic attack (TIA) — A "mini-stroke" that causes similar symptoms but resolves within a few minutes to hours. While the symptoms have persisted for 30 minutes, a TIA is still possible.
+
+**What this is less likely to be — and why:**
+- Bell's palsy — This condition causes one-sided facial paralysis, but does not typically involve arm weakness or slurred speech.
+
+**Urgency: EMERGENCY**
+This is an urgent, life-threatening medical emergency. You need immediate evaluation and treatment to minimize brain damage.
+
+**What you can do now (safe steps):**
+1. Call 911 or your local emergency number right away.
+2. While waiting for the ambulance, do not try to drive yourself or have someone else drive you. Stay where you are and remain calm.
+
+**Watch-outs — get help right away if:**
+- Symptoms do not start to improve within a few minutes.
+
+**Sources:**
+- General clinical guidance (no specific citations available)
+--------------------------------------------------------------------------------
+RESULT: Expected EMERGENCY | Got NOT_FOUND | ❌ MISMATCH
+
+================================================================================
+SUMMARY
+================================================================================
+Total: 25 | Matches: 16 | Mismatches: 9
+Accuracy: 64.0%
+
+DETAILED RESULTS:
+  #1: Expected MILD                 | Got MILD                 | ✅
+  #2: Expected MILD                 | Got NOT_FOUND            | ❌
+  #3: Expected MILD                 | Got MODERATE             | ❌
+  #4: Expected MILD                 | Got MILD                 | ✅
+  #5: Expected MILD                 | Got MILD                 | ✅
+  #6: Expected MILD                 | Got MILD                 | ✅
+  #7: Expected MILD                 | Got MILD                 | ✅
+  #8: Expected MILD                 | Got MILD                 | ✅
+  #9: Expected MODERATE             | Got MODERATE             | ✅
+  #10: Expected MODERATE             | Got MODERATE             | ✅
+  #11: Expected MODERATE             | Got NEEDS_DOCTOR_24_72H  | ❌
+  #12: Expected MODERATE             | Got NOT_FOUND            | ❌
+  #13: Expected MODERATE             | Got MODERATE             | ✅
+  #14: Expected MODERATE             | Got MODERATE             | ✅
+  #15: Expected MODERATE             | Got MODERATE             | ✅
+  #16: Expected NEEDS_DOCTOR_24_72H  | Got NEEDS_DOCTOR_24_72H  | ✅
+  #17: Expected NEEDS_DOCTOR_24_72H  | Got NEEDS_DOCTOR_24_72H  | ✅
+  #18: Expected NEEDS_DOCTOR_24_72H  | Got MODERATE             | ❌
+  #19: Expected NEEDS_DOCTOR_24_72H  | Got NEEDS_DOCTOR_24_72H  | ✅
+  #20: Expected NEEDS_DOCTOR_NOW     | Got NOT_FOUND            | ❌
+  #21: Expected NEEDS_DOCTOR_NOW     | Got NEEDS_DOCTOR_NOW     | ✅
+  #22: Expected NEEDS_DOCTOR_NOW     | Got EMERGENCY            | ❌
+  #23: Expected NEEDS_DOCTOR_NOW     | Got NEEDS_DOCTOR_NOW     | ✅
+  #24: Expected EMERGENCY            | Got NOT_FOUND            | ❌
+  #25: Expected EMERGENCY            | Got NOT_FOUND            | ❌

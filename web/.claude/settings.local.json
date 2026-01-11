@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/mahmoudshal84/Websites/heydoc/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

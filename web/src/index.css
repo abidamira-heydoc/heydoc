@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.calm-gradient {
+  background: linear-gradient(to bottom right, #f0fdf4, #ffffff, #f9fafb);
+}

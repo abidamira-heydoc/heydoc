@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create:*)",
+      "Bash(npm install)",
+      "Bash(npx create-expo-app:*)",
+      "Bash(npm install:*)",
+      "Bash(npx tailwindcss init:*)",
+      "Bash(npx expo install:*)",
+      "Bash(cat:*)",
+      "Bash(firebase functions:log:*)",
+      "Bash(firebase functions:config:get:*)",
+      "Bash(npm run build:web:*)",
+      "Bash(firebase init:*)",
+      "Bash(firebase deploy:*)",
+      "Bash(find:*)",
+      "Bash(firebase login:*)",
+      "Bash(npm run upload-knowledge:*)",
+      "Bash(echo $GOOGLE_APPLICATION_CREDENTIALS)",
+      "Bash(firebase projects:list:*)",
+      "Bash(GOOGLE_APPLICATION_CREDENTIALS=\"\" GCLOUD_PROJECT=heydoc-25b71 FIREBASE_CONFIG='{\"\"projectId\"\":\"\"heydoc-25b71\"\"}' npm run upload-knowledge)",
+      "Bash(firebase firestore:get:*)",
+      "Bash(firebase hosting:sites:*)",
+      "Bash(npm run build:*)",
+      "Bash(tar:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
