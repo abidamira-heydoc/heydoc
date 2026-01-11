@@ -11,14 +11,14 @@ dotenv.config();
 import { searchKnowledge, formatRetrievedContext, getCollectionStats } from './rag';
 
 const TEST_QUERIES = [
-  "What causes headaches?",
   "Does ginger help with nausea?",
+  "Is turmeric good for inflammation?",
+  "Can I take melatonin every night?",
+  "What causes headaches?",
   "What is vitamin D good for?",
   "How do I prevent the flu?",
   "What are the symptoms of diabetes?",
-  "Is melatonin safe for sleep?",
   "What helps with back pain?",
-  "What are omega-3 fatty acids used for?",
 ];
 
 async function main() {

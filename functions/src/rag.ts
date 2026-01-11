@@ -112,38 +112,52 @@ export interface KnowledgeEntry {
 }
 
 /**
- * Upload knowledge entries to Qdrant
+ * Upload knowledge entries to Qdrant (batched to handle large datasets)
  */
 export async function uploadKnowledge(entries: KnowledgeEntry[]): Promise<void> {
   const client = getQdrantClient();
+  const BATCH_SIZE = 500; // Voyage AI limit is 1000, using 500 for safety
 
-  // Create embeddings for all entries
-  const texts = entries.map(e => `${e.title}: ${e.text_chunk}`);
-  const embeddings = await createEmbeddings(texts);
+  // Process in batches
+  let totalUploaded = 0;
+  for (let i = 0; i < entries.length; i += BATCH_SIZE) {
+    const batch = entries.slice(i, i + BATCH_SIZE);
+    const batchNum = Math.floor(i / BATCH_SIZE) + 1;
+    const totalBatches = Math.ceil(entries.length / BATCH_SIZE);
 
-  // Prepare points for Qdrant
-  const points = entries.map((entry, index) => ({
-    id: index + 1, // Qdrant requires numeric or UUID ids
-    vector: embeddings[index],
-    payload: {
-      entry_id: entry.id,
-      title: entry.title,
-      source_name: entry.source_name,
-      url: entry.url,
-      text_chunk: entry.text_chunk,
-      license: entry.license || '',
-      date_accessed: entry.date_accessed || '',
-      category: entry.category || 'general',
-    },
-  }));
+    console.log(`  Batch ${batchNum}/${totalBatches}: Processing ${batch.length} entries...`);
 
-  // Upsert points to collection
-  await client.upsert(COLLECTION_NAME, {
-    wait: true,
-    points,
-  });
+    // Create embeddings for this batch
+    const texts = batch.map(e => `${e.title}: ${e.text_chunk}`);
+    const embeddings = await createEmbeddings(texts);
 
-  console.log(`Uploaded ${points.length} knowledge entries`);
+    // Prepare points for Qdrant (use global index for unique IDs)
+    const points = batch.map((entry, index) => ({
+      id: i + index + 1, // Qdrant requires numeric or UUID ids
+      vector: embeddings[index],
+      payload: {
+        entry_id: entry.id,
+        title: entry.title,
+        source_name: entry.source_name,
+        url: entry.url,
+        text_chunk: entry.text_chunk,
+        license: entry.license || '',
+        date_accessed: entry.date_accessed || '',
+        category: entry.category || 'general',
+      },
+    }));
+
+    // Upsert points to collection
+    await client.upsert(COLLECTION_NAME, {
+      wait: true,
+      points,
+    });
+
+    totalUploaded += batch.length;
+    console.log(`    ✓ Uploaded ${totalUploaded}/${entries.length} entries`);
+  }
+
+  console.log(`Uploaded ${totalUploaded} knowledge entries total`);
 }
 
 /**
