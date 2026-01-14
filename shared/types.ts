@@ -158,6 +158,35 @@ export interface MedicalHistoryEntry {
   createdAt: Date;
 }
 
+// Payment and Consultation types
+export interface ConsultationSession {
+  id: string;
+  userId: string;
+  doctorId: string;
+  conversationId?: string;
+  consultationType: 'text' | 'voice' | 'video';
+  status: 'pending_payment' | 'paid' | 'in_progress' | 'completed' | 'cancelled';
+  paymentIntentId: string;
+  amount: number; // in cents (2500 = $25)
+  duration: number; // in minutes (15)
+  createdAt: Date;
+  paidAt?: Date;
+  startedAt?: Date;
+  completedAt?: Date;
+}
+
+export interface Payment {
+  id: string;
+  userId: string;
+  consultationSessionId: string;
+  amount: number; // in cents
+  currency: string;
+  status: 'pending' | 'succeeded' | 'failed' | 'refunded';
+  stripePaymentIntentId: string;
+  createdAt: Date;
+  completedAt?: Date;
+}
+
 export const EMERGENCY_SYMPTOMS: EmergencySymptom[] = [
   {
     keywords: ['chest pain', 'chest pressure', 'heart attack', 'crushing chest'],

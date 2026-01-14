@@ -19,5 +19,8 @@ export const COLLECTIONS = {
   MESSAGES: 'messages',
   CONSENTS: 'consents',
   AUDIT_LOGS: 'auditLogs',
-  MEDICAL_HISTORY: 'medicalHistory'
+  MEDICAL_HISTORY: 'medicalHistory',
+  CONSULTATION_SESSIONS: 'consultationSessions',
+  PAYMENTS: 'payments',
+  STRIPE_EVENT_LOGS: 'stripeEventLogs'
 };

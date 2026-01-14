@@ -1,6 +1,7 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import Anthropic from '@anthropic-ai/sdk';
+import Stripe from 'stripe';
 import { searchKnowledge, formatRetrievedContext } from './rag';
 
 admin.initializeApp();
@@ -1624,3 +1625,273 @@ export const deleteOrganization = functions.https.onRequest(async (req, res) => 
     res.status(500).send(`Error: ${error.message}`);
   }
 });
+
+// ============================================================================
+// STRIPE PAYMENT FUNCTIONS
+// ============================================================================
+
+const CONSULTATION_PRICE_CENTS = 2500; // $25.00
+const CONSULTATION_DURATION_MINUTES = 15;
+
+/**
+ * Initialize Stripe client
+ */
+function getStripeClient(): Stripe {
+  const secretKey = functions.config().stripe?.secret_key || process.env.STRIPE_SECRET_KEY;
+  if (!secretKey) {
+    throw new functions.https.HttpsError(
+      'failed-precondition',
+      'Stripe secret key not configured'
+    );
+  }
+  return new Stripe(secretKey);
+}
+
+/**
+ * Create a payment intent for a doctor consultation
+ */
+export const createConsultationPayment = functions.https.onCall(
+  async (data: { doctorId: string; consultationType: 'text' | 'voice' | 'video' }, context) => {
+    // Verify user is authenticated
+    if (!context.auth) {
+      throw new functions.https.HttpsError(
+        'unauthenticated',
+        'User must be authenticated to create a payment'
+      );
+    }
+
+    const { doctorId, consultationType } = data;
+
+    if (!doctorId || !consultationType) {
+      throw new functions.https.HttpsError(
+        'invalid-argument',
+        'Doctor ID and consultation type are required'
+      );
+    }
+
+    try {
+      const stripe = getStripeClient();
+      const userId = context.auth.uid;
+
+      // Create a consultation session in Firestore (pending payment)
+      const sessionRef = admin.firestore().collection('consultationSessions').doc();
+      const sessionData = {
+        id: sessionRef.id,
+        userId,
+        doctorId,
+        consultationType,
+        status: 'pending_payment',
+        paymentIntentId: '', // Will be updated below
+        amount: CONSULTATION_PRICE_CENTS,
+        duration: CONSULTATION_DURATION_MINUTES,
+        createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      };
+
+      // Create Stripe Payment Intent
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: CONSULTATION_PRICE_CENTS,
+        currency: 'usd',
+        metadata: {
+          userId,
+          sessionId: sessionRef.id,
+          doctorId,
+          consultationType,
+        },
+        description: `HeyDoc ${CONSULTATION_DURATION_MINUTES}-minute ${consultationType} consultation`,
+      });
+
+      // Update session with payment intent ID
+      sessionData.paymentIntentId = paymentIntent.id;
+      await sessionRef.set(sessionData);
+
+      return {
+        clientSecret: paymentIntent.client_secret,
+        sessionId: sessionRef.id,
+      };
+    } catch (error: any) {
+      console.error('Error creating payment intent:', error);
+      throw new functions.https.HttpsError('internal', error.message);
+    }
+  }
+);
+
+/**
+ * Get consultation session status
+ */
+export const getConsultationSession = functions.https.onCall(
+  async (data: { sessionId: string }, context) => {
+    if (!context.auth) {
+      throw new functions.https.HttpsError('unauthenticated', 'User must be authenticated');
+    }
+
+    const { sessionId } = data;
+    if (!sessionId) {
+      throw new functions.https.HttpsError('invalid-argument', 'Session ID is required');
+    }
+
+    const sessionDoc = await admin.firestore()
+      .collection('consultationSessions')
+      .doc(sessionId)
+      .get();
+
+    if (!sessionDoc.exists) {
+      return null;
+    }
+
+    const sessionData = sessionDoc.data();
+
+    // Only allow users to see their own sessions
+    if (sessionData?.userId !== context.auth.uid) {
+      throw new functions.https.HttpsError('permission-denied', 'Access denied');
+    }
+
+    return {
+      id: sessionDoc.id,
+      ...sessionData,
+      createdAt: sessionData?.createdAt?.toDate?.() || null,
+      paidAt: sessionData?.paidAt?.toDate?.() || null,
+      startedAt: sessionData?.startedAt?.toDate?.() || null,
+      completedAt: sessionData?.completedAt?.toDate?.() || null,
+    };
+  }
+);
+
+/**
+ * Stripe webhook handler for payment events
+ */
+export const stripeWebhook = functions.https.onRequest(async (req, res) => {
+  const webhookSecret = functions.config().stripe?.webhook_secret || process.env.STRIPE_WEBHOOK_SECRET;
+
+  if (!webhookSecret) {
+    console.error('Stripe webhook secret not configured');
+    res.status(500).send('Webhook secret not configured');
+    return;
+  }
+
+  const signature = req.headers['stripe-signature'];
+  if (!signature) {
+    res.status(400).send('Missing stripe-signature header');
+    return;
+  }
+
+  let event: Stripe.Event;
+
+  try {
+    const stripe = getStripeClient();
+    // Use raw body for signature verification
+    event = stripe.webhooks.constructEvent(
+      req.rawBody,
+      signature,
+      webhookSecret
+    );
+  } catch (err: any) {
+    console.error('Webhook signature verification failed:', err.message);
+    res.status(400).send(`Webhook Error: ${err.message}`);
+    return;
+  }
+
+  // Handle the event
+  try {
+    switch (event.type) {
+      case 'payment_intent.succeeded': {
+        const paymentIntent = event.data.object as Stripe.PaymentIntent;
+        await handlePaymentSuccess(paymentIntent);
+        break;
+      }
+      case 'payment_intent.payment_failed': {
+        const paymentIntent = event.data.object as Stripe.PaymentIntent;
+        await handlePaymentFailure(paymentIntent);
+        break;
+      }
+      default:
+        console.log(`Unhandled event type: ${event.type}`);
+    }
+
+    // Log the event for audit purposes
+    await admin.firestore().collection('stripeEventLogs').add({
+      eventId: event.id,
+      eventType: event.type,
+      processed: true,
+      processedAt: admin.firestore.FieldValue.serverTimestamp(),
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+    });
+
+    res.status(200).json({ received: true });
+  } catch (error: any) {
+    console.error('Error handling webhook event:', error);
+    res.status(500).send(`Webhook handler error: ${error.message}`);
+  }
+});
+
+/**
+ * Handle successful payment
+ */
+async function handlePaymentSuccess(paymentIntent: Stripe.PaymentIntent): Promise<void> {
+  const { userId, sessionId } = paymentIntent.metadata;
+
+  if (!sessionId) {
+    console.error('No sessionId in payment intent metadata');
+    return;
+  }
+
+  const db = admin.firestore();
+  const batch = db.batch();
+
+  // Update consultation session to 'paid'
+  const sessionRef = db.collection('consultationSessions').doc(sessionId);
+  batch.update(sessionRef, {
+    status: 'paid',
+    paidAt: admin.firestore.FieldValue.serverTimestamp(),
+  });
+
+  // Create payment record
+  const paymentRef = db.collection('payments').doc();
+  batch.set(paymentRef, {
+    id: paymentRef.id,
+    userId,
+    consultationSessionId: sessionId,
+    amount: paymentIntent.amount,
+    currency: paymentIntent.currency,
+    status: 'succeeded',
+    stripePaymentIntentId: paymentIntent.id,
+    createdAt: admin.firestore.FieldValue.serverTimestamp(),
+    completedAt: admin.firestore.FieldValue.serverTimestamp(),
+  });
+
+  await batch.commit();
+
+  console.log(`Payment successful for session ${sessionId}, user ${userId}`);
+}
+
+/**
+ * Handle failed payment
+ */
+async function handlePaymentFailure(paymentIntent: Stripe.PaymentIntent): Promise<void> {
+  const { userId, sessionId } = paymentIntent.metadata;
+
+  if (!sessionId) {
+    console.error('No sessionId in payment intent metadata');
+    return;
+  }
+
+  const db = admin.firestore();
+
+  // Update consultation session to cancelled
+  await db.collection('consultationSessions').doc(sessionId).update({
+    status: 'cancelled',
+  });
+
+  // Create failed payment record
+  await db.collection('payments').add({
+    userId,
+    consultationSessionId: sessionId,
+    amount: paymentIntent.amount,
+    currency: paymentIntent.currency,
+    status: 'failed',
+    stripePaymentIntentId: paymentIntent.id,
+    createdAt: admin.firestore.FieldValue.serverTimestamp(),
+    errorMessage: paymentIntent.last_payment_error?.message || 'Payment failed',
+  });
+
+  console.log(`Payment failed for session ${sessionId}, user ${userId}`);
+}

@@ -81,5 +81,24 @@ service cloud.firestore {
       allow read: if isAuthenticated();
       allow write: if false; // Only cloud functions/admin can write
     }
+
+    // Consultation sessions - users can read their own
+    match /consultationSessions/{sessionId} {
+      allow read: if isAuthenticated() &&
+                     resource.data.userId == request.auth.uid;
+      allow write: if false; // Only cloud functions can write
+    }
+
+    // Payments - users can read their own
+    match /payments/{paymentId} {
+      allow read: if isAuthenticated() &&
+                     resource.data.userId == request.auth.uid;
+      allow write: if false; // Only cloud functions can write
+    }
+
+    // Stripe event logs - no client access
+    match /stripeEventLogs/{logId} {
+      allow read, write: if false; // Only cloud functions can access
+    }
   }
 }
