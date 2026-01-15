@@ -14,7 +14,7 @@ const DoctorConsultModal: React.FC<DoctorConsultModalProps> = ({ onClose }) => {
   const [step, setStep] = useState<ModalStep>('info');
   const [consultationType, setConsultationType] = useState<ConsultationType>('text');
   const [clientSecret, setClientSecret] = useState<string | null>(null);
-  const [sessionId, setSessionId] = useState<string | null>(null);
+  const [_sessionId, setSessionId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -168,7 +168,7 @@ const SelectTypeStep: React.FC<SelectTypeStepProps> = ({
   isLoading,
   error,
 }) => {
-  const options: { type: ConsultationType; label: string; icon: JSX.Element; description: string }[] = [
+  const options: { type: ConsultationType; label: string; icon: React.ReactNode; description: string }[] = [
     {
       type: 'text',
       label: 'Text Chat',
