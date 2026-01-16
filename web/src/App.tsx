@@ -7,7 +7,15 @@ import ConsentForm from './components/Consent/ConsentForm';
 import IntakeForm from './components/Intake/IntakeForm';
 import Chat from './components/Chat/Chat';
 import ProfileView from './components/Profile/ProfileView';
-import AdminDashboard from './components/Admin/AdminDashboard';
+
+// Admin components
+import AdminProtectedRoute from './components/Admin/AdminProtectedRoute';
+import AdminLayout from './components/Admin/AdminLayout';
+import DashboardHome from './components/Admin/DashboardHome';
+import AnalyticsDashboard from './components/Admin/AnalyticsDashboard';
+import UserManagement from './components/Admin/UserManagement';
+import ImpactReports from './components/Admin/ImpactReports';
+import AdminSettings from './components/Admin/AdminSettings';
 
 // Protected route component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -91,14 +99,17 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       />
-      <Route
-        path="/admin"
-        element={
-          <ProtectedRoute>
-            <AdminDashboard />
-          </ProtectedRoute>
-        }
-      />
+
+      {/* Admin Routes - Protected by admin role check */}
+      <Route path="/admin" element={<AdminProtectedRoute />}>
+        <Route element={<AdminLayout />}>
+          <Route index element={<DashboardHome />} />
+          <Route path="analytics" element={<AnalyticsDashboard />} />
+          <Route path="users" element={<UserManagement />} />
+          <Route path="reports" element={<ImpactReports />} />
+          <Route path="settings" element={<AdminSettings />} />
+        </Route>
+      </Route>
     </Routes>
   );
 }
