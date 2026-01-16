@@ -151,7 +151,10 @@ const AdminLayoutInner: React.FC = () => {
       >
         {/* Sidebar Header */}
         <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200">
-          <div className="flex items-center gap-3">
+          <div
+            className="flex items-center gap-3 cursor-pointer"
+            onClick={() => navigate('/chat')}
+          >
             <img src="/heydoclogo.png" alt="HeyDoc" className="w-8 h-8 object-contain" />
             <span className="font-bold text-lg text-gray-900">HeyDoc Admin</span>
           </div>

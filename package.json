@@ -29,5 +29,8 @@
     "react-native"
   ],
   "author": "Your Name",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "jspdf": "^4.0.0"
+  }
 }

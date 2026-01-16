@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { chatService, type ConversationStage } from '../../services/chatService';
 import { doc, getDoc, collection, addDoc, updateDoc, query, where, orderBy, getDocs, onSnapshot, writeBatch } from 'firebase/firestore';
@@ -11,6 +12,7 @@ import ChatSidebar from './ChatSidebar';
 import DoctorConsultModal from './DoctorConsultModal';
 
 const Chat: React.FC = () => {
+  const navigate = useNavigate();
   const { user } = useAuth();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
@@ -298,7 +300,10 @@ const Chat: React.FC = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
-            <div className="flex items-center gap-3">
+            <div
+              className="flex items-center gap-3 cursor-pointer"
+              onClick={() => navigate('/chat')}
+            >
               <img
                 src="/heydoclogo.png"
                 alt="HeyDoc Logo"

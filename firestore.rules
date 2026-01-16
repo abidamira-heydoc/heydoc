@@ -12,6 +12,17 @@ service cloud.firestore {
       return isAuthenticated() && request.auth.uid == userId;
     }
 
+    // Helper function to check if user is an admin
+    function isAdmin() {
+      return isAuthenticated() &&
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Helper function to get current user's organizationId
+    function getUserOrgId() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.organizationId;
+    }
+
     // Organizations - anyone can read (for code validation), only functions can write
     match /organizations/{orgId} {
       allow read: if true;
@@ -20,9 +31,9 @@ service cloud.firestore {
 
     // Users collection
     match /users/{userId} {
+      // Users can read their own doc, admins can read users in their org
       allow read: if isOwner(userId) ||
-                    (isAuthenticated() &&
-                     get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin');
+                    (isAdmin() && resource.data.organizationId == getUserOrgId());
       allow write: if isOwner(userId);
     }
 
@@ -43,8 +54,11 @@ service cloud.firestore {
 
     // Conversations
     match /conversations/{conversationId} {
+      // Users can read their own, admins can read conversations of users in their org
       allow read: if isAuthenticated() &&
-                     resource.data.userId == request.auth.uid;
+                     (resource.data.userId == request.auth.uid ||
+                      (isAdmin() &&
+                       get(/databases/$(database)/documents/users/$(resource.data.userId)).data.organizationId == getUserOrgId()));
       allow create: if isAuthenticated() &&
                        request.resource.data.userId == request.auth.uid;
       allow update, delete: if isAuthenticated() &&

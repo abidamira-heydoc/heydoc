@@ -169,7 +169,10 @@ const AdminDashboard: React.FC = () => {
       {/* Header */}
       <div className="bg-white shadow-sm border-b border-gray-200">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
+          <div
+            className="flex items-center gap-4 cursor-pointer"
+            onClick={() => navigate('/chat')}
+          >
             <img src="/heydoclogo.png" alt="HeyDoc" className="w-10 h-10 object-contain" />
             <div>
               <h1 className="text-xl font-bold text-gray-900">Admin Dashboard</h1>
