@@ -126,27 +126,27 @@ const IntakeForm: React.FC = () => {
   const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 1));
 
   return (
-    <div className="min-h-screen calm-gradient py-12 px-4">
-      <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Health Profile</h1>
-        <p className="text-gray-600 mb-8">
+    <div className="min-h-screen calm-gradient py-6 sm:py-12 px-3 sm:px-4">
+      <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-4 sm:p-8">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Health Profile</h1>
+        <p className="text-gray-600 mb-6 sm:mb-8 text-sm sm:text-base">
           Help us understand you better so we can provide personalized guidance.
         </p>
 
         {/* Progress Steps */}
-        <div className="flex items-center justify-center mb-8">
+        <div className="flex items-center justify-center mb-6 sm:mb-8">
           {[1, 2, 3].map((step) => (
             <React.Fragment key={step}>
               <div
-                className={`flex items-center justify-center w-10 h-10 rounded-full ${
+                className={`flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full ${
                   currentStep >= step ? 'bg-primary-600 text-white' : 'bg-gray-200 text-gray-600'
-                } font-semibold`}
+                } font-semibold text-sm sm:text-base`}
               >
                 {step}
               </div>
               {step < 3 && (
                 <div
-                  className={`w-16 h-1 ${
+                  className={`w-8 sm:w-16 h-1 ${
                     currentStep > step ? 'bg-primary-600' : 'bg-gray-200'
                   }`}
                 />
@@ -167,7 +167,7 @@ const IntakeForm: React.FC = () => {
             <div className="space-y-6">
               <h2 className="text-xl font-semibold text-gray-900 mb-4">Basic Information</h2>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Age <span className="text-red-500">*</span>
@@ -177,7 +177,7 @@ const IntakeForm: React.FC = () => {
                     required
                     value={age}
                     onChange={(e) => setAge(e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
                     placeholder="e.g., 30"
                   />
                 </div>
@@ -190,7 +190,7 @@ const IntakeForm: React.FC = () => {
                     required
                     value={sex}
                     onChange={(e) => setSex(e.target.value as any)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
                   >
                     <option value="male">Male</option>
                     <option value="female">Female</option>
@@ -204,7 +204,7 @@ const IntakeForm: React.FC = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Height <span className="text-red-500">*</span>
                 </label>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-3 sm:gap-4">
                   <div>
                     <input
                       type="number"
@@ -213,7 +213,7 @@ const IntakeForm: React.FC = () => {
                       max="8"
                       value={heightFeet}
                       onChange={(e) => setHeightFeet(e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
                       placeholder="Feet"
                     />
                     <p className="text-xs text-gray-500 mt-1">Feet (e.g., 5)</p>
@@ -226,7 +226,7 @@ const IntakeForm: React.FC = () => {
                       max="11"
                       value={heightInches}
                       onChange={(e) => setHeightInches(e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
                       placeholder="Inches"
                     />
                     <p className="text-xs text-gray-500 mt-1">Inches (e.g., 10)</p>
@@ -244,7 +244,7 @@ const IntakeForm: React.FC = () => {
                   required
                   value={weightLbs}
                   onChange={(e) => setWeightLbs(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
                   placeholder="e.g., 150"
                 />
               </div>
@@ -272,7 +272,7 @@ const IntakeForm: React.FC = () => {
                   type="text"
                   value={medicalHistory}
                   onChange={(e) => setMedicalHistory(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none text-sm sm:text-base"
                   placeholder="e.g., Asthma, Diabetes (comma-separated)"
                 />
               </div>
@@ -285,7 +285,7 @@ const IntakeForm: React.FC = () => {
                   type="text"
                   value={currentConditions}
                   onChange={(e) => setCurrentConditions(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none text-sm sm:text-base"
                   placeholder="e.g., High blood pressure (comma-separated)"
                 />
               </div>
@@ -298,7 +298,7 @@ const IntakeForm: React.FC = () => {
                   type="text"
                   value={allergies}
                   onChange={(e) => setAllergies(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none text-sm sm:text-base"
                   placeholder="e.g., Penicillin, Peanuts (comma-separated)"
                 />
               </div>
@@ -310,8 +310,8 @@ const IntakeForm: React.FC = () => {
                 <textarea
                   value={medications}
                   onChange={(e) => setMedications(e.target.value)}
-                  rows={4}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+                  rows={3}
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none text-sm sm:text-base"
                   placeholder="Enter each medication on a new line"
                 />
               </div>
@@ -323,8 +323,8 @@ const IntakeForm: React.FC = () => {
                 <textarea
                   value={familyHistoryInput}
                   onChange={(e) => setFamilyHistoryInput(e.target.value)}
-                  rows={4}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+                  rows={3}
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none text-sm sm:text-base"
                   placeholder="e.g., Heart disease: father&#10;Diabetes: mother"
                 />
               </div>
@@ -361,7 +361,7 @@ const IntakeForm: React.FC = () => {
                   required
                   value={smoking}
                   onChange={(e) => setSmoking(e.target.value as any)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none text-sm sm:text-base"
                 >
                   <option value="never">Never smoked</option>
                   <option value="former">Former smoker</option>
@@ -378,7 +378,7 @@ const IntakeForm: React.FC = () => {
                     type="text"
                     value={smokingDetails}
                     onChange={(e) => setSmokingDetails(e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none text-sm sm:text-base"
                     placeholder="e.g., 5 cigarettes/day, quit 2 years ago"
                   />
                 </div>
@@ -392,7 +392,7 @@ const IntakeForm: React.FC = () => {
                   required
                   value={alcohol}
                   onChange={(e) => setAlcohol(e.target.value as any)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none text-sm sm:text-base"
                 >
                   <option value="never">Never</option>
                   <option value="occasionally">Occasionally</option>
@@ -410,7 +410,7 @@ const IntakeForm: React.FC = () => {
                     type="text"
                     value={alcoholDetails}
                     onChange={(e) => setAlcoholDetails(e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none text-sm sm:text-base"
                     placeholder="e.g., 1-2 drinks on weekends"
                   />
                 </div>
@@ -424,7 +424,7 @@ const IntakeForm: React.FC = () => {
                   required
                   value={exercise}
                   onChange={(e) => setExercise(e.target.value as any)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none text-sm sm:text-base"
                 >
                   <option value="sedentary">Sedentary (little to no exercise)</option>
                   <option value="light">Light (1-2 days/week)</option>
@@ -442,7 +442,7 @@ const IntakeForm: React.FC = () => {
                   type="text"
                   value={exerciseDetails}
                   onChange={(e) => setExerciseDetails(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none text-sm sm:text-base"
                   placeholder="e.g., Running 3x/week, yoga daily"
                 />
               </div>

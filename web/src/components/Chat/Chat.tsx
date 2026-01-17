@@ -22,9 +22,65 @@ const Chat: React.FC = () => {
   const [currentConversationId, setCurrentConversationId] = useState<string | null>(null);
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [showDoctorModal, setShowDoctorModal] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [conversationStage, setConversationStage] = useState<ConversationStage>('INTAKE1');
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
+
+  // Handle swipe gestures for sidebar
+  useEffect(() => {
+    const minSwipeDistance = 50;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartX.current = e.touches[0].clientX;
+      touchEndX.current = null;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      touchEndX.current = e.touches[0].clientX;
+    };
+
+    const handleTouchEnd = () => {
+      if (!touchStartX.current || !touchEndX.current) return;
+
+      const distance = touchEndX.current - touchStartX.current;
+      const isLeftSwipe = distance < -minSwipeDistance;
+      const isRightSwipe = distance > minSwipeDistance;
+
+      // Only handle swipes on mobile
+      if (window.innerWidth < 1024) {
+        // Swipe right from left edge to open sidebar
+        if (isRightSwipe && touchStartX.current < 50) {
+          setSidebarOpen(true);
+        }
+        // Swipe left to close sidebar
+        if (isLeftSwipe && sidebarOpen) {
+          setSidebarOpen(false);
+        }
+      }
+
+      touchStartX.current = null;
+      touchEndX.current = null;
+    };
+
+    document.addEventListener('touchstart', handleTouchStart);
+    document.addEventListener('touchmove', handleTouchMove);
+    document.addEventListener('touchend', handleTouchEnd);
+
+    return () => {
+      document.removeEventListener('touchstart', handleTouchStart);
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [sidebarOpen]);
+
+  // Set sidebar open on desktop only after mount
+  useEffect(() => {
+    if (window.innerWidth >= 1024) {
+      setSidebarOpen(true);
+    }
+  }, []);
 
   // Load health profile
   useEffect(() => {
@@ -290,7 +346,7 @@ const Chat: React.FC = () => {
         {emergencyDetected && <EmergencyBanner />}
 
         {/* Chat Header */}
-        <div className="bg-white/80 backdrop-blur-md border-b border-green-100 px-6 py-4 flex items-center justify-between shadow-sm">
+        <div className="bg-white/80 backdrop-blur-md border-b border-green-100 px-3 sm:px-6 py-3 sm:py-4 flex items-center justify-between shadow-sm">
           <div className="flex items-center">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -316,11 +372,11 @@ const Chat: React.FC = () => {
             </div>
           </div>
           {healthProfile && (
-            <div className="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg">
+            <div className="flex items-center gap-2 bg-gray-50 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg">
               <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
-              <span className="text-sm font-medium text-gray-700">
+              <span className="text-xs sm:text-sm font-medium text-gray-700">
                 {healthProfile.age}yo {healthProfile.sex}
               </span>
             </div>
@@ -328,41 +384,41 @@ const Chat: React.FC = () => {
         </div>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4">
+        <div className="flex-1 overflow-y-auto px-3 sm:px-6 py-4 sm:py-6 space-y-4">
           {/* Welcome screen - shows when no messages */}
           {messages.length === 0 && !emergencyDetected && (
-            <div className="text-center py-16 px-4">
-              <div className="inline-block p-8 bg-white rounded-2xl mb-6 shadow-lg border-2 border-green-100">
+            <div className="text-center py-8 sm:py-16 px-2 sm:px-4">
+              <div className="inline-block p-4 sm:p-8 bg-white rounded-2xl mb-4 sm:mb-6 shadow-lg border-2 border-green-100">
                 <img
                   src="/heydoclogo.png"
                   alt="HeyDoc Logo"
-                  className="w-40 h-40 object-contain"
+                  className="w-24 h-24 sm:w-40 sm:h-40 object-contain"
                 />
               </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-3">
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 sm:mb-3">
                 Welcome to HeyDoc!
               </h2>
-              <p className="text-gray-700 max-w-lg mx-auto text-lg mb-6">
+              <p className="text-gray-700 max-w-lg mx-auto text-base sm:text-lg mb-4 sm:mb-6">
                 Your first step to better care — with natural remedy guidance.
               </p>
-              <div className="max-w-2xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-                <div className="bg-white/60 backdrop-blur-sm p-5 rounded-xl shadow-md border border-green-200/50 hover:shadow-lg transition-all">
-                  <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-lg flex items-center justify-center mb-3">
-                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="max-w-2xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mt-6 sm:mt-8">
+                <div className="bg-white/60 backdrop-blur-sm p-4 sm:p-5 rounded-xl shadow-md border border-green-200/50 hover:shadow-lg transition-all">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-lg flex items-center justify-center mb-2 sm:mb-3">
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
                   </div>
-                  <h3 className="font-semibold text-gray-900 mb-1">Describe Symptoms</h3>
-                  <p className="text-sm text-gray-600">Share what you're experiencing</p>
+                  <h3 className="font-semibold text-gray-900 mb-1 text-sm sm:text-base">Describe Symptoms</h3>
+                  <p className="text-xs sm:text-sm text-gray-600">Share what you're experiencing</p>
                 </div>
-                <div className="bg-white/60 backdrop-blur-sm p-5 rounded-xl shadow-md border border-blue-200/50 hover:shadow-lg transition-all">
-                  <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-emerald-500 rounded-lg flex items-center justify-center mb-3">
-                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="bg-white/60 backdrop-blur-sm p-4 sm:p-5 rounded-xl shadow-md border border-blue-200/50 hover:shadow-lg transition-all">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-green-400 to-emerald-500 rounded-lg flex items-center justify-center mb-2 sm:mb-3">
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <h3 className="font-semibold text-gray-900 mb-1">Get Guidance</h3>
-                  <p className="text-sm text-gray-600">Receive personalized advice</p>
+                  <h3 className="font-semibold text-gray-900 mb-1 text-sm sm:text-base">Get Guidance</h3>
+                  <p className="text-xs sm:text-sm text-gray-600">Receive personalized advice</p>
                 </div>
               </div>
             </div>
@@ -393,26 +449,26 @@ const Chat: React.FC = () => {
         </div>
 
         {/* Input Area */}
-        <div className="bg-white/80 backdrop-blur-md border-t border-green-100 px-6 py-5 shadow-lg">
+        <div className="bg-white/80 backdrop-blur-md border-t border-green-100 px-3 sm:px-6 py-3 sm:py-5 shadow-lg">
           {!emergencyDetected && messages.length > 0 && (
-            <div className="mb-4">
+            <div className="mb-3 sm:mb-4">
               <button
                 onClick={() => setShowDoctorModal(true)}
-                className="group relative w-full bg-gradient-to-r from-green-500 via-emerald-500 to-cyan-500 hover:from-green-600 hover:via-emerald-600 hover:to-cyan-600 text-white font-bold py-4 px-6 rounded-xl transition-all shadow-lg hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center overflow-hidden"
+                className="group relative w-full bg-gradient-to-r from-green-500 via-emerald-500 to-cyan-500 hover:from-green-600 hover:via-emerald-600 hover:to-cyan-600 text-white font-bold py-3 sm:py-4 px-4 sm:px-6 rounded-xl transition-all shadow-lg hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-700"></div>
-                <svg className="w-6 h-6 mr-2.5 relative z-10 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6 mr-2 relative z-10 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
-                <span className="relative z-10 text-lg">Speak to a Doctor</span>
-                <svg className="w-5 h-5 ml-2 relative z-10 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <span className="relative z-10 text-base sm:text-lg">Speak to a Doctor</span>
+                <svg className="w-4 h-4 sm:w-5 sm:h-5 ml-2 relative z-10 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </button>
             </div>
           )}
 
-          <div className="flex items-end space-x-3">
+          <div className="flex items-end space-x-2 sm:space-x-3">
             <div className="flex-1">
               <textarea
                 value={input}
@@ -421,19 +477,19 @@ const Chat: React.FC = () => {
                 placeholder={
                   emergencyDetected
                     ? 'Please call emergency services immediately'
-                    : 'Describe your symptoms or health concerns...'
+                    : 'Describe your symptoms...'
                 }
                 disabled={emergencyDetected || loading}
-                className="w-full px-5 py-3.5 border-2 border-green-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none resize-none disabled:bg-gray-50 disabled:cursor-not-allowed transition-all shadow-sm bg-white/80"
-                rows={3}
+                className="w-full px-3 sm:px-5 py-2.5 sm:py-3.5 border-2 border-green-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none resize-none disabled:bg-gray-50 disabled:cursor-not-allowed transition-all shadow-sm bg-white/80 text-sm sm:text-base"
+                rows={2}
               />
             </div>
             <button
               onClick={handleSend}
               disabled={!input.trim() || loading || emergencyDetected}
-              className="bg-gradient-to-br from-green-500 via-emerald-500 to-cyan-500 hover:from-green-600 hover:via-emerald-600 hover:to-cyan-600 text-white p-4 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-xl disabled:shadow-sm"
+              className="bg-gradient-to-br from-green-500 via-emerald-500 to-cyan-500 hover:from-green-600 hover:via-emerald-600 hover:to-cyan-600 text-white p-3 sm:p-4 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-xl disabled:shadow-sm flex-shrink-0"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
               </svg>
             </button>

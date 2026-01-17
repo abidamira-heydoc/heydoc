@@ -99,18 +99,18 @@ const ProfileView: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen calm-gradient py-12 px-4">
+    <div className="min-h-screen calm-gradient py-6 sm:py-12 px-3 sm:px-4">
       <div className="max-w-4xl mx-auto">
-        <div className="bg-white rounded-2xl shadow-xl p-8">
+        <div className="bg-white rounded-2xl shadow-xl p-4 sm:p-8">
           {/* Header */}
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 sm:mb-8 gap-3">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Health Profile</h1>
-              <p className="text-gray-600 mt-1">Manage your health information</p>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Health Profile</h1>
+              <p className="text-gray-600 mt-1 text-sm sm:text-base">Manage your health information</p>
             </div>
             <button
               onClick={() => navigate('/chat')}
-              className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition"
+              className="px-3 sm:px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition text-sm sm:text-base self-start sm:self-auto"
             >
               Back to Chat
             </button>
@@ -121,50 +121,50 @@ const ProfileView: React.FC = () => {
             <div className="space-y-6">
               {/* Basic Info */}
               <div>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">Basic Information</h2>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <p className="text-sm text-gray-600">Age</p>
-                    <p className="text-lg font-semibold text-gray-900">{healthProfile?.age} years</p>
+                <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">Basic Information</h2>
+                <div className="grid grid-cols-2 gap-2 sm:gap-4">
+                  <div className="bg-gray-50 rounded-lg p-3 sm:p-4">
+                    <p className="text-xs sm:text-sm text-gray-600">Age</p>
+                    <p className="text-base sm:text-lg font-semibold text-gray-900">{healthProfile?.age} years</p>
                   </div>
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <p className="text-sm text-gray-600">Sex</p>
-                    <p className="text-lg font-semibold text-gray-900 capitalize">{healthProfile?.sex}</p>
+                  <div className="bg-gray-50 rounded-lg p-3 sm:p-4">
+                    <p className="text-xs sm:text-sm text-gray-600">Sex</p>
+                    <p className="text-base sm:text-lg font-semibold text-gray-900 capitalize">{healthProfile?.sex}</p>
                   </div>
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <p className="text-sm text-gray-600">Height</p>
-                    <p className="text-lg font-semibold text-gray-900">{healthProfile?.height} cm</p>
+                  <div className="bg-gray-50 rounded-lg p-3 sm:p-4">
+                    <p className="text-xs sm:text-sm text-gray-600">Height</p>
+                    <p className="text-base sm:text-lg font-semibold text-gray-900">{healthProfile?.height} cm</p>
                   </div>
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <p className="text-sm text-gray-600">Weight</p>
-                    <p className="text-lg font-semibold text-gray-900">{healthProfile?.weight} kg</p>
+                  <div className="bg-gray-50 rounded-lg p-3 sm:p-4">
+                    <p className="text-xs sm:text-sm text-gray-600">Weight</p>
+                    <p className="text-base sm:text-lg font-semibold text-gray-900">{healthProfile?.weight} kg</p>
                   </div>
                 </div>
               </div>
 
               {/* Medical Info */}
               <div>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">Medical Information</h2>
-                <div className="space-y-4">
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <p className="text-sm text-gray-600 mb-1">Allergies</p>
-                    <p className="text-gray-900">
+                <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">Medical Information</h2>
+                <div className="space-y-3 sm:space-y-4">
+                  <div className="bg-gray-50 rounded-lg p-3 sm:p-4">
+                    <p className="text-xs sm:text-sm text-gray-600 mb-1">Allergies</p>
+                    <p className="text-gray-900 text-sm sm:text-base">
                       {healthProfile?.allergies.length
                         ? healthProfile.allergies.join(', ')
                         : 'None reported'}
                     </p>
                   </div>
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <p className="text-sm text-gray-600 mb-1">Current Conditions</p>
-                    <p className="text-gray-900">
+                  <div className="bg-gray-50 rounded-lg p-3 sm:p-4">
+                    <p className="text-xs sm:text-sm text-gray-600 mb-1">Current Conditions</p>
+                    <p className="text-gray-900 text-sm sm:text-base">
                       {healthProfile?.currentConditions.length
                         ? healthProfile.currentConditions.join(', ')
                         : 'None reported'}
                     </p>
                   </div>
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <p className="text-sm text-gray-600 mb-1">Current Medications</p>
-                    <p className="text-gray-900">
+                  <div className="bg-gray-50 rounded-lg p-3 sm:p-4">
+                    <p className="text-xs sm:text-sm text-gray-600 mb-1">Current Medications</p>
+                    <p className="text-gray-900 text-sm sm:text-base">
                       {healthProfile?.currentMedications.length
                         ? healthProfile.currentMedications.map(m => m.name).join(', ')
                         : 'None reported'}
@@ -175,23 +175,23 @@ const ProfileView: React.FC = () => {
 
               {/* Lifestyle */}
               <div>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">Lifestyle</h2>
-                <div className="grid grid-cols-3 gap-4">
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <p className="text-sm text-gray-600">Smoking</p>
-                    <p className="text-lg font-semibold text-gray-900 capitalize">
+                <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">Lifestyle</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4">
+                  <div className="bg-gray-50 rounded-lg p-3 sm:p-4">
+                    <p className="text-xs sm:text-sm text-gray-600">Smoking</p>
+                    <p className="text-base sm:text-lg font-semibold text-gray-900 capitalize">
                       {healthProfile?.lifestyle.smoking}
                     </p>
                   </div>
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <p className="text-sm text-gray-600">Alcohol</p>
-                    <p className="text-lg font-semibold text-gray-900 capitalize">
+                  <div className="bg-gray-50 rounded-lg p-3 sm:p-4">
+                    <p className="text-xs sm:text-sm text-gray-600">Alcohol</p>
+                    <p className="text-base sm:text-lg font-semibold text-gray-900 capitalize">
                       {healthProfile?.lifestyle.alcohol}
                     </p>
                   </div>
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <p className="text-sm text-gray-600">Exercise</p>
-                    <p className="text-lg font-semibold text-gray-900 capitalize">
+                  <div className="bg-gray-50 rounded-lg p-3 sm:p-4">
+                    <p className="text-xs sm:text-sm text-gray-600">Exercise</p>
+                    <p className="text-base sm:text-lg font-semibold text-gray-900 capitalize">
                       {healthProfile?.lifestyle.exercise}
                     </p>
                   </div>
@@ -207,17 +207,17 @@ const ProfileView: React.FC = () => {
             </div>
           ) : (
             /* Edit Form */
-            <div className="space-y-6">
-              <h2 className="text-xl font-semibold text-gray-900">Edit Basic Information</h2>
+            <div className="space-y-4 sm:space-y-6">
+              <h2 className="text-lg sm:text-xl font-semibold text-gray-900">Edit Basic Information</h2>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Age</label>
                   <input
                     type="number"
                     value={age}
                     onChange={(e) => setAge(e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none text-sm sm:text-base"
                   />
                 </div>
                 <div>
@@ -225,7 +225,7 @@ const ProfileView: React.FC = () => {
                   <select
                     value={sex}
                     onChange={(e) => setSex(e.target.value as any)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none text-sm sm:text-base"
                   >
                     <option value="male">Male</option>
                     <option value="female">Female</option>
@@ -240,7 +240,7 @@ const ProfileView: React.FC = () => {
                     step="0.1"
                     value={height}
                     onChange={(e) => setHeight(e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none text-sm sm:text-base"
                   />
                 </div>
                 <div>
@@ -250,7 +250,7 @@ const ProfileView: React.FC = () => {
                     step="0.1"
                     value={weight}
                     onChange={(e) => setWeight(e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none text-sm sm:text-base"
                   />
                 </div>
               </div>
@@ -261,7 +261,7 @@ const ProfileView: React.FC = () => {
                   type="text"
                   value={allergies}
                   onChange={(e) => setAllergies(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none text-sm sm:text-base"
                   placeholder="Comma-separated"
                 />
               </div>
@@ -272,7 +272,7 @@ const ProfileView: React.FC = () => {
                   type="text"
                   value={currentConditions}
                   onChange={(e) => setCurrentConditions(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none text-sm sm:text-base"
                   placeholder="Comma-separated"
                 />
               </div>
@@ -282,8 +282,8 @@ const ProfileView: React.FC = () => {
                 <textarea
                   value={currentMedications}
                   onChange={(e) => setCurrentMedications(e.target.value)}
-                  rows={4}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
+                  rows={3}
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none text-sm sm:text-base"
                   placeholder="One per line"
                 />
               </div>

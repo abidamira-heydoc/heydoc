@@ -62,10 +62,24 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
     setDeleteConfirm(null);
   };
 
-  if (!isOpen) return null;
-
   return (
-    <div className="w-80 bg-white/70 backdrop-blur-md border-r border-green-100 flex flex-col shadow-lg">
+    <>
+      {/* Mobile overlay backdrop */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/30 z-40 lg:hidden"
+          onClick={onToggle}
+        />
+      )}
+
+      {/* Sidebar */}
+      <div className={`
+        fixed lg:static inset-y-0 left-0 z-50
+        w-[280px] sm:w-80 bg-white/95 lg:bg-white/70 backdrop-blur-md border-r border-green-100
+        flex flex-col shadow-lg
+        transform transition-transform duration-300 ease-in-out
+        ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0 lg:hidden'}
+      `}>
       {/* Sidebar Header */}
       <div className="p-4 border-b border-green-100">
         <button
@@ -181,7 +195,8 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
           <span className="text-sm font-medium">Sign Out</span>
         </button>
       </div>
-    </div>
+      </div>
+    </>
   );
 };
 
