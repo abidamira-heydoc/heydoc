@@ -22,6 +22,7 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
   onNewConversation,
   onDeleteConversation,
   isOpen,
+  onToggle,
 }) => {
   const { signOut, user } = useAuth();
   const navigate = useNavigate();
