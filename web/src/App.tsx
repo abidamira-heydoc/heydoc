@@ -30,6 +30,9 @@ import CaseQueue from './components/DoctorPortal/CaseQueue';
 import ActiveCases from './components/DoctorPortal/ActiveCases';
 import DoctorChat from './components/DoctorPortal/DoctorChat';
 import PatientConsultChat from './components/Chat/PatientConsultChat';
+import StripeConnect from './components/DoctorPortal/StripeConnect';
+import EarningsDashboard from './components/DoctorPortal/EarningsDashboard';
+import CaseHistory from './components/DoctorPortal/CaseHistory';
 
 // Protected route component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -146,11 +149,12 @@ function AppRoutes() {
           <Route index element={<DoctorDashboard />} />
           <Route path="cases" element={<CaseQueue />} />
           <Route path="active" element={<ActiveCases />} />
-          {/* Placeholder routes - will be implemented in Phase 3/4 */}
-          <Route path="history" element={<DoctorDashboard />} />
-          <Route path="earnings" element={<DoctorDashboard />} />
+          {/* Phase 4 routes */}
+          <Route path="history" element={<CaseHistory />} />
+          <Route path="earnings" element={<EarningsDashboard />} />
+          <Route path="payments/connect" element={<StripeConnect />} />
+          {/* Placeholder - will be implemented in Phase 5 */}
           <Route path="profile" element={<DoctorDashboard />} />
-          <Route path="payments/connect" element={<DoctorDashboard />} />
           <Route path="chat/:caseId" element={<DoctorChat />} />
         </Route>
       </Route>
