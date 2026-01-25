@@ -2001,3 +2001,719 @@ async function handlePaymentFailure(paymentIntent: Stripe.PaymentIntent): Promis
 
   console.log(`Payment failed for session ${sessionId}, user ${userId}`);
 }
+
+// ============================================================================
+// STRIPE CONNECT FOR DOCTORS
+// ============================================================================
+
+// Tier pricing configuration
+const TIER_PRICING = {
+  standard: {
+    amount: 2500, // $25.00
+    platformFee: 500, // $5.00
+    doctorPayout: 2000, // $20.00
+  },
+  priority: {
+    amount: 4500, // $45.00
+    platformFee: 900, // $9.00
+    doctorPayout: 3600, // $36.00
+  },
+};
+
+/**
+ * Create Stripe Connect Express account for a doctor
+ */
+export const createStripeConnectAccount = functions.https.onCall(
+  async (data: { returnUrl: string; refreshUrl: string }, context) => {
+    if (!context.auth) {
+      throw new functions.https.HttpsError(
+        'unauthenticated',
+        'Must be authenticated as a doctor'
+      );
+    }
+
+    const { returnUrl, refreshUrl } = data;
+    if (!returnUrl || !refreshUrl) {
+      throw new functions.https.HttpsError(
+        'invalid-argument',
+        'returnUrl and refreshUrl are required'
+      );
+    }
+
+    try {
+      const stripe = getStripeClient();
+      const doctorId = context.auth.uid;
+
+      // Check if doctor already has a Connect account
+      const doctorDoc = await admin.firestore()
+        .collection('doctors')
+        .doc(doctorId)
+        .get();
+
+      if (!doctorDoc.exists) {
+        throw new functions.https.HttpsError('not-found', 'Doctor profile not found');
+      }
+
+      const doctorData = doctorDoc.data();
+      let accountId = doctorData?.stripeAccountId;
+
+      // Create new account if doesn't exist
+      if (!accountId) {
+        const account = await stripe.accounts.create({
+          type: 'express',
+          country: 'US',
+          email: doctorData?.email,
+          capabilities: {
+            card_payments: { requested: true },
+            transfers: { requested: true },
+          },
+          business_type: 'individual',
+          metadata: {
+            doctorId,
+            doctorName: doctorData?.name,
+          },
+        });
+
+        accountId = account.id;
+
+        // Save account ID to doctor profile
+        await admin.firestore()
+          .collection('doctors')
+          .doc(doctorId)
+          .update({
+            stripeAccountId: accountId,
+            updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+          });
+      }
+
+      // Create account link for onboarding
+      const accountLink = await stripe.accountLinks.create({
+        account: accountId,
+        refresh_url: refreshUrl,
+        return_url: returnUrl,
+        type: 'account_onboarding',
+      });
+
+      return {
+        accountLinkUrl: accountLink.url,
+        accountId,
+      };
+    } catch (error: any) {
+      console.error('Error creating Connect account:', error);
+      throw new functions.https.HttpsError('internal', error.message);
+    }
+  }
+);
+
+/**
+ * Verify Stripe Connect onboarding is complete
+ */
+export const verifyStripeConnect = functions.https.onCall(async (data, context) => {
+  if (!context.auth) {
+    throw new functions.https.HttpsError('unauthenticated', 'Must be authenticated');
+  }
+
+  try {
+    const stripe = getStripeClient();
+    const doctorId = context.auth.uid;
+
+    const doctorDoc = await admin.firestore()
+      .collection('doctors')
+      .doc(doctorId)
+      .get();
+
+    if (!doctorDoc.exists) {
+      throw new functions.https.HttpsError('not-found', 'Doctor profile not found');
+    }
+
+    const doctorData = doctorDoc.data();
+    const accountId = doctorData?.stripeAccountId;
+
+    if (!accountId) {
+      return { connected: false, message: 'No Stripe account linked' };
+    }
+
+    // Check account status
+    const account = await stripe.accounts.retrieve(accountId);
+
+    const isComplete = account.charges_enabled && account.payouts_enabled;
+
+    if (isComplete && !doctorData?.stripeOnboardingComplete) {
+      // Update doctor profile
+      await admin.firestore()
+        .collection('doctors')
+        .doc(doctorId)
+        .update({
+          stripeOnboardingComplete: true,
+          updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+        });
+    }
+
+    return {
+      connected: isComplete,
+      chargesEnabled: account.charges_enabled,
+      payoutsEnabled: account.payouts_enabled,
+      accountId,
+    };
+  } catch (error: any) {
+    console.error('Error verifying Connect account:', error);
+    throw new functions.https.HttpsError('internal', error.message);
+  }
+});
+
+/**
+ * Request instant payout for a doctor
+ */
+export const requestInstantPayout = functions.https.onCall(
+  async (data: { amount: number }, context) => {
+    if (!context.auth) {
+      throw new functions.https.HttpsError('unauthenticated', 'Must be authenticated');
+    }
+
+    const { amount } = data;
+    if (!amount || amount < 100) {
+      throw new functions.https.HttpsError(
+        'invalid-argument',
+        'Amount must be at least $1.00'
+      );
+    }
+
+    try {
+      const stripe = getStripeClient();
+      const doctorId = context.auth.uid;
+
+      const doctorDoc = await admin.firestore()
+        .collection('doctors')
+        .doc(doctorId)
+        .get();
+
+      if (!doctorDoc.exists) {
+        throw new functions.https.HttpsError('not-found', 'Doctor profile not found');
+      }
+
+      const doctorData = doctorDoc.data();
+      const accountId = doctorData?.stripeAccountId;
+      const pendingBalance = doctorData?.pendingBalance || 0;
+
+      if (!accountId) {
+        throw new functions.https.HttpsError(
+          'failed-precondition',
+          'Stripe account not connected'
+        );
+      }
+
+      // Instant payout fee is $2 (200 cents)
+      const instantFee = 200;
+      const netAmount = amount - instantFee;
+
+      if (netAmount > pendingBalance) {
+        throw new functions.https.HttpsError(
+          'failed-precondition',
+          'Insufficient balance for payout'
+        );
+      }
+
+      // Create transfer to Connect account
+      const transfer = await stripe.transfers.create({
+        amount: netAmount,
+        currency: 'usd',
+        destination: accountId,
+        metadata: {
+          doctorId,
+          payoutType: 'instant',
+          fee: instantFee,
+        },
+      });
+
+      // Create payout on the Connect account (instant)
+      const payout = await stripe.payouts.create(
+        {
+          amount: netAmount,
+          currency: 'usd',
+          method: 'instant',
+        },
+        {
+          stripeAccount: accountId,
+        }
+      );
+
+      // Update doctor's pending balance
+      await admin.firestore()
+        .collection('doctors')
+        .doc(doctorId)
+        .update({
+          pendingBalance: admin.firestore.FieldValue.increment(-amount),
+          updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+        });
+
+      // Record payout
+      await admin.firestore().collection('doctorPayouts').add({
+        doctorId,
+        amount: netAmount,
+        fee: instantFee,
+        grossAmount: amount,
+        status: 'completed',
+        type: 'instant',
+        stripeTransferId: transfer.id,
+        stripePayoutId: payout.id,
+        createdAt: admin.firestore.FieldValue.serverTimestamp(),
+        processedAt: admin.firestore.FieldValue.serverTimestamp(),
+      });
+
+      return {
+        success: true,
+        netAmount,
+        fee: instantFee,
+        transferId: transfer.id,
+        payoutId: payout.id,
+      };
+    } catch (error: any) {
+      console.error('Error processing instant payout:', error);
+      throw new functions.https.HttpsError('internal', error.message);
+    }
+  }
+);
+
+/**
+ * Create payment for a consultation case (with tier support)
+ */
+export const createCasePayment = functions.https.onCall(
+  async (
+    data: {
+      tier: 'standard' | 'priority';
+      chiefComplaint: string;
+      symptoms: string;
+      patientName: string;
+      patientAge: number;
+      patientSex: string;
+      requestedDoctorId?: string;
+      imageUrls?: string[];
+      aiConversationId?: string;
+    },
+    context
+  ) => {
+    if (!context.auth) {
+      throw new functions.https.HttpsError(
+        'unauthenticated',
+        'User must be authenticated'
+      );
+    }
+
+    const {
+      tier,
+      chiefComplaint,
+      symptoms,
+      patientName,
+      patientAge,
+      patientSex,
+      requestedDoctorId,
+      imageUrls,
+      aiConversationId,
+    } = data;
+
+    if (!tier || !chiefComplaint || !patientName) {
+      throw new functions.https.HttpsError(
+        'invalid-argument',
+        'Missing required fields'
+      );
+    }
+
+    const pricing = TIER_PRICING[tier];
+    if (!pricing) {
+      throw new functions.https.HttpsError('invalid-argument', 'Invalid tier');
+    }
+
+    try {
+      const stripe = getStripeClient();
+      const userId = context.auth.uid;
+
+      // Create the consultation case
+      const caseRef = admin.firestore().collection('consultationCases').doc();
+      const caseData = {
+        id: caseRef.id,
+        userId,
+        patientName,
+        patientAge,
+        patientSex,
+        chiefComplaint,
+        symptoms,
+        aiConversationId: aiConversationId || null,
+        imageUrls: imageUrls || [],
+        tier,
+        amount: pricing.amount,
+        platformFee: pricing.platformFee,
+        doctorPayout: pricing.doctorPayout,
+        requestedDoctorId: tier === 'priority' ? requestedDoctorId : null,
+        assignedDoctorId: null,
+        paymentIntentId: '',
+        paymentStatus: 'pending',
+        status: 'pending',
+        createdAt: admin.firestore.FieldValue.serverTimestamp(),
+        priorityExpiresAt:
+          tier === 'priority'
+            ? admin.firestore.Timestamp.fromDate(
+                new Date(Date.now() + 5 * 60 * 1000) // 5 minutes from now
+              )
+            : null,
+      };
+
+      // Create Stripe Payment Intent
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: pricing.amount,
+        currency: 'usd',
+        metadata: {
+          userId,
+          caseId: caseRef.id,
+          tier,
+          requestedDoctorId: requestedDoctorId || '',
+        },
+        description: `HeyDoc ${tier === 'priority' ? 'Priority' : 'Standard'} Consultation`,
+      });
+
+      caseData.paymentIntentId = paymentIntent.id;
+      await caseRef.set(caseData);
+
+      return {
+        clientSecret: paymentIntent.client_secret,
+        caseId: caseRef.id,
+        amount: pricing.amount,
+      };
+    } catch (error: any) {
+      console.error('Error creating case payment:', error);
+      throw new functions.https.HttpsError('internal', error.message);
+    }
+  }
+);
+
+/**
+ * Complete a consultation case and process doctor payout
+ */
+export const completeCase = functions.https.onCall(
+  async (data: { caseId: string; doctorNotes?: string }, context) => {
+    if (!context.auth) {
+      throw new functions.https.HttpsError('unauthenticated', 'Must be authenticated');
+    }
+
+    const { caseId, doctorNotes } = data;
+    if (!caseId) {
+      throw new functions.https.HttpsError('invalid-argument', 'Case ID required');
+    }
+
+    try {
+      const doctorId = context.auth.uid;
+
+      const caseDoc = await admin.firestore()
+        .collection('consultationCases')
+        .doc(caseId)
+        .get();
+
+      if (!caseDoc.exists) {
+        throw new functions.https.HttpsError('not-found', 'Case not found');
+      }
+
+      const caseData = caseDoc.data();
+
+      if (caseData?.assignedDoctorId !== doctorId) {
+        throw new functions.https.HttpsError(
+          'permission-denied',
+          'You are not assigned to this case'
+        );
+      }
+
+      if (caseData?.status === 'completed') {
+        throw new functions.https.HttpsError(
+          'failed-precondition',
+          'Case already completed'
+        );
+      }
+
+      const db = admin.firestore();
+      const batch = db.batch();
+
+      // Update case to completed
+      const caseRef = db.collection('consultationCases').doc(caseId);
+      batch.update(caseRef, {
+        status: 'completed',
+        completedAt: admin.firestore.FieldValue.serverTimestamp(),
+        doctorNotes: doctorNotes || null,
+      });
+
+      // Add to doctor's pending balance
+      const doctorRef = db.collection('doctors').doc(doctorId);
+      batch.update(doctorRef, {
+        pendingBalance: admin.firestore.FieldValue.increment(caseData.doctorPayout),
+        totalEarnings: admin.firestore.FieldValue.increment(caseData.doctorPayout),
+        totalCases: admin.firestore.FieldValue.increment(1),
+        updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+      });
+
+      await batch.commit();
+
+      return {
+        success: true,
+        earnings: caseData.doctorPayout,
+      };
+    } catch (error: any) {
+      console.error('Error completing case:', error);
+      throw new functions.https.HttpsError('internal', error.message);
+    }
+  }
+);
+
+/**
+ * Accept a case from the queue
+ */
+export const acceptCase = functions.https.onCall(
+  async (data: { caseId: string }, context) => {
+    if (!context.auth) {
+      throw new functions.https.HttpsError('unauthenticated', 'Must be authenticated');
+    }
+
+    const { caseId } = data;
+    if (!caseId) {
+      throw new functions.https.HttpsError('invalid-argument', 'Case ID required');
+    }
+
+    try {
+      const doctorId = context.auth.uid;
+
+      // Verify doctor is approved
+      const doctorDoc = await admin.firestore()
+        .collection('doctors')
+        .doc(doctorId)
+        .get();
+
+      if (!doctorDoc.exists || doctorDoc.data()?.status !== 'approved') {
+        throw new functions.https.HttpsError(
+          'permission-denied',
+          'Doctor must be approved'
+        );
+      }
+
+      // Use transaction to prevent race conditions
+      const caseRef = admin.firestore().collection('consultationCases').doc(caseId);
+
+      await admin.firestore().runTransaction(async (transaction) => {
+        const caseDoc = await transaction.get(caseRef);
+
+        if (!caseDoc.exists) {
+          throw new functions.https.HttpsError('not-found', 'Case not found');
+        }
+
+        const caseData = caseDoc.data();
+
+        if (caseData?.status !== 'pending') {
+          throw new functions.https.HttpsError(
+            'failed-precondition',
+            'Case is no longer available'
+          );
+        }
+
+        if (caseData?.paymentStatus !== 'paid') {
+          throw new functions.https.HttpsError(
+            'failed-precondition',
+            'Payment not confirmed'
+          );
+        }
+
+        transaction.update(caseRef, {
+          status: 'assigned',
+          assignedDoctorId: doctorId,
+          assignedAt: admin.firestore.FieldValue.serverTimestamp(),
+        });
+      });
+
+      return { success: true };
+    } catch (error: any) {
+      console.error('Error accepting case:', error);
+      throw new functions.https.HttpsError('internal', error.message);
+    }
+  }
+);
+
+/**
+ * Weekly payout scheduler (runs every Monday at 6 AM UTC)
+ */
+export const weeklyDoctorPayouts = functions.pubsub
+  .schedule('0 6 * * 1')
+  .timeZone('UTC')
+  .onRun(async () => {
+    console.log('Starting weekly doctor payouts...');
+
+    const stripe = getStripeClient();
+    const db = admin.firestore();
+
+    // Get all doctors with pending balance > $1
+    const doctorsSnapshot = await db
+      .collection('doctors')
+      .where('pendingBalance', '>', 100)
+      .where('stripeOnboardingComplete', '==', true)
+      .get();
+
+    for (const doctorDoc of doctorsSnapshot.docs) {
+      const doctorData = doctorDoc.data();
+      const doctorId = doctorDoc.id;
+      const pendingBalance = doctorData.pendingBalance;
+      const accountId = doctorData.stripeAccountId;
+
+      if (!accountId) continue;
+
+      try {
+        // Create transfer to Connect account
+        const transfer = await stripe.transfers.create({
+          amount: pendingBalance,
+          currency: 'usd',
+          destination: accountId,
+          metadata: {
+            doctorId,
+            payoutType: 'weekly',
+          },
+        });
+
+        // Update doctor's balance
+        await db.collection('doctors').doc(doctorId).update({
+          pendingBalance: 0,
+          updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+        });
+
+        // Record payout
+        await db.collection('doctorPayouts').add({
+          doctorId,
+          amount: pendingBalance,
+          fee: 0,
+          grossAmount: pendingBalance,
+          status: 'completed',
+          type: 'weekly',
+          stripeTransferId: transfer.id,
+          createdAt: admin.firestore.FieldValue.serverTimestamp(),
+          processedAt: admin.firestore.FieldValue.serverTimestamp(),
+        });
+
+        console.log(`Payout of ${pendingBalance} cents to doctor ${doctorId}`);
+      } catch (error) {
+        console.error(`Error paying doctor ${doctorId}:`, error);
+
+        // Record failed payout
+        await db.collection('doctorPayouts').add({
+          doctorId,
+          amount: pendingBalance,
+          status: 'failed',
+          type: 'weekly',
+          failureReason: (error as Error).message,
+          createdAt: admin.firestore.FieldValue.serverTimestamp(),
+        });
+      }
+    }
+
+    console.log('Weekly payouts complete');
+    return null;
+  });
+
+/**
+ * Handle case payment success (update case status)
+ */
+export const onCasePaymentSuccess = functions.firestore
+  .document('stripeEventLogs/{eventId}')
+  .onCreate(async (snap) => {
+    const eventData = snap.data();
+
+    if (eventData.eventType !== 'payment_intent.succeeded') return;
+
+    // This will be called via the existing stripeWebhook
+    // The webhook should be updated to handle case payments
+  });
+
+/**
+ * Get doctor's payout history
+ */
+export const getDoctorPayouts = functions.https.onCall(async (data, context) => {
+  if (!context.auth) {
+    throw new functions.https.HttpsError('unauthenticated', 'Must be authenticated');
+  }
+
+  const doctorId = context.auth.uid;
+
+  const payoutsSnapshot = await admin.firestore()
+    .collection('doctorPayouts')
+    .where('doctorId', '==', doctorId)
+    .orderBy('createdAt', 'desc')
+    .limit(50)
+    .get();
+
+  const payouts = payoutsSnapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+    createdAt: doc.data().createdAt?.toDate?.() || null,
+    processedAt: doc.data().processedAt?.toDate?.() || null,
+  }));
+
+  return { payouts };
+});
+
+/**
+ * Get doctor's earnings summary
+ */
+export const getDoctorEarnings = functions.https.onCall(async (data, context) => {
+  if (!context.auth) {
+    throw new functions.https.HttpsError('unauthenticated', 'Must be authenticated');
+  }
+
+  const doctorId = context.auth.uid;
+
+  // Get doctor profile
+  const doctorDoc = await admin.firestore()
+    .collection('doctors')
+    .doc(doctorId)
+    .get();
+
+  if (!doctorDoc.exists) {
+    throw new functions.https.HttpsError('not-found', 'Doctor profile not found');
+  }
+
+  const doctorData = doctorDoc.data();
+
+  // Get completed cases this week
+  const oneWeekAgo = new Date();
+  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+  const weeklySnapshot = await admin.firestore()
+    .collection('consultationCases')
+    .where('assignedDoctorId', '==', doctorId)
+    .where('status', '==', 'completed')
+    .where('completedAt', '>=', oneWeekAgo)
+    .get();
+
+  const weeklyEarnings = weeklySnapshot.docs.reduce(
+    (sum, doc) => sum + (doc.data().doctorPayout || 0),
+    0
+  );
+  const weeklyCases = weeklySnapshot.size;
+
+  // Get completed cases this month
+  const oneMonthAgo = new Date();
+  oneMonthAgo.setDate(oneMonthAgo.getDate() - 30);
+
+  const monthlySnapshot = await admin.firestore()
+    .collection('consultationCases')
+    .where('assignedDoctorId', '==', doctorId)
+    .where('status', '==', 'completed')
+    .where('completedAt', '>=', oneMonthAgo)
+    .get();
+
+  const monthlyEarnings = monthlySnapshot.docs.reduce(
+    (sum, doc) => sum + (doc.data().doctorPayout || 0),
+    0
+  );
+  const monthlyCases = monthlySnapshot.size;
+
+  return {
+    pendingBalance: doctorData?.pendingBalance || 0,
+    totalEarnings: doctorData?.totalEarnings || 0,
+    totalCases: doctorData?.totalCases || 0,
+    weeklyEarnings,
+    weeklyCases,
+    monthlyEarnings,
+    monthlyCases,
+    stripeConnected: doctorData?.stripeOnboardingComplete || false,
+  };
+});

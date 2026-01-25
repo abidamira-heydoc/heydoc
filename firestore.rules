@@ -114,5 +114,61 @@ service cloud.firestore {
     match /stripeEventLogs/{logId} {
       allow read, write: if false; // Only cloud functions can access
     }
+
+    // ============================================================================
+    // DOCTOR PORTAL COLLECTIONS
+    // ============================================================================
+
+    // Helper function to check if user is an approved doctor
+    function isApprovedDoctor() {
+      return isAuthenticated() &&
+             exists(/databases/$(database)/documents/doctors/$(request.auth.uid)) &&
+             get(/databases/$(database)/documents/doctors/$(request.auth.uid)).data.status == 'approved';
+    }
+
+    // Doctors collection
+    match /doctors/{doctorId} {
+      // Doctors can read/write their own profile
+      allow read: if isAuthenticated() && request.auth.uid == doctorId;
+      allow create: if isAuthenticated() && request.auth.uid == doctorId;
+      allow update: if isAuthenticated() && request.auth.uid == doctorId;
+      // Admins can read all doctors for approval
+      allow read: if isAdmin();
+      // Public read for available doctors (for patient selection)
+      allow read: if isAuthenticated() && resource.data.status == 'approved' && resource.data.isAvailable == true;
+    }
+
+    // Consultation cases
+    match /consultationCases/{caseId} {
+      // Patients can read their own cases
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      // Doctors can read cases assigned to them or pending cases
+      allow read: if isApprovedDoctor() &&
+                     (resource.data.assignedDoctorId == request.auth.uid ||
+                      resource.data.status == 'pending');
+      // Doctors can update cases assigned to them
+      allow update: if isApprovedDoctor() && resource.data.assignedDoctorId == request.auth.uid;
+      // Only cloud functions can create/fully manage cases
+      allow create: if false;
+    }
+
+    // Consultation messages (doctor-patient chat)
+    match /consultationMessages/{messageId} {
+      // Patients and assigned doctors can read messages for their cases
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated() && resource.data.senderId == request.auth.uid;
+    }
+
+    // Doctor payouts - doctors can read their own
+    match /doctorPayouts/{payoutId} {
+      allow read: if isAuthenticated() && resource.data.doctorId == request.auth.uid;
+      allow write: if false; // Only cloud functions can write
+    }
+
+    // Admins can manage doctors
+    match /doctors/{doctorId} {
+      allow read, write: if isAdmin();
+    }
   }
 }
