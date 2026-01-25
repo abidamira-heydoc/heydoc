@@ -28,6 +28,8 @@ import DoctorPending from './components/DoctorPortal/DoctorPending';
 import DoctorRejected from './components/DoctorPortal/DoctorRejected';
 import CaseQueue from './components/DoctorPortal/CaseQueue';
 import ActiveCases from './components/DoctorPortal/ActiveCases';
+import DoctorChat from './components/DoctorPortal/DoctorChat';
+import PatientConsultChat from './components/Chat/PatientConsultChat';
 
 // Protected route component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -111,6 +113,14 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       />
+      <Route
+        path="/consultation/:caseId"
+        element={
+          <ProtectedRoute>
+            <PatientConsultChat />
+          </ProtectedRoute>
+        }
+      />
 
       {/* Admin Routes - Protected by admin role check */}
       <Route path="/admin" element={<AdminProtectedRoute />}>
@@ -141,7 +151,7 @@ function AppRoutes() {
           <Route path="earnings" element={<DoctorDashboard />} />
           <Route path="profile" element={<DoctorDashboard />} />
           <Route path="payments/connect" element={<DoctorDashboard />} />
-          <Route path="chat/:caseId" element={<DoctorDashboard />} />
+          <Route path="chat/:caseId" element={<DoctorChat />} />
         </Route>
       </Route>
     </Routes>
