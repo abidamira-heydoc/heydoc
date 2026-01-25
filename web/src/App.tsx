@@ -33,6 +33,8 @@ import PatientConsultChat from './components/Chat/PatientConsultChat';
 import StripeConnect from './components/DoctorPortal/StripeConnect';
 import EarningsDashboard from './components/DoctorPortal/EarningsDashboard';
 import CaseHistory from './components/DoctorPortal/CaseHistory';
+import DoctorProfile from './components/DoctorPortal/DoctorProfile';
+import DoctorSettings from './components/DoctorPortal/DoctorSettings';
 
 // Protected route component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -153,8 +155,9 @@ function AppRoutes() {
           <Route path="history" element={<CaseHistory />} />
           <Route path="earnings" element={<EarningsDashboard />} />
           <Route path="payments/connect" element={<StripeConnect />} />
-          {/* Placeholder - will be implemented in Phase 5 */}
-          <Route path="profile" element={<DoctorDashboard />} />
+          {/* Phase 5 routes */}
+          <Route path="profile" element={<DoctorProfile />} />
+          <Route path="settings" element={<DoctorSettings />} />
           <Route path="chat/:caseId" element={<DoctorChat />} />
         </Route>
       </Route>
