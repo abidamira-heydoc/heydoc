@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { useAuth } from '../../contexts/AuthContext';
-import { COLLECTIONS } from '../../../../shared/firebase.config';
-import type { DoctorProfile } from '../../../../shared/types';
+import { COLLECTIONS } from '@shared/firebase.config';
+import type { DoctorProfile } from '@shared/types';
 
 const DoctorRejected: React.FC = () => {
   const { user, signOut } = useAuth();

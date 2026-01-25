@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { useAuth } from '../../contexts/AuthContext';
-import { COLLECTIONS } from '../../../../shared/firebase.config';
+import { COLLECTIONS } from '@shared/firebase.config';
 
 const ConsentForm: React.FC = () => {
   const [hipaaConsent, setHipaaConsent] = useState(false);

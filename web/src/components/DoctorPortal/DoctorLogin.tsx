@@ -3,8 +3,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../../config/firebase';
-import { COLLECTIONS } from '../../../../shared/firebase.config';
-import type { DoctorProfile } from '../../../../shared/types';
+import { COLLECTIONS } from '@shared/firebase.config';
+import type { DoctorProfile } from '@shared/types';
 
 const DoctorLogin: React.FC = () => {
   const [email, setEmail] = useState('');

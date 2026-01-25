@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { useAuth } from '../../contexts/AuthContext';
-import { COLLECTIONS } from '../../../../shared/firebase.config';
-import type { HealthProfile, Medication, FamilyHistory } from '../../../../shared/types';
+import { COLLECTIONS } from '@shared/firebase.config';
+import type { HealthProfile, Medication, FamilyHistory } from '@shared/types';
 
 const IntakeForm: React.FC = () => {
   const { user } = useAuth();

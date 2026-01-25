@@ -4,9 +4,9 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { auth, db, storage } from '../../config/firebase';
-import { COLLECTIONS } from '../../../../shared/firebase.config';
-import type { DoctorSpecialty, DoctorProfile } from '../../../../shared/types';
-import { SPECIALTY_LABELS } from '../../../../shared/types';
+import { COLLECTIONS } from '@shared/firebase.config';
+import type { DoctorSpecialty, DoctorProfile } from '@shared/types';
+import { SPECIALTY_LABELS } from '@shared/types';
 
 const US_STATES = [
   'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',

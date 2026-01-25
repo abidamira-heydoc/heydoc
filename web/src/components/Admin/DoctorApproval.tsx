@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { collection, query, getDocs, doc, updateDoc, orderBy } from 'firebase/firestore';
 import { db } from '../../config/firebase';
-import { COLLECTIONS } from '../../../../shared/firebase.config';
-import type { DoctorProfile, DoctorStatus } from '../../../../shared/types';
-import { SPECIALTY_LABELS } from '../../../../shared/types';
+import { COLLECTIONS } from '@shared/firebase.config';
+import type { DoctorProfile, DoctorStatus, DoctorSpecialty } from '@shared/types';
+import { SPECIALTY_LABELS } from '@shared/types';
 
 type TabType = 'pending' | 'approved' | 'rejected';
 
@@ -263,7 +263,7 @@ const DoctorApproval: React.FC = () => {
                       </td>
                       <td className="px-4 py-4">
                         <div className="flex flex-wrap gap-1">
-                          {doctor.specialties.slice(0, 2).map((s) => (
+                          {doctor.specialties.slice(0, 2).map((s: DoctorSpecialty) => (
                             <span
                               key={s}
                               className="px-2 py-0.5 bg-blue-100 text-blue-700 text-xs rounded-full"
@@ -358,7 +358,7 @@ const DoctorApproval: React.FC = () => {
               <div>
                 <h4 className="text-sm font-semibold text-gray-700 mb-2">Specialties</h4>
                 <div className="flex flex-wrap gap-2">
-                  {selectedDoctor.specialties.map((s) => (
+                  {selectedDoctor.specialties.map((s: DoctorSpecialty) => (
                     <span
                       key={s}
                       className="px-3 py-1 bg-blue-100 text-blue-700 text-sm rounded-full"

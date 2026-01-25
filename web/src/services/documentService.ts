@@ -2,7 +2,7 @@ import { ref, uploadBytesResumable, getDownloadURL, deleteObject, listAll, getMe
 import { storage } from '../config/firebase';
 import { doc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { db } from '../config/firebase';
-import { COLLECTIONS } from '../../../shared/firebase.config';
+import { COLLECTIONS } from '@shared/firebase.config';
 
 export interface UploadedDocument {
   id: string;

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDoctor } from '../../contexts/DoctorContext';
-import { SPECIALTY_LABELS } from '../../../../shared/types';
+import { SPECIALTY_LABELS } from '@shared/types';
+import type { DoctorSpecialty } from '@shared/types';
 
 const DoctorDashboard: React.FC = () => {
   const {
@@ -240,7 +241,7 @@ const DoctorDashboard: React.FC = () => {
           <div className="flex-1">
             <h3 className="text-xl font-semibold text-gray-900 mb-2">{doctor?.name}</h3>
             <div className="flex flex-wrap gap-2 mb-3">
-              {doctor?.specialties?.map((specialty) => (
+              {doctor?.specialties?.map((specialty: DoctorSpecialty) => (
                 <span
                   key={specialty}
                   className="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full"

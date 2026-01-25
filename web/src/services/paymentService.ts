@@ -1,6 +1,6 @@
 import { httpsCallable } from 'firebase/functions';
 import { functions } from '../config/firebase';
-import type { ConsultationSession } from '../../../shared/types';
+import type { ConsultationSession } from '@shared/types';
 
 interface CreatePaymentIntentResponse {
   clientSecret: string;

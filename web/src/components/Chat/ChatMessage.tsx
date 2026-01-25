@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { Message } from '../../../../shared/types';
+import type { Message } from '@shared/types';
 
 interface ChatMessageProps {
   message: Message;

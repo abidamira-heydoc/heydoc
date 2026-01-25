@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { useAuth } from '../../contexts/AuthContext';
-import { COLLECTIONS } from '../../../../shared/firebase.config';
-import type { HealthProfile } from '../../../../shared/types';
+import { COLLECTIONS } from '@shared/firebase.config';
+import type { HealthProfile } from '@shared/types';
 
 const ProfileView: React.FC = () => {
   const { user } = useAuth();
@@ -42,7 +42,7 @@ const ProfileView: React.FC = () => {
           setWeight(profile.weight.toString());
           setAllergies(profile.allergies.join(', '));
           setCurrentConditions(profile.currentConditions.join(', '));
-          setCurrentMedications(profile.currentMedications.map(m => m.name).join('\n'));
+          setCurrentMedications(profile.currentMedications.map((m: { name: string }) => m.name).join('\n'));
         }
       } catch (error) {
         console.error('Error loading profile:', error);
@@ -166,7 +166,7 @@ const ProfileView: React.FC = () => {
                     <p className="text-xs sm:text-sm text-gray-600 mb-1">Current Medications</p>
                     <p className="text-gray-900 text-sm sm:text-base">
                       {healthProfile?.currentMedications.length
-                        ? healthProfile.currentMedications.map(m => m.name).join(', ')
+                        ? healthProfile.currentMedications.map((m: { name: string }) => m.name).join(', ')
                         : 'None reported'}
                     </p>
                   </div>

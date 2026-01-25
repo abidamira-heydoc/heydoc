@@ -5,8 +5,8 @@ import { chatService, type ConversationStage } from '../../services/chatService'
 import { documentService } from '../../services/documentService';
 import { doc, getDoc, collection, addDoc, updateDoc, query, where, orderBy, getDocs, onSnapshot, writeBatch } from 'firebase/firestore';
 import { db } from '../../config/firebase';
-import { COLLECTIONS } from '../../../../shared/firebase.config';
-import type { Message, Conversation, ImageMetadata } from '../../../../shared/types';
+import { COLLECTIONS } from '@shared/firebase.config';
+import type { Message, Conversation, ImageMetadata } from '@shared/types';
 import EmergencyBanner from './EmergencyBanner';
 import ChatMessage from './ChatMessage';
 import ChatSidebar from './ChatSidebar';

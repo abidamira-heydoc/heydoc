@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect, useCallback } fr
 import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { useAuth } from './AuthContext';
-import type { Organization } from '../../../shared/types';
+import type { Organization } from '@shared/types';
 
 export interface AdminUser {
   id: string;

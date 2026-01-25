@@ -2,8 +2,8 @@ import React, { createContext, useContext, useState, useEffect, useCallback } fr
 import { doc, getDoc, collection, query, where, getDocs, onSnapshot, orderBy, limit, updateDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { useAuth } from './AuthContext';
-import { COLLECTIONS } from '../../../shared/firebase.config';
-import type { DoctorProfile, ConsultationCase } from '../../../shared/types';
+import { COLLECTIONS } from '@shared/firebase.config';
+import type { DoctorProfile, ConsultationCase } from '@shared/types';
 
 export interface DoctorMetrics {
   casesToday: number;
@@ -251,7 +251,7 @@ export const DoctorProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         isAvailable: newAvailability,
         updatedAt: new Date(),
       });
-      setDoctor(prev => prev ? { ...prev, isAvailable: newAvailability } : null);
+      setDoctor((prev: DoctorProfile | null) => prev ? { ...prev, isAvailable: newAvailability } : null);
     } catch (err: any) {
       console.error('Error toggling availability:', err);
       setError(err.message || 'Failed to update availability');
