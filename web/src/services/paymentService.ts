@@ -1,15 +1,19 @@
 import { httpsCallable } from 'firebase/functions';
 import { functions } from '../config/firebase';
-import type { ConsultationSession } from '@shared/types';
+import type { ConsultationSession, ConsultationTier } from '@shared/types';
 
 interface CreatePaymentIntentResponse {
   clientSecret: string;
   sessionId: string;
+  caseId: string;
 }
 
 interface CreatePaymentIntentRequest {
   doctorId: string;
   consultationType: 'text' | 'voice' | 'video';
+  tier: ConsultationTier;
+  conversationId?: string;
+  chiefComplaint?: string;
 }
 
 export const paymentService = {
@@ -19,7 +23,10 @@ export const paymentService = {
    */
   async createConsultationPayment(
     doctorId: string,
-    consultationType: 'text' | 'voice' | 'video'
+    consultationType: 'text' | 'voice' | 'video',
+    tier: ConsultationTier = 'standard',
+    conversationId?: string,
+    chiefComplaint?: string
   ): Promise<CreatePaymentIntentResponse> {
     const createPayment = httpsCallable<CreatePaymentIntentRequest, CreatePaymentIntentResponse>(
       functions,
@@ -29,11 +36,15 @@ export const paymentService = {
     const result = await createPayment({
       doctorId,
       consultationType,
+      tier,
+      conversationId,
+      chiefComplaint,
     });
 
     return {
       clientSecret: result.data.clientSecret,
       sessionId: result.data.sessionId,
+      caseId: result.data.caseId,
     };
   },
 

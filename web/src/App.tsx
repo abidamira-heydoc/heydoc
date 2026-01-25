@@ -26,6 +26,8 @@ import DoctorLayout from './components/DoctorPortal/DoctorLayout';
 import DoctorDashboard from './components/DoctorPortal/DoctorDashboard';
 import DoctorPending from './components/DoctorPortal/DoctorPending';
 import DoctorRejected from './components/DoctorPortal/DoctorRejected';
+import CaseQueue from './components/DoctorPortal/CaseQueue';
+import ActiveCases from './components/DoctorPortal/ActiveCases';
 
 // Protected route component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -132,9 +134,9 @@ function AppRoutes() {
       <Route path="/doctor" element={<DoctorProtectedRoute />}>
         <Route element={<DoctorLayout />}>
           <Route index element={<DoctorDashboard />} />
-          {/* Placeholder routes - will be implemented in Phase 2 */}
-          <Route path="cases" element={<DoctorDashboard />} />
-          <Route path="active" element={<DoctorDashboard />} />
+          <Route path="cases" element={<CaseQueue />} />
+          <Route path="active" element={<ActiveCases />} />
+          {/* Placeholder routes - will be implemented in Phase 3/4 */}
           <Route path="history" element={<DoctorDashboard />} />
           <Route path="earnings" element={<DoctorDashboard />} />
           <Route path="profile" element={<DoctorDashboard />} />
