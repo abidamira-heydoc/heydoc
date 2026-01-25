@@ -14,6 +14,24 @@ export interface UploadedDocument {
   category?: 'lab_result' | 'prescription' | 'medical_record' | 'insurance' | 'other';
 }
 
+export interface ChatImageUpload {
+  url: string;
+  metadata: {
+    originalName: string;
+    size: number;
+    type: string;
+    uploadedAt: Date;
+  };
+}
+
+// Allowed image types for chat uploads
+const CHAT_IMAGE_TYPES: Record<string, { ext: string; maxSize: number }> = {
+  'image/jpeg': { ext: '.jpg', maxSize: 10 * 1024 * 1024 },
+  'image/png': { ext: '.png', maxSize: 10 * 1024 * 1024 },
+  'image/heic': { ext: '.heic', maxSize: 10 * 1024 * 1024 },
+  'image/webp': { ext: '.webp', maxSize: 10 * 1024 * 1024 },
+};
+
 export const documentService = {
   /**
    * Upload a document to Firebase Storage
@@ -189,5 +207,88 @@ export const documentService = {
     }
 
     return { valid: true };
+  },
+
+  /**
+   * Validate chat image before upload
+   */
+  validateChatImage(file: File): { valid: boolean; error?: string } {
+    const allowedType = CHAT_IMAGE_TYPES[file.type];
+
+    if (!allowedType) {
+      return {
+        valid: false,
+        error: 'Only JPG, PNG, HEIC, and WebP images are allowed.',
+      };
+    }
+
+    if (file.size > allowedType.maxSize) {
+      const maxSizeMB = allowedType.maxSize / (1024 * 1024);
+      return {
+        valid: false,
+        error: `Image must be less than ${maxSizeMB}MB`,
+      };
+    }
+
+    return { valid: true };
+  },
+
+  /**
+   * Upload a chat image to Firebase Storage
+   * @param userId - User's ID
+   * @param conversationId - Conversation ID
+   * @param file - Image file to upload
+   * @param onProgress - Progress callback (0-100)
+   */
+  async uploadChatImage(
+    userId: string,
+    conversationId: string,
+    file: File,
+    onProgress?: (progress: number) => void
+  ): Promise<ChatImageUpload> {
+    // Validate file
+    const validation = this.validateChatImage(file);
+    if (!validation.valid) {
+      throw new Error(validation.error);
+    }
+
+    // Create storage reference: /chat-images/{userId}/{conversationId}/{timestamp}_{filename}
+    const timestamp = Date.now();
+    const sanitizedName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
+    const fileName = `${timestamp}_${sanitizedName}`;
+    const storageRef = ref(storage, `chat-images/${userId}/${conversationId}/${fileName}`);
+
+    // Upload file
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    return new Promise((resolve, reject) => {
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          onProgress?.(Math.round(progress));
+        },
+        (error) => {
+          console.error('Chat image upload error:', error);
+          reject(error);
+        },
+        async () => {
+          // Get download URL
+          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+
+          const result: ChatImageUpload = {
+            url: downloadURL,
+            metadata: {
+              originalName: file.name,
+              size: file.size,
+              type: file.type,
+              uploadedAt: new Date(),
+            },
+          };
+
+          resolve(result);
+        }
+      );
+    });
   },
 };

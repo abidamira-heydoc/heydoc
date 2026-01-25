@@ -2,10 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { chatService, type ConversationStage } from '../../services/chatService';
+import { documentService } from '../../services/documentService';
 import { doc, getDoc, collection, addDoc, updateDoc, query, where, orderBy, getDocs, onSnapshot, writeBatch } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { COLLECTIONS } from '../../../../shared/firebase.config';
-import type { Message, Conversation } from '../../../../shared/types';
+import type { Message, Conversation, ImageMetadata } from '../../../../shared/types';
 import EmergencyBanner from './EmergencyBanner';
 import ChatMessage from './ChatMessage';
 import ChatSidebar from './ChatSidebar';
@@ -24,7 +25,14 @@ const Chat: React.FC = () => {
   const [showDoctorModal, setShowDoctorModal] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [conversationStage, setConversationStage] = useState<ConversationStage>('INTAKE1');
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
+  const [uploadProgress, setUploadProgress] = useState<number>(0);
+  const [isUploading, setIsUploading] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const dropZoneRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number | null>(null);
   const touchEndX = useRef<number | null>(null);
 
@@ -212,7 +220,9 @@ const Chat: React.FC = () => {
 
   // Send message
   const handleSend = async () => {
-    if (!input.trim() || loading || (emergencyDetected && !input.includes('emergency'))) return;
+    // Allow sending if there's text OR an image
+    const hasContent = input.trim() || selectedImage;
+    if (!hasContent || loading || isUploading || (emergencyDetected && !input.includes('emergency'))) return;
     if (!user) return;
 
     // Check for emergency keywords
@@ -228,13 +238,41 @@ const Chat: React.FC = () => {
         if (!convId) return;
       }
 
+      // Upload image if selected
+      let imageUrl: string | undefined;
+      let imageMetadata: ImageMetadata | undefined;
+
+      if (selectedImage) {
+        setIsUploading(true);
+        try {
+          const uploadResult = await documentService.uploadChatImage(
+            user.uid,
+            convId,
+            selectedImage,
+            setUploadProgress
+          );
+          imageUrl = uploadResult.url;
+          imageMetadata = uploadResult.metadata;
+        } catch (uploadError) {
+          console.error('Image upload failed:', uploadError);
+          alert('Failed to upload image. Please try again.');
+          setIsUploading(false);
+          setLoading(false);
+          return;
+        }
+        setIsUploading(false);
+        setUploadProgress(0);
+      }
+
       // Create user message
       const userMessage: Omit<Message, 'id'> = {
         conversationId: convId,
         role: 'user',
-        content: input,
+        content: input || (imageUrl ? '[Image attached]' : ''),
         timestamp: new Date(),
         emergencyFlag: quickEmergency,
+        ...(imageUrl && { imageUrl }),
+        ...(imageMetadata && { imageMetadata }),
       };
 
       // Add to Firestore
@@ -243,9 +281,10 @@ const Chat: React.FC = () => {
       // Add to local state
       setMessages((prev) => [...prev, userMessage as Message]);
 
-      // Clear input
+      // Clear input and image
       const userInput = input;
       setInput('');
+      handleRemoveImage();
 
       // Check for emergency
       if (quickEmergency) {
@@ -258,13 +297,18 @@ const Chat: React.FC = () => {
         return;
       }
 
-      // Build message history for AI
+      // Build message history for AI (include imageUrl for vision)
       const messageHistory = [
         ...messages.map((m) => ({
           role: m.role as 'user' | 'assistant',
           content: m.content,
+          ...(m.imageUrl && { imageUrl: m.imageUrl }),
         })),
-        { role: 'user' as const, content: userInput },
+        {
+          role: 'user' as const,
+          content: userInput || (imageUrl ? 'I\'ve attached an image of my symptom.' : ''),
+          ...(imageUrl && { imageUrl }),
+        },
       ];
 
       // Get AI response with current stage
@@ -327,8 +371,108 @@ const Chat: React.FC = () => {
     }
   };
 
+  // Handle image selection
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate the file
+    const validation = documentService.validateChatImage(file);
+    if (!validation.valid) {
+      alert(validation.error);
+      return;
+    }
+
+    setSelectedImage(file);
+    // Create preview URL
+    const previewUrl = URL.createObjectURL(file);
+    setImagePreviewUrl(previewUrl);
+  };
+
+  // Remove selected image
+  const handleRemoveImage = () => {
+    if (imagePreviewUrl) {
+      URL.revokeObjectURL(imagePreviewUrl);
+    }
+    setSelectedImage(null);
+    setImagePreviewUrl(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
+  // Open file picker
+  const handleImageButtonClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  // Drag and drop handlers
+  const handleDragEnter = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.dataTransfer.types.includes('Files')) {
+      setIsDragging(true);
+    }
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    // Only set isDragging to false if we're leaving the drop zone entirely
+    if (e.currentTarget === e.target) {
+      setIsDragging(false);
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+
+    const files = e.dataTransfer.files;
+    if (files && files.length > 0) {
+      const file = files[0];
+
+      // Validate the file
+      const validation = documentService.validateChatImage(file);
+      if (!validation.valid) {
+        alert(validation.error);
+        return;
+      }
+
+      setSelectedImage(file);
+      const previewUrl = URL.createObjectURL(file);
+      setImagePreviewUrl(previewUrl);
+    }
+  };
+
   return (
-    <div className="h-screen flex overflow-hidden bg-gradient-to-br from-blue-50 via-cyan-50 to-green-50">
+    <div
+      className="h-screen flex overflow-hidden bg-gradient-to-br from-blue-50 via-cyan-50 to-green-50 relative"
+      onDragEnter={handleDragEnter}
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
+      ref={dropZoneRef}
+    >
+      {/* Drag and Drop Overlay */}
+      {isDragging && (
+        <div className="absolute inset-0 z-50 bg-green-500/20 backdrop-blur-sm flex items-center justify-center pointer-events-none">
+          <div className="bg-white rounded-2xl shadow-2xl p-8 flex flex-col items-center border-4 border-dashed border-green-500">
+            <svg className="w-16 h-16 text-green-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            </svg>
+            <p className="text-xl font-semibold text-gray-700">Drop image here</p>
+            <p className="text-sm text-gray-500 mt-1">JPG, PNG, HEIC, or WebP (max 10MB)</p>
+          </div>
+        </div>
+      )}
+
       {/* Sidebar */}
       <ChatSidebar
         conversations={conversations}
@@ -468,7 +612,57 @@ const Chat: React.FC = () => {
             </div>
           )}
 
+          {/* Image Preview */}
+          {imagePreviewUrl && (
+            <div className="mb-3 relative inline-block">
+              <div className="relative rounded-lg overflow-hidden border-2 border-green-200 shadow-md">
+                <img
+                  src={imagePreviewUrl}
+                  alt="Selected preview"
+                  className="max-h-32 max-w-48 object-cover"
+                />
+                {isUploading && (
+                  <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                    <div className="text-white text-sm font-medium">{uploadProgress}%</div>
+                  </div>
+                )}
+                <button
+                  onClick={handleRemoveImage}
+                  disabled={isUploading}
+                  className="absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white rounded-full p-1 shadow-md transition-colors disabled:opacity-50"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              <p className="text-xs text-gray-500 mt-1 truncate max-w-48">{selectedImage?.name}</p>
+            </div>
+          )}
+
+          {/* Hidden file input */}
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleImageSelect}
+            accept="image/jpeg,image/png,image/heic,image/webp"
+            className="hidden"
+          />
+
           <div className="flex items-end space-x-2 sm:space-x-3">
+            {/* Image upload button */}
+            <button
+              onClick={handleImageButtonClick}
+              disabled={emergencyDetected || loading || isUploading}
+              className="bg-gray-100 hover:bg-gray-200 text-gray-600 p-3 sm:p-4 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md flex-shrink-0"
+              title="Attach image"
+            >
+              <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </button>
+
             <div className="flex-1">
               <textarea
                 value={input}
@@ -477,21 +671,30 @@ const Chat: React.FC = () => {
                 placeholder={
                   emergencyDetected
                     ? 'Please call emergency services immediately'
+                    : selectedImage
+                    ? 'Add a description (optional)...'
                     : 'Describe your symptoms...'
                 }
-                disabled={emergencyDetected || loading}
+                disabled={emergencyDetected || loading || isUploading}
                 className="w-full px-3 sm:px-5 py-2.5 sm:py-3.5 border-2 border-green-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none resize-none disabled:bg-gray-50 disabled:cursor-not-allowed transition-all shadow-sm bg-white/80 text-sm sm:text-base"
                 rows={2}
               />
             </div>
             <button
               onClick={handleSend}
-              disabled={!input.trim() || loading || emergencyDetected}
+              disabled={(!input.trim() && !selectedImage) || loading || isUploading || emergencyDetected}
               className="bg-gradient-to-br from-green-500 via-emerald-500 to-cyan-500 hover:from-green-600 hover:via-emerald-600 hover:to-cyan-600 text-white p-3 sm:p-4 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-xl disabled:shadow-sm flex-shrink-0"
             >
-              <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-              </svg>
+              {isUploading ? (
+                <svg className="w-5 h-5 sm:w-6 sm:h-6 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+              ) : (
+                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                </svg>
+              )}
             </button>
           </div>
 

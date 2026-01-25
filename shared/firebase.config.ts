@@ -22,5 +22,10 @@ export const COLLECTIONS = {
   MEDICAL_HISTORY: 'medicalHistory',
   CONSULTATION_SESSIONS: 'consultationSessions',
   PAYMENTS: 'payments',
-  STRIPE_EVENT_LOGS: 'stripeEventLogs'
+  STRIPE_EVENT_LOGS: 'stripeEventLogs',
+  // Doctor Portal Collections
+  DOCTORS: 'doctors',
+  CONSULTATION_CASES: 'consultationCases',
+  CONSULTATION_MESSAGES: 'consultationMessages',
+  DOCTOR_PAYOUTS: 'doctorPayouts'
 };

@@ -90,6 +90,13 @@ export interface Conversation {
   messages: Message[];
 }
 
+export interface ImageMetadata {
+  originalName: string;
+  size: number; // bytes
+  type: string; // mime type
+  uploadedAt: Date;
+}
+
 export interface Message {
   id: string;
   conversationId: string;
@@ -97,6 +104,8 @@ export interface Message {
   content: string;
   timestamp: Date;
   emergencyFlag?: boolean;
+  imageUrl?: string; // Firebase Storage download URL
+  imageMetadata?: ImageMetadata;
 }
 
 export interface EmergencySymptom {
@@ -114,15 +123,145 @@ export interface NaturalRemedy {
   warnings?: string[];
 }
 
+// Doctor Portal Types
+export type DoctorStatus = 'pending' | 'approved' | 'rejected' | 'suspended';
+export type DoctorSpecialty =
+  | 'family_medicine'
+  | 'internal_medicine'
+  | 'pediatrics'
+  | 'dermatology'
+  | 'psychiatry'
+  | 'obgyn'
+  | 'cardiology'
+  | 'orthopedics'
+  | 'neurology'
+  | 'emergency_medicine'
+  | 'other';
+
+export const SPECIALTY_LABELS: Record<DoctorSpecialty, string> = {
+  family_medicine: 'Family Medicine',
+  internal_medicine: 'Internal Medicine',
+  pediatrics: 'Pediatrics',
+  dermatology: 'Dermatology',
+  psychiatry: 'Psychiatry',
+  obgyn: 'OB/GYN',
+  cardiology: 'Cardiology',
+  orthopedics: 'Orthopedics',
+  neurology: 'Neurology',
+  emergency_medicine: 'Emergency Medicine',
+  other: 'Other'
+};
+
 export interface DoctorProfile {
   id: string;
+  email: string;
   name: string;
-  specialties: string[];
+  specialties: DoctorSpecialty[];
   credentials: string[];
-  rating: number;
+  licenseNumber: string;
+  licenseState: string;
+  licenseUrl: string; // Firebase Storage URL
+  photoUrl: string;
+  bio: string;
   yearsExperience: number;
-  avatarUrl: string;
-  availability: 'available' | 'busy' | 'offline';
+  rating: number;
+  totalRatings: number;
+  totalCases: number;
+  isAvailable: boolean;
+  status: DoctorStatus;
+  // Stripe Connect
+  stripeAccountId?: string;
+  stripeOnboardingComplete: boolean;
+  // Earnings
+  pendingBalance: number; // cents - awaiting payout
+  totalEarnings: number; // cents - lifetime
+  // Timestamps
+  createdAt: Date;
+  updatedAt: Date;
+  approvedAt?: Date;
+  rejectedAt?: Date;
+  rejectionReason?: string;
+}
+
+// Consultation Case - represents a $25 or $45 consultation request
+export type ConsultationTier = 'standard' | 'priority';
+export type CaseStatus = 'pending' | 'assigned' | 'active' | 'completed' | 'cancelled' | 'refunded';
+
+export interface ConsultationCase {
+  id: string;
+  // Patient info
+  userId: string;
+  patientName: string;
+  patientAge: number;
+  patientSex: 'male' | 'female' | 'other' | 'prefer_not_to_say';
+  // Case details
+  chiefComplaint: string;
+  symptoms: string;
+  aiConversationId?: string; // Reference to AI chat that led to this
+  imageUrls: string[]; // Any images patient attached
+  // Tier & Pricing
+  tier: ConsultationTier;
+  amount: number; // cents: 2500 or 4500
+  platformFee: number; // cents: 500 or 900
+  doctorPayout: number; // cents: 2000 or 3600
+  // Doctor assignment
+  requestedDoctorId?: string; // Only for priority tier
+  assignedDoctorId?: string;
+  // Payment
+  paymentIntentId: string;
+  paymentStatus: 'pending' | 'paid' | 'refunded';
+  // Status & Timestamps
+  status: CaseStatus;
+  createdAt: Date;
+  assignedAt?: Date;
+  startedAt?: Date;
+  completedAt?: Date;
+  cancelledAt?: Date;
+  // Priority request timeout
+  priorityExpiresAt?: Date; // 5 min from creation for priority cases
+  // Completion
+  doctorNotes?: string;
+  patientRating?: number; // 1-5
+  patientReview?: string;
+}
+
+// Doctor-Patient Chat Messages
+export interface ConsultationMessage {
+  id: string;
+  caseId: string;
+  senderId: string;
+  senderRole: 'doctor' | 'patient';
+  content: string;
+  imageUrl?: string;
+  imageMetadata?: ImageMetadata;
+  timestamp: Date;
+  read: boolean;
+}
+
+// Doctor Earnings/Payout
+export interface DoctorPayout {
+  id: string;
+  doctorId: string;
+  amount: number; // cents
+  status: 'pending' | 'processing' | 'completed' | 'failed';
+  stripeTransferId?: string;
+  cases: string[]; // Array of case IDs included in this payout
+  createdAt: Date;
+  processedAt?: Date;
+  failureReason?: string;
+}
+
+// Doctor availability for patient selection
+export interface AvailableDoctor {
+  id: string;
+  name: string;
+  photoUrl: string;
+  specialties: DoctorSpecialty[];
+  yearsExperience: number;
+  rating: number;
+  totalRatings: number;
+  bio: string;
+  isAvailable: boolean;
 }
 
 export interface Consent {

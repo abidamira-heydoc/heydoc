@@ -858,6 +858,7 @@ Be the friend who says: "Let me help you figure this out."`;
 interface ChatMessage {
   role: 'user' | 'assistant' | 'system';
   content: string;
+  imageUrl?: string; // Firebase Storage URL for attached image
 }
 
 type ConversationStage = 'GREETING' | 'INTAKE1' | 'INTAKE2' | 'FULL_RESPONSE';
@@ -866,6 +867,37 @@ interface ChatRequest {
   messages: ChatMessage[];
   healthProfile?: any;
   stage?: ConversationStage;
+}
+
+type ImageMediaType = 'image/jpeg' | 'image/png' | 'image/gif' | 'image/webp';
+
+/**
+ * Fetch an image from URL and convert to base64
+ */
+async function fetchImageAsBase64(imageUrl: string): Promise<{ base64: string; mediaType: ImageMediaType } | null> {
+  try {
+    const response = await fetch(imageUrl);
+    if (!response.ok) {
+      console.error('Failed to fetch image:', response.status);
+      return null;
+    }
+
+    const contentType = response.headers.get('content-type') || 'image/jpeg';
+    const arrayBuffer = await response.arrayBuffer();
+    const base64 = Buffer.from(arrayBuffer).toString('base64');
+
+    // Map content type to Claude's expected media types
+    let mediaType: ImageMediaType = 'image/jpeg';
+    if (contentType.includes('png')) mediaType = 'image/png';
+    else if (contentType.includes('gif')) mediaType = 'image/gif';
+    else if (contentType.includes('webp')) mediaType = 'image/webp';
+    // Note: HEIC will be served as JPEG by Firebase Storage
+
+    return { base64, mediaType };
+  } catch (error) {
+    console.error('Error fetching image:', error);
+    return null;
+  }
 }
 
 /**
@@ -1122,18 +1154,92 @@ Purpose: Provide structured assessment + guidance.
     }
 
     // Convert messages to Claude format (filter out system messages)
-    const claudeMessages = messages
-      .filter(m => m.role !== 'system')
-      .map(m => ({
-        role: m.role as 'user' | 'assistant',
-        content: m.content,
-      }));
+    // Handle images for vision capability
+    const claudeMessages: Anthropic.MessageParam[] = [];
+    let hasImage = false;
+
+    for (const m of messages.filter(m => m.role !== 'system')) {
+      if (m.imageUrl && m.role === 'user') {
+        // Fetch and convert image to base64
+        const imageData = await fetchImageAsBase64(m.imageUrl);
+        if (imageData) {
+          hasImage = true;
+          // Create multi-part content with image and text
+          const contentParts: Anthropic.ContentBlockParam[] = [
+            {
+              type: 'image',
+              source: {
+                type: 'base64',
+                media_type: imageData.mediaType,
+                data: imageData.base64,
+              },
+            },
+          ];
+
+          // Add text content if present and not just placeholder
+          if (m.content && m.content !== '[Image attached]') {
+            contentParts.push({
+              type: 'text',
+              text: m.content,
+            });
+          } else {
+            // Add context for image-only messages
+            contentParts.push({
+              type: 'text',
+              text: 'I\'ve attached an image of my symptom/condition. Please analyze what you see.',
+            });
+          }
+
+          claudeMessages.push({
+            role: 'user',
+            content: contentParts,
+          });
+        } else {
+          // Fallback if image fetch fails
+          claudeMessages.push({
+            role: m.role as 'user' | 'assistant',
+            content: m.content + '\n\n[Note: An image was attached but could not be loaded]',
+          });
+        }
+      } else {
+        // Regular text message
+        claudeMessages.push({
+          role: m.role as 'user' | 'assistant',
+          content: m.content,
+        });
+      }
+    }
+
+    // Use vision-capable model if images are present, otherwise use haiku for speed
+    const modelToUse = hasImage ? 'claude-3-5-sonnet-20241022' : 'claude-3-haiku-20240307';
+
+    // Add vision-specific instructions to system prompt if image is present
+    let finalSystemPrompt = systemPrompt;
+    if (hasImage) {
+      finalSystemPrompt += `\n\n---\n\n## IMAGE ANALYSIS GUIDELINES
+
+When the user shares an image of a symptom or condition:
+
+1. **Describe what you observe** - Be specific about visible characteristics (color, size, texture, pattern, location)
+2. **Note relevant details** - Swelling, redness, discharge, symmetry, distribution
+3. **Consider context** - How does this fit with the symptoms they've described?
+4. **Assess urgency visually** - Does what you see suggest immediate concern?
+5. **Ask clarifying questions** - Duration, changes over time, associated symptoms
+
+**Important limitations:**
+- Images alone cannot provide diagnosis
+- Lighting and image quality affect assessment
+- Always recommend professional evaluation for concerning findings
+- If the image shows something potentially serious (severe burns, deep wounds, signs of infection), prioritize safety guidance
+
+**Never say** "I can see you have [condition]" — instead say "This could be consistent with..." or "The appearance suggests..."`;
+    }
 
     // Call Claude API
     const completion = await anthropic.messages.create({
-      model: 'claude-3-haiku-20240307',
-      max_tokens: 1000,
-      system: systemPrompt,
+      model: modelToUse,
+      max_tokens: hasImage ? 1500 : 1000, // Allow longer responses for image analysis
+      system: finalSystemPrompt,
       messages: claudeMessages,
     });
 

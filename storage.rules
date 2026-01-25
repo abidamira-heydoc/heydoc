@@ -2,6 +2,18 @@ rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
 
+    // Chat images (symptom photos, rashes, injuries, etc.)
+    match /chat-images/{userId}/{conversationId}/{imageId} {
+      // Only the owner can read their chat images
+      allow read: if request.auth != null && request.auth.uid == userId;
+
+      // Only the owner can write, with file type and size validation
+      allow write: if request.auth != null
+                   && request.auth.uid == userId
+                   && request.resource.size < 10 * 1024 * 1024  // 10MB max
+                   && request.resource.contentType.matches('image/.*');
+    }
+
     // User documents (lab results, prescriptions, medical records, etc.)
     match /users/{userId}/documents/{document=**} {
       // Only the owner can read/write their documents
@@ -37,6 +49,18 @@ service firebase.storage {
     match /shared/{userId}/{consultId}/{document=**} {
       allow read: if request.auth != null && request.auth.uid == userId;
       allow write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Doctor Portal uploads (license and profile photos)
+    match /doctors/{doctorId}/{document=**} {
+      // Only the doctor can write their own documents
+      allow write: if request.auth != null
+                   && request.auth.uid == doctorId
+                   && request.resource.size < 10 * 1024 * 1024  // 10MB max
+                   && request.resource.contentType.matches('image/.*');
+
+      // Anyone authenticated can read (for patient-facing doctor list)
+      allow read: if request.auth != null;
     }
 
     // Deny all other access

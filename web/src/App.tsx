@@ -16,6 +16,16 @@ import AnalyticsDashboard from './components/Admin/AnalyticsDashboard';
 import UserManagement from './components/Admin/UserManagement';
 import ImpactReports from './components/Admin/ImpactReports';
 import AdminSettings from './components/Admin/AdminSettings';
+import DoctorApproval from './components/Admin/DoctorApproval';
+
+// Doctor Portal components
+import DoctorSignup from './components/DoctorPortal/DoctorSignup';
+import DoctorLogin from './components/DoctorPortal/DoctorLogin';
+import DoctorProtectedRoute from './components/DoctorPortal/DoctorProtectedRoute';
+import DoctorLayout from './components/DoctorPortal/DoctorLayout';
+import DoctorDashboard from './components/DoctorPortal/DoctorDashboard';
+import DoctorPending from './components/DoctorPortal/DoctorPending';
+import DoctorRejected from './components/DoctorPortal/DoctorRejected';
 
 // Protected route component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -106,8 +116,30 @@ function AppRoutes() {
           <Route index element={<DashboardHome />} />
           <Route path="analytics" element={<AnalyticsDashboard />} />
           <Route path="users" element={<UserManagement />} />
+          <Route path="doctors" element={<DoctorApproval />} />
           <Route path="reports" element={<ImpactReports />} />
           <Route path="settings" element={<AdminSettings />} />
+        </Route>
+      </Route>
+
+      {/* Doctor Portal Routes */}
+      <Route path="/doctor/signup" element={<DoctorSignup />} />
+      <Route path="/doctor/login" element={<DoctorLogin />} />
+      <Route path="/doctor/pending" element={<DoctorPending />} />
+      <Route path="/doctor/rejected" element={<DoctorRejected />} />
+
+      {/* Protected Doctor Routes */}
+      <Route path="/doctor" element={<DoctorProtectedRoute />}>
+        <Route element={<DoctorLayout />}>
+          <Route index element={<DoctorDashboard />} />
+          {/* Placeholder routes - will be implemented in Phase 2 */}
+          <Route path="cases" element={<DoctorDashboard />} />
+          <Route path="active" element={<DoctorDashboard />} />
+          <Route path="history" element={<DoctorDashboard />} />
+          <Route path="earnings" element={<DoctorDashboard />} />
+          <Route path="profile" element={<DoctorDashboard />} />
+          <Route path="payments/connect" element={<DoctorDashboard />} />
+          <Route path="chat/:caseId" element={<DoctorDashboard />} />
         </Route>
       </Route>
     </Routes>

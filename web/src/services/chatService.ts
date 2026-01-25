@@ -24,9 +24,10 @@ export type { ConversationStage };
 export const chatService = {
   /**
    * Send a message to the AI and get a response
+   * Messages can include optional imageUrl for vision analysis
    */
   async sendMessage(
-    messages: Array<{ role: 'user' | 'assistant' | 'system'; content: string }>,
+    messages: Array<{ role: 'user' | 'assistant' | 'system'; content: string; imageUrl?: string }>,
     healthProfile?: any,
     stage: ConversationStage = 'INTAKE1'
   ): Promise<SendMessageResult> {
