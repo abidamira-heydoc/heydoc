@@ -12,10 +12,28 @@ service cloud.firestore {
       return isAuthenticated() && request.auth.uid == userId;
     }
 
-    // Helper function to check if user is an admin
-    function isAdmin() {
+    // Helper function to check if user is a platform admin (HeyDoc owner)
+    function isPlatformAdmin() {
       return isAuthenticated() &&
-             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'platform_admin';
+    }
+
+    // Helper function to check if user is an org admin
+    function isOrgAdmin() {
+      return isAuthenticated() &&
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'org_admin';
+    }
+
+    // Helper function to check if user is any type of admin (backward compat)
+    function isAnyAdmin() {
+      return isAuthenticated() &&
+             (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'org_admin' ||
+              get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'platform_admin');
+    }
+
+    // Legacy alias for backward compatibility
+    function isAdmin() {
+      return isAnyAdmin();
     }
 
     // Helper function to get current user's organizationId
@@ -23,18 +41,22 @@ service cloud.firestore {
       return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.organizationId;
     }
 
-    // Organizations - anyone can read (for code validation), only functions can write
+    // Organizations - anyone can read (for code validation), platform admin or functions can write
     match /organizations/{orgId} {
       allow read: if true;
-      allow write: if false; // Only cloud functions can write
+      allow write: if isPlatformAdmin(); // Platform admin can manage orgs
     }
 
     // Users collection
     match /users/{userId} {
-      // Users can read their own doc, admins can read users in their org
+      // Users can read their own doc
+      // Org admins can read users in their org
+      // Platform admins can read all users
       allow read: if isOwner(userId) ||
-                    (isAdmin() && resource.data.organizationId == getUserOrgId());
-      allow write: if isOwner(userId);
+                    isPlatformAdmin() ||
+                    (isOrgAdmin() && resource.data.organizationId == getUserOrgId());
+      // Users can update their own profile, platform admin can update any user
+      allow write: if isOwner(userId) || isPlatformAdmin();
     }
 
     // Medical history - users can read their own
@@ -128,12 +150,14 @@ service cloud.firestore {
 
     // Doctors collection
     match /doctors/{doctorId} {
-      // Doctors can read/write their own profile
+      // Doctors can read/write their own profile (except status changes)
       allow read: if isAuthenticated() && request.auth.uid == doctorId;
       allow create: if isAuthenticated() && request.auth.uid == doctorId;
-      allow update: if isAuthenticated() && request.auth.uid == doctorId;
-      // Admins can read all doctors for approval
-      allow read: if isAdmin();
+      allow update: if isAuthenticated() && request.auth.uid == doctorId &&
+                       (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['status', 'approvedAt', 'rejectedAt']));
+      // Platform admin can read all doctors and update status
+      allow read: if isPlatformAdmin();
+      allow update: if isPlatformAdmin();
       // Public read for available doctors (for patient selection)
       allow read: if isAuthenticated() && resource.data.status == 'approved' && resource.data.isAvailable == true;
     }
@@ -166,9 +190,19 @@ service cloud.firestore {
       allow write: if false; // Only cloud functions can write
     }
 
-    // Admins can manage doctors
+    // Platform admins have full access to doctors collection
     match /doctors/{doctorId} {
-      allow read, write: if isAdmin();
+      allow read, write: if isPlatformAdmin();
+    }
+
+    // Platform admin can read all consultation cases
+    match /consultationCases/{caseId} {
+      allow read: if isPlatformAdmin();
+    }
+
+    // Platform admin can read all payouts
+    match /doctorPayouts/{payoutId} {
+      allow read: if isPlatformAdmin();
     }
   }
 }

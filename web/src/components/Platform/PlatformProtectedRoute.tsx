@@ -5,21 +5,20 @@ import { db } from '../../config/firebase';
 import { useAuth } from '../../contexts/AuthContext';
 import type { UserRole } from '@shared/types';
 
-interface AdminUserData {
+interface PlatformUserData {
   role: UserRole;
-  organizationId: string | null;
   email: string;
 }
 
-const AdminProtectedRoute: React.FC = () => {
+const PlatformProtectedRoute: React.FC = () => {
   const { user, loading: authLoading } = useAuth();
   const location = useLocation();
   const [checking, setChecking] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [userData, setUserData] = useState<AdminUserData | null>(null);
+  const [isPlatformAdmin, setIsPlatformAdmin] = useState(false);
+  const [userData, setUserData] = useState<PlatformUserData | null>(null);
 
   useEffect(() => {
-    const checkAdminStatus = async () => {
+    const checkPlatformAdminStatus = async () => {
       if (authLoading) return;
 
       if (!user) {
@@ -31,52 +30,43 @@ const AdminProtectedRoute: React.FC = () => {
         const userDoc = await getDoc(doc(db, 'users', user.uid));
 
         if (!userDoc.exists()) {
-          setIsAdmin(false);
+          setIsPlatformAdmin(false);
           setChecking(false);
           return;
         }
 
         const data = userDoc.data();
-        const role = data?.role as UserRole;
 
-        // Accept org_admin or platform_admin
-        if (role !== 'org_admin' && role !== 'platform_admin') {
-          setIsAdmin(false);
-          setChecking(false);
-          return;
-        }
-
-        // org_admin requires organizationId, platform_admin does not
-        if (role === 'org_admin' && !data?.organizationId) {
-          setIsAdmin(false);
+        // Must be platform_admin role
+        if (data?.role !== 'platform_admin') {
+          setIsPlatformAdmin(false);
           setChecking(false);
           return;
         }
 
         setUserData({
-          role: role,
-          organizationId: data.organizationId || null,
+          role: data.role,
           email: data.email || user.email || '',
         });
-        setIsAdmin(true);
+        setIsPlatformAdmin(true);
       } catch (error) {
-        console.error('Error checking admin status:', error);
-        setIsAdmin(false);
+        console.error('Error checking platform admin status:', error);
+        setIsPlatformAdmin(false);
       } finally {
         setChecking(false);
       }
     };
 
-    checkAdminStatus();
+    checkPlatformAdminStatus();
   }, [user, authLoading]);
 
   // Show loading while auth is loading or checking admin status
   if (authLoading || checking) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto" />
-          <p className="mt-4 text-gray-600">Verifying admin access...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto" />
+          <p className="mt-4 text-gray-600">Verifying platform access...</p>
         </div>
       </div>
     );
@@ -87,33 +77,41 @@ const AdminProtectedRoute: React.FC = () => {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  // Not an admin - show access denied
-  if (!isAdmin) {
+  // Not a platform admin - show access denied
+  if (!isPlatformAdmin) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-gray-50 flex items-center justify-center px-4">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-gray-50 flex items-center justify-center px-4">
         <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md text-center">
           <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Access Denied</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Platform Access Denied</h2>
           <p className="text-gray-600 mb-6">
-            You don't have organization administrator access. Please contact your organization admin or platform support if you believe this is an error.
+            This area is restricted to HeyDoc platform administrators. If you're an organization admin, please use the standard admin dashboard.
           </p>
-          <a
-            href="/chat"
-            className="inline-block bg-primary-600 hover:bg-primary-700 text-white font-semibold py-2 px-6 rounded-lg transition"
-          >
-            Go to Chat
-          </a>
+          <div className="space-y-3">
+            <a
+              href="/admin"
+              className="block w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-2 px-6 rounded-lg transition"
+            >
+              Go to Org Admin
+            </a>
+            <a
+              href="/chat"
+              className="block w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-2 px-6 rounded-lg transition"
+            >
+              Go to Chat
+            </a>
+          </div>
         </div>
       </div>
     );
   }
 
-  // Admin verified - render child routes
+  // Platform admin verified - render child routes
   return <Outlet context={{ userData }} />;
 };
 
-export default AdminProtectedRoute;
+export default PlatformProtectedRoute;

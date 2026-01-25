@@ -295,11 +295,11 @@ const UserManagement: React.FC = () => {
                     </td>
                     <td className="py-3 px-4">
                       <span className={`text-xs font-medium px-2 py-1 rounded-full ${
-                        u.role === 'admin'
+                        u.role === 'org_admin' || u.role === 'platform_admin'
                           ? 'bg-purple-100 text-purple-700'
                           : 'bg-gray-100 text-gray-700'
                       }`}>
-                        {u.role === 'admin' ? 'Admin' : 'User'}
+                        {u.role === 'org_admin' ? 'Org Admin' : u.role === 'platform_admin' ? 'Platform Admin' : 'User'}
                       </span>
                     </td>
                     <td className="py-3 px-4 text-gray-500 text-sm">
@@ -312,7 +312,7 @@ const UserManagement: React.FC = () => {
                       <span className="text-gray-400">-</span>
                     </td>
                     <td className="py-3 px-4 text-right">
-                      {u.id !== user?.uid && u.role !== 'admin' && (
+                      {u.id !== user?.uid && u.role === 'user' && (
                         <>
                           {deleteConfirm === u.id ? (
                             <div className="flex items-center justify-end gap-2">

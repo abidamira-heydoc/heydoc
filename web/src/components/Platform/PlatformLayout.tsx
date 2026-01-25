@@ -1,30 +1,30 @@
 import React, { useState } from 'react';
 import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { useAdmin, AdminProvider } from '../../contexts/AdminContext';
+import { usePlatform, PlatformProvider } from '../../contexts/PlatformContext';
 
-// Icons as components for cleaner code
-const DashboardIcon = () => (
+// Icons
+const OverviewIcon = () => (
   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
   </svg>
 );
 
-const AnalyticsIcon = () => (
+const OrganizationsIcon = () => (
   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
   </svg>
 );
 
-const UsersIcon = () => (
+const DoctorsIcon = () => (
   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
   </svg>
 );
 
-const ReportsIcon = () => (
+const RevenueIcon = () => (
   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
   </svg>
 );
 
@@ -67,11 +67,11 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { name: 'Dashboard', path: '/admin', icon: DashboardIcon, end: true },
-  { name: 'Analytics', path: '/admin/analytics', icon: AnalyticsIcon },
-  { name: 'Users', path: '/admin/users', icon: UsersIcon },
-  { name: 'Reports', path: '/admin/reports', icon: ReportsIcon },
-  { name: 'Settings', path: '/admin/settings', icon: SettingsIcon },
+  { name: 'Overview', path: '/platform', icon: OverviewIcon, end: true },
+  { name: 'Organizations', path: '/platform/organizations', icon: OrganizationsIcon },
+  { name: 'Doctors', path: '/platform/doctors', icon: DoctorsIcon },
+  { name: 'Revenue', path: '/platform/revenue', icon: RevenueIcon },
+  { name: 'Settings', path: '/platform/settings', icon: SettingsIcon },
 ];
 
 // Breadcrumb component
@@ -93,7 +93,7 @@ const Breadcrumb: React.FC = () => {
           {index === breadcrumbs.length - 1 ? (
             <span className="text-gray-900 font-medium">{crumb.name}</span>
           ) : (
-            <NavLink to={crumb.path} className="hover:text-primary-600">
+            <NavLink to={crumb.path} className="hover:text-blue-600">
               {crumb.name}
             </NavLink>
           )}
@@ -103,10 +103,10 @@ const Breadcrumb: React.FC = () => {
   );
 };
 
-// Inner layout component that uses admin context
-const AdminLayoutInner: React.FC = () => {
+// Inner layout component that uses platform context
+const PlatformLayoutInner: React.FC = () => {
   const { signOut } = useAuth();
-  const { organization, adminUser, loading, error, clearError } = useAdmin();
+  const { platformUser, metrics, loading, error, clearError } = usePlatform();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -121,10 +121,10 @@ const AdminLayoutInner: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto" />
-          <p className="mt-4 text-gray-600">Loading admin dashboard...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto" />
+          <p className="mt-4 text-gray-600">Loading platform dashboard...</p>
         </div>
       </div>
     );
@@ -144,34 +144,40 @@ const AdminLayoutInner: React.FC = () => {
       <aside
         className={`
           fixed lg:static inset-y-0 left-0 z-50
-          w-64 bg-white border-r border-gray-200
+          w-64 bg-slate-900 border-r border-slate-800
           transform transition-transform duration-200 ease-in-out
           ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
         `}
       >
         {/* Sidebar Header */}
-        <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200">
-          <div
-            className="flex items-center gap-3 cursor-pointer"
-            onClick={() => navigate('/chat')}
-          >
+        <div className="h-16 flex items-center justify-between px-4 border-b border-slate-800">
+          <div className="flex items-center gap-3">
             <img src="/heydoclogo.png" alt="HeyDoc" className="w-8 h-8 object-contain" />
-            <span className="font-bold text-lg text-gray-900">HeyDoc Admin</span>
+            <div>
+              <span className="font-bold text-lg text-white">HeyDoc</span>
+              <span className="ml-1 text-xs bg-blue-500 text-white px-1.5 py-0.5 rounded">Platform</span>
+            </div>
           </div>
           <button
             onClick={() => setSidebarOpen(false)}
-            className="lg:hidden p-1 text-gray-500 hover:text-gray-700"
+            className="lg:hidden p-1 text-slate-400 hover:text-white"
           >
             <CloseIcon />
           </button>
         </div>
 
-        {/* Organization Info */}
-        <div className="px-4 py-3 border-b border-gray-100 bg-gray-50">
-          <p className="text-xs text-gray-500 uppercase tracking-wider">Organization</p>
-          <p className="text-sm font-medium text-gray-900 truncate">
-            {organization?.name || 'Loading...'}
-          </p>
+        {/* Platform Stats Mini */}
+        <div className="px-4 py-3 border-b border-slate-800 bg-slate-800/50">
+          <div className="grid grid-cols-2 gap-2 text-xs">
+            <div>
+              <p className="text-slate-500">Organizations</p>
+              <p className="text-white font-semibold">{metrics?.totalOrganizations || 0}</p>
+            </div>
+            <div>
+              <p className="text-slate-500">Pending Doctors</p>
+              <p className="text-white font-semibold">{metrics?.pendingDoctors || 0}</p>
+            </div>
+          </div>
         </div>
 
         {/* Navigation */}
@@ -185,8 +191,8 @@ const AdminLayoutInner: React.FC = () => {
               className={({ isActive }) =>
                 `flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
                   isActive
-                    ? 'bg-primary-50 text-primary-700 font-medium'
-                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                    ? 'bg-blue-600 text-white font-medium'
+                    : 'text-slate-300 hover:bg-slate-800 hover:text-white'
                 }`
               }
             >
@@ -197,10 +203,10 @@ const AdminLayoutInner: React.FC = () => {
         </nav>
 
         {/* Back to App Link */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-white">
+        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-slate-800 bg-slate-900">
           <a
             href="/chat"
-            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors"
+            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-colors"
           >
             <BackIcon />
             <span>Back to App</span>
@@ -220,10 +226,10 @@ const AdminLayoutInner: React.FC = () => {
             <MenuIcon />
           </button>
 
-          {/* Page title area - hidden on mobile since we have breadcrumb */}
+          {/* Page title area */}
           <div className="hidden lg:block">
             <h1 className="text-lg font-semibold text-gray-900">
-              {organization?.name || 'Admin Dashboard'}
+              Platform Administration
             </h1>
           </div>
 
@@ -233,13 +239,13 @@ const AdminLayoutInner: React.FC = () => {
             <div className="hidden sm:flex items-center gap-3">
               <div className="text-right">
                 <p className="text-sm font-medium text-gray-900 truncate max-w-[150px]">
-                  {adminUser?.email}
+                  {platformUser?.email}
                 </p>
-                <p className="text-xs text-gray-500">Administrator</p>
+                <p className="text-xs text-blue-600 font-medium">Platform Admin</p>
               </div>
-              <div className="w-9 h-9 bg-primary-100 rounded-full flex items-center justify-center">
-                <span className="text-primary-700 font-medium text-sm">
-                  {adminUser?.email?.[0]?.toUpperCase() || 'A'}
+              <div className="w-9 h-9 bg-blue-100 rounded-full flex items-center justify-center">
+                <span className="text-blue-700 font-medium text-sm">
+                  {platformUser?.email?.[0]?.toUpperCase() || 'P'}
                 </span>
               </div>
             </div>
@@ -276,13 +282,13 @@ const AdminLayoutInner: React.FC = () => {
   );
 };
 
-// Wrapper component that provides admin context
-const AdminLayout: React.FC = () => {
+// Wrapper component that provides platform context
+const PlatformLayout: React.FC = () => {
   return (
-    <AdminProvider>
-      <AdminLayoutInner />
-    </AdminProvider>
+    <PlatformProvider>
+      <PlatformLayoutInner />
+    </PlatformProvider>
   );
 };
 
-export default AdminLayout;
+export default PlatformLayout;

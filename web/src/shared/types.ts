@@ -12,15 +12,31 @@ export interface Organization {
   updatedAt: Date;
 }
 
+// Role type for hierarchical RBAC
+export type UserRole = 'user' | 'org_admin' | 'platform_admin';
+
 export interface UserProfile {
   id: string;
   email: string;
-  organizationId: string;    // Links user to their org
-  role: 'user' | 'admin';    // Admin can create/manage users
+  organizationId: string | null;  // null for platform_admin
+  role: UserRole;
   avatarUrl?: string;
   createdAt: Date;
   updatedAt: Date;
 }
+
+// Role helper functions
+export const isPlatformAdmin = (profile: UserProfile | null | undefined): boolean => {
+  return profile?.role === 'platform_admin';
+};
+
+export const isOrgAdmin = (profile: UserProfile | null | undefined): boolean => {
+  return profile?.role === 'org_admin';
+};
+
+export const isAnyAdmin = (profile: UserProfile | null | undefined): boolean => {
+  return profile?.role === 'org_admin' || profile?.role === 'platform_admin';
+};
 
 export interface HealthProfile {
   userId: string;
@@ -125,6 +141,28 @@ export interface NaturalRemedy {
 
 // Doctor Portal Types
 export type DoctorStatus = 'pending' | 'approved' | 'rejected' | 'suspended';
+
+// Notification Settings for Doctors
+export interface NotificationSettings {
+  // Email notifications
+  emailNewCase: boolean;       // New case available in queue
+  emailCaseAssigned: boolean;  // Priority case assigned to you
+  emailPayoutSent: boolean;    // Payout processed
+  emailWeeklyDigest: boolean;  // Weekly summary email
+  // Push notifications
+  pushNewCase: boolean;        // Instant push for new cases
+  pushMessages: boolean;       // Patient message alerts
+}
+
+export const DEFAULT_NOTIFICATION_SETTINGS: NotificationSettings = {
+  emailNewCase: true,
+  emailCaseAssigned: true,
+  emailPayoutSent: true,
+  emailWeeklyDigest: true,
+  pushNewCase: true,
+  pushMessages: true,
+};
+
 export type DoctorSpecialty =
   | 'family_medicine'
   | 'internal_medicine'
@@ -156,6 +194,7 @@ export interface DoctorProfile {
   id: string;
   email: string;
   name: string;
+  displayName?: string; // For emails/notifications
   specialties: DoctorSpecialty[];
   credentials: string[];
   licenseNumber: string;
@@ -175,6 +214,9 @@ export interface DoctorProfile {
   // Earnings
   pendingBalance: number; // cents - awaiting payout
   totalEarnings: number; // cents - lifetime
+  // Notifications
+  notificationSettings?: NotificationSettings;
+  fcmTokens?: string[]; // Push notification tokens
   // Timestamps
   createdAt: Date;
   updatedAt: Date;

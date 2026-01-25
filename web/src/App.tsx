@@ -16,7 +16,15 @@ import AnalyticsDashboard from './components/Admin/AnalyticsDashboard';
 import UserManagement from './components/Admin/UserManagement';
 import ImpactReports from './components/Admin/ImpactReports';
 import AdminSettings from './components/Admin/AdminSettings';
-import DoctorApproval from './components/Admin/DoctorApproval';
+
+// Platform Admin components
+import PlatformProtectedRoute from './components/Platform/PlatformProtectedRoute';
+import PlatformLayout from './components/Platform/PlatformLayout';
+import PlatformDashboard from './components/Platform/PlatformDashboard';
+import OrganizationsManagement from './components/Platform/OrganizationsManagement';
+import PlatformDoctorApproval from './components/Platform/PlatformDoctorApproval';
+import PlatformRevenue from './components/Platform/PlatformRevenue';
+import PlatformSettings from './components/Platform/PlatformSettings';
 
 // Doctor Portal components
 import DoctorSignup from './components/DoctorPortal/DoctorSignup';
@@ -69,11 +77,29 @@ const OrgProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }
   return <>{children}</>;
 };
 
+// Check if we're on the doctors subdomain
+const isDoctorSubdomain = (): boolean => {
+  const hostname = window.location.hostname;
+  return hostname.startsWith('doctors.') || hostname === 'doctors.localhost';
+};
+
+// Redirect to doctor portal if on doctors subdomain
+const SubdomainRedirect: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  if (isDoctorSubdomain()) {
+    return <Navigate to="/doctor/login" replace />;
+  }
+  return <>{children}</>;
+};
+
 function AppRoutes() {
   return (
     <Routes>
-      {/* Public: Invite code entry */}
-      <Route path="/" element={<InviteCode />} />
+      {/* Public: Invite code entry (redirects to doctor portal on doctors subdomain) */}
+      <Route path="/" element={
+        <SubdomainRedirect>
+          <InviteCode />
+        </SubdomainRedirect>
+      } />
 
       {/* Requires org code */}
       <Route
@@ -127,15 +153,25 @@ function AppRoutes() {
         }
       />
 
-      {/* Admin Routes - Protected by admin role check */}
+      {/* Admin Routes - Protected by org_admin or platform_admin role */}
       <Route path="/admin" element={<AdminProtectedRoute />}>
         <Route element={<AdminLayout />}>
           <Route index element={<DashboardHome />} />
           <Route path="analytics" element={<AnalyticsDashboard />} />
           <Route path="users" element={<UserManagement />} />
-          <Route path="doctors" element={<DoctorApproval />} />
           <Route path="reports" element={<ImpactReports />} />
           <Route path="settings" element={<AdminSettings />} />
+        </Route>
+      </Route>
+
+      {/* Platform Admin Routes - Protected by platform_admin role only */}
+      <Route path="/platform" element={<PlatformProtectedRoute />}>
+        <Route element={<PlatformLayout />}>
+          <Route index element={<PlatformDashboard />} />
+          <Route path="organizations" element={<OrganizationsManagement />} />
+          <Route path="doctors" element={<PlatformDoctorApproval />} />
+          <Route path="revenue" element={<PlatformRevenue />} />
+          <Route path="settings" element={<PlatformSettings />} />
         </Route>
       </Route>
 

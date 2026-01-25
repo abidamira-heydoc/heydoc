@@ -2,6 +2,7 @@ import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import Anthropic from '@anthropic-ai/sdk';
 import Stripe from 'stripe';
+import { Resend } from 'resend';
 import { searchKnowledge, formatRetrievedContext } from './rag';
 
 admin.initializeApp();
@@ -1460,12 +1461,14 @@ export const createUserAccount = functions.https.onCall(async (data: {
     .doc(context.auth.uid)
     .get();
 
-  if (!callerProfile.exists || callerProfile.data()?.role !== 'admin') {
+  const callerRole = callerProfile.data()?.role;
+  if (!callerProfile.exists || (callerRole !== 'org_admin' && callerRole !== 'platform_admin')) {
     throw new functions.https.HttpsError('permission-denied', 'Only admins can create users');
   }
 
   const organizationId = callerProfile.data()?.organizationId;
-  if (!organizationId) {
+  // org_admin requires organizationId, platform_admin can create users in any org
+  if (callerRole === 'org_admin' && !organizationId) {
     throw new functions.https.HttpsError('failed-precondition', 'Admin must belong to an organization');
   }
 
@@ -1518,13 +1521,14 @@ export const getOrgUsers = functions.https.onCall(async (data, context) => {
     .doc(context.auth.uid)
     .get();
 
-  if (!callerProfile.exists || callerProfile.data()?.role !== 'admin') {
+  const callerRole = callerProfile.data()?.role;
+  if (!callerProfile.exists || (callerRole !== 'org_admin' && callerRole !== 'platform_admin')) {
     throw new functions.https.HttpsError('permission-denied', 'Only admins can view users');
   }
 
   const organizationId = callerProfile.data()?.organizationId;
 
-  // Get all users in the organization
+  // Get all users in the organization (or all users for platform admin)
   const usersSnapshot = await admin.firestore()
     .collection('users')
     .where('organizationId', '==', organizationId)
@@ -1554,7 +1558,8 @@ export const deleteUserAccount = functions.https.onCall(async (data: { userId: s
     .doc(context.auth.uid)
     .get();
 
-  if (!callerProfile.exists || callerProfile.data()?.role !== 'admin') {
+  const callerRole = callerProfile.data()?.role;
+  if (!callerProfile.exists || (callerRole !== 'org_admin' && callerRole !== 'platform_admin')) {
     throw new functions.https.HttpsError('permission-denied', 'Only admins can delete users');
   }
 
@@ -1578,7 +1583,8 @@ export const deleteUserAccount = functions.https.onCall(async (data: { userId: s
     throw new functions.https.HttpsError('not-found', 'User not found');
   }
 
-  if (targetUser.data()?.organizationId !== callerProfile.data()?.organizationId) {
+  // Org admins can only delete users in their org, platform admins can delete any user
+  if (callerRole === 'org_admin' && targetUser.data()?.organizationId !== callerProfile.data()?.organizationId) {
     throw new functions.https.HttpsError('permission-denied', 'Cannot delete users from other organizations');
   }
 
@@ -1930,13 +1936,20 @@ export const stripeWebhook = functions.https.onRequest(async (req, res) => {
 });
 
 /**
- * Handle successful payment
+ * Handle successful payment - routes to appropriate handler based on metadata
  */
 async function handlePaymentSuccess(paymentIntent: Stripe.PaymentIntent): Promise<void> {
-  const { userId, sessionId } = paymentIntent.metadata;
+  const { userId, sessionId, caseId } = paymentIntent.metadata;
 
+  // Route to case payment handler if caseId is present
+  if (caseId) {
+    await handleCasePaymentSuccess(paymentIntent);
+    return;
+  }
+
+  // Handle legacy session-based payments
   if (!sessionId) {
-    console.error('No sessionId in payment intent metadata');
+    console.error('No sessionId or caseId in payment intent metadata');
     return;
   }
 
@@ -1970,13 +1983,70 @@ async function handlePaymentSuccess(paymentIntent: Stripe.PaymentIntent): Promis
 }
 
 /**
- * Handle failed payment
+ * Handle successful case payment - updates consultationCases to 'paid'
+ * This allows doctors to accept the case from the queue
+ */
+async function handleCasePaymentSuccess(paymentIntent: Stripe.PaymentIntent): Promise<void> {
+  const { userId, caseId, tier } = paymentIntent.metadata;
+
+  if (!caseId) {
+    console.error('No caseId in payment intent metadata');
+    return;
+  }
+
+  const db = admin.firestore();
+  const batch = db.batch();
+
+  // Update consultation case to 'paid'
+  const caseRef = db.collection('consultationCases').doc(caseId);
+  batch.update(caseRef, {
+    paymentStatus: 'paid',
+    paidAt: admin.firestore.FieldValue.serverTimestamp(),
+  });
+
+  // Create payment record for audit trail
+  const paymentRef = db.collection('payments').doc();
+  batch.set(paymentRef, {
+    id: paymentRef.id,
+    userId,
+    consultationCaseId: caseId,
+    tier: tier || 'standard',
+    amount: paymentIntent.amount,
+    currency: paymentIntent.currency,
+    status: 'succeeded',
+    stripePaymentIntentId: paymentIntent.id,
+    createdAt: admin.firestore.FieldValue.serverTimestamp(),
+    completedAt: admin.firestore.FieldValue.serverTimestamp(),
+  });
+
+  await batch.commit();
+
+  console.log(`Case payment successful for case ${caseId}, user ${userId}, tier ${tier}`);
+
+  // Notify doctors about new case (async, don't block payment flow)
+  const caseDoc = await db.collection('consultationCases').doc(caseId).get();
+  if (caseDoc.exists) {
+    const caseData = { id: caseId, ...caseDoc.data() };
+    notifyDoctorsNewCase(caseData).catch((err) => {
+      console.error('Failed to notify doctors:', err);
+    });
+  }
+}
+
+/**
+ * Handle failed payment - routes to appropriate handler based on metadata
  */
 async function handlePaymentFailure(paymentIntent: Stripe.PaymentIntent): Promise<void> {
-  const { userId, sessionId } = paymentIntent.metadata;
+  const { userId, sessionId, caseId } = paymentIntent.metadata;
+
+  // Route to case payment failure handler if caseId is present
+  if (caseId) {
+    await handleCasePaymentFailure(paymentIntent);
+    return;
+  }
 
   if (!sessionId) {
-    console.error('No sessionId in payment intent metadata');
+    console.error('No sessionId or caseId in payment intent metadata');
     return;
   }
 
@@ -2000,6 +2070,41 @@ async function handlePaymentFailure(paymentIntent: Stripe.PaymentIntent): Promis
   });
 
   console.log(`Payment failed for session ${sessionId}, user ${userId}`);
+}
+
+/**
+ * Handle failed case payment - marks case as payment_failed
+ */
+async function handleCasePaymentFailure(paymentIntent: Stripe.PaymentIntent): Promise<void> {
+  const { userId, caseId, tier } = paymentIntent.metadata;
+
+  if (!caseId) {
+    console.error('No caseId in payment intent metadata');
+    return;
+  }
+
+  const db = admin.firestore();
+
+  // Update consultation case to payment_failed
+  await db.collection('consultationCases').doc(caseId).update({
+    paymentStatus: 'failed',
+    status: 'cancelled',
+  });
+
+  // Create failed payment record
+  await db.collection('payments').add({
+    userId,
+    consultationCaseId: caseId,
+    tier: tier || 'standard',
+    amount: paymentIntent.amount,
+    currency: paymentIntent.currency,
+    status: 'failed',
+    stripePaymentIntentId: paymentIntent.id,
+    createdAt: admin.firestore.FieldValue.serverTimestamp(),
+    errorMessage: paymentIntent.last_payment_error?.message || 'Payment failed',
+  });
+
+  console.log(`Case payment failed for case ${caseId}, user ${userId}`);
 }
 
 // ============================================================================
@@ -2260,6 +2365,15 @@ export const requestInstantPayout = functions.https.onCall(
         processedAt: admin.firestore.FieldValue.serverTimestamp(),
       });
 
+      // Send instant payout notification
+      if (doctorData.email && doctorData.notificationSettings?.emailPayoutSent !== false) {
+        sendEmail(
+          doctorData.email,
+          'Instant payout processed - HeyDoc',
+          payoutEmailTemplate(doctorData.displayName || 'Doctor', netAmount, 'instant')
+        ).catch((err) => console.error('Failed to send instant payout email:', err));
+      }
+
       return {
         success: true,
         netAmount,
@@ -2449,12 +2563,230 @@ export const completeCase = functions.https.onCall(
 
       await batch.commit();
 
+      // Send completion notification to doctor (async)
+      const doctorDoc = await db.collection('doctors').doc(doctorId).get();
+      if (doctorDoc.exists) {
+        const doctor = doctorDoc.data();
+        if (doctor?.email) {
+          sendEmail(
+            doctor.email,
+            'Case Completed - HeyDoc',
+            caseCompletedEmailTemplate(doctor.displayName || 'Doctor', caseData, caseData.doctorPayout)
+          ).catch((err) => console.error('Failed to send completion email:', err));
+        }
+      }
+
       return {
         success: true,
         earnings: caseData.doctorPayout,
       };
     } catch (error: any) {
       console.error('Error completing case:', error);
+      throw new functions.https.HttpsError('internal', error.message);
+    }
+  }
+);
+
+/**
+ * Refund a consultation case payment
+ * Called when: patient cancels before doctor accepts, or case expires
+ */
+export const refundCase = functions.https.onCall(
+  async (data: { caseId: string; reason?: string }, context) => {
+    if (!context.auth) {
+      throw new functions.https.HttpsError('unauthenticated', 'Must be authenticated');
+    }
+
+    const { caseId, reason } = data;
+    if (!caseId) {
+      throw new functions.https.HttpsError('invalid-argument', 'Case ID required');
+    }
+
+    try {
+      const userId = context.auth.uid;
+      const db = admin.firestore();
+
+      const caseDoc = await db.collection('consultationCases').doc(caseId).get();
+
+      if (!caseDoc.exists) {
+        throw new functions.https.HttpsError('not-found', 'Case not found');
+      }
+
+      const caseData = caseDoc.data();
+
+      // Only the patient who created the case can request a refund
+      if (caseData?.userId !== userId) {
+        throw new functions.https.HttpsError(
+          'permission-denied',
+          'You can only refund your own cases'
+        );
+      }
+
+      // Can only refund cases that are pending (not yet accepted by a doctor)
+      if (caseData?.status !== 'pending') {
+        throw new functions.https.HttpsError(
+          'failed-precondition',
+          'Can only refund pending cases. Contact support for assigned cases.'
+        );
+      }
+
+      // Must have a successful payment to refund
+      if (caseData?.paymentStatus !== 'paid') {
+        throw new functions.https.HttpsError(
+          'failed-precondition',
+          'No payment to refund'
+        );
+      }
+
+      const paymentIntentId = caseData.paymentIntentId;
+      if (!paymentIntentId) {
+        throw new functions.https.HttpsError(
+          'failed-precondition',
+          'No payment intent found for this case'
+        );
+      }
+
+      // Process refund via Stripe
+      const stripe = getStripeClient();
+      const refund = await stripe.refunds.create({
+        payment_intent: paymentIntentId,
+        reason: 'requested_by_customer',
+      });
+
+      // Update case status
+      const batch = db.batch();
+      const caseRef = db.collection('consultationCases').doc(caseId);
+      batch.update(caseRef, {
+        status: 'cancelled',
+        paymentStatus: 'refunded',
+        refundedAt: admin.firestore.FieldValue.serverTimestamp(),
+        refundReason: reason || 'Patient cancelled',
+        stripeRefundId: refund.id,
+      });
+
+      // Record refund in payments collection
+      const refundRef = db.collection('payments').doc();
+      batch.set(refundRef, {
+        id: refundRef.id,
+        userId,
+        consultationCaseId: caseId,
+        amount: caseData.amount,
+        currency: 'usd',
+        status: 'refunded',
+        stripePaymentIntentId: paymentIntentId,
+        stripeRefundId: refund.id,
+        refundReason: reason || 'Patient cancelled',
+        createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      });
+
+      await batch.commit();
+
+      console.log(`Refund processed for case ${caseId}, refund ID: ${refund.id}`);
+
+      return {
+        success: true,
+        refundId: refund.id,
+        amount: caseData.amount,
+      };
+    } catch (error: any) {
+      console.error('Error processing refund:', error);
+      throw new functions.https.HttpsError('internal', error.message);
+    }
+  }
+);
+
+/**
+ * Admin refund for any case (including assigned cases)
+ * Only admins can use this function
+ */
+export const adminRefundCase = functions.https.onCall(
+  async (data: { caseId: string; reason: string }, context) => {
+    if (!context.auth) {
+      throw new functions.https.HttpsError('unauthenticated', 'Must be authenticated');
+    }
+
+    const { caseId, reason } = data;
+    if (!caseId || !reason) {
+      throw new functions.https.HttpsError('invalid-argument', 'Case ID and reason required');
+    }
+
+    try {
+      const adminId = context.auth.uid;
+      const db = admin.firestore();
+
+      // Verify caller is an admin
+      const adminDoc = await db.collection('users').doc(adminId).get();
+      if (!adminDoc.exists || adminDoc.data()?.role !== 'admin') {
+        throw new functions.https.HttpsError('permission-denied', 'Admin access required');
+      }
+
+      const caseDoc = await db.collection('consultationCases').doc(caseId).get();
+
+      if (!caseDoc.exists) {
+        throw new functions.https.HttpsError('not-found', 'Case not found');
+      }
+
+      const caseData = caseDoc.data();
+
+      // Cannot refund already refunded or cancelled cases
+      if (caseData?.paymentStatus === 'refunded') {
+        throw new functions.https.HttpsError('failed-precondition', 'Case already refunded');
+      }
+
+      if (caseData?.paymentStatus !== 'paid') {
+        throw new functions.https.HttpsError('failed-precondition', 'No payment to refund');
+      }
+
+      const paymentIntentId = caseData.paymentIntentId;
+      if (!paymentIntentId) {
+        throw new functions.https.HttpsError('failed-precondition', 'No payment intent found');
+      }
+
+      // Process refund via Stripe
+      const stripe = getStripeClient();
+      const refund = await stripe.refunds.create({
+        payment_intent: paymentIntentId,
+        reason: 'requested_by_customer',
+      });
+
+      const batch = db.batch();
+      const caseRef = db.collection('consultationCases').doc(caseId);
+      batch.update(caseRef, {
+        status: 'cancelled',
+        paymentStatus: 'refunded',
+        refundedAt: admin.firestore.FieldValue.serverTimestamp(),
+        refundReason: reason,
+        refundedBy: adminId,
+        stripeRefundId: refund.id,
+      });
+
+      // Record refund
+      const refundRef = db.collection('payments').doc();
+      batch.set(refundRef, {
+        id: refundRef.id,
+        userId: caseData.userId,
+        consultationCaseId: caseId,
+        amount: caseData.amount,
+        currency: 'usd',
+        status: 'refunded',
+        stripePaymentIntentId: paymentIntentId,
+        stripeRefundId: refund.id,
+        refundReason: reason,
+        refundedBy: adminId,
+        createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      });
+
+      await batch.commit();
+
+      console.log(`Admin refund for case ${caseId} by ${adminId}, refund ID: ${refund.id}`);
+
+      return {
+        success: true,
+        refundId: refund.id,
+        amount: caseData.amount,
+      };
+    } catch (error: any) {
+      console.error('Error processing admin refund:', error);
       throw new functions.https.HttpsError('internal', error.message);
     }
   }
@@ -2589,6 +2921,15 @@ export const weeklyDoctorPayouts = functions.pubsub
           processedAt: admin.firestore.FieldValue.serverTimestamp(),
         });
 
+        // Send payout notification email
+        if (doctorData.email && doctorData.notificationSettings?.emailPayoutSent !== false) {
+          sendEmail(
+            doctorData.email,
+            'Your weekly payout has been processed - HeyDoc',
+            payoutEmailTemplate(doctorData.displayName || 'Doctor', pendingBalance, 'weekly')
+          ).catch((err) => console.error('Failed to send payout email:', err));
+        }
+
         console.log(`Payout of ${pendingBalance} cents to doctor ${doctorId}`);
       } catch (error) {
         console.error(`Error paying doctor ${doctorId}:`, error);
@@ -2716,4 +3057,739 @@ export const getDoctorEarnings = functions.https.onCall(async (data, context) =>
     monthlyCases,
     stripeConnected: doctorData?.stripeOnboardingComplete || false,
   };
+});
+
+// ============================================================================
+// EMAIL & PUSH NOTIFICATIONS
+// ============================================================================
+
+/**
+ * Get Resend client for sending emails
+ */
+function getResendClient(): Resend {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    throw new Error('RESEND_API_KEY not configured');
+  }
+  return new Resend(apiKey);
+}
+
+// Email sender address (domain verified in Resend)
+const EMAIL_FROM = 'HeyDoc <notifications@heydoccare.com>';
+
+/**
+ * Send email helper function
+ */
+async function sendEmail(
+  to: string,
+  subject: string,
+  html: string
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const resend = getResendClient();
+    await resend.emails.send({
+      from: EMAIL_FROM,
+      to,
+      subject,
+      html,
+    });
+    return { success: true };
+  } catch (error: any) {
+    console.error('Email send error:', error);
+    return { success: false, error: error.message };
+  }
+}
+
+/**
+ * Email template: New case available
+ */
+function newCaseEmailTemplate(doctorName: string, caseData: any): string {
+  const tierLabel = caseData.tier === 'priority' ? 'PRIORITY' : 'Standard';
+  const earnings = caseData.tier === 'priority' ? '$36' : '$20';
+
+  return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: #10b981; color: white; padding: 20px; border-radius: 8px 8px 0 0; }
+        .content { background: #f9fafb; padding: 20px; border: 1px solid #e5e7eb; }
+        .case-info { background: white; padding: 15px; border-radius: 8px; margin: 15px 0; }
+        .tier-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 12px; }
+        .tier-priority { background: #fef3c7; color: #92400e; }
+        .tier-standard { background: #dbeafe; color: #1e40af; }
+        .earnings { font-size: 24px; font-weight: bold; color: #10b981; }
+        .cta-button { display: inline-block; background: #10b981; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; margin-top: 15px; }
+        .footer { text-align: center; padding: 20px; color: #6b7280; font-size: 12px; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <h1 style="margin:0;">New Case Available</h1>
+        </div>
+        <div class="content">
+          <p>Hi Dr. ${doctorName},</p>
+          <p>A new consultation case is waiting for you on HeyDoc.</p>
+
+          <div class="case-info">
+            <span class="tier-badge ${caseData.tier === 'priority' ? 'tier-priority' : 'tier-standard'}">${tierLabel}</span>
+            <h3 style="margin: 10px 0 5px;">Chief Complaint</h3>
+            <p style="margin: 0;">${caseData.chiefComplaint}</p>
+            <p style="margin-top: 15px; margin-bottom: 5px;">Your earnings:</p>
+            <span class="earnings">${earnings}</span>
+          </div>
+
+          <a href="https://doctors.heydoccare.com/doctor/cases" class="cta-button">View Case</a>
+
+          <p style="margin-top: 20px; color: #6b7280; font-size: 14px;">
+            ${caseData.tier === 'priority' ? 'This is a priority case. The patient selected you specifically.' : 'This case is available to all doctors. First to accept gets it.'}
+          </p>
+        </div>
+        <div class="footer">
+          <p>HeyDoc - Professional Medical Consultations</p>
+          <p><a href="https://doctors.heydoccare.com/doctor/settings">Manage notification preferences</a></p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+}
+
+/**
+ * Email template: Payout processed
+ */
+function payoutEmailTemplate(doctorName: string, amount: number, type: string): string {
+  const amountFormatted = (amount / 100).toFixed(2);
+
+  return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: #10b981; color: white; padding: 20px; border-radius: 8px 8px 0 0; }
+        .content { background: #f9fafb; padding: 20px; border: 1px solid #e5e7eb; }
+        .amount { font-size: 36px; font-weight: bold; color: #10b981; text-align: center; padding: 20px; }
+        .details { background: white; padding: 15px; border-radius: 8px; margin: 15px 0; }
+        .footer { text-align: center; padding: 20px; color: #6b7280; font-size: 12px; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <h1 style="margin:0;">💰 Payout Processed</h1>
+        </div>
+        <div class="content">
+          <p>Hi Dr. ${doctorName},</p>
+          <p>Great news! Your ${type} payout has been processed.</p>
+
+          <div class="amount">$${amountFormatted}</div>
+
+          <div class="details">
+            <p><strong>Type:</strong> ${type === 'instant' ? 'Instant Transfer' : 'Weekly Payout'}</p>
+            <p><strong>Status:</strong> Processing</p>
+            <p style="color: #6b7280; font-size: 14px;">Funds typically arrive within 1-2 business days.</p>
+          </div>
+
+          <p>View your complete earnings history in your <a href="https://doctors.heydoccare.com/doctor/earnings">dashboard</a>.</p>
+        </div>
+        <div class="footer">
+          <p>HeyDoc - Professional Medical Consultations</p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+}
+
+/**
+ * Email template: Case completed
+ */
+function caseCompletedEmailTemplate(doctorName: string, caseData: any, earnings: number): string {
+  const earningsFormatted = (earnings / 100).toFixed(2);
+
+  return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: #10b981; color: white; padding: 20px; border-radius: 8px 8px 0 0; }
+        .content { background: #f9fafb; padding: 20px; border: 1px solid #e5e7eb; }
+        .summary { background: white; padding: 15px; border-radius: 8px; margin: 15px 0; }
+        .earnings { color: #10b981; font-weight: bold; }
+        .footer { text-align: center; padding: 20px; color: #6b7280; font-size: 12px; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <h1 style="margin:0;">✅ Case Completed</h1>
+        </div>
+        <div class="content">
+          <p>Hi Dr. ${doctorName},</p>
+          <p>Thank you for completing this consultation.</p>
+
+          <div class="summary">
+            <h3 style="margin-top: 0;">Case Summary</h3>
+            <p><strong>Chief Complaint:</strong> ${caseData.chiefComplaint}</p>
+            <p><strong>Tier:</strong> ${caseData.tier === 'priority' ? 'Priority' : 'Standard'}</p>
+            <p><strong>Earnings:</strong> <span class="earnings">$${earningsFormatted}</span></p>
+          </div>
+
+          <p>This amount has been added to your pending balance and will be included in your next payout.</p>
+        </div>
+        <div class="footer">
+          <p>HeyDoc - Professional Medical Consultations</p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+}
+
+/**
+ * Send new case notification to doctor(s)
+ */
+async function notifyDoctorsNewCase(caseData: any): Promise<void> {
+  const db = admin.firestore();
+
+  // For priority cases, only notify the requested doctor
+  if (caseData.tier === 'priority' && caseData.requestedDoctorId) {
+    const doctorDoc = await db.collection('doctors').doc(caseData.requestedDoctorId).get();
+    if (doctorDoc.exists) {
+      const doctor = doctorDoc.data();
+      if (doctor && doctor.notificationSettings?.emailNewCase !== false && doctor.email) {
+        await sendEmail(
+          doctor.email,
+          `[PRIORITY] New consultation request on HeyDoc`,
+          newCaseEmailTemplate(doctor.displayName || doctor.name || 'Doctor', caseData)
+        );
+      }
+      // Send push notification if enabled
+      if (doctor && doctor.notificationSettings?.pushNewCase !== false && doctor.fcmTokens?.length > 0) {
+        await sendPushToDoctor(caseData.requestedDoctorId, {
+          title: 'Priority Case Request',
+          body: `A patient has requested you specifically. Earn $36.`,
+          data: { caseId: caseData.id, type: 'new_case' },
+        });
+      }
+    }
+    return;
+  }
+
+  // For standard cases, notify all available approved doctors
+  const doctorsSnapshot = await db.collection('doctors')
+    .where('status', '==', 'approved')
+    .where('isAvailable', '==', true)
+    .get();
+
+  const emailPromises: Promise<any>[] = [];
+  const pushPromises: Promise<any>[] = [];
+
+  for (const doc of doctorsSnapshot.docs) {
+    const doctor = doc.data();
+
+    // Send email if enabled (default: true)
+    if (doctor.notificationSettings?.emailNewCase !== false && doctor.email) {
+      emailPromises.push(
+        sendEmail(
+          doctor.email,
+          'New consultation available on HeyDoc',
+          newCaseEmailTemplate(doctor.displayName || 'Doctor', caseData)
+        )
+      );
+    }
+
+    // Send push if enabled and has tokens
+    if (doctor.notificationSettings?.pushNewCase !== false && doctor.fcmTokens?.length > 0) {
+      pushPromises.push(
+        sendPushToDoctor(doc.id, {
+          title: 'New Case Available',
+          body: `${caseData.chiefComplaint.substring(0, 50)}... Earn $20.`,
+          data: { caseId: caseData.id, type: 'new_case' },
+        })
+      );
+    }
+  }
+
+  await Promise.allSettled([...emailPromises, ...pushPromises]);
+  console.log(`Notified ${emailPromises.length} doctors via email, ${pushPromises.length} via push`);
+}
+
+/**
+ * Send push notification to a specific doctor
+ */
+async function sendPushToDoctor(
+  doctorId: string,
+  notification: { title: string; body: string; data?: Record<string, string> }
+): Promise<void> {
+  const db = admin.firestore();
+  const doctorDoc = await db.collection('doctors').doc(doctorId).get();
+
+  if (!doctorDoc.exists) return;
+
+  const fcmTokens = doctorDoc.data()?.fcmTokens || [];
+  if (fcmTokens.length === 0) return;
+
+  const messaging = admin.messaging();
+  const invalidTokens: string[] = [];
+
+  for (const token of fcmTokens) {
+    try {
+      await messaging.send({
+        token,
+        notification: {
+          title: notification.title,
+          body: notification.body,
+        },
+        data: notification.data || {},
+        webpush: {
+          fcmOptions: {
+            link: 'https://doctors.heydoccare.com/doctor/cases',
+          },
+        },
+      });
+    } catch (error: any) {
+      if (error.code === 'messaging/registration-token-not-registered') {
+        invalidTokens.push(token);
+      }
+      console.error(`Push notification error for token ${token}:`, error.message);
+    }
+  }
+
+  // Clean up invalid tokens
+  if (invalidTokens.length > 0) {
+    const validTokens = fcmTokens.filter((t: string) => !invalidTokens.includes(t));
+    await db.collection('doctors').doc(doctorId).update({ fcmTokens: validTokens });
+  }
+}
+
+/**
+ * Register FCM token for push notifications
+ */
+export const registerFCMToken = functions.https.onCall(
+  async (data: { token: string }, context) => {
+    if (!context.auth) {
+      throw new functions.https.HttpsError('unauthenticated', 'Must be authenticated');
+    }
+
+    const { token } = data;
+    if (!token) {
+      throw new functions.https.HttpsError('invalid-argument', 'Token required');
+    }
+
+    const doctorId = context.auth.uid;
+    const db = admin.firestore();
+
+    // Check if this is a doctor
+    const doctorDoc = await db.collection('doctors').doc(doctorId).get();
+    if (!doctorDoc.exists) {
+      throw new functions.https.HttpsError('not-found', 'Doctor profile not found');
+    }
+
+    // Add token if not already present
+    const currentTokens = doctorDoc.data()?.fcmTokens || [];
+    if (!currentTokens.includes(token)) {
+      await db.collection('doctors').doc(doctorId).update({
+        fcmTokens: admin.firestore.FieldValue.arrayUnion(token),
+      });
+    }
+
+    return { success: true };
+  }
+);
+
+/**
+ * Unregister FCM token
+ */
+export const unregisterFCMToken = functions.https.onCall(
+  async (data: { token: string }, context) => {
+    if (!context.auth) {
+      throw new functions.https.HttpsError('unauthenticated', 'Must be authenticated');
+    }
+
+    const { token } = data;
+    if (!token) {
+      throw new functions.https.HttpsError('invalid-argument', 'Token required');
+    }
+
+    const doctorId = context.auth.uid;
+
+    await admin.firestore().collection('doctors').doc(doctorId).update({
+      fcmTokens: admin.firestore.FieldValue.arrayRemove(token),
+    });
+
+    return { success: true };
+  }
+);
+
+/**
+ * Update notification settings
+ */
+export const updateNotificationSettings = functions.https.onCall(
+  async (data: { settings: Record<string, boolean> }, context) => {
+    if (!context.auth) {
+      throw new functions.https.HttpsError('unauthenticated', 'Must be authenticated');
+    }
+
+    const { settings } = data;
+    if (!settings) {
+      throw new functions.https.HttpsError('invalid-argument', 'Settings required');
+    }
+
+    const doctorId = context.auth.uid;
+
+    await admin.firestore().collection('doctors').doc(doctorId).update({
+      notificationSettings: settings,
+      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+    });
+
+    return { success: true };
+  }
+);
+
+/**
+ * Test email notification (for debugging)
+ */
+export const testEmailNotification = functions.https.onCall(
+  async (data: { email: string }, context) => {
+    if (!context.auth) {
+      throw new functions.https.HttpsError('unauthenticated', 'Must be authenticated');
+    }
+
+    const { email } = data;
+    if (!email) {
+      throw new functions.https.HttpsError('invalid-argument', 'Email required');
+    }
+
+    const result = await sendEmail(
+      email,
+      'HeyDoc Test Notification',
+      `
+        <div style="font-family: sans-serif; padding: 20px;">
+          <h1 style="color: #10b981;">✅ Email notifications are working!</h1>
+          <p>This is a test email from HeyDoc.</p>
+          <p>If you received this, your notification system is properly configured.</p>
+        </div>
+      `
+    );
+
+    return result;
+  }
+);
+
+// ============================================================================
+// PLATFORM ADMIN FUNCTIONS (RBAC)
+// ============================================================================
+
+// Role type definitions
+type UserRole = 'user' | 'org_admin' | 'platform_admin';
+
+// Helper function to check if caller is platform admin
+async function isPlatformAdmin(uid: string): Promise<boolean> {
+  const userDoc = await admin.firestore().collection('users').doc(uid).get();
+  return userDoc.exists && userDoc.data()?.role === 'platform_admin';
+}
+
+// Helper function to check if caller is any admin (exported for potential use)
+async function _isAnyAdmin(uid: string): Promise<boolean> {
+  const userDoc = await admin.firestore().collection('users').doc(uid).get();
+  const role = userDoc.data()?.role;
+  return userDoc.exists && (role === 'org_admin' || role === 'platform_admin');
+}
+
+// Export to prevent unused warning
+export { _isAnyAdmin as isAnyAdminHelper };
+
+/**
+ * Create organization (platform admin only)
+ */
+export const createOrganizationV2 = functions.https.onCall(async (data: {
+  name: string;
+  code: string;
+  type: string;
+  maxUsers?: number;
+}, context) => {
+  if (!context.auth) {
+    throw new functions.https.HttpsError('unauthenticated', 'Must be logged in');
+  }
+
+  const isPlatAdmin = await isPlatformAdmin(context.auth.uid);
+  if (!isPlatAdmin) {
+    throw new functions.https.HttpsError('permission-denied', 'Only platform admins can create organizations');
+  }
+
+  const { name, code, type, maxUsers } = data;
+
+  if (!name || !code) {
+    throw new functions.https.HttpsError('invalid-argument', 'Name and code are required');
+  }
+
+  try {
+    // Check if code already exists
+    const existingOrg = await admin.firestore()
+      .collection('organizations')
+      .where('code', '==', code.toUpperCase())
+      .get();
+
+    if (!existingOrg.empty) {
+      throw new functions.https.HttpsError('already-exists', 'Organization code already exists');
+    }
+
+    // Create the organization
+    const orgRef = await admin.firestore().collection('organizations').add({
+      name,
+      code: code.toUpperCase(),
+      type: type || 'other',
+      isActive: true,
+      maxUsers: maxUsers || null,
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+    });
+
+    return {
+      success: true,
+      organizationId: orgRef.id,
+      code: code.toUpperCase(),
+    };
+  } catch (error: any) {
+    if (error.code) throw error; // Re-throw HttpsErrors
+    console.error('Error creating organization:', error);
+    throw new functions.https.HttpsError('internal', error.message);
+  }
+});
+
+/**
+ * Assign org admin role to a user (platform admin only)
+ */
+export const assignOrgAdmin = functions.https.onCall(async (data: {
+  email: string;
+  organizationId: string;
+}, context) => {
+  if (!context.auth) {
+    throw new functions.https.HttpsError('unauthenticated', 'Must be logged in');
+  }
+
+  const isPlatAdmin = await isPlatformAdmin(context.auth.uid);
+  if (!isPlatAdmin) {
+    throw new functions.https.HttpsError('permission-denied', 'Only platform admins can assign org admins');
+  }
+
+  const { email, organizationId } = data;
+
+  if (!email || !organizationId) {
+    throw new functions.https.HttpsError('invalid-argument', 'Email and organizationId are required');
+  }
+
+  try {
+    // Verify organization exists
+    const orgDoc = await admin.firestore().collection('organizations').doc(organizationId).get();
+    if (!orgDoc.exists) {
+      throw new functions.https.HttpsError('not-found', 'Organization not found');
+    }
+
+    // Find user by email
+    const usersSnapshot = await admin.firestore()
+      .collection('users')
+      .where('email', '==', email)
+      .get();
+
+    if (usersSnapshot.empty) {
+      throw new functions.https.HttpsError('not-found', 'User not found with that email');
+    }
+
+    const userDoc = usersSnapshot.docs[0];
+
+    // Update user to org_admin role
+    await userDoc.ref.update({
+      role: 'org_admin' as UserRole,
+      organizationId,
+      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+    });
+
+    return {
+      success: true,
+      userId: userDoc.id,
+      email,
+      organizationId,
+    };
+  } catch (error: any) {
+    if (error.code) throw error;
+    console.error('Error assigning org admin:', error);
+    throw new functions.https.HttpsError('internal', error.message);
+  }
+});
+
+/**
+ * Get platform-wide analytics (platform admin only)
+ */
+export const getPlatformAnalytics = functions.https.onCall(async (data, context) => {
+  if (!context.auth) {
+    throw new functions.https.HttpsError('unauthenticated', 'Must be logged in');
+  }
+
+  const isPlatAdmin = await isPlatformAdmin(context.auth.uid);
+  if (!isPlatAdmin) {
+    throw new functions.https.HttpsError('permission-denied', 'Only platform admins can view platform analytics');
+  }
+
+  try {
+    // Get counts
+    const [orgsSnapshot, usersSnapshot, doctorsSnapshot, casesSnapshot] = await Promise.all([
+      admin.firestore().collection('organizations').get(),
+      admin.firestore().collection('users').get(),
+      admin.firestore().collection('doctors').get(),
+      admin.firestore().collection('consultationCases').get(),
+    ]);
+
+    // Calculate metrics
+    const totalOrganizations = orgsSnapshot.size;
+    const activeOrganizations = orgsSnapshot.docs.filter(d => d.data().isActive).length;
+    const totalUsers = usersSnapshot.size;
+    const totalDoctors = doctorsSnapshot.size;
+    const pendingDoctors = doctorsSnapshot.docs.filter(d => d.data().status === 'pending').length;
+    const approvedDoctors = doctorsSnapshot.docs.filter(d => d.data().status === 'approved').length;
+
+    // Revenue calculations
+    let totalRevenue = 0;
+    let monthlyRevenue = 0;
+    const startOfMonth = new Date();
+    startOfMonth.setDate(1);
+    startOfMonth.setHours(0, 0, 0, 0);
+
+    casesSnapshot.docs.forEach(doc => {
+      const caseData = doc.data();
+      if (caseData.paymentStatus === 'paid') {
+        const platformFee = caseData.platformFee || 0;
+        totalRevenue += platformFee;
+
+        const createdAt = caseData.createdAt?.toDate?.();
+        if (createdAt && createdAt >= startOfMonth) {
+          monthlyRevenue += platformFee;
+        }
+      }
+    });
+
+    return {
+      totalOrganizations,
+      activeOrganizations,
+      totalUsers,
+      totalDoctors,
+      pendingDoctors,
+      approvedDoctors,
+      totalRevenue,
+      monthlyRevenue,
+      totalCases: casesSnapshot.size,
+      activeCases: casesSnapshot.docs.filter(d =>
+        ['pending', 'assigned', 'active'].includes(d.data().status)
+      ).length,
+    };
+  } catch (error: any) {
+    console.error('Error getting platform analytics:', error);
+    throw new functions.https.HttpsError('internal', error.message);
+  }
+});
+
+/**
+ * Migrate admin users to org_admin (one-time migration)
+ * Run this to convert existing 'admin' role to 'org_admin'
+ */
+export const migrateAdminRoles = functions.https.onCall(async (data, context) => {
+  if (!context.auth) {
+    throw new functions.https.HttpsError('unauthenticated', 'Must be logged in');
+  }
+
+  const isPlatAdmin = await isPlatformAdmin(context.auth.uid);
+  if (!isPlatAdmin) {
+    throw new functions.https.HttpsError('permission-denied', 'Only platform admins can run migrations');
+  }
+
+  try {
+    // Find all users with role 'admin'
+    const usersSnapshot = await admin.firestore()
+      .collection('users')
+      .where('role', '==', 'admin')
+      .get();
+
+    let migratedCount = 0;
+    const batch = admin.firestore().batch();
+
+    for (const doc of usersSnapshot.docs) {
+      batch.update(doc.ref, {
+        role: 'org_admin' as UserRole,
+        updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+      });
+      migratedCount++;
+    }
+
+    await batch.commit();
+
+    return {
+      success: true,
+      migratedCount,
+      message: `Migrated ${migratedCount} admin users to org_admin role`,
+    };
+  } catch (error: any) {
+    console.error('Error migrating admin roles:', error);
+    throw new functions.https.HttpsError('internal', error.message);
+  }
+});
+
+/**
+ * Set user as platform admin (super admin function, use with caution)
+ * This should be called directly from Firebase Console or with admin token
+ */
+export const setPlatformAdmin = functions.https.onRequest(async (req, res) => {
+  const authToken = req.headers.authorization;
+  const expectedToken = functions.config().admin?.token || process.env.ADMIN_TOKEN || 'your-secret-token';
+
+  if (authToken !== `Bearer ${expectedToken}`) {
+    res.status(401).send('Unauthorized');
+    return;
+  }
+
+  const { email } = req.body;
+
+  if (!email) {
+    res.status(400).send('Missing required field: email');
+    return;
+  }
+
+  try {
+    // Find user by email
+    const usersSnapshot = await admin.firestore()
+      .collection('users')
+      .where('email', '==', email)
+      .get();
+
+    if (usersSnapshot.empty) {
+      res.status(404).send('User not found');
+      return;
+    }
+
+    const userDoc = usersSnapshot.docs[0];
+
+    // Update to platform_admin
+    await userDoc.ref.update({
+      role: 'platform_admin' as UserRole,
+      organizationId: null, // Platform admins don't belong to a specific org
+      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+    });
+
+    res.status(200).json({
+      success: true,
+      userId: userDoc.id,
+      email,
+      role: 'platform_admin',
+    });
+  } catch (error: any) {
+    console.error('Error setting platform admin:', error);
+    res.status(500).send(`Error: ${error.message}`);
+  }
 });
