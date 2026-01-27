@@ -50,13 +50,20 @@ service cloud.firestore {
     // Users collection
     match /users/{userId} {
       // Users can read their own doc
+      allow read: if isOwner(userId);
+
+      // Platform admins can read ALL users (separate rule to avoid nesting issues)
+      allow read: if isAuthenticated() &&
+                    get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'platform_admin';
+
       // Org admins can read users in their org
-      // Platform admins can read all users
-      allow read: if isOwner(userId) ||
-                    isPlatformAdmin() ||
-                    (isOrgAdmin() && resource.data.organizationId == getUserOrgId());
-      // Users can update their own profile, platform admin can update any user
-      allow write: if isOwner(userId) || isPlatformAdmin();
+      allow read: if isOrgAdmin() && resource.data.organizationId == getUserOrgId();
+
+      // Users can update their own profile
+      allow write: if isOwner(userId);
+
+      // Platform admin can update any user
+      allow write: if isPlatformAdmin();
     }
 
     // Medical history - users can read their own

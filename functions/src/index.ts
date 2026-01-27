@@ -3823,6 +3823,52 @@ export const getPlatformAnalytics = functions.https.onCall(async (data, context)
 });
 
 /**
+ * Get all organizations with user counts (platform admin only)
+ */
+export const getPlatformOrganizations = functions.https.onCall(async (data, context) => {
+  if (!context.auth) {
+    throw new functions.https.HttpsError('unauthenticated', 'Must be logged in');
+  }
+
+  const isPlatAdmin = await isPlatformAdmin(context.auth.uid);
+  if (!isPlatAdmin) {
+    throw new functions.https.HttpsError('permission-denied', 'Only platform admins can view organizations');
+  }
+
+  try {
+    const orgsSnapshot = await admin.firestore().collection('organizations').get();
+    const organizations = [];
+
+    for (const orgDoc of orgsSnapshot.docs) {
+      const orgData = orgDoc.data();
+
+      // Get user count for this org
+      const usersSnapshot = await admin.firestore()
+        .collection('users')
+        .where('organizationId', '==', orgDoc.id)
+        .get();
+
+      organizations.push({
+        id: orgDoc.id,
+        name: orgData.name,
+        code: orgData.code,
+        type: orgData.type,
+        isActive: orgData.isActive,
+        maxUsers: orgData.maxUsers || null,
+        createdAt: orgData.createdAt?.toDate?.() || null,
+        updatedAt: orgData.updatedAt?.toDate?.() || null,
+        userCount: usersSnapshot.size,
+      });
+    }
+
+    return { organizations };
+  } catch (error: any) {
+    console.error('Error getting organizations:', error);
+    throw new functions.https.HttpsError('internal', error.message);
+  }
+});
+
+/**
  * Migrate admin users to org_admin (one-time migration)
  * Run this to convert existing 'admin' role to 'org_admin'
  */
@@ -3880,7 +3926,57 @@ export const setPlatformAdmin = functions.https.onRequest(async (req, res) => {
     return;
   }
 
-  const { email } = req.body;
+  const { email, action } = req.body;
+
+  // Diagnostic action
+  if (action === 'diagnostic') {
+    try {
+      const results: any = {};
+
+      // Check platform admins
+      const platformAdmins = await admin.firestore()
+        .collection('users')
+        .where('role', '==', 'platform_admin')
+        .get();
+      results.platformAdmins = platformAdmins.docs.map(d => ({
+        id: d.id,
+        email: d.data().email,
+        role: d.data().role,
+        organizationId: d.data().organizationId,
+      }));
+
+      // Check org admins
+      const orgAdmins = await admin.firestore()
+        .collection('users')
+        .where('role', '==', 'org_admin')
+        .get();
+      results.orgAdmins = orgAdmins.docs.map(d => ({
+        id: d.id,
+        email: d.data().email,
+        role: d.data().role,
+        organizationId: d.data().organizationId,
+      }));
+
+      // Check organizations
+      const orgs = await admin.firestore().collection('organizations').get();
+      results.organizations = orgs.docs.map(d => ({
+        id: d.id,
+        name: d.data().name,
+        code: d.data().code,
+        isActive: d.data().isActive,
+      }));
+
+      // Total user count
+      const users = await admin.firestore().collection('users').get();
+      results.totalUsers = users.docs.length;
+
+      res.status(200).json(results);
+      return;
+    } catch (error: any) {
+      res.status(500).send(`Diagnostic error: ${error.message}`);
+      return;
+    }
+  }
 
   if (!email) {
     res.status(400).send('Missing required field: email');
@@ -3916,6 +4012,66 @@ export const setPlatformAdmin = functions.https.onRequest(async (req, res) => {
     });
   } catch (error: any) {
     console.error('Error setting platform admin:', error);
+    res.status(500).send(`Error: ${error.message}`);
+  }
+});
+
+/**
+ * Diagnostic function to check admin roles and data
+ * Call via: curl -H "Authorization: Bearer TOKEN" https://...cloudfunctions.net/diagnosticCheck
+ */
+export const diagnosticCheck = functions.https.onRequest(async (req, res) => {
+  const authToken = req.headers.authorization;
+  const expectedToken = functions.config().admin?.token || process.env.ADMIN_TOKEN || 'your-secret-token';
+
+  if (authToken !== `Bearer ${expectedToken}`) {
+    res.status(401).send('Unauthorized');
+    return;
+  }
+
+  try {
+    const results: any = {};
+
+    // Check platform admins
+    const platformAdmins = await admin.firestore()
+      .collection('users')
+      .where('role', '==', 'platform_admin')
+      .get();
+    results.platformAdmins = platformAdmins.docs.map(d => ({
+      id: d.id,
+      email: d.data().email,
+      role: d.data().role,
+      organizationId: d.data().organizationId,
+    }));
+
+    // Check org admins
+    const orgAdmins = await admin.firestore()
+      .collection('users')
+      .where('role', '==', 'org_admin')
+      .get();
+    results.orgAdmins = orgAdmins.docs.map(d => ({
+      id: d.id,
+      email: d.data().email,
+      role: d.data().role,
+      organizationId: d.data().organizationId,
+    }));
+
+    // Check organizations
+    const orgs = await admin.firestore().collection('organizations').get();
+    results.organizations = orgs.docs.map(d => ({
+      id: d.id,
+      name: d.data().name,
+      code: d.data().code,
+      isActive: d.data().isActive,
+    }));
+
+    // Total user count
+    const users = await admin.firestore().collection('users').get();
+    results.totalUsers = users.docs.length;
+
+    res.status(200).json(results);
+  } catch (error: any) {
+    console.error('Diagnostic error:', error);
     res.status(500).send(`Error: ${error.message}`);
   }
 });

@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { doc, getDoc, collection, getDocs, query, where } from 'firebase/firestore';
-import { db } from '../config/firebase';
+import { doc, getDoc } from 'firebase/firestore';
+import { httpsCallable } from 'firebase/functions';
+import { db, functions } from '../config/firebase';
 import { useAuth } from './AuthContext';
 import type { Organization, UserRole } from '@shared/types';
 
@@ -118,48 +119,26 @@ export const PlatformProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   }, [user]);
 
-  // Fetch all organizations with stats
+  // Fetch all organizations with stats via Cloud Function
   const refreshOrganizations = useCallback(async () => {
     setOrgsLoading(true);
     try {
-      const orgsSnapshot = await getDocs(collection(db, 'organizations'));
-      const orgsWithStats: OrganizationWithStats[] = [];
+      const getPlatformOrganizations = httpsCallable(functions, 'getPlatformOrganizations');
+      const result = await getPlatformOrganizations({});
+      const data = result.data as { organizations: any[] };
 
-      for (const orgDoc of orgsSnapshot.docs) {
-        const orgData = orgDoc.data();
-
-        // Get user count for this org
-        const usersQuery = query(
-          collection(db, 'users'),
-          where('organizationId', '==', orgDoc.id)
-        );
-        const usersSnapshot = await getDocs(usersQuery);
-
-        // Get conversation count (approximate - count from first few users)
-        let conversationCount = 0;
-        const userIds = usersSnapshot.docs.slice(0, 10).map(d => d.id);
-        for (const userId of userIds) {
-          const convQuery = query(
-            collection(db, 'conversations'),
-            where('userId', '==', userId)
-          );
-          const convSnapshot = await getDocs(convQuery);
-          conversationCount += convSnapshot.docs.length;
-        }
-
-        orgsWithStats.push({
-          id: orgDoc.id,
-          name: orgData.name,
-          code: orgData.code,
-          type: orgData.type,
-          isActive: orgData.isActive,
-          maxUsers: orgData.maxUsers,
-          createdAt: orgData.createdAt?.toDate?.() || new Date(),
-          updatedAt: orgData.updatedAt?.toDate?.() || new Date(),
-          userCount: usersSnapshot.docs.length,
-          conversationCount,
-        });
-      }
+      const orgsWithStats: OrganizationWithStats[] = data.organizations.map(org => ({
+        id: org.id,
+        name: org.name,
+        code: org.code,
+        type: org.type,
+        isActive: org.isActive,
+        maxUsers: org.maxUsers,
+        createdAt: org.createdAt ? new Date(org.createdAt) : new Date(),
+        updatedAt: org.updatedAt ? new Date(org.updatedAt) : new Date(),
+        userCount: org.userCount,
+        conversationCount: 0, // Not fetched for performance
+      }));
 
       setOrganizations(orgsWithStats);
     } catch (err: any) {
@@ -170,63 +149,25 @@ export const PlatformProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   }, []);
 
-  // Fetch platform-wide metrics
+  // Fetch platform-wide metrics via Cloud Function
   const refreshMetrics = useCallback(async () => {
     setMetricsLoading(true);
     try {
-      // Get all organizations
-      const orgsSnapshot = await getDocs(collection(db, 'organizations'));
-      const totalOrganizations = orgsSnapshot.docs.length;
-      const activeOrganizations = orgsSnapshot.docs.filter(d => d.data().isActive).length;
-
-      // Get all users
-      const usersSnapshot = await getDocs(collection(db, 'users'));
-      const totalUsers = usersSnapshot.docs.length;
-
-      // Get all doctors
-      const doctorsSnapshot = await getDocs(collection(db, 'doctors'));
-      const totalDoctors = doctorsSnapshot.docs.length;
-      const pendingDoctors = doctorsSnapshot.docs.filter(d => d.data().status === 'pending').length;
-      const approvedDoctors = doctorsSnapshot.docs.filter(d => d.data().status === 'approved').length;
-
-      // Get consultation cases for revenue
-      const casesSnapshot = await getDocs(collection(db, 'consultationCases'));
-      const totalCases = casesSnapshot.docs.length;
-      const activeCases = casesSnapshot.docs.filter(d =>
-        ['pending', 'assigned', 'active'].includes(d.data().status)
-      ).length;
-
-      // Calculate revenue
-      let totalRevenue = 0;
-      let monthlyRevenue = 0;
-      const startOfMonth = new Date();
-      startOfMonth.setDate(1);
-      startOfMonth.setHours(0, 0, 0, 0);
-
-      casesSnapshot.docs.forEach(doc => {
-        const data = doc.data();
-        if (data.paymentStatus === 'paid') {
-          const platformFee = data.platformFee || 0;
-          totalRevenue += platformFee;
-
-          const createdAt = data.createdAt?.toDate?.();
-          if (createdAt && createdAt >= startOfMonth) {
-            monthlyRevenue += platformFee;
-          }
-        }
-      });
+      const getPlatformAnalytics = httpsCallable(functions, 'getPlatformAnalytics');
+      const result = await getPlatformAnalytics({});
+      const data = result.data as PlatformMetrics;
 
       setMetrics({
-        totalOrganizations,
-        activeOrganizations,
-        totalUsers,
-        totalDoctors,
-        pendingDoctors,
-        approvedDoctors,
-        totalRevenue,
-        monthlyRevenue,
-        totalCases,
-        activeCases,
+        totalOrganizations: data.totalOrganizations,
+        activeOrganizations: data.activeOrganizations,
+        totalUsers: data.totalUsers,
+        totalDoctors: data.totalDoctors,
+        pendingDoctors: data.pendingDoctors,
+        approvedDoctors: data.approvedDoctors,
+        totalRevenue: data.totalRevenue,
+        monthlyRevenue: data.monthlyRevenue,
+        totalCases: data.totalCases,
+        activeCases: data.activeCases,
       });
     } catch (err: any) {
       console.error('Error fetching metrics:', err);
