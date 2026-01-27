@@ -1,9 +1,62 @@
 import React, { useState } from 'react';
-import type { Message } from '@shared/types';
+import type { Message, SourceCitation } from '@shared/types';
 
 interface ChatMessageProps {
   message: Message;
 }
+
+// Sources section component for AI responses
+const SourcesSection: React.FC<{ sources: SourceCitation[]; usedWebSearch?: boolean }> = ({
+  sources,
+  usedWebSearch,
+}) => {
+  const [expanded, setExpanded] = useState(false);
+
+  if (sources.length === 0) return null;
+
+  return (
+    <div className="mt-3 pt-3 border-t border-gray-200/50">
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="flex items-center text-sm text-gray-600 hover:text-gray-800 transition-colors"
+      >
+        <span className="mr-1.5">📚</span>
+        <span className="font-medium">Sources ({sources.length})</span>
+        <svg
+          className={`w-4 h-4 ml-1 transition-transform ${expanded ? 'rotate-180' : ''}`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+        {usedWebSearch && (
+          <span className="ml-2 text-xs text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded">
+            🔍 Web search
+          </span>
+        )}
+      </button>
+
+      {expanded && (
+        <ul className="mt-2 space-y-1.5 text-sm">
+          {sources.map((source, idx) => (
+            <li key={idx} className="flex items-start">
+              <span className="text-gray-400 mr-2">•</span>
+              <a
+                href={source.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-green-600 hover:text-green-700 hover:underline transition-colors break-all"
+              >
+                {source.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+};
 
 // Image Lightbox Component
 const ImageLightbox: React.FC<{ imageUrl: string; onClose: () => void }> = ({ imageUrl, onClose }) => {
@@ -162,6 +215,11 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
             <div className="whitespace-pre-wrap leading-relaxed">
               {parseMessageContent(message.content, isUser)}
             </div>
+          )}
+
+          {/* Sources section for AI responses */}
+          {!isUser && message.sources && message.sources.length > 0 && (
+            <SourcesSection sources={message.sources} usedWebSearch={message.usedWebSearch} />
           )}
 
           <p className={`text-xs mt-2 ${isUser ? 'text-primary-100' : 'text-gray-500'}`}>

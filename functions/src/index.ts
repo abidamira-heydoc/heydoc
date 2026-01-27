@@ -864,11 +864,107 @@ interface ChatMessage {
 
 type ConversationStage = 'GREETING' | 'INTAKE1' | 'INTAKE2' | 'FULL_RESPONSE';
 
+// Source citation structure
+interface SourceCitation {
+  name: string;
+  url: string;
+  snippet?: string;
+}
+
 interface ChatRequest {
   messages: ChatMessage[];
   healthProfile?: any;
   stage?: ConversationStage;
+  enableWebSearch?: boolean; // Optional toggle for web search
 }
+
+interface ChatResponse {
+  message: string;
+  nextStage: ConversationStage;
+  sources?: SourceCitation[];
+  usedWebSearch?: boolean;
+  usage: {
+    input_tokens: number;
+    output_tokens: number;
+  };
+}
+
+/**
+ * Extract source citations from Claude's response text
+ * Parses markdown links [Source Name](url) format
+ */
+function extractSourcesFromResponse(text: string): SourceCitation[] {
+  const sources: SourceCitation[] = [];
+  const seenUrls = new Set<string>();
+
+  // Match markdown links: [text](url)
+  const citationRegex = /\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g;
+  let match;
+
+  while ((match = citationRegex.exec(text)) !== null) {
+    const name = match[1];
+    const url = match[2];
+
+    // Deduplicate by URL
+    if (!seenUrls.has(url)) {
+      seenUrls.add(url);
+      sources.push({ name, url });
+    }
+  }
+
+  return sources;
+}
+
+/**
+ * Web search system prompt addition for hybrid RAG + web search
+ */
+const WEB_SEARCH_INSTRUCTIONS = `
+
+---
+
+## HYBRID SEARCH: KNOWLEDGE BASE + WEB SEARCH
+
+You have access to TWO sources of medical information:
+
+### 1. VERIFIED KNOWLEDGE BASE (provided in context below)
+Pre-verified content from MedlinePlus, CDC, PubMed, FDA, WHO, NCCIH.
+Use this as your PRIMARY source for evidence-based information.
+
+### 2. WEB SEARCH TOOL (for additional/current information)
+Use the web_search tool to find information from trusted medical sites when helpful.
+
+**WHEN TO USE WEB SEARCH:**
+- User asks about something not covered in knowledge base
+- User wants current/latest information or guidelines
+- User specifically mentions a source (e.g., "What does Mayo Clinic say...")
+- Additional context from premium sources would improve your answer
+- Topics like new treatments, recent drug approvals, or current outbreaks
+
+**TRUSTED SITES TO SEARCH:**
+- Mayo Clinic (mayoclinic.org) - excellent patient education
+- Cleveland Clinic (clevelandclinic.org) - comprehensive disease info
+- WebMD (webmd.com) - accessible symptom information
+- Healthline (healthline.com) - well-sourced health content
+- Medscape (medscape.com) - clinical references
+
+**SEARCH TIPS:**
+- Use site-specific searches when appropriate: "migraine treatment site:mayoclinic.org"
+- Search for specific topics: "ibuprofen vs acetaminophen headache"
+- Keep searches focused and medical
+
+**CITATION FORMAT (REQUIRED):**
+Always cite sources using markdown links: [Source Name](https://full-url)
+
+Example citations:
+- [Mayo Clinic — Migraine](https://www.mayoclinic.org/diseases-conditions/migraine-headache/symptoms-causes/syc-20360201)
+- [CDC — Flu Prevention](https://www.cdc.gov/flu/prevent/index.html)
+
+**At the end of your FULL_RESPONSE, include a Sources section:**
+📚 **Sources:**
+- [Source 1](url)
+- [Source 2](url)
+
+`;
 
 type ImageMediaType = 'image/jpeg' | 'image/png' | 'image/gif' | 'image/webp';
 
@@ -1211,11 +1307,23 @@ Purpose: Provide structured assessment + guidance.
       }
     }
 
-    // Use vision-capable model if images are present, otherwise use haiku for speed
-    const modelToUse = hasImage ? 'claude-3-5-sonnet-20241022' : 'claude-3-haiku-20240307';
+    // Determine if web search should be enabled
+    // Default: enabled for FULL_RESPONSE stage when not disabled
+    const enableWebSearch = data.enableWebSearch !== false && effectiveStage === 'FULL_RESPONSE';
+
+    // Use Sonnet for web search capability, vision, or FULL_RESPONSE; Haiku for quick intake
+    const modelToUse = (enableWebSearch || hasImage || effectiveStage === 'FULL_RESPONSE')
+      ? 'claude-sonnet-4-20250514'
+      : 'claude-3-haiku-20240307';
 
     // Add vision-specific instructions to system prompt if image is present
     let finalSystemPrompt = systemPrompt;
+
+    // Add web search instructions for FULL_RESPONSE stage
+    if (enableWebSearch) {
+      finalSystemPrompt += WEB_SEARCH_INSTRUCTIONS;
+    }
+
     if (hasImage) {
       finalSystemPrompt += `\n\n---\n\n## IMAGE ANALYSIS GUIDELINES
 
@@ -1236,17 +1344,43 @@ When the user shares an image of a symptom or condition:
 **Never say** "I can see you have [condition]" — instead say "This could be consistent with..." or "The appearance suggests..."`;
     }
 
-    // Call Claude API
-    const completion = await anthropic.messages.create({
+    // Build API call options
+    const apiOptions: any = {
       model: modelToUse,
-      max_tokens: hasImage ? 1500 : 1000, // Allow longer responses for image analysis
+      max_tokens: (hasImage || enableWebSearch) ? 2000 : 1000, // Allow longer responses for image/web search
       system: finalSystemPrompt,
       messages: claudeMessages,
-    });
+    };
 
-    let response = completion.content[0].type === 'text'
-      ? completion.content[0].text
-      : '';
+    // Add web search tool if enabled
+    if (enableWebSearch) {
+      apiOptions.tools = [
+        {
+          type: 'web_search_20250305',
+          name: 'web_search',
+          max_uses: 3, // Limit searches per request for cost control
+        },
+      ];
+    }
+
+    // Call Claude API
+    const completion = await anthropic.messages.create(apiOptions);
+
+    // Process response - handle both text and potential tool use
+    let response = '';
+    let usedWebSearch = false;
+
+    for (const block of completion.content) {
+      if (block.type === 'text') {
+        response += block.text;
+      } else if (block.type === 'web_search_tool_result') {
+        // Web search was used
+        usedWebSearch = true;
+      }
+    }
+
+    // Extract sources from the response text
+    const sources = extractSourcesFromResponse(response);
 
     // Parse NEXT_STAGE from response
     const stageMatch = response.match(/NEXT_STAGE=(GREETING|INTAKE1|INTAKE2|FULL_RESPONSE)/);
@@ -1284,6 +1418,8 @@ When the user shares an image of a symptom or condition:
     return {
       message: response,
       nextStage,
+      sources: sources.length > 0 ? sources : undefined,
+      usedWebSearch,
       usage: {
         input_tokens: completion.usage.input_tokens,
         output_tokens: completion.usage.output_tokens,

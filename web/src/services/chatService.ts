@@ -1,17 +1,22 @@
 import { httpsCallable } from 'firebase/functions';
 import { functions } from '../config/firebase';
+import type { SourceCitation } from '@shared/types';
 
 type ConversationStage = 'INTAKE1' | 'INTAKE2' | 'FULL_RESPONSE';
 
 interface ChatResponse {
   message: string;
   nextStage?: ConversationStage;
+  sources?: SourceCitation[];
+  usedWebSearch?: boolean;
   usage?: any;
 }
 
 interface SendMessageResult {
   message: string;
   nextStage: ConversationStage;
+  sources?: SourceCitation[];
+  usedWebSearch?: boolean;
 }
 
 interface EmergencyDetectionResponse {
@@ -25,11 +30,13 @@ export const chatService = {
   /**
    * Send a message to the AI and get a response
    * Messages can include optional imageUrl for vision analysis
+   * Options can include enableWebSearch to control web search behavior
    */
   async sendMessage(
     messages: Array<{ role: 'user' | 'assistant' | 'system'; content: string; imageUrl?: string }>,
     healthProfile?: any,
-    stage: ConversationStage = 'INTAKE1'
+    stage: ConversationStage = 'INTAKE1',
+    options?: { enableWebSearch?: boolean }
   ): Promise<SendMessageResult> {
     const chat = httpsCallable<any, ChatResponse>(functions, 'chat');
 
@@ -37,11 +44,14 @@ export const chatService = {
       messages,
       healthProfile,
       stage,
+      enableWebSearch: options?.enableWebSearch,
     });
 
     return {
       message: result.data.message,
       nextStage: result.data.nextStage || 'FULL_RESPONSE',
+      sources: result.data.sources,
+      usedWebSearch: result.data.usedWebSearch,
     };
   },
 

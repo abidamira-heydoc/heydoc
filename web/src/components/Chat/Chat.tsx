@@ -311,22 +311,25 @@ const Chat: React.FC = () => {
         },
       ];
 
-      // Get AI response with current stage
-      const { message: aiResponse, nextStage } = await chatService.sendMessage(
+      // Get AI response with current stage (web search enabled by default)
+      const { message: aiResponse, nextStage, sources, usedWebSearch } = await chatService.sendMessage(
         messageHistory,
         healthProfile,
-        conversationStage
+        conversationStage,
+        { enableWebSearch: true }
       );
 
       // Update stage for next turn
       setConversationStage(nextStage);
 
-      // Create assistant message
+      // Create assistant message with sources if available
       const assistantMessage: Omit<Message, 'id'> = {
         conversationId: convId,
         role: 'assistant',
         content: aiResponse,
         timestamp: new Date(),
+        ...(sources && sources.length > 0 && { sources }),
+        ...(usedWebSearch && { usedWebSearch }),
       };
 
       // Add to Firestore

@@ -113,6 +113,13 @@ export interface ImageMetadata {
   uploadedAt: Date;
 }
 
+// Source citation from RAG or web search
+export interface SourceCitation {
+  name: string;
+  url: string;
+  snippet?: string;
+}
+
 export interface Message {
   id: string;
   conversationId: string;
@@ -122,6 +129,8 @@ export interface Message {
   emergencyFlag?: boolean;
   imageUrl?: string; // Firebase Storage download URL
   imageMetadata?: ImageMetadata;
+  sources?: SourceCitation[]; // Citations from RAG or web search
+  usedWebSearch?: boolean; // Whether web search was used for this response
 }
 
 export interface EmergencySymptom {
