@@ -11,6 +11,12 @@ dotenv.config();
 import { searchKnowledge, formatRetrievedContext, getCollectionStats } from './rag';
 
 const TEST_QUERIES = [
+  // New source-specific tests
+  "What do studies say about ginger for nausea?",
+  "Is ibuprofen safe with blood pressure medication?",
+  "What does WHO recommend for flu prevention?",
+  "What are acetaminophen side effects?",
+  // Original tests
   "Does ginger help with nausea?",
   "Is turmeric good for inflammation?",
   "Can I take melatonin every night?",
