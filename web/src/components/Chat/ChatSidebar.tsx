@@ -27,20 +27,26 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
   const { signOut, user } = useAuth();
   const navigate = useNavigate();
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [userRole, setUserRole] = useState<string | null>(null);
 
   useEffect(() => {
-    const checkAdmin = async () => {
+    const checkUserRole = async () => {
       if (!user) return;
       try {
         const userDoc = await getDoc(doc(db, 'users', user.uid));
-        setIsAdmin(userDoc.exists() && userDoc.data()?.role === 'admin');
+        if (userDoc.exists()) {
+          setUserRole(userDoc.data()?.role || null);
+        }
       } catch (err) {
-        console.error('Error checking admin status:', err);
+        console.error('Error checking user role:', err);
       }
     };
-    checkAdmin();
+    checkUserRole();
   }, [user]);
+
+  // Check if user is any type of admin
+  const isAdmin = userRole === 'org_admin' || userRole === 'platform_admin';
+  const isPlatformAdmin = userRole === 'platform_admin';
 
   const handleSignOut = async () => {
     await signOut();
@@ -166,6 +172,19 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
 
       {/* Sidebar Footer */}
       <div className="p-4 border-t border-green-100 space-y-2 bg-white/50">
+        {/* Platform Admin Dashboard Button */}
+        {isPlatformAdmin && (
+          <button
+            onClick={() => navigate('/platform')}
+            className="w-full text-left px-4 py-2.5 hover:bg-blue-50 rounded-xl transition-all flex items-center"
+          >
+            <svg className="w-5 h-5 mr-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+            <span className="text-sm font-medium text-blue-700">Platform Dashboard</span>
+          </button>
+        )}
+        {/* Org Admin Dashboard Button */}
         {isAdmin && (
           <button
             onClick={() => navigate('/admin')}
@@ -174,7 +193,7 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
             <svg className="w-5 h-5 mr-3 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
             </svg>
-            <span className="text-sm font-medium text-purple-700">Admin Dashboard</span>
+            <span className="text-sm font-medium text-purple-700">Org Dashboard</span>
           </button>
         )}
         <button
