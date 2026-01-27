@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { usePlatform } from '../../contexts/PlatformContext';
 import { httpsCallable } from 'firebase/functions';
 import { functions } from '../../config/firebase';
@@ -206,9 +207,12 @@ const OrganizationsManagement: React.FC = () => {
                       {org.createdAt.toLocaleDateString()}
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <button className="text-blue-600 hover:text-blue-700 text-sm font-medium">
+                      <Link
+                        to={`/platform/organizations/${org.id}`}
+                        className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+                      >
                         View
-                      </button>
+                      </Link>
                     </td>
                   </tr>
                 ))}

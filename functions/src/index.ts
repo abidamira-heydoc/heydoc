@@ -4075,3 +4075,291 @@ export const diagnosticCheck = functions.https.onRequest(async (req, res) => {
     res.status(500).send(`Error: ${error.message}`);
   }
 });
+
+/**
+ * Get organization details with users and stats (platform admin only)
+ */
+export const getOrganizationDetails = functions.https.onCall(async (data, context) => {
+  if (!context.auth) {
+    throw new functions.https.HttpsError('unauthenticated', 'Must be logged in');
+  }
+
+  const isPlatAdmin = await isPlatformAdmin(context.auth.uid);
+  if (!isPlatAdmin) {
+    throw new functions.https.HttpsError('permission-denied', 'Only platform admins can view organization details');
+  }
+
+  const { orgId } = data;
+  if (!orgId) {
+    throw new functions.https.HttpsError('invalid-argument', 'Organization ID is required');
+  }
+
+  try {
+    // Get organization
+    const orgDoc = await admin.firestore().collection('organizations').doc(orgId).get();
+    if (!orgDoc.exists) {
+      throw new functions.https.HttpsError('not-found', 'Organization not found');
+    }
+
+    const orgData = orgDoc.data()!;
+
+    // Get users in this organization (basic info only for privacy)
+    const usersSnapshot = await admin.firestore()
+      .collection('users')
+      .where('organizationId', '==', orgId)
+      .get();
+
+    const users = usersSnapshot.docs.map(doc => {
+      const userData = doc.data();
+      return {
+        id: doc.id,
+        email: userData.email || '',
+        role: userData.role || 'user',
+        createdAt: userData.createdAt?.toDate?.()?.toISOString() || null,
+        lastActive: userData.lastActive?.toDate?.()?.toISOString() || null,
+      };
+    });
+
+    // Get conversation count for stats
+    const conversationsSnapshot = await admin.firestore()
+      .collection('conversations')
+      .where('organizationId', '==', orgId)
+      .count()
+      .get();
+
+    // Get active users in last 30 days
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+    let activeUsersLast30Days = 0;
+    for (const user of usersSnapshot.docs) {
+      const lastActive = user.data().lastActive?.toDate?.();
+      if (lastActive && lastActive > thirtyDaysAgo) {
+        activeUsersLast30Days++;
+      }
+    }
+
+    return {
+      organization: {
+        id: orgDoc.id,
+        name: orgData.name,
+        code: orgData.code,
+        type: orgData.type,
+        isActive: orgData.isActive,
+        maxUsers: orgData.maxUsers || null,
+        createdAt: orgData.createdAt?.toDate?.()?.toISOString() || null,
+        updatedAt: orgData.updatedAt?.toDate?.()?.toISOString() || null,
+      },
+      users,
+      stats: {
+        totalUsers: users.length,
+        totalConversations: conversationsSnapshot.data().count,
+        activeUsersLast30Days,
+      },
+    };
+  } catch (error: any) {
+    console.error('Error getting organization details:', error);
+    if (error instanceof functions.https.HttpsError) {
+      throw error;
+    }
+    throw new functions.https.HttpsError('internal', error.message);
+  }
+});
+
+/**
+ * Update organization settings (platform admin only)
+ */
+export const updateOrganization = functions.https.onCall(async (data, context) => {
+  if (!context.auth) {
+    throw new functions.https.HttpsError('unauthenticated', 'Must be logged in');
+  }
+
+  const isPlatAdmin = await isPlatformAdmin(context.auth.uid);
+  if (!isPlatAdmin) {
+    throw new functions.https.HttpsError('permission-denied', 'Only platform admins can update organizations');
+  }
+
+  const { orgId, name, code, type, isActive, maxUsers } = data;
+  if (!orgId) {
+    throw new functions.https.HttpsError('invalid-argument', 'Organization ID is required');
+  }
+
+  try {
+    const orgRef = admin.firestore().collection('organizations').doc(orgId);
+    const orgDoc = await orgRef.get();
+
+    if (!orgDoc.exists) {
+      throw new functions.https.HttpsError('not-found', 'Organization not found');
+    }
+
+    // Build update object with only provided fields
+    const updateData: any = {
+      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+    };
+
+    if (name !== undefined) updateData.name = name;
+    if (code !== undefined) updateData.code = code.toUpperCase();
+    if (type !== undefined) updateData.type = type;
+    if (isActive !== undefined) updateData.isActive = isActive;
+    if (maxUsers !== undefined) updateData.maxUsers = maxUsers || null;
+
+    // If code is being changed, check for uniqueness
+    if (code !== undefined && code.toUpperCase() !== orgDoc.data()!.code) {
+      const existingOrg = await admin.firestore()
+        .collection('organizations')
+        .where('code', '==', code.toUpperCase())
+        .get();
+
+      if (!existingOrg.empty) {
+        throw new functions.https.HttpsError('already-exists', 'An organization with this code already exists');
+      }
+    }
+
+    await orgRef.update(updateData);
+
+    // Get updated org
+    const updatedDoc = await orgRef.get();
+    const updatedData = updatedDoc.data()!;
+
+    return {
+      success: true,
+      organization: {
+        id: updatedDoc.id,
+        name: updatedData.name,
+        code: updatedData.code,
+        type: updatedData.type,
+        isActive: updatedData.isActive,
+        maxUsers: updatedData.maxUsers || null,
+        createdAt: updatedData.createdAt?.toDate?.()?.toISOString() || null,
+        updatedAt: updatedData.updatedAt?.toDate?.()?.toISOString() || null,
+      },
+    };
+  } catch (error: any) {
+    console.error('Error updating organization:', error);
+    if (error instanceof functions.https.HttpsError) {
+      throw error;
+    }
+    throw new functions.https.HttpsError('internal', error.message);
+  }
+});
+
+/**
+ * Remove user from organization (platform admin only)
+ */
+export const removeUserFromOrg = functions.https.onCall(async (data, context) => {
+  if (!context.auth) {
+    throw new functions.https.HttpsError('unauthenticated', 'Must be logged in');
+  }
+
+  const isPlatAdmin = await isPlatformAdmin(context.auth.uid);
+  if (!isPlatAdmin) {
+    throw new functions.https.HttpsError('permission-denied', 'Only platform admins can remove users from organizations');
+  }
+
+  const { userId, orgId } = data;
+  if (!userId || !orgId) {
+    throw new functions.https.HttpsError('invalid-argument', 'User ID and Organization ID are required');
+  }
+
+  try {
+    const userRef = admin.firestore().collection('users').doc(userId);
+    const userDoc = await userRef.get();
+
+    if (!userDoc.exists) {
+      throw new functions.https.HttpsError('not-found', 'User not found');
+    }
+
+    const userData = userDoc.data()!;
+    if (userData.organizationId !== orgId) {
+      throw new functions.https.HttpsError('invalid-argument', 'User does not belong to this organization');
+    }
+
+    // Remove user from organization
+    await userRef.update({
+      organizationId: null,
+      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+    });
+
+    return {
+      success: true,
+      message: `User ${userData.email} has been removed from the organization`,
+    };
+  } catch (error: any) {
+    console.error('Error removing user from organization:', error);
+    if (error instanceof functions.https.HttpsError) {
+      throw error;
+    }
+    throw new functions.https.HttpsError('internal', error.message);
+  }
+});
+
+/**
+ * Permanently delete an organization (platform admin only)
+ * This will also remove all users from the organization
+ */
+export const deleteOrganizationAdmin = functions.https.onCall(async (data, context) => {
+  if (!context.auth) {
+    throw new functions.https.HttpsError('unauthenticated', 'Must be logged in');
+  }
+
+  const isPlatAdmin = await isPlatformAdmin(context.auth.uid);
+  if (!isPlatAdmin) {
+    throw new functions.https.HttpsError('permission-denied', 'Only platform admins can delete organizations');
+  }
+
+  const { orgId, confirmName } = data;
+  if (!orgId) {
+    throw new functions.https.HttpsError('invalid-argument', 'Organization ID is required');
+  }
+
+  try {
+    const orgRef = admin.firestore().collection('organizations').doc(orgId);
+    const orgDoc = await orgRef.get();
+
+    if (!orgDoc.exists) {
+      throw new functions.https.HttpsError('not-found', 'Organization not found');
+    }
+
+    const orgData = orgDoc.data()!;
+
+    // Safety check: require confirmation by typing org name
+    if (confirmName !== orgData.name) {
+      throw new functions.https.HttpsError('invalid-argument', 'Organization name does not match. Please type the exact organization name to confirm deletion.');
+    }
+
+    // Get all users in this organization
+    const usersSnapshot = await admin.firestore()
+      .collection('users')
+      .where('organizationId', '==', orgId)
+      .get();
+
+    // Use batch to remove org association from all users and delete the org
+    const batch = admin.firestore().batch();
+
+    // Remove organization association from all users
+    for (const userDoc of usersSnapshot.docs) {
+      batch.update(userDoc.ref, {
+        organizationId: null,
+        updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+      });
+    }
+
+    // Delete the organization
+    batch.delete(orgRef);
+
+    await batch.commit();
+
+    return {
+      success: true,
+      message: `Organization "${orgData.name}" has been permanently deleted. ${usersSnapshot.size} users were removed from the organization.`,
+      deletedOrg: orgData.name,
+      usersAffected: usersSnapshot.size,
+    };
+  } catch (error: any) {
+    console.error('Error deleting organization:', error);
+    if (error instanceof functions.https.HttpsError) {
+      throw error;
+    }
+    throw new functions.https.HttpsError('internal', error.message);
+  }
+});

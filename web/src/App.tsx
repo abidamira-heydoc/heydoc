@@ -22,6 +22,7 @@ import PlatformProtectedRoute from './components/Platform/PlatformProtectedRoute
 import PlatformLayout from './components/Platform/PlatformLayout';
 import PlatformDashboard from './components/Platform/PlatformDashboard';
 import OrganizationsManagement from './components/Platform/OrganizationsManagement';
+import OrganizationDetail from './components/Platform/OrganizationDetail';
 import PlatformDoctorApproval from './components/Platform/PlatformDoctorApproval';
 import PlatformRevenue from './components/Platform/PlatformRevenue';
 import PlatformSettings from './components/Platform/PlatformSettings';
@@ -169,6 +170,7 @@ function AppRoutes() {
         <Route element={<PlatformLayout />}>
           <Route index element={<PlatformDashboard />} />
           <Route path="organizations" element={<OrganizationsManagement />} />
+          <Route path="organizations/:orgId" element={<OrganizationDetail />} />
           <Route path="doctors" element={<PlatformDoctorApproval />} />
           <Route path="revenue" element={<PlatformRevenue />} />
           <Route path="settings" element={<PlatformSettings />} />
