@@ -878,16 +878,6 @@ interface ChatRequest {
   enableWebSearch?: boolean; // Optional toggle for web search
 }
 
-interface ChatResponse {
-  message: string;
-  nextStage: ConversationStage;
-  sources?: SourceCitation[];
-  usedWebSearch?: boolean;
-  usage: {
-    input_tokens: number;
-    output_tokens: number;
-  };
-}
 
 /**
  * Extract source citations from Claude's response text
