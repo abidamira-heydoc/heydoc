@@ -4,8 +4,8 @@ import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { COLLECTIONS } from '../shared/firebase.config';
 import { useAuth } from './AuthContext';
+import type { LanguageCode } from '../config/i18n';
 import {
-  LanguageCode,
   SUPPORTED_LANGUAGES,
   isRTLLanguage,
   getLanguageConfig,
