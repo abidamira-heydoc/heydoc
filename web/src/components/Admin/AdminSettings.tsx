@@ -1,24 +1,26 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAdmin } from '../../contexts/AdminContext';
 
 const AdminSettings: React.FC = () => {
+  const { t } = useTranslation('admin');
   const { organization, adminUser } = useAdmin();
 
   return (
     <div className="space-y-6">
       {/* Page Header */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
-        <p className="text-gray-500 mt-1">Manage your organization settings</p>
+        <h1 className="text-2xl font-bold text-gray-900">{t('settings.title')}</h1>
+        <p className="text-gray-500 mt-1">{t('settings.description')}</p>
       </div>
 
       {/* Organization Info */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Organization Information</h2>
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('settings.general.title')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Organization Name
+              {t('settings.general.orgName')}
             </label>
             <input
               type="text"
@@ -26,11 +28,11 @@ const AdminSettings: React.FC = () => {
               disabled
               className="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg text-gray-500"
             />
-            <p className="mt-1 text-xs text-gray-400">Contact support to change organization name</p>
+            <p className="mt-1 text-xs text-gray-400">{t('settings.general.orgNameHint')}</p>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Invite Code
+              {t('settings.general.inviteCode')}
             </label>
             <div className="flex gap-2">
               <input
@@ -43,11 +45,11 @@ const AdminSettings: React.FC = () => {
                 onClick={() => {
                   if (organization?.code) {
                     navigator.clipboard.writeText(organization.code);
-                    alert('Invite code copied to clipboard!');
+                    alert(t('settings.general.inviteCodeCopied'));
                   }
                 }}
                 className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-                title="Copy invite code"
+                title={t('settings.general.copyInviteCode')}
               >
                 <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -57,7 +59,7 @@ const AdminSettings: React.FC = () => {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Organization Type
+              {t('settings.general.orgType')}
             </label>
             <input
               type="text"
@@ -68,11 +70,11 @@ const AdminSettings: React.FC = () => {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Status
+              {t('settings.general.status')}
             </label>
             <div className="flex items-center gap-2 px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg">
               <span className={`w-2 h-2 rounded-full ${organization?.isActive ? 'bg-green-500' : 'bg-red-500'}`} />
-              <span className="text-gray-500">{organization?.isActive ? 'Active' : 'Inactive'}</span>
+              <span className="text-gray-500">{organization?.isActive ? t('settings.general.active') : t('settings.general.inactive')}</span>
             </div>
           </div>
         </div>
@@ -80,11 +82,11 @@ const AdminSettings: React.FC = () => {
 
       {/* Admin Account */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Admin Account</h2>
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('settings.adminAccount.title')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Email Address
+              {t('settings.adminAccount.emailAddress')}
             </label>
             <input
               type="email"
@@ -95,11 +97,11 @@ const AdminSettings: React.FC = () => {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Role
+              {t('settings.adminAccount.role')}
             </label>
             <input
               type="text"
-              value="Administrator"
+              value={t('settings.adminAccount.administrator')}
               disabled
               className="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg text-gray-500"
             />
@@ -109,12 +111,12 @@ const AdminSettings: React.FC = () => {
 
       {/* Notification Settings */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Notification Settings</h2>
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('settings.notifications.title')}</h2>
         <div className="space-y-4">
           <label className="flex items-center justify-between p-4 bg-gray-50 rounded-lg cursor-not-allowed opacity-60">
             <div>
-              <p className="font-medium text-gray-900">Emergency Alerts</p>
-              <p className="text-sm text-gray-500">Receive email when emergency is detected</p>
+              <p className="font-medium text-gray-900">{t('settings.notifications.emergencyAlerts')}</p>
+              <p className="text-sm text-gray-500">{t('settings.notifications.emergencyAlertsDesc')}</p>
             </div>
             <input
               type="checkbox"
@@ -124,8 +126,8 @@ const AdminSettings: React.FC = () => {
           </label>
           <label className="flex items-center justify-between p-4 bg-gray-50 rounded-lg cursor-not-allowed opacity-60">
             <div>
-              <p className="font-medium text-gray-900">Weekly Reports</p>
-              <p className="text-sm text-gray-500">Receive weekly usage summary via email</p>
+              <p className="font-medium text-gray-900">{t('settings.notifications.weeklyReports')}</p>
+              <p className="text-sm text-gray-500">{t('settings.notifications.weeklyReportsDesc')}</p>
             </div>
             <input
               type="checkbox"
@@ -135,8 +137,8 @@ const AdminSettings: React.FC = () => {
           </label>
           <label className="flex items-center justify-between p-4 bg-gray-50 rounded-lg cursor-not-allowed opacity-60">
             <div>
-              <p className="font-medium text-gray-900">New User Notifications</p>
-              <p className="text-sm text-gray-500">Get notified when new users join</p>
+              <p className="font-medium text-gray-900">{t('settings.notifications.newUserNotifications')}</p>
+              <p className="text-sm text-gray-500">{t('settings.notifications.newUserNotificationsDesc')}</p>
             </div>
             <input
               type="checkbox"
@@ -146,41 +148,41 @@ const AdminSettings: React.FC = () => {
           </label>
         </div>
         <p className="mt-4 text-sm text-gray-400">
-          Notification settings will be available in a future update.
+          {t('settings.notifications.comingSoon')}
         </p>
       </div>
 
       {/* Danger Zone */}
       <div className="bg-white rounded-xl shadow-sm border border-red-200 p-6">
-        <h2 className="text-lg font-semibold text-red-900 mb-4">Danger Zone</h2>
+        <h2 className="text-lg font-semibold text-red-900 mb-4">{t('settings.dangerZone.title')}</h2>
         <div className="space-y-4">
           <div className="flex items-center justify-between p-4 bg-red-50 rounded-lg">
             <div>
-              <p className="font-medium text-red-900">Export All Data</p>
-              <p className="text-sm text-red-700">Download all organization data as JSON</p>
+              <p className="font-medium text-red-900">{t('settings.dangerZone.exportData')}</p>
+              <p className="text-sm text-red-700">{t('settings.dangerZone.exportDataDesc')}</p>
             </div>
             <button
               disabled
               className="px-4 py-2 border border-red-300 text-red-700 rounded-lg hover:bg-red-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Export
+              {t('settings.dangerZone.export')}
             </button>
           </div>
           <div className="flex items-center justify-between p-4 bg-red-50 rounded-lg">
             <div>
-              <p className="font-medium text-red-900">Delete Organization</p>
-              <p className="text-sm text-red-700">Permanently delete organization and all data</p>
+              <p className="font-medium text-red-900">{t('settings.dangerZone.deleteOrg')}</p>
+              <p className="text-sm text-red-700">{t('settings.dangerZone.deleteOrgDesc')}</p>
             </div>
             <button
               disabled
               className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Delete
+              {t('settings.dangerZone.delete')}
             </button>
           </div>
         </div>
         <p className="mt-4 text-sm text-red-400">
-          These actions require contacting HeyDoc support.
+          {t('settings.dangerZone.contactSupport')}
         </p>
       </div>
 
@@ -191,10 +193,9 @@ const AdminSettings: React.FC = () => {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           <div>
-            <p className="text-sm font-medium text-blue-800">Settings Implementation</p>
+            <p className="text-sm font-medium text-blue-800">{t('settings.implementation.title')}</p>
             <p className="text-sm text-blue-700 mt-1">
-              Most settings are read-only in this MVP. Editable settings (notifications, data export)
-              will be implemented in future phases as needed.
+              {t('settings.implementation.description')}
             </p>
           </div>
         </div>

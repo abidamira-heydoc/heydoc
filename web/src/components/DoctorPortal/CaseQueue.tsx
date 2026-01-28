@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useDoctor } from '../../contexts/DoctorContext';
 import type { ConsultationCase } from '@shared/types';
 
 type TabType = 'standard' | 'priority';
 
 const CaseQueue: React.FC = () => {
+  const { t } = useTranslation('doctor');
   const navigate = useNavigate();
   const {
     pendingCases,
@@ -36,18 +38,18 @@ const CaseQueue: React.FC = () => {
     const diffMs = now.getTime() - date.getTime();
     const diffMins = Math.floor(diffMs / 60000);
 
-    if (diffMins < 1) return 'Just now';
-    if (diffMins < 60) return `${diffMins}m ago`;
+    if (diffMins < 1) return t('common.justNow');
+    if (diffMins < 60) return t('common.mAgo', { count: diffMins });
     const diffHours = Math.floor(diffMins / 60);
-    if (diffHours < 24) return `${diffHours}h ago`;
-    return `${Math.floor(diffHours / 24)}d ago`;
+    if (diffHours < 24) return t('common.hAgo', { count: diffHours });
+    return t('common.dAgo', { count: Math.floor(diffHours / 24) });
   };
 
   const getTimeRemaining = (expiresAt: Date | undefined) => {
     if (!expiresAt) return null;
     const now = new Date();
     const diffMs = expiresAt.getTime() - now.getTime();
-    if (diffMs <= 0) return 'Expired';
+    if (diffMs <= 0) return t('common.expired');
     const diffMins = Math.floor(diffMs / 60000);
     const diffSecs = Math.floor((diffMs % 60000) / 1000);
     return `${diffMins}:${diffSecs.toString().padStart(2, '0')}`;
@@ -66,7 +68,7 @@ const CaseQueue: React.FC = () => {
   };
 
   const handleDeclineCase = async (caseItem: ConsultationCase) => {
-    if (!confirm('Are you sure you want to decline this request? The patient will be refunded.')) {
+    if (!confirm(t('cases.queue.declineConfirm'))) {
       return;
     }
     setActionLoading(caseItem.id);
@@ -87,8 +89,8 @@ const CaseQueue: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Case Queue</h1>
-          <p className="text-gray-600 mt-1">Accept cases to start helping patients</p>
+          <h1 className="text-2xl font-bold text-gray-900">{t('cases.queue.title')}</h1>
+          <p className="text-gray-600 mt-1">{t('cases.queue.subtitle')}</p>
         </div>
         <button
           onClick={() => refreshCases()}
@@ -98,7 +100,7 @@ const CaseQueue: React.FC = () => {
           <svg className={`w-5 h-5 ${casesLoading ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
           </svg>
-          Refresh
+          {t('common.refresh')}
         </button>
       </div>
 
@@ -125,9 +127,9 @@ const CaseQueue: React.FC = () => {
                 : 'border-transparent text-gray-500 hover:text-gray-700'
             }`}
           >
-            Standard Queue
+            {t('cases.queue.standardQueue')}
             {pendingCases.length > 0 && (
-              <span className="ml-2 px-2 py-0.5 bg-blue-100 text-blue-600 rounded-full text-xs">
+              <span className="ms-2 px-2 py-0.5 bg-blue-100 text-blue-600 rounded-full text-xs">
                 {pendingCases.length}
               </span>
             )}
@@ -140,12 +142,12 @@ const CaseQueue: React.FC = () => {
                 : 'border-transparent text-gray-500 hover:text-gray-700'
             }`}
           >
-            <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+            <svg className="w-4 h-4 me-1" fill="currentColor" viewBox="0 0 20 20">
               <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
             </svg>
-            Priority Requests
+            {t('cases.queue.priorityRequests')}
             {priorityCases.length > 0 && (
-              <span className="ml-2 px-2 py-0.5 bg-amber-100 text-amber-600 rounded-full text-xs animate-pulse">
+              <span className="ms-2 px-2 py-0.5 bg-amber-100 text-amber-600 rounded-full text-xs animate-pulse">
                 {priorityCases.length}
               </span>
             )}
@@ -178,12 +180,12 @@ const CaseQueue: React.FC = () => {
             </svg>
           </div>
           <h3 className="text-lg font-semibold text-gray-900 mb-2">
-            {activeTab === 'standard' ? 'No cases in queue' : 'No priority requests'}
+            {activeTab === 'standard' ? t('cases.queue.empty') : t('cases.queue.noPriorityRequests')}
           </h3>
           <p className="text-gray-500">
             {activeTab === 'standard'
-              ? 'New cases will appear here when patients request help.'
-              : 'Priority requests from patients who choose you specifically will appear here.'}
+              ? t('cases.queue.emptyDesc')
+              : t('cases.queue.priorityDesc')}
           </p>
         </div>
       ) : (
@@ -200,6 +202,7 @@ const CaseQueue: React.FC = () => {
               formatCurrency={formatCurrency}
               formatTimeAgo={formatTimeAgo}
               getTimeRemaining={getTimeRemaining}
+              t={t}
             />
           ))}
         </div>
@@ -215,6 +218,7 @@ const CaseQueue: React.FC = () => {
           onDecline={() => handleDeclineCase(selectedCase)}
           isLoading={actionLoading === selectedCase.id}
           formatCurrency={formatCurrency}
+          t={t}
         />
       )}
     </div>
@@ -232,6 +236,7 @@ interface CaseCardProps {
   formatCurrency: (cents: number) => string;
   formatTimeAgo: (date: Date) => string;
   getTimeRemaining: (date: Date | undefined) => string | null;
+  t: (key: string, options?: Record<string, unknown>) => string;
 }
 
 const CaseCard: React.FC<CaseCardProps> = ({
@@ -244,6 +249,7 @@ const CaseCard: React.FC<CaseCardProps> = ({
   formatCurrency,
   formatTimeAgo,
   getTimeRemaining,
+  t,
 }) => {
   const timeRemaining = isPriority ? getTimeRemaining(caseItem.priorityExpiresAt) : null;
 
@@ -260,10 +266,10 @@ const CaseCard: React.FC<CaseCardProps> = ({
             <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
               <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
             </svg>
-            PRIORITY REQUEST
+            {t('cases.queue.priorityRequest')}
           </span>
           {timeRemaining && (
-            <span className={`text-xs font-mono ${timeRemaining === 'Expired' ? 'text-red-600' : 'text-amber-600'}`}>
+            <span className={`text-xs font-mono ${timeRemaining === t('common.expired') ? 'text-red-600' : 'text-amber-600'}`}>
               {timeRemaining}
             </span>
           )}
@@ -284,26 +290,26 @@ const CaseCard: React.FC<CaseCardProps> = ({
           </h3>
           <p className="text-sm text-gray-500">{formatTimeAgo(caseItem.createdAt)}</p>
         </div>
-        <div className="text-right">
+        <div className="text-end">
           <span className={`text-lg font-bold ${isPriority ? 'text-amber-600' : 'text-green-600'}`}>
             {formatCurrency(caseItem.doctorPayout)}
           </span>
           {isPriority && (
-            <p className="text-xs text-amber-600">+$16 bonus</p>
+            <p className="text-xs text-amber-600">{t('cases.queue.priorityBonus')}</p>
           )}
         </div>
       </div>
 
       {/* Chief Complaint */}
       <div className="mb-4">
-        <p className="text-sm text-gray-500 mb-1">Chief Complaint</p>
+        <p className="text-sm text-gray-500 mb-1">{t('cases.queue.chiefComplaint')}</p>
         <p className="text-gray-900 font-medium line-clamp-2">{caseItem.chiefComplaint}</p>
       </div>
 
       {/* Symptoms Preview */}
       {caseItem.symptoms && (
         <div className="mb-4">
-          <p className="text-sm text-gray-500 mb-1">Symptoms</p>
+          <p className="text-sm text-gray-500 mb-1">{t('cases.queue.symptoms')}</p>
           <p className="text-gray-700 text-sm line-clamp-2">{caseItem.symptoms}</p>
         </div>
       )}
@@ -314,7 +320,7 @@ const CaseCard: React.FC<CaseCardProps> = ({
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
           </svg>
-          {caseItem.imageUrls.length} image{caseItem.imageUrls.length > 1 ? 's' : ''} attached
+          {t('cases.queue.imagesAttached', { count: caseItem.imageUrls.length })}
         </div>
       )}
 
@@ -339,7 +345,7 @@ const CaseCard: React.FC<CaseCardProps> = ({
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
-              Accept
+              {t('common.accept')}
             </>
           )}
         </button>
@@ -349,14 +355,14 @@ const CaseCard: React.FC<CaseCardProps> = ({
             disabled={isLoading}
             className="px-4 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition disabled:opacity-50"
           >
-            Decline
+            {t('common.decline')}
           </button>
         ) : (
           <button
             onClick={onViewDetails}
             className="px-4 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition"
           >
-            Details
+            {t('common.details')}
           </button>
         )}
       </div>
@@ -373,6 +379,7 @@ interface CaseDetailsModalProps {
   onDecline: () => void;
   isLoading: boolean;
   formatCurrency: (cents: number) => string;
+  t: (key: string, options?: Record<string, unknown>) => string;
 }
 
 const CaseDetailsModal: React.FC<CaseDetailsModalProps> = ({
@@ -383,6 +390,7 @@ const CaseDetailsModal: React.FC<CaseDetailsModalProps> = ({
   onDecline,
   isLoading,
   formatCurrency,
+  t,
 }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -392,9 +400,9 @@ const CaseDetailsModal: React.FC<CaseDetailsModalProps> = ({
           isPriority ? 'bg-amber-500 text-white' : 'bg-blue-600 text-white'
         }`}>
           <div>
-            <h2 className="text-xl font-semibold">Case Details</h2>
+            <h2 className="text-xl font-semibold">{t('cases.queue.caseDetails')}</h2>
             {isPriority && (
-              <p className="text-sm opacity-90">Priority Request</p>
+              <p className="text-sm opacity-90">{t('cases.queue.priorityRequest')}</p>
             )}
           </div>
           <button
@@ -419,32 +427,32 @@ const CaseDetailsModal: React.FC<CaseDetailsModalProps> = ({
             <div>
               <h3 className="text-xl font-semibold text-gray-900">{caseItem.patientName}</h3>
               <p className="text-gray-600">
-                {caseItem.patientAge} years old, {caseItem.patientSex}
+                {caseItem.patientAge} {t('common.yearsOld')}, {caseItem.patientSex}
               </p>
             </div>
           </div>
 
           {/* Payout */}
           <div className={`rounded-lg p-4 ${isPriority ? 'bg-amber-50 border border-amber-200' : 'bg-green-50 border border-green-200'}`}>
-            <p className="text-sm text-gray-600 mb-1">Your Payout</p>
+            <p className="text-sm text-gray-600 mb-1">{t('cases.queue.yourPayout')}</p>
             <p className={`text-2xl font-bold ${isPriority ? 'text-amber-600' : 'text-green-600'}`}>
               {formatCurrency(caseItem.doctorPayout)}
             </p>
             {isPriority && (
-              <p className="text-sm text-amber-600 mt-1">Includes $16 priority bonus</p>
+              <p className="text-sm text-amber-600 mt-1">{t('cases.queue.includesPriorityBonus')}</p>
             )}
           </div>
 
           {/* Chief Complaint */}
           <div>
-            <h4 className="font-semibold text-gray-700 mb-2">Chief Complaint</h4>
+            <h4 className="font-semibold text-gray-700 mb-2">{t('cases.queue.chiefComplaint')}</h4>
             <p className="text-gray-900 bg-gray-50 rounded-lg p-3">{caseItem.chiefComplaint}</p>
           </div>
 
           {/* Symptoms */}
           {caseItem.symptoms && (
             <div>
-              <h4 className="font-semibold text-gray-700 mb-2">Symptoms</h4>
+              <h4 className="font-semibold text-gray-700 mb-2">{t('cases.queue.symptoms')}</h4>
               <p className="text-gray-900 bg-gray-50 rounded-lg p-3">{caseItem.symptoms}</p>
             </div>
           )}
@@ -452,13 +460,13 @@ const CaseDetailsModal: React.FC<CaseDetailsModalProps> = ({
           {/* Images */}
           {caseItem.imageUrls && caseItem.imageUrls.length > 0 && (
             <div>
-              <h4 className="font-semibold text-gray-700 mb-2">Attached Images</h4>
+              <h4 className="font-semibold text-gray-700 mb-2">{t('cases.queue.attachedImages')}</h4>
               <div className="grid grid-cols-2 gap-2">
                 {caseItem.imageUrls.map((url, idx) => (
                   <img
                     key={idx}
                     src={url}
-                    alt={`Attachment ${idx + 1}`}
+                    alt={`${t('common.image')} ${idx + 1}`}
                     className="w-full h-32 object-cover rounded-lg"
                   />
                 ))}
@@ -475,7 +483,7 @@ const CaseDetailsModal: React.FC<CaseDetailsModalProps> = ({
               disabled={isLoading}
               className="flex-1 py-3 border border-gray-300 rounded-lg text-gray-700 font-semibold hover:bg-gray-100 transition disabled:opacity-50"
             >
-              Decline & Refund
+              {t('cases.queue.declineRefund')}
             </button>
           )}
           <button
@@ -494,8 +502,8 @@ const CaseDetailsModal: React.FC<CaseDetailsModalProps> = ({
               </svg>
             ) : (
               <>
-                Accept Case
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {t('cases.queue.acceptCase')}
+                <svg className="w-5 h-5 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </>

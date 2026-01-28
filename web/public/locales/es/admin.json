@@ -4,68 +4,373 @@
     "analytics": "Analíticas",
     "users": "Usuarios",
     "reports": "Informes",
-    "settings": "Configuración"
+    "settings": "Configuración",
+    "backToApp": "Volver a la Aplicación"
+  },
+  "layout": {
+    "loading": "Cargando panel de administración...",
+    "organization": "Organización",
+    "administrator": "Administrador",
+    "logout": "Cerrar Sesión",
+    "heyDocAdmin": "HeyDoc Admin"
   },
   "dashboard": {
     "title": "Panel de la Organización",
-    "welcome": "Bienvenido de nuevo, {{name}}",
+    "welcome": "Bienvenido de nuevo",
+    "welcomeWithName": "¡Bienvenido de nuevo, {{name}}!",
+    "overview": "Aquí tienes un resumen de la actividad de asistencia médica de tu organización.",
     "stats": {
       "totalUsers": "Total de Usuarios",
       "activeUsers": "Usuarios Activos",
+      "activeUsersDays": "Usuarios Activos (7 días)",
       "totalConversations": "Total de Conversaciones",
-      "emergencyAlerts": "Alertas de Emergencia"
+      "emergencyAlerts": "Alertas de Emergencia",
+      "conversationsThisMonth": "Conversaciones Este Mes",
+      "emergencyFlags": "Banderas de Emergencia"
+    },
+    "quickActions": {
+      "title": "Acciones Rápidas",
+      "viewAnalytics": "Ver Analíticas",
+      "viewAnalyticsDesc": "Ver gráficos de uso detallados y tendencias",
+      "manageUsers": "Gestionar Usuarios",
+      "manageUsersDesc": "Añadir, eliminar o ver cuentas de usuario",
+      "generateReport": "Generar Informe",
+      "generateReportDesc": "Crear informe de impacto en PDF para liderazgo"
+    },
+    "recentActivity": {
+      "title": "Actividad Reciente",
+      "comingSoon": "Feed de actividad próximamente",
+      "trackActivity": "Seguimiento de actividad de usuarios y eventos importantes"
     }
+  },
+  "oldDashboard": {
+    "title": "Panel de Administración",
+    "backToChat": "Volver al Chat",
+    "accessDenied": "Acceso Denegado",
+    "noAdminAccess": "No tienes acceso de administrador a esta página.",
+    "goToChat": "Ir al Chat",
+    "loading": "Cargando...",
+    "userManagement": "Gestión de Usuarios",
+    "addUser": "Añadir Usuario",
+    "email": "Correo",
+    "password": "Contraseña",
+    "minCharacters": "Mínimo 6 caracteres",
+    "createUser": "Crear Usuario",
+    "creating": "Creando...",
+    "cancel": "Cancelar",
+    "role": "Rol",
+    "created": "Creado",
+    "actions": "Acciones",
+    "admin": "Administrador",
+    "user": "Usuario",
+    "you": "Tú",
+    "delete": "¿Eliminar?",
+    "deleting": "Eliminando...",
+    "yes": "Sí",
+    "no": "No",
+    "noUsersYet": "Aún no hay usuarios. Haz clic en \"Añadir Usuario\" para crear uno.",
+    "totalUsers": "Total de Usuarios",
+    "admins": "Administradores",
+    "regularUsers": "Usuarios Regulares",
+    "emailRequired": "Se requieren correo y contraseña",
+    "passwordMinLength": "La contraseña debe tener al menos 6 caracteres",
+    "userCreated": "¡Usuario {{email}} creado exitosamente!",
+    "userDeleted": "Usuario eliminado exitosamente",
+    "failedToLoadUsers": "Error al cargar usuarios",
+    "failedToCreateUser": "Error al crear usuario",
+    "failedToDeleteUser": "Error al eliminar usuario"
   },
   "users": {
     "title": "Gestión de Usuarios",
+    "description": "Gestionar usuarios de tu organización",
     "search": "Buscar usuarios...",
+    "searchByEmail": "Buscar usuarios por correo...",
     "addUser": "Añadir Usuario",
+    "addNewUser": "Añadir Nuevo Usuario",
     "columns": {
+      "user": "Usuario",
       "name": "Nombre",
       "email": "Correo",
       "role": "Rol",
       "status": "Estado",
+      "joined": "Registrado",
       "lastActive": "Última Actividad",
+      "conversations": "Conversaciones",
       "actions": "Acciones"
     },
     "roles": {
       "user": "Usuario",
       "orgAdmin": "Admin de Organización",
       "platformAdmin": "Admin de Plataforma"
-    }
+    },
+    "filters": {
+      "all": "Todos los Usuarios",
+      "active": "Activos",
+      "inactive": "Inactivos"
+    },
+    "modal": {
+      "email": "Correo",
+      "emailPlaceholder": "usuario@ejemplo.com",
+      "password": "Contraseña",
+      "passwordPlaceholder": "Mínimo 6 caracteres",
+      "cancel": "Cancelar",
+      "createUser": "Crear Usuario",
+      "creating": "Creando..."
+    },
+    "delete": {
+      "confirm": "¿Eliminar?",
+      "yes": "Sí",
+      "no": "No",
+      "deleting": "..."
+    },
+    "actions": {
+      "viewDetails": "Ver detalles (próximamente)",
+      "deleteUser": "Eliminar usuario"
+    },
+    "noResults": "No se encontraron usuarios que coincidan con \"{{query}}\"",
+    "clearSearch": "Limpiar búsqueda",
+    "noUsers": "Aún no hay usuarios en tu organización.",
+    "loadingUsers": "Cargando usuarios...",
+    "showing": "Mostrando {{filtered}} de {{total}} usuarios",
+    "refresh": "Actualizar",
+    "you": "Tú",
+    "never": "Nunca",
+    "emailRequired": "Se requieren correo y contraseña",
+    "passwordMinLength": "La contraseña debe tener al menos 6 caracteres",
+    "userCreated": "¡Usuario {{email}} creado exitosamente!",
+    "userDeleted": "Usuario eliminado exitosamente",
+    "failedToCreateUser": "Error al crear usuario",
+    "failedToDeleteUser": "Error al eliminar usuario"
   },
   "analytics": {
-    "title": "Panel de Analíticas",
+    "title": "Analíticas",
+    "description": "Seguimiento de patrones de uso y tendencias de salud",
     "dateRange": "Rango de Fechas",
+    "days7": "7 Días",
+    "days30": "30 Días",
+    "days90": "90 Días",
+    "lastDays": "Últimos {{days}} días",
     "metrics": {
+      "totalConversations": "Total de Conversaciones",
+      "thisMonth": "Este Mes",
+      "activeUsers": "Usuarios Activos",
+      "emergencyAlerts": "Alertas de Emergencia",
       "conversations": "Conversaciones",
       "messages": "Mensajes",
       "avgSessionTime": "Tiempo Promedio de Sesión",
       "userSatisfaction": "Satisfacción del Usuario"
-    }
+    },
+    "charts": {
+      "conversationsOverTime": "Conversaciones a lo Largo del Tiempo",
+      "mostCommonSymptoms": "Síntomas Más Comunes",
+      "topMentions": "Menciones principales",
+      "peakUsageTimes": "Horas Pico de Uso",
+      "hourDistribution": "Distribución de 24 horas",
+      "emergencyFlagTrends": "Tendencias de Banderas de Emergencia",
+      "criticalAlerts": "Alertas críticas"
+    },
+    "insights": {
+      "title": "Perspectivas Rápidas",
+      "engagementRate": "Tasa de Participación",
+      "engagementDesc": "Usuarios activos en últimos 7 días",
+      "avgConversations": "Conversaciones Promedio/Usuario",
+      "avgConversationsDesc": "Promedio histórico",
+      "emergencyRate": "Tasa de Detección de Emergencias",
+      "emergencyRateDesc": "Conversaciones con alertas"
+    },
+    "refreshData": "Actualizar Datos",
+    "refreshing": "Actualizando..."
   },
   "reports": {
     "title": "Informes de Impacto",
+    "description": "Generar informes para compartir con liderazgo",
     "generate": "Generar Informe",
     "download": "Descargar",
+    "downloadPDF": "Descargar PDF",
+    "generating": "Generando...",
     "types": {
-      "monthly": "Resumen Mensual",
+      "monthly": "Informe Mensual",
       "quarterly": "Informe Trimestral",
       "annual": "Informe Anual"
+    },
+    "preview": {
+      "title": "Informe de Impacto HeyDoc",
+      "reportPeriod": "Período del Informe: {{period}}"
+    },
+    "sections": {
+      "executiveSummary": "Resumen Ejecutivo",
+      "summaryText": "Este informe proporciona una visión general del uso de HeyDoc en su organización, destacando métricas clave, ahorros de costos potenciales e indicadores de impacto en la salud para el período del informe.",
+      "keyMetrics": "Métricas Clave",
+      "estimatedCostSavings": "Ahorro de Costos Estimado",
+      "estimatedSavings": "Ahorros Estimados",
+      "savingsDescription": "Basado en un ahorro estimado de $50 por consulta de salud que de otro modo habría resultado en una visita innecesaria a urgencias o atención de urgencia.",
+      "emergencyDetectionImpact": "Impacto de Detección de Emergencias",
+      "emergencySituationsDetected": "{{count}} Situaciones de Emergencia Detectadas",
+      "emergencyDescription": "La IA de HeyDoc detectó situaciones de emergencia potenciales e inmediatamente dirigió a los usuarios a buscar atención de emergencia. Estas intervenciones tempranas pueden haber contribuido a mejores resultados de salud y potencialmente salvado vidas.",
+      "usageInsights": "Perspectivas de Uso"
+    },
+    "footer": {
+      "generatedBy": "Generado por HeyDoc Admin Dashboard",
+      "reportDate": "Fecha del Informe: {{date}}"
+    },
+    "info": {
+      "title": "Acerca de Este Informe",
+      "description": "Haz clic en \"Descargar PDF\" para generar un documento PDF profesional que puedes compartir con liderazgo, miembros de la junta o interesados para demostrar el impacto de HeyDoc en tu organización."
+    },
+    "pdf": {
+      "title": "Informe de Impacto HeyDoc",
+      "executiveSummary": "Resumen Ejecutivo",
+      "summaryText": "Este informe proporciona una visión general del uso de HeyDoc en {{orgName}}, destacando métricas clave, ahorros de costos potenciales e indicadores de impacto en la salud para el período del informe. HeyDoc ha estado ayudando a su equipo a acceder a orientación de salud inmediata y detección de emergencias.",
+      "keyMetrics": "Métricas Clave",
+      "totalUsers": "Total de Usuarios",
+      "conversations": "Conversaciones",
+      "emergencyAlerts": "Alertas de Emergencia",
+      "activeUsers": "Usuarios Activos",
+      "estimatedCostSavings": "Ahorro de Costos Estimado",
+      "savingsNote1": "Ahorro estimado basado en $50 por consulta de salud que pudo haber",
+      "savingsNote2": "evitado una visita innecesaria a urgencias o atención de urgencia.",
+      "emergencyDetectionImpact": "Impacto de Detección de Emergencias",
+      "emergencySituationsDetected": "{{count}} Situaciones de Emergencia Detectadas",
+      "emergencyNote": "La IA de HeyDoc detectó situaciones de emergencia potenciales e inmediatamente dirigió a los usuarios a buscar atención de emergencia. Estas intervenciones tempranas pueden haber contribuido a mejores resultados de salud.",
+      "usageInsights": "Perspectivas de Uso",
+      "engagementRate": "Tasa de Participación de Usuarios",
+      "engagementRateDesc": "Usuarios activos en los últimos 7 días",
+      "avgConversations": "Conversaciones Promedio por Usuario",
+      "avgConversationsDesc": "Promedio histórico",
+      "emergencyRate": "Tasa de Detección de Emergencias",
+      "emergencyRateDesc": "Conversaciones con alertas",
+      "mostCommonHealthTopics": "Temas de Salud Más Comunes",
+      "generatedBy": "Generado por HeyDoc Admin Dashboard",
+      "page": "Página {{current}} de {{total}}"
     }
   },
   "settings": {
-    "title": "Configuración de la Organización",
+    "title": "Configuración",
+    "description": "Gestionar la configuración de tu organización",
     "general": {
-      "title": "Configuración General",
+      "title": "Información de la Organización",
       "orgName": "Nombre de la Organización",
-      "orgCode": "Código de la Organización",
+      "orgNameHint": "Contacta a soporte para cambiar el nombre de la organización",
+      "inviteCode": "Código de Invitación",
+      "copyInviteCode": "Copiar código de invitación",
+      "inviteCodeCopied": "¡Código de invitación copiado al portapapeles!",
+      "orgType": "Tipo de Organización",
+      "status": "Estado",
+      "active": "Activo",
+      "inactive": "Inactivo",
+      "orgCode": "Código de Organización",
       "maxUsers": "Máximo de Usuarios"
+    },
+    "adminAccount": {
+      "title": "Cuenta de Administrador",
+      "emailAddress": "Correo Electrónico",
+      "role": "Rol",
+      "administrator": "Administrador"
     },
     "notifications": {
       "title": "Configuración de Notificaciones",
       "emailAlerts": "Alertas por Correo",
-      "emergencyAlerts": "Alertas de Emergencia"
+      "emergencyAlerts": "Alertas de Emergencia",
+      "emergencyAlertsDesc": "Recibir correo cuando se detecte una emergencia",
+      "weeklyReports": "Informes Semanales",
+      "weeklyReportsDesc": "Recibir resumen de uso semanal por correo",
+      "newUserNotifications": "Notificaciones de Nuevos Usuarios",
+      "newUserNotificationsDesc": "Recibir notificación cuando nuevos usuarios se registren",
+      "comingSoon": "La configuración de notificaciones estará disponible en una actualización futura."
+    },
+    "dangerZone": {
+      "title": "Zona de Peligro",
+      "exportData": "Exportar Todos los Datos",
+      "exportDataDesc": "Descargar todos los datos de la organización como JSON",
+      "export": "Exportar",
+      "deleteOrg": "Eliminar Organización",
+      "deleteOrgDesc": "Eliminar permanentemente la organización y todos los datos",
+      "delete": "Eliminar",
+      "contactSupport": "Estas acciones requieren contactar al soporte de HeyDoc."
+    },
+    "implementation": {
+      "title": "Implementación de Configuración",
+      "description": "La mayoría de las configuraciones son de solo lectura en este MVP. Las configuraciones editables (notificaciones, exportación de datos) se implementarán en fases futuras según sea necesario."
     }
+  },
+  "doctorApproval": {
+    "title": "Gestión de Médicos",
+    "description": "Revisar y gestionar solicitudes de médicos",
+    "stats": {
+      "pendingReview": "Pendiente de Revisión",
+      "approvedDoctors": "Médicos Aprobados",
+      "rejected": "Rechazados"
+    },
+    "tabs": {
+      "pending": "Pendientes",
+      "approved": "Aprobados",
+      "rejected": "Rechazados"
+    },
+    "table": {
+      "doctor": "Médico",
+      "specialties": "Especialidades",
+      "license": "Licencia",
+      "applied": "Solicitado",
+      "actions": "Acciones",
+      "viewDetails": "Ver Detalles"
+    },
+    "loading": "Cargando médicos...",
+    "noDoctors": "No hay médicos {{status}}",
+    "modal": {
+      "title": "Detalles del Médico",
+      "yearsExperience": "{{years}} años de experiencia",
+      "bio": "Biografía",
+      "specialties": "Especialidades",
+      "licenseNumber": "Número de Licencia",
+      "licenseState": "Estado de la Licencia",
+      "licensePhoto": "Foto de la Licencia",
+      "clickToView": "Clic para ver tamaño completo",
+      "rejectionReason": "Razón del Rechazo",
+      "rejectionReasonInput": "Razón del Rechazo (si rechaza)",
+      "rejectionPlaceholder": "Ingrese la razón del rechazo..."
+    },
+    "actions": {
+      "approve": "Aprobar",
+      "reject": "Rechazar",
+      "suspend": "Suspender Médico",
+      "close": "Cerrar",
+      "processing": "Procesando..."
+    },
+    "messages": {
+      "approved": "¡{{name}} ha sido aprobado!",
+      "rejected": "{{name}} ha sido rechazado.",
+      "suspended": "{{name}} ha sido suspendido.",
+      "provideReason": "Por favor proporcione una razón de rechazo",
+      "failedToLoad": "Error al cargar médicos",
+      "failedToApprove": "Error al aprobar médico",
+      "failedToReject": "Error al rechazar médico",
+      "failedToSuspend": "Error al suspender médico"
+    }
+  },
+  "protectedRoute": {
+    "verifying": "Verificando acceso de administrador...",
+    "accessDenied": "Acceso Denegado",
+    "noAccess": "No tienes acceso de administrador de organización. Por favor contacta al administrador de tu organización o al soporte de la plataforma si crees que esto es un error.",
+    "goToChat": "Ir al Chat"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "close": "Cerrar",
+    "confirm": "Confirmar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "view": "Ver",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "refresh": "Actualizar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "yes": "Sí",
+    "no": "No"
   }
 }

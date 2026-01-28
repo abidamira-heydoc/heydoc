@@ -4,68 +4,373 @@
     "analytics": "विश्लेषण",
     "users": "उपयोगकर्ता",
     "reports": "रिपोर्ट",
-    "settings": "सेटिंग्स"
+    "settings": "सेटिंग्स",
+    "backToApp": "ऐप पर वापस जाएं"
+  },
+  "layout": {
+    "loading": "एडमिन डैशबोर्ड लोड हो रहा है...",
+    "organization": "संगठन",
+    "administrator": "प्रशासक",
+    "logout": "लॉग आउट",
+    "heyDocAdmin": "HeyDoc एडमिन"
   },
   "dashboard": {
     "title": "संगठन डैशबोर्ड",
-    "welcome": "वापसी पर स्वागत है, {{name}}",
+    "welcome": "वापसी पर स्वागत है",
+    "welcomeWithName": "वापसी पर स्वागत है, {{name}}!",
+    "overview": "यहाँ आपके संगठन की स्वास्थ्य सहायता गतिविधि का अवलोकन है।",
     "stats": {
       "totalUsers": "कुल उपयोगकर्ता",
       "activeUsers": "सक्रिय उपयोगकर्ता",
+      "activeUsersDays": "सक्रिय उपयोगकर्ता (7 दिन)",
       "totalConversations": "कुल वार्तालाप",
-      "emergencyAlerts": "आपातकालीन अलर्ट"
+      "emergencyAlerts": "आपातकालीन अलर्ट",
+      "conversationsThisMonth": "इस माह वार्तालाप",
+      "emergencyFlags": "आपातकालीन फ्लैग"
+    },
+    "quickActions": {
+      "title": "त्वरित कार्रवाई",
+      "viewAnalytics": "विश्लेषण देखें",
+      "viewAnalyticsDesc": "विस्तृत उपयोग चार्ट और रुझान देखें",
+      "manageUsers": "उपयोगकर्ता प्रबंधित करें",
+      "manageUsersDesc": "उपयोगकर्ता खाते जोड़ें, हटाएं या देखें",
+      "generateReport": "रिपोर्ट बनाएं",
+      "generateReportDesc": "नेतृत्व के लिए PDF प्रभाव रिपोर्ट बनाएं"
+    },
+    "recentActivity": {
+      "title": "हाल की गतिविधि",
+      "comingSoon": "गतिविधि फीड जल्द आ रहा है",
+      "trackActivity": "उपयोगकर्ता गतिविधि और महत्वपूर्ण घटनाओं का ट्रैक करें"
     }
+  },
+  "oldDashboard": {
+    "title": "एडमिन डैशबोर्ड",
+    "backToChat": "चैट पर वापस जाएं",
+    "accessDenied": "पहुंच अस्वीकृत",
+    "noAdminAccess": "आपके पास इस पृष्ठ तक एडमिन पहुंच नहीं है।",
+    "goToChat": "चैट पर जाएं",
+    "loading": "लोड हो रहा है...",
+    "userManagement": "उपयोगकर्ता प्रबंधन",
+    "addUser": "उपयोगकर्ता जोड़ें",
+    "email": "ईमेल",
+    "password": "पासवर्ड",
+    "minCharacters": "न्यूनतम 6 अक्षर",
+    "createUser": "उपयोगकर्ता बनाएं",
+    "creating": "बना रहा है...",
+    "cancel": "रद्द करें",
+    "role": "भूमिका",
+    "created": "बनाया गया",
+    "actions": "कार्रवाई",
+    "admin": "एडमिन",
+    "user": "उपयोगकर्ता",
+    "you": "आप",
+    "delete": "हटाएं?",
+    "deleting": "हटा रहा है...",
+    "yes": "हां",
+    "no": "नहीं",
+    "noUsersYet": "अभी तक कोई उपयोगकर्ता नहीं। एक बनाने के लिए \"उपयोगकर्ता जोड़ें\" पर क्लिक करें।",
+    "totalUsers": "कुल उपयोगकर्ता",
+    "admins": "एडमिन",
+    "regularUsers": "सामान्य उपयोगकर्ता",
+    "emailRequired": "ईमेल और पासवर्ड आवश्यक हैं",
+    "passwordMinLength": "पासवर्ड कम से कम 6 अक्षरों का होना चाहिए",
+    "userCreated": "उपयोगकर्ता {{email}} सफलतापूर्वक बनाया गया!",
+    "userDeleted": "उपयोगकर्ता सफलतापूर्वक हटाया गया",
+    "failedToLoadUsers": "उपयोगकर्ताओं को लोड करने में विफल",
+    "failedToCreateUser": "उपयोगकर्ता बनाने में विफल",
+    "failedToDeleteUser": "उपयोगकर्ता हटाने में विफल"
   },
   "users": {
     "title": "उपयोगकर्ता प्रबंधन",
+    "description": "अपने संगठन के उपयोगकर्ताओं को प्रबंधित करें",
     "search": "उपयोगकर्ता खोजें...",
+    "searchByEmail": "ईमेल द्वारा उपयोगकर्ता खोजें...",
     "addUser": "उपयोगकर्ता जोड़ें",
+    "addNewUser": "नया उपयोगकर्ता जोड़ें",
     "columns": {
+      "user": "उपयोगकर्ता",
       "name": "नाम",
       "email": "ईमेल",
       "role": "भूमिका",
       "status": "स्थिति",
+      "joined": "शामिल हुए",
       "lastActive": "अंतिम सक्रिय",
+      "conversations": "वार्तालाप",
       "actions": "कार्रवाई"
     },
     "roles": {
       "user": "उपयोगकर्ता",
-      "orgAdmin": "संगठन व्यवस्थापक",
-      "platformAdmin": "प्लेटफॉर्म व्यवस्थापक"
-    }
+      "orgAdmin": "संगठन एडमिन",
+      "platformAdmin": "प्लेटफॉर्म एडमिन"
+    },
+    "filters": {
+      "all": "सभी उपयोगकर्ता",
+      "active": "सक्रिय",
+      "inactive": "निष्क्रिय"
+    },
+    "modal": {
+      "email": "ईमेल",
+      "emailPlaceholder": "user@example.com",
+      "password": "पासवर्ड",
+      "passwordPlaceholder": "न्यूनतम 6 अक्षर",
+      "cancel": "रद्द करें",
+      "createUser": "उपयोगकर्ता बनाएं",
+      "creating": "बना रहा है..."
+    },
+    "delete": {
+      "confirm": "हटाएं?",
+      "yes": "हां",
+      "no": "नहीं",
+      "deleting": "..."
+    },
+    "actions": {
+      "viewDetails": "विवरण देखें (जल्द आ रहा है)",
+      "deleteUser": "उपयोगकर्ता हटाएं"
+    },
+    "noResults": "\"{{query}}\" से मेल खाने वाला कोई उपयोगकर्ता नहीं मिला",
+    "clearSearch": "खोज साफ करें",
+    "noUsers": "आपके संगठन में अभी तक कोई उपयोगकर्ता नहीं है।",
+    "loadingUsers": "उपयोगकर्ता लोड हो रहे हैं...",
+    "showing": "{{total}} में से {{filtered}} उपयोगकर्ता दिखा रहे हैं",
+    "refresh": "रिफ्रेश करें",
+    "you": "आप",
+    "never": "कभी नहीं",
+    "emailRequired": "ईमेल और पासवर्ड आवश्यक हैं",
+    "passwordMinLength": "पासवर्ड कम से कम 6 अक्षरों का होना चाहिए",
+    "userCreated": "उपयोगकर्ता {{email}} सफलतापूर्वक बनाया गया!",
+    "userDeleted": "उपयोगकर्ता सफलतापूर्वक हटाया गया",
+    "failedToCreateUser": "उपयोगकर्ता बनाने में विफल",
+    "failedToDeleteUser": "उपयोगकर्ता हटाने में विफल"
   },
   "analytics": {
-    "title": "विश्लेषण डैशबोर्ड",
-    "dateRange": "दिनांक सीमा",
+    "title": "विश्लेषण",
+    "description": "उपयोग पैटर्न और स्वास्थ्य रुझानों का ट्रैक करें",
+    "dateRange": "तिथि सीमा",
+    "days7": "7 दिन",
+    "days30": "30 दिन",
+    "days90": "90 दिन",
+    "lastDays": "पिछले {{days}} दिन",
     "metrics": {
+      "totalConversations": "कुल वार्तालाप",
+      "thisMonth": "इस माह",
+      "activeUsers": "सक्रिय उपयोगकर्ता",
+      "emergencyAlerts": "आपातकालीन अलर्ट",
       "conversations": "वार्तालाप",
       "messages": "संदेश",
       "avgSessionTime": "औसत सत्र समय",
       "userSatisfaction": "उपयोगकर्ता संतुष्टि"
-    }
+    },
+    "charts": {
+      "conversationsOverTime": "समय के साथ वार्तालाप",
+      "mostCommonSymptoms": "सबसे आम लक्षण",
+      "topMentions": "शीर्ष उल्लेख",
+      "peakUsageTimes": "पीक उपयोग समय",
+      "hourDistribution": "24-घंटे वितरण",
+      "emergencyFlagTrends": "आपातकालीन फ्लैग रुझान",
+      "criticalAlerts": "गंभीर अलर्ट"
+    },
+    "insights": {
+      "title": "त्वरित अंतर्दृष्टि",
+      "engagementRate": "सहभागिता दर",
+      "engagementDesc": "पिछले 7 दिनों में सक्रिय उपयोगकर्ता",
+      "avgConversations": "औसत वार्तालाप/उपयोगकर्ता",
+      "avgConversationsDesc": "सभी समय का औसत",
+      "emergencyRate": "आपातकालीन पहचान दर",
+      "emergencyRateDesc": "अलर्ट वाले वार्तालाप"
+    },
+    "refreshData": "डेटा रिफ्रेश करें",
+    "refreshing": "रिफ्रेश हो रहा है..."
   },
   "reports": {
     "title": "प्रभाव रिपोर्ट",
+    "description": "नेतृत्व के साथ साझा करने के लिए रिपोर्ट बनाएं",
     "generate": "रिपोर्ट बनाएं",
     "download": "डाउनलोड",
+    "downloadPDF": "PDF डाउनलोड करें",
+    "generating": "बना रहा है...",
     "types": {
-      "monthly": "मासिक सारांश",
+      "monthly": "मासिक रिपोर्ट",
       "quarterly": "त्रैमासिक रिपोर्ट",
       "annual": "वार्षिक रिपोर्ट"
+    },
+    "preview": {
+      "title": "HeyDoc प्रभाव रिपोर्ट",
+      "reportPeriod": "रिपोर्ट अवधि: {{period}}"
+    },
+    "sections": {
+      "executiveSummary": "कार्यकारी सारांश",
+      "summaryText": "यह रिपोर्ट आपके संगठन में HeyDoc के उपयोग का अवलोकन प्रदान करती है, जो रिपोर्टिंग अवधि के लिए प्रमुख मेट्रिक्स, संभावित लागत बचत और स्वास्थ्य प्रभाव संकेतकों को उजागर करती है।",
+      "keyMetrics": "प्रमुख मेट्रिक्स",
+      "estimatedCostSavings": "अनुमानित लागत बचत",
+      "estimatedSavings": "अनुमानित बचत",
+      "savingsDescription": "प्रति स्वास्थ्य परामर्श $50 की अनुमानित बचत पर आधारित जो अन्यथा अनावश्यक आपातकालीन कक्ष या तत्काल देखभाल यात्रा का परिणाम हो सकती थी।",
+      "emergencyDetectionImpact": "आपातकालीन पहचान प्रभाव",
+      "emergencySituationsDetected": "{{count}} आपातकालीन स्थितियां पहचानी गईं",
+      "emergencyDescription": "HeyDoc की AI ने संभावित आपातकालीन स्थितियों का पता लगाया और तुरंत उपयोगकर्ताओं को आपातकालीन देखभाल लेने के लिए निर्देशित किया। इन प्रारंभिक हस्तक्षेपों ने बेहतर स्वास्थ्य परिणामों में योगदान दिया हो सकता है और संभवतः जीवन बचाए।",
+      "usageInsights": "उपयोग अंतर्दृष्टि"
+    },
+    "footer": {
+      "generatedBy": "HeyDoc एडमिन डैशबोर्ड द्वारा जनित",
+      "reportDate": "रिपोर्ट तिथि: {{date}}"
+    },
+    "info": {
+      "title": "इस रिपोर्ट के बारे में",
+      "description": "एक पेशेवर PDF दस्तावेज़ बनाने के लिए \"PDF डाउनलोड करें\" पर क्लिक करें जिसे आप नेतृत्व, बोर्ड सदस्यों या हितधारकों के साथ साझा कर सकते हैं ताकि आपके संगठन में HeyDoc के प्रभाव को प्रदर्शित किया जा सके।"
+    },
+    "pdf": {
+      "title": "HeyDoc प्रभाव रिपोर्ट",
+      "executiveSummary": "कार्यकारी सारांश",
+      "summaryText": "यह रिपोर्ट {{orgName}} में HeyDoc के उपयोग का अवलोकन प्रदान करती है, जो रिपोर्टिंग अवधि के लिए प्रमुख मेट्रिक्स, संभावित लागत बचत और स्वास्थ्य प्रभाव संकेतकों को उजागर करती है। HeyDoc आपकी टीम को तत्काल स्वास्थ्य मार्गदर्शन और आपातकालीन पहचान तक पहुंचने में मदद कर रहा है।",
+      "keyMetrics": "प्रमुख मेट्रिक्स",
+      "totalUsers": "कुल उपयोगकर्ता",
+      "conversations": "वार्तालाप",
+      "emergencyAlerts": "आपातकालीन अलर्ट",
+      "activeUsers": "सक्रिय उपयोगकर्ता",
+      "estimatedCostSavings": "अनुमानित लागत बचत",
+      "savingsNote1": "प्रति स्वास्थ्य परामर्श $50 की अनुमानित बचत पर आधारित जो",
+      "savingsNote2": "अनावश्यक आपातकालीन कक्ष या तत्काल देखभाल यात्रा से बचा सकती थी।",
+      "emergencyDetectionImpact": "आपातकालीन पहचान प्रभाव",
+      "emergencySituationsDetected": "{{count}} आपातकालीन स्थितियां पहचानी गईं",
+      "emergencyNote": "HeyDoc की AI ने संभावित आपातकालीन स्थितियों का पता लगाया और तुरंत उपयोगकर्ताओं को आपातकालीन देखभाल लेने के लिए निर्देशित किया। इन प्रारंभिक हस्तक्षेपों ने बेहतर स्वास्थ्य परिणामों में योगदान दिया हो सकता है।",
+      "usageInsights": "उपयोग अंतर्दृष्टि",
+      "engagementRate": "उपयोगकर्ता सहभागिता दर",
+      "engagementRateDesc": "पिछले 7 दिनों में सक्रिय उपयोगकर्ता",
+      "avgConversations": "प्रति उपयोगकर्ता औसत वार्तालाप",
+      "avgConversationsDesc": "सभी समय का औसत",
+      "emergencyRate": "आपातकालीन पहचान दर",
+      "emergencyRateDesc": "अलर्ट वाले वार्तालाप",
+      "mostCommonHealthTopics": "सबसे आम स्वास्थ्य विषय",
+      "generatedBy": "HeyDoc एडमिन डैशबोर्ड द्वारा जनित",
+      "page": "पृष्ठ {{current}} का {{total}}"
     }
   },
   "settings": {
-    "title": "संगठन सेटिंग्स",
+    "title": "सेटिंग्स",
+    "description": "अपने संगठन की सेटिंग्स प्रबंधित करें",
     "general": {
-      "title": "सामान्य सेटिंग्स",
+      "title": "संगठन जानकारी",
       "orgName": "संगठन का नाम",
+      "orgNameHint": "संगठन का नाम बदलने के लिए सहायता से संपर्क करें",
+      "inviteCode": "आमंत्रण कोड",
+      "copyInviteCode": "आमंत्रण कोड कॉपी करें",
+      "inviteCodeCopied": "आमंत्रण कोड क्लिपबोर्ड पर कॉपी हो गया!",
+      "orgType": "संगठन प्रकार",
+      "status": "स्थिति",
+      "active": "सक्रिय",
+      "inactive": "निष्क्रिय",
       "orgCode": "संगठन कोड",
       "maxUsers": "अधिकतम उपयोगकर्ता"
     },
+    "adminAccount": {
+      "title": "एडमिन खाता",
+      "emailAddress": "ईमेल पता",
+      "role": "भूमिका",
+      "administrator": "प्रशासक"
+    },
     "notifications": {
-      "title": "सूचना सेटिंग्स",
+      "title": "अधिसूचना सेटिंग्स",
       "emailAlerts": "ईमेल अलर्ट",
-      "emergencyAlerts": "आपातकालीन अलर्ट"
+      "emergencyAlerts": "आपातकालीन अलर्ट",
+      "emergencyAlertsDesc": "आपातकालीन स्थिति पहचाने जाने पर ईमेल प्राप्त करें",
+      "weeklyReports": "साप्ताहिक रिपोर्ट",
+      "weeklyReportsDesc": "ईमेल द्वारा साप्ताहिक उपयोग सारांश प्राप्त करें",
+      "newUserNotifications": "नए उपयोगकर्ता अधिसूचनाएं",
+      "newUserNotificationsDesc": "नए उपयोगकर्ता शामिल होने पर सूचित हों",
+      "comingSoon": "अधिसूचना सेटिंग्स भविष्य के अपडेट में उपलब्ध होंगी।"
+    },
+    "dangerZone": {
+      "title": "खतरा क्षेत्र",
+      "exportData": "सभी डेटा निर्यात करें",
+      "exportDataDesc": "सभी संगठन डेटा JSON के रूप में डाउनलोड करें",
+      "export": "निर्यात करें",
+      "deleteOrg": "संगठन हटाएं",
+      "deleteOrgDesc": "संगठन और सभी डेटा स्थायी रूप से हटाएं",
+      "delete": "हटाएं",
+      "contactSupport": "इन कार्रवाइयों के लिए HeyDoc सहायता से संपर्क आवश्यक है।"
+    },
+    "implementation": {
+      "title": "सेटिंग्स कार्यान्वयन",
+      "description": "इस MVP में अधिकांश सेटिंग्स केवल पढ़ने के लिए हैं। संपादन योग्य सेटिंग्स (अधिसूचनाएं, डेटा निर्यात) भविष्य के चरणों में आवश्यकतानुसार लागू की जाएंगी।"
     }
+  },
+  "doctorApproval": {
+    "title": "डॉक्टर प्रबंधन",
+    "description": "डॉक्टर आवेदनों की समीक्षा और प्रबंधन करें",
+    "stats": {
+      "pendingReview": "समीक्षा लंबित",
+      "approvedDoctors": "स्वीकृत डॉक्टर",
+      "rejected": "अस्वीकृत"
+    },
+    "tabs": {
+      "pending": "लंबित",
+      "approved": "स्वीकृत",
+      "rejected": "अस्वीकृत"
+    },
+    "table": {
+      "doctor": "डॉक्टर",
+      "specialties": "विशेषज्ञताएं",
+      "license": "लाइसेंस",
+      "applied": "आवेदन किया",
+      "actions": "कार्रवाई",
+      "viewDetails": "विवरण देखें"
+    },
+    "loading": "डॉक्टर लोड हो रहे हैं...",
+    "noDoctors": "कोई {{status}} डॉक्टर नहीं",
+    "modal": {
+      "title": "डॉक्टर विवरण",
+      "yearsExperience": "{{years}} वर्ष अनुभव",
+      "bio": "परिचय",
+      "specialties": "विशेषज्ञताएं",
+      "licenseNumber": "लाइसेंस नंबर",
+      "licenseState": "लाइसेंस राज्य",
+      "licensePhoto": "लाइसेंस फोटो",
+      "clickToView": "पूर्ण आकार देखने के लिए क्लिक करें",
+      "rejectionReason": "अस्वीकृति का कारण",
+      "rejectionReasonInput": "अस्वीकृति का कारण (यदि अस्वीकार कर रहे हैं)",
+      "rejectionPlaceholder": "अस्वीकृति का कारण दर्ज करें..."
+    },
+    "actions": {
+      "approve": "स्वीकृत करें",
+      "reject": "अस्वीकार करें",
+      "suspend": "डॉक्टर को निलंबित करें",
+      "close": "बंद करें",
+      "processing": "प्रोसेसिंग..."
+    },
+    "messages": {
+      "approved": "{{name}} को स्वीकृत कर दिया गया है!",
+      "rejected": "{{name}} को अस्वीकार कर दिया गया है।",
+      "suspended": "{{name}} को निलंबित कर दिया गया है।",
+      "provideReason": "कृपया अस्वीकृति का कारण प्रदान करें",
+      "failedToLoad": "डॉक्टरों को लोड करने में विफल",
+      "failedToApprove": "डॉक्टर को स्वीकृत करने में विफल",
+      "failedToReject": "डॉक्टर को अस्वीकार करने में विफल",
+      "failedToSuspend": "डॉक्टर को निलंबित करने में विफल"
+    }
+  },
+  "protectedRoute": {
+    "verifying": "एडमिन पहुंच सत्यापित हो रही है...",
+    "accessDenied": "पहुंच अस्वीकृत",
+    "noAccess": "आपके पास संगठन प्रशासक पहुंच नहीं है। यदि आपको लगता है कि यह एक त्रुटि है, तो कृपया अपने संगठन के एडमिन या प्लेटफॉर्म सहायता से संपर्क करें।",
+    "goToChat": "चैट पर जाएं"
+  },
+  "common": {
+    "loading": "लोड हो रहा है...",
+    "error": "त्रुटि",
+    "success": "सफलता",
+    "save": "सहेजें",
+    "cancel": "रद्द करें",
+    "close": "बंद करें",
+    "confirm": "पुष्टि करें",
+    "delete": "हटाएं",
+    "edit": "संपादित करें",
+    "view": "देखें",
+    "search": "खोजें",
+    "filter": "फ़िल्टर करें",
+    "refresh": "रिफ्रेश करें",
+    "back": "वापस",
+    "next": "अगला",
+    "previous": "पिछला",
+    "yes": "हां",
+    "no": "नहीं"
   }
 }

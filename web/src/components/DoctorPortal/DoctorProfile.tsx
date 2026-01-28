@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { useAuth } from '../../contexts/AuthContext';
@@ -29,6 +30,7 @@ const US_STATES = [
 ];
 
 const DoctorProfile: React.FC = () => {
+  const { t } = useTranslation('doctor');
   const { user } = useAuth();
   const [doctor, setDoctor] = useState<DoctorProfileType | null>(null);
   const [loading, setLoading] = useState(true);
@@ -64,14 +66,14 @@ const DoctorProfile: React.FC = () => {
         }
       } catch (err) {
         console.error('Error fetching doctor:', err);
-        setError('Failed to load profile');
+        setError(t('profile.failedToLoad'));
       } finally {
         setLoading(false);
       }
     };
 
     fetchDoctor();
-  }, [user]);
+  }, [user, t]);
 
   const handleSpecialtyToggle = (specialty: DoctorSpecialty) => {
     setSpecialties(prev =>
@@ -104,7 +106,7 @@ const DoctorProfile: React.FC = () => {
       setTimeout(() => setSuccess(false), 3000);
     } catch (err) {
       console.error('Error updating profile:', err);
-      setError('Failed to save changes');
+      setError(t('profile.failedToSave'));
     } finally {
       setSaving(false);
     }
@@ -115,7 +117,7 @@ const DoctorProfile: React.FC = () => {
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto" />
-          <p className="mt-4 text-gray-600">Loading profile...</p>
+          <p className="mt-4 text-gray-600">{t('profile.loadingProfile')}</p>
         </div>
       </div>
     );
@@ -125,8 +127,8 @@ const DoctorProfile: React.FC = () => {
     <div className="max-w-3xl mx-auto space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">My Profile</h1>
-        <p className="text-gray-600">Manage your professional information</p>
+        <h1 className="text-2xl font-bold text-gray-900">{t('profile.title')}</h1>
+        <p className="text-gray-600">{t('profile.subtitle')}</p>
       </div>
 
       {/* Success/Error Messages */}
@@ -135,7 +137,7 @@ const DoctorProfile: React.FC = () => {
           <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
-          <p className="text-green-700">Profile updated successfully!</p>
+          <p className="text-green-700">{t('profile.profileUpdated')}</p>
         </div>
       )}
 
@@ -151,12 +153,12 @@ const DoctorProfile: React.FC = () => {
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Basic Info Card */}
         <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Basic Information</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('profile.basicInfo')}</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Full Name
+                {t('profile.fullName')}
               </label>
               <input
                 type="text"
@@ -168,7 +170,7 @@ const DoctorProfile: React.FC = () => {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Email
+                {t('profile.email')}
               </label>
               <input
                 type="email"
@@ -176,11 +178,11 @@ const DoctorProfile: React.FC = () => {
                 disabled
                 className="w-full px-4 py-2 border border-gray-200 rounded-lg bg-gray-50 text-gray-500"
               />
-              <p className="text-xs text-gray-500 mt-1">Email cannot be changed</p>
+              <p className="text-xs text-gray-500 mt-1">{t('profile.emailCannotChange')}</p>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Years of Experience
+                {t('profile.yearsExperience')}
               </label>
               <input
                 type="number"
@@ -196,12 +198,12 @@ const DoctorProfile: React.FC = () => {
 
         {/* Professional Info Card */}
         <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Professional Information</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('profile.professionalInfo')}</h2>
 
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Specialties
+                {t('profile.specialties')}
               </label>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                 {SPECIALTIES.map((s) => (
@@ -209,7 +211,7 @@ const DoctorProfile: React.FC = () => {
                     key={s}
                     type="button"
                     onClick={() => handleSpecialtyToggle(s)}
-                    className={`px-3 py-2 text-sm font-medium rounded-lg transition text-left ${
+                    className={`px-3 py-2 text-sm font-medium rounded-lg transition text-start ${
                       specialties.includes(s)
                         ? 'bg-blue-600 text-white'
                         : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -220,20 +222,20 @@ const DoctorProfile: React.FC = () => {
                 ))}
               </div>
               <p className="text-xs text-gray-500 mt-2">
-                Selected: {specialties.length > 0 ? specialties.map(s => SPECIALTY_LABELS[s]).join(', ') : 'None'}
+                {t('profile.selected')}: {specialties.length > 0 ? specialties.map(s => SPECIALTY_LABELS[s]).join(', ') : t('profile.none')}
               </p>
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                License State
+                {t('profile.licenseState')}
               </label>
               <select
                 value={licenseState}
                 onChange={(e) => setLicenseState(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               >
-                <option value="">Select state...</option>
+                <option value="">{t('profile.selectState')}</option>
                 {US_STATES.map((state) => (
                   <option key={state} value={state}>{state}</option>
                 ))}
@@ -242,7 +244,7 @@ const DoctorProfile: React.FC = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                License Number
+                {t('profile.licenseNumber')}
               </label>
               <input
                 type="text"
@@ -250,18 +252,18 @@ const DoctorProfile: React.FC = () => {
                 disabled
                 className="w-full px-4 py-2 border border-gray-200 rounded-lg bg-gray-50 text-gray-500"
               />
-              <p className="text-xs text-gray-500 mt-1">Contact support to update your license</p>
+              <p className="text-xs text-gray-500 mt-1">{t('profile.contactSupportToUpdate')}</p>
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Bio
+                {t('profile.bio')}
               </label>
               <textarea
                 value={bio}
                 onChange={(e) => setBio(e.target.value)}
                 rows={4}
-                placeholder="Tell patients about your background and approach to care..."
+                placeholder={t('profile.bioPlaceholder')}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
@@ -270,7 +272,7 @@ const DoctorProfile: React.FC = () => {
 
         {/* Availability Card */}
         <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Availability</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('profile.availability')}</h2>
 
           <label className="flex items-start gap-3 cursor-pointer">
             <input
@@ -280,9 +282,9 @@ const DoctorProfile: React.FC = () => {
               className="mt-1 w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
             />
             <div>
-              <p className="font-medium text-gray-900">Available for Cases</p>
+              <p className="font-medium text-gray-900">{t('profile.availableForCases')}</p>
               <p className="text-sm text-gray-500">
-                When enabled, you'll appear in the case queue and can receive new consultations.
+                {t('profile.availableDesc')}
               </p>
             </div>
           </label>
@@ -290,18 +292,18 @@ const DoctorProfile: React.FC = () => {
 
         {/* Stats Card (Read-only) */}
         <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Statistics</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('profile.statistics')}</h2>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center p-3 bg-gray-50 rounded-lg">
               <p className="text-2xl font-bold text-gray-900">{doctor?.totalCases || 0}</p>
-              <p className="text-sm text-gray-500">Total Cases</p>
+              <p className="text-sm text-gray-500">{t('common.totalCases')}</p>
             </div>
             <div className="text-center p-3 bg-gray-50 rounded-lg">
               <p className="text-2xl font-bold text-green-600">
                 ${((doctor?.totalEarnings || 0) / 100).toFixed(0)}
               </p>
-              <p className="text-sm text-gray-500">Lifetime Earnings</p>
+              <p className="text-sm text-gray-500">{t('common.lifetimeEarnings')}</p>
             </div>
             <div className="text-center p-3 bg-gray-50 rounded-lg">
               <div className="flex items-center justify-center gap-1">
@@ -314,22 +316,22 @@ const DoctorProfile: React.FC = () => {
                   </svg>
                 )}
               </div>
-              <p className="text-sm text-gray-500">Rating</p>
+              <p className="text-sm text-gray-500">{t('common.rating')}</p>
             </div>
             <div className="text-center p-3 bg-gray-50 rounded-lg">
               <p className="text-2xl font-bold text-gray-900">{doctor?.totalRatings || 0}</p>
-              <p className="text-sm text-gray-500">Reviews</p>
+              <p className="text-sm text-gray-500">{t('common.reviews')}</p>
             </div>
           </div>
         </div>
 
         {/* Account Status Card (Read-only) */}
         <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Account Status</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('profile.accountStatus')}</h2>
 
           <div className="space-y-3">
             <div className="flex items-center justify-between py-2 border-b border-gray-100">
-              <span className="text-gray-600">Account Status</span>
+              <span className="text-gray-600">{t('profile.accountStatus')}</span>
               <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                 doctor?.status === 'approved'
                   ? 'bg-green-100 text-green-700'
@@ -341,22 +343,22 @@ const DoctorProfile: React.FC = () => {
               </span>
             </div>
             <div className="flex items-center justify-between py-2 border-b border-gray-100">
-              <span className="text-gray-600">Stripe Connected</span>
+              <span className="text-gray-600">{t('profile.stripeConnected')}</span>
               <span className="flex items-center gap-2">
                 {doctor?.stripeOnboardingComplete ? (
                   <>
-                    <span className="text-green-600 font-medium">Connected</span>
+                    <span className="text-green-600 font-medium">{t('profile.connected')}</span>
                     <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </>
                 ) : (
-                  <span className="text-amber-600 font-medium">Not Connected</span>
+                  <span className="text-amber-600 font-medium">{t('profile.notConnected')}</span>
                 )}
               </span>
             </div>
             <div className="flex items-center justify-between py-2">
-              <span className="text-gray-600">Member Since</span>
+              <span className="text-gray-600">{t('profile.memberSince')}</span>
               <span className="text-gray-900">
                 {doctor?.createdAt ? new Date(doctor.createdAt).toLocaleDateString() : '—'}
               </span>
@@ -377,10 +379,10 @@ const DoctorProfile: React.FC = () => {
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                 </svg>
-                Saving...
+                {t('profile.saving')}
               </>
             ) : (
-              'Save Changes'
+              t('profile.saveChanges')
             )}
           </button>
         </div>

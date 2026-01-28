@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { doc, getDoc } from 'firebase/firestore';
 import { httpsCallable } from 'firebase/functions';
 import { db, functions } from '../../config/firebase';
@@ -8,6 +9,7 @@ import { COLLECTIONS } from '@shared/firebase.config';
 import type { DoctorProfile } from '@shared/types';
 
 const StripeConnect: React.FC = () => {
+  const { t } = useTranslation('doctor');
   const navigate = useNavigate();
   const { user } = useAuth();
   const [searchParams] = useSearchParams();
@@ -29,9 +31,9 @@ const StripeConnect: React.FC = () => {
       verifyStripeConnection();
     } else if (stripeRefresh === 'true') {
       // User needs to complete onboarding
-      setError('Please complete the Stripe onboarding process.');
+      setError(t('stripe.connect.completeOnboarding'));
     }
-  }, [searchParams]);
+  }, [searchParams, t]);
 
   // Fetch doctor profile
   useEffect(() => {
@@ -97,7 +99,7 @@ const StripeConnect: React.FC = () => {
       window.location.href = accountLinkUrl;
     } catch (err: any) {
       console.error('Error creating Connect account:', err);
-      setError(err.message || 'Failed to connect with Stripe. Please try again.');
+      setError(err.message || t('stripe.connect.connectionFailed'));
       setConnecting(false);
     }
   };
@@ -111,7 +113,7 @@ const StripeConnect: React.FC = () => {
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto" />
-          <p className="mt-4 text-gray-600">Loading...</p>
+          <p className="mt-4 text-gray-600">{t('stripe.loading')}</p>
         </div>
       </div>
     );
@@ -127,15 +129,15 @@ const StripeConnect: React.FC = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Stripe Connected!</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('stripe.connected.title')}</h2>
           <p className="text-gray-600 mb-6">
-            Your bank account is connected. You'll receive automatic payouts every Monday.
+            {t('stripe.connected.message')}
           </p>
           <button
             onClick={handleContinueToDashboard}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition"
           >
-            View Earnings Dashboard
+            {t('stripe.connected.viewEarnings')}
           </button>
         </div>
       </div>
@@ -152,15 +154,15 @@ const StripeConnect: React.FC = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Successfully Connected!</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('stripe.success.title')}</h2>
           <p className="text-gray-600 mb-6">
-            Your Stripe account is now connected. You can start accepting cases and earning money.
+            {t('stripe.success.message')}
           </p>
           <button
             onClick={handleContinueToDashboard}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition"
           >
-            Go to Earnings Dashboard
+            {t('stripe.success.goToEarnings')}
           </button>
         </div>
       </div>
@@ -171,9 +173,9 @@ const StripeConnect: React.FC = () => {
     <div className="max-w-2xl mx-auto space-y-6">
       {/* Header */}
       <div className="text-center">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">Connect Your Bank Account</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">{t('stripe.title')}</h1>
         <p className="text-gray-600">
-          To receive payments for consultations, you need to connect your bank account via Stripe.
+          {t('stripe.subtitle')}
         </p>
       </div>
 
@@ -185,17 +187,17 @@ const StripeConnect: React.FC = () => {
             <svg className="w-10 h-10" viewBox="0 0 32 32" fill="white">
               <path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.594-7.305h.003z"/>
             </svg>
-            <span className="text-2xl font-bold">Stripe Connect</span>
+            <span className="text-2xl font-bold">{t('stripe.connect.stripeConnect')}</span>
           </div>
           <p className="text-indigo-100">
-            Secure, fast payments directly to your bank account
+            {t('stripe.connect.secureFastPayments')}
           </p>
         </div>
 
         <div className="p-6 space-y-6">
           {/* Benefits */}
           <div className="space-y-4">
-            <h3 className="font-semibold text-gray-900">Why Stripe?</h3>
+            <h3 className="font-semibold text-gray-900">{t('stripe.connect.whyStripe')}</h3>
             <div className="grid gap-4">
               <div className="flex items-start gap-3">
                 <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
@@ -204,8 +206,8 @@ const StripeConnect: React.FC = () => {
                   </svg>
                 </div>
                 <div>
-                  <p className="font-medium text-gray-900">Automatic Weekly Payouts</p>
-                  <p className="text-sm text-gray-500">Receive your earnings every Monday automatically</p>
+                  <p className="font-medium text-gray-900">{t('stripe.connect.automaticPayouts')}</p>
+                  <p className="text-sm text-gray-500">{t('stripe.connect.automaticPayoutsDesc')}</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
@@ -215,8 +217,8 @@ const StripeConnect: React.FC = () => {
                   </svg>
                 </div>
                 <div>
-                  <p className="font-medium text-gray-900">Instant Transfers Available</p>
-                  <p className="text-sm text-gray-500">Get paid immediately for a small $2 fee</p>
+                  <p className="font-medium text-gray-900">{t('stripe.connect.instantTransfers')}</p>
+                  <p className="text-sm text-gray-500">{t('stripe.connect.instantTransfersDesc')}</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
@@ -226,8 +228,8 @@ const StripeConnect: React.FC = () => {
                   </svg>
                 </div>
                 <div>
-                  <p className="font-medium text-gray-900">Bank-Level Security</p>
-                  <p className="text-sm text-gray-500">Your financial data is encrypted and secure</p>
+                  <p className="font-medium text-gray-900">{t('stripe.connect.bankSecurity')}</p>
+                  <p className="text-sm text-gray-500">{t('stripe.connect.bankSecurityDesc')}</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
@@ -237,8 +239,8 @@ const StripeConnect: React.FC = () => {
                   </svg>
                 </div>
                 <div>
-                  <p className="font-medium text-gray-900">1099 Tax Forms</p>
-                  <p className="text-sm text-gray-500">Stripe generates your tax documents automatically</p>
+                  <p className="font-medium text-gray-900">{t('stripe.connect.taxForms')}</p>
+                  <p className="text-sm text-gray-500">{t('stripe.connect.taxFormsDesc')}</p>
                 </div>
               </div>
             </div>
@@ -246,17 +248,17 @@ const StripeConnect: React.FC = () => {
 
           {/* Earnings Preview */}
           <div className="bg-gray-50 rounded-xl p-4">
-            <h3 className="font-semibold text-gray-900 mb-3">Your Earnings Per Case</h3>
+            <h3 className="font-semibold text-gray-900 mb-3">{t('stripe.connect.earningsPerCase')}</h3>
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-white rounded-lg p-3 border border-gray-200">
-                <p className="text-sm text-gray-500">Standard Case</p>
+                <p className="text-sm text-gray-500">{t('stripe.connect.standardCase')}</p>
                 <p className="text-xl font-bold text-green-600">$20</p>
-                <p className="text-xs text-gray-400">Patient pays $25</p>
+                <p className="text-xs text-gray-400">{t('stripe.connect.patientPays', { amount: '$25' })}</p>
               </div>
               <div className="bg-white rounded-lg p-3 border border-amber-200">
-                <p className="text-sm text-amber-600">Priority Request</p>
+                <p className="text-sm text-amber-600">{t('stripe.connect.priorityRequest')}</p>
                 <p className="text-xl font-bold text-amber-600">$36</p>
-                <p className="text-xs text-gray-400">Patient pays $45</p>
+                <p className="text-xs text-gray-400">{t('stripe.connect.patientPays', { amount: '$45' })}</p>
               </div>
             </div>
           </div>
@@ -280,22 +282,22 @@ const StripeConnect: React.FC = () => {
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                 </svg>
-                Connecting to Stripe...
+                {t('stripe.connect.connecting')}
               </>
             ) : (
               <>
                 <svg className="w-5 h-5" viewBox="0 0 32 32" fill="currentColor">
                   <path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.594-7.305h.003z"/>
                 </svg>
-                Connect with Stripe
+                {t('stripe.connect.connectButton')}
               </>
             )}
           </button>
 
           <p className="text-xs text-center text-gray-500">
-            By connecting, you agree to Stripe's{' '}
+            {t('stripe.connect.termsAgreement')}{' '}
             <a href="https://stripe.com/connect-account/legal" target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:underline">
-              Terms of Service
+              {t('stripe.connect.termsOfService')}
             </a>
           </p>
         </div>
@@ -307,7 +309,7 @@ const StripeConnect: React.FC = () => {
           onClick={() => navigate('/doctor')}
           className="text-gray-500 hover:text-gray-700 text-sm"
         >
-          I'll do this later
+          {t('stripe.connect.doLater')}
         </button>
       </div>
     </div>

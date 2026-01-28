@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { useAuth } from '../../contexts/AuthContext';
@@ -7,6 +8,7 @@ import { COLLECTIONS } from '@shared/firebase.config';
 import type { DoctorProfile } from '@shared/types';
 
 const DoctorProtectedRoute: React.FC = () => {
+  const { t } = useTranslation('doctor');
   const { user, loading: authLoading } = useAuth();
   const location = useLocation();
   const [checking, setChecking] = useState(true);
@@ -72,7 +74,7 @@ const DoctorProtectedRoute: React.FC = () => {
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto" />
-          <p className="mt-4 text-gray-600">Verifying doctor access...</p>
+          <p className="mt-4 text-gray-600">{t('protected.verifyingAccess')}</p>
         </div>
       </div>
     );
@@ -103,15 +105,15 @@ const DoctorProtectedRoute: React.FC = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
             </svg>
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Account Suspended</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('auth.suspended.title')}</h2>
           <p className="text-gray-600 mb-6">
-            Your doctor account has been suspended. Please contact support for more information.
+            {t('auth.suspended.message')}
           </p>
           <a
             href="mailto:support@heydoccare.com"
             className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition"
           >
-            Contact Support
+            {t('auth.suspended.contactSupport')}
           </a>
         </div>
       </div>

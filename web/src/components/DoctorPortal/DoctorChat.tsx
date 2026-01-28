@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { doc, getDoc, collection, query, where, orderBy, onSnapshot, addDoc, updateDoc } from 'firebase/firestore';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { db, storage } from '../../config/firebase';
@@ -8,6 +9,7 @@ import { COLLECTIONS } from '@shared/firebase.config';
 import type { ConsultationCase, ConsultationMessage, HealthProfile } from '@shared/types';
 
 const DoctorChat: React.FC = () => {
+  const { t } = useTranslation('doctor');
   const { caseId } = useParams<{ caseId: string }>();
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -142,11 +144,11 @@ const DoctorChat: React.FC = () => {
 
     // Validate file
     if (!file.type.startsWith('image/')) {
-      alert('Please select an image file');
+      alert(t('chat.imageUpload.selectImage'));
       return;
     }
     if (file.size > 10 * 1024 * 1024) {
-      alert('Image must be less than 10MB');
+      alert(t('chat.imageUpload.sizeLimit'));
       return;
     }
 
@@ -178,7 +180,7 @@ const DoctorChat: React.FC = () => {
       });
     } catch (err) {
       console.error('Error uploading image:', err);
-      alert('Failed to upload image');
+      alert(t('chat.imageUpload.uploadFailed'));
     } finally {
       setUploadingImage(false);
       if (fileInputRef.current) {
@@ -192,7 +194,7 @@ const DoctorChat: React.FC = () => {
       <div className="h-full flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto" />
-          <p className="mt-4 text-gray-600">Loading consultation...</p>
+          <p className="mt-4 text-gray-600">{t('chat.loadingConsultation')}</p>
         </div>
       </div>
     );
@@ -202,12 +204,12 @@ const DoctorChat: React.FC = () => {
     return (
       <div className="h-full flex items-center justify-center">
         <div className="text-center">
-          <p className="text-gray-600">Case not found</p>
+          <p className="text-gray-600">{t('chat.caseNotFound')}</p>
           <button
             onClick={() => navigate('/doctor/cases')}
             className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg"
           >
-            Back to Queue
+            {t('chat.backToQueue')}
           </button>
         </div>
       </div>
@@ -227,7 +229,7 @@ const DoctorChat: React.FC = () => {
             onClick={() => navigate('/doctor/active')}
             className="p-2 hover:bg-gray-100 rounded-lg transition"
           >
-            <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-gray-600 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
@@ -236,12 +238,12 @@ const DoctorChat: React.FC = () => {
               <h2 className="font-semibold text-gray-900">{caseData.patientName}</h2>
               {isPriority && (
                 <span className="px-2 py-0.5 bg-amber-100 text-amber-700 text-xs font-semibold rounded-full">
-                  Priority
+                  {t('chat.priority')}
                 </span>
               )}
               <span className="flex items-center gap-1 text-green-600 text-sm">
                 <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                Active
+                {t('chat.active')}
               </span>
             </div>
             <p className="text-sm text-gray-500">{caseData.chiefComplaint}</p>
@@ -261,6 +263,7 @@ const DoctorChat: React.FC = () => {
           <button
             onClick={() => setShowPatientInfo(!showPatientInfo)}
             className={`p-2 rounded-lg transition ${showPatientInfo ? 'bg-blue-100 text-blue-600' : 'hover:bg-gray-100 text-gray-600'}`}
+            title={t('chat.togglePatientInfo')}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -275,7 +278,7 @@ const DoctorChat: React.FC = () => {
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
-            Mark Complete
+            {t('chat.markComplete')}
           </button>
         </div>
       </div>
@@ -284,10 +287,11 @@ const DoctorChat: React.FC = () => {
       <div className="flex-1 flex overflow-hidden">
         {/* Patient Info Sidebar */}
         {showPatientInfo && (
-          <div className="w-80 border-r border-gray-200 bg-gray-50 overflow-y-auto">
+          <div className="w-80 border-e border-gray-200 bg-gray-50 overflow-y-auto">
             <PatientInfoSidebar
               caseData={caseData}
               healthProfile={healthProfile}
+              t={t}
             />
           </div>
         )}
@@ -301,11 +305,11 @@ const DoctorChat: React.FC = () => {
                 <svg className="w-12 h-12 mx-auto mb-3 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                 </svg>
-                <p>Start the conversation with {caseData.patientName}</p>
+                <p>{t('chat.startConversation', { name: caseData.patientName })}</p>
               </div>
             ) : (
               messages.map((msg) => (
-                <MessageBubble key={msg.id} message={msg} isDoctor={msg.senderRole === 'doctor'} />
+                <MessageBubble key={msg.id} message={msg} isDoctor={msg.senderRole === 'doctor'} t={t} />
               ))
             )}
             <div ref={messagesEndRef} />
@@ -351,7 +355,7 @@ const DoctorChat: React.FC = () => {
                       handleSendMessage(e);
                     }
                   }}
-                  placeholder="Type your message..."
+                  placeholder={t('chat.placeholder')}
                   rows={1}
                   className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
                 />
@@ -369,7 +373,7 @@ const DoctorChat: React.FC = () => {
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                   </svg>
                 ) : (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                   </svg>
                 )}
@@ -385,7 +389,7 @@ const DoctorChat: React.FC = () => {
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
                 </svg>
-                Video Call (Coming Soon)
+                {t('chat.videoCallComingSoon')}
               </button>
               <button
                 disabled
@@ -394,7 +398,7 @@ const DoctorChat: React.FC = () => {
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
-                Voice Call (Coming Soon)
+                {t('chat.voiceCallComingSoon')}
               </button>
             </div>
           </div>
@@ -407,6 +411,7 @@ const DoctorChat: React.FC = () => {
           caseData={caseData}
           onClose={() => setShowCompleteModal(false)}
           onComplete={() => navigate('/doctor/active')}
+          t={t}
         />
       )}
     </div>
@@ -417,9 +422,10 @@ const DoctorChat: React.FC = () => {
 interface MessageBubbleProps {
   message: ConsultationMessage;
   isDoctor: boolean;
+  t: (key: string) => string;
 }
 
-const MessageBubble: React.FC<MessageBubbleProps> = ({ message, isDoctor }) => {
+const MessageBubble: React.FC<MessageBubbleProps> = ({ message, isDoctor, t }) => {
   const [showLightbox, setShowLightbox] = useState(false);
 
   const formatTime = (date: Date) => {
@@ -432,12 +438,12 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, isDoctor }) => {
         <div className={`max-w-[70%] ${isDoctor ? 'order-2' : 'order-1'}`}>
           {message.imageUrl && (
             <div
-              className={`mb-1 cursor-pointer ${isDoctor ? 'ml-auto' : 'mr-auto'}`}
+              className={`mb-1 cursor-pointer ${isDoctor ? 'ms-auto' : 'me-auto'}`}
               onClick={() => setShowLightbox(true)}
             >
               <img
                 src={message.imageUrl}
-                alt="Shared image"
+                alt={t('chat.sharedImage')}
                 className="max-w-full rounded-xl max-h-64 object-cover"
               />
             </div>
@@ -445,13 +451,13 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, isDoctor }) => {
           {message.content && (
             <div className={`px-4 py-2.5 rounded-2xl ${
               isDoctor
-                ? 'bg-blue-600 text-white rounded-br-sm'
-                : 'bg-gray-100 text-gray-900 rounded-bl-sm'
+                ? 'bg-blue-600 text-white rounded-ee-sm'
+                : 'bg-gray-100 text-gray-900 rounded-es-sm'
             }`}>
               <p className="whitespace-pre-wrap">{message.content}</p>
             </div>
           )}
-          <p className={`text-xs text-gray-400 mt-1 ${isDoctor ? 'text-right' : 'text-left'}`}>
+          <p className={`text-xs text-gray-400 mt-1 ${isDoctor ? 'text-end' : 'text-start'}`}>
             {formatTime(message.timestamp)}
           </p>
         </div>
@@ -465,7 +471,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, isDoctor }) => {
         >
           <button
             onClick={() => setShowLightbox(false)}
-            className="absolute top-4 right-4 text-white p-2 hover:bg-white/20 rounded-lg"
+            className="absolute top-4 end-4 text-white p-2 hover:bg-white/20 rounded-lg"
           >
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -473,7 +479,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, isDoctor }) => {
           </button>
           <img
             src={message.imageUrl}
-            alt="Full size"
+            alt={t('chat.fullSize')}
             className="max-w-full max-h-full object-contain"
             onClick={(e) => e.stopPropagation()}
           />
@@ -487,9 +493,10 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, isDoctor }) => {
 interface PatientInfoSidebarProps {
   caseData: ConsultationCase;
   healthProfile: HealthProfile | null;
+  t: (key: string, options?: Record<string, unknown>) => string;
 }
 
-const PatientInfoSidebar: React.FC<PatientInfoSidebarProps> = ({ caseData, healthProfile }) => {
+const PatientInfoSidebar: React.FC<PatientInfoSidebarProps> = ({ caseData, healthProfile, t }) => {
   return (
     <div className="p-4 space-y-4">
       {/* Patient Card */}
@@ -501,20 +508,20 @@ const PatientInfoSidebar: React.FC<PatientInfoSidebarProps> = ({ caseData, healt
           <div>
             <h3 className="font-semibold text-gray-900">{caseData.patientName}</h3>
             <p className="text-sm text-gray-500">
-              {caseData.patientAge} years, {caseData.patientSex}
+              {caseData.patientAge} {t('chat.patientCard.yearsOld')}, {caseData.patientSex}
             </p>
           </div>
         </div>
 
         <div className="space-y-3">
           <div>
-            <p className="text-xs font-medium text-gray-500 uppercase">Chief Complaint</p>
+            <p className="text-xs font-medium text-gray-500 uppercase">{t('chat.patientCard.chiefComplaint')}</p>
             <p className="text-gray-900">{caseData.chiefComplaint}</p>
           </div>
 
           {caseData.symptoms && (
             <div>
-              <p className="text-xs font-medium text-gray-500 uppercase">Symptoms</p>
+              <p className="text-xs font-medium text-gray-500 uppercase">{t('chat.patientCard.symptoms')}</p>
               <p className="text-gray-900 text-sm">{caseData.symptoms}</p>
             </div>
           )}
@@ -524,13 +531,13 @@ const PatientInfoSidebar: React.FC<PatientInfoSidebarProps> = ({ caseData, healt
       {/* Attached Images */}
       {caseData.imageUrls && caseData.imageUrls.length > 0 && (
         <div className="bg-white rounded-xl p-4 shadow-sm">
-          <h4 className="text-xs font-medium text-gray-500 uppercase mb-3">Attached Images</h4>
+          <h4 className="text-xs font-medium text-gray-500 uppercase mb-3">{t('chat.attachedImages')}</h4>
           <div className="grid grid-cols-2 gap-2">
             {caseData.imageUrls.map((url, idx) => (
               <img
                 key={idx}
                 src={url}
-                alt={`Attachment ${idx + 1}`}
+                alt={`${t('common.image')} ${idx + 1}`}
                 className="w-full h-20 object-cover rounded-lg cursor-pointer hover:opacity-80 transition"
               />
             ))}
@@ -541,25 +548,25 @@ const PatientInfoSidebar: React.FC<PatientInfoSidebarProps> = ({ caseData, healt
       {/* Health Profile */}
       {healthProfile && (
         <div className="bg-white rounded-xl p-4 shadow-sm">
-          <h4 className="text-xs font-medium text-gray-500 uppercase mb-3">Health Profile</h4>
+          <h4 className="text-xs font-medium text-gray-500 uppercase mb-3">{t('chat.healthProfile')}</h4>
           <div className="space-y-3 text-sm">
             {healthProfile.allergies && healthProfile.allergies.length > 0 && (
               <div>
-                <p className="text-xs text-red-600 font-medium">Allergies</p>
+                <p className="text-xs text-red-600 font-medium">{t('chat.allergies')}</p>
                 <p className="text-gray-900">{healthProfile.allergies.join(', ')}</p>
               </div>
             )}
 
             {healthProfile.currentConditions && healthProfile.currentConditions.length > 0 && (
               <div>
-                <p className="text-xs text-gray-500">Current Conditions</p>
+                <p className="text-xs text-gray-500">{t('chat.currentConditions')}</p>
                 <p className="text-gray-900">{healthProfile.currentConditions.join(', ')}</p>
               </div>
             )}
 
             {healthProfile.currentMedications && healthProfile.currentMedications.length > 0 && (
               <div>
-                <p className="text-xs text-gray-500">Medications</p>
+                <p className="text-xs text-gray-500">{t('chat.medications')}</p>
                 <p className="text-gray-900">
                   {healthProfile.currentMedications.map((m: { name: string }) => m.name).join(', ')}
                 </p>
@@ -568,11 +575,11 @@ const PatientInfoSidebar: React.FC<PatientInfoSidebarProps> = ({ caseData, healt
 
             <div className="grid grid-cols-2 gap-2 pt-2 border-t">
               <div>
-                <p className="text-xs text-gray-500">Height</p>
+                <p className="text-xs text-gray-500">{t('chat.height')}</p>
                 <p className="text-gray-900">{healthProfile.height} cm</p>
               </div>
               <div>
-                <p className="text-xs text-gray-500">Weight</p>
+                <p className="text-xs text-gray-500">{t('chat.weight')}</p>
                 <p className="text-gray-900">{healthProfile.weight} kg</p>
               </div>
             </div>
@@ -582,12 +589,12 @@ const PatientInfoSidebar: React.FC<PatientInfoSidebarProps> = ({ caseData, healt
 
       {/* Payout Info */}
       <div className={`rounded-xl p-4 ${caseData.tier === 'priority' ? 'bg-amber-50' : 'bg-green-50'}`}>
-        <p className="text-xs font-medium text-gray-500 uppercase mb-1">Your Payout</p>
+        <p className="text-xs font-medium text-gray-500 uppercase mb-1">{t('chat.yourPayout')}</p>
         <p className={`text-2xl font-bold ${caseData.tier === 'priority' ? 'text-amber-600' : 'text-green-600'}`}>
           ${(caseData.doctorPayout / 100).toFixed(2)}
         </p>
         <p className="text-xs text-gray-500 mt-1">
-          {caseData.tier === 'priority' ? 'Priority Request' : 'Standard Consultation'}
+          {caseData.tier === 'priority' ? t('chat.priorityRequest') : t('chat.standardConsultation')}
         </p>
       </div>
     </div>
@@ -599,9 +606,10 @@ interface CompleteModalProps {
   caseData: ConsultationCase;
   onClose: () => void;
   onComplete: () => void;
+  t: (key: string, options?: Record<string, unknown>) => string;
 }
 
-const CompleteModal: React.FC<CompleteModalProps> = ({ caseData, onClose, onComplete }) => {
+const CompleteModal: React.FC<CompleteModalProps> = ({ caseData, onClose, onComplete, t }) => {
   const [notes, setNotes] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -616,7 +624,7 @@ const CompleteModal: React.FC<CompleteModalProps> = ({ caseData, onClose, onComp
       onComplete();
     } catch (err) {
       console.error('Error completing case:', err);
-      alert('Failed to complete consultation');
+      alert(t('chat.completeFailed'));
     } finally {
       setLoading(false);
     }
@@ -626,44 +634,44 @@ const CompleteModal: React.FC<CompleteModalProps> = ({ caseData, onClose, onComp
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden">
         <div className="bg-green-600 text-white px-6 py-4">
-          <h2 className="text-xl font-semibold">Complete Consultation</h2>
+          <h2 className="text-xl font-semibold">{t('chat.completeModal.title')}</h2>
         </div>
 
         <div className="p-6 space-y-4">
           <div className="bg-green-50 border border-green-200 rounded-lg p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="font-semibold text-gray-900">Consultation with {caseData.patientName}</p>
+                <p className="font-semibold text-gray-900">{t('chat.completeModal.consultationWith', { name: caseData.patientName })}</p>
                 <p className="text-sm text-gray-600">{caseData.chiefComplaint}</p>
               </div>
-              <div className="text-right">
+              <div className="text-end">
                 <p className="text-2xl font-bold text-green-600">
                   ${(caseData.doctorPayout / 100).toFixed(2)}
                 </p>
-                <p className="text-xs text-gray-500">Your earnings</p>
+                <p className="text-xs text-gray-500">{t('chat.completeModal.yourEarnings')}</p>
               </div>
             </div>
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Final Notes (Optional)
+              {t('chat.completeModal.finalNotes')}
             </label>
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              placeholder="Add any notes about this consultation..."
+              placeholder={t('chat.completeModal.notesPlaceholder')}
               rows={3}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
             />
           </div>
 
           <div className="bg-gray-50 rounded-lg p-4 text-sm text-gray-600">
-            <p className="font-medium text-gray-900 mb-1">What happens next:</p>
+            <p className="font-medium text-gray-900 mb-1">{t('chat.completeModal.whatHappensNext')}</p>
             <ul className="space-y-1">
-              <li>• The patient will be asked to rate their experience</li>
-              <li>• Your earnings will be added to your balance</li>
-              <li>• Payout is processed automatically on Monday</li>
+              <li>- {t('chat.completeModal.ratingPrompt')}</li>
+              <li>- {t('chat.completeModal.earningsAdded')}</li>
+              <li>- {t('chat.completeModal.payoutProcessed')}</li>
             </ul>
           </div>
 
@@ -673,7 +681,7 @@ const CompleteModal: React.FC<CompleteModalProps> = ({ caseData, onClose, onComp
               disabled={loading}
               className="flex-1 px-4 py-3 border border-gray-300 rounded-lg text-gray-700 font-semibold hover:bg-gray-50 transition disabled:opacity-50"
             >
-              Cancel
+              {t('chat.completeModal.cancel')}
             </button>
             <button
               onClick={handleComplete}
@@ -690,7 +698,7 @@ const CompleteModal: React.FC<CompleteModalProps> = ({ caseData, onClose, onComp
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               )}
-              Complete & Earn ${(caseData.doctorPayout / 100).toFixed(2)}
+              {t('chat.completeModal.completeAndEarn', { amount: `$${(caseData.doctorPayout / 100).toFixed(2)}` })}
             </button>
           </div>
         </div>

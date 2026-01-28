@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAdmin } from '../../contexts/AdminContext';
 import {
   ConversationsChart,
@@ -16,6 +17,7 @@ const dateRangeToDays: Record<DateRange, number> = {
 };
 
 const AnalyticsDashboard: React.FC = () => {
+  const { t } = useTranslation('admin');
   const { metrics, metricsLoading, analyticsData, analyticsLoading, refreshAnalytics } = useAdmin();
   const [dateRange, setDateRange] = useState<DateRange>('30d');
 
@@ -33,8 +35,8 @@ const AnalyticsDashboard: React.FC = () => {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Analytics</h1>
-          <p className="text-gray-500 mt-1">Track usage patterns and health trends</p>
+          <h1 className="text-2xl font-bold text-gray-900">{t('analytics.title')}</h1>
+          <p className="text-gray-500 mt-1">{t('analytics.description')}</p>
         </div>
 
         {/* Date Range Selector */}
@@ -49,7 +51,7 @@ const AnalyticsDashboard: React.FC = () => {
                   : 'text-gray-600 hover:bg-gray-100'
               }`}
             >
-              {range === '7d' ? '7 Days' : range === '30d' ? '30 Days' : '90 Days'}
+              {range === '7d' ? t('analytics.days7') : range === '30d' ? t('analytics.days30') : t('analytics.days90')}
             </button>
           ))}
         </div>
@@ -58,7 +60,7 @@ const AnalyticsDashboard: React.FC = () => {
       {/* Summary Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-white rounded-xl border border-gray-100 p-5">
-          <p className="text-sm text-gray-500 mb-1">Total Conversations</p>
+          <p className="text-sm text-gray-500 mb-1">{t('analytics.metrics.totalConversations')}</p>
           {metricsLoading ? (
             <div className="h-8 w-20 bg-gray-200 rounded animate-pulse" />
           ) : (
@@ -66,7 +68,7 @@ const AnalyticsDashboard: React.FC = () => {
           )}
         </div>
         <div className="bg-white rounded-xl border border-gray-100 p-5">
-          <p className="text-sm text-gray-500 mb-1">This Month</p>
+          <p className="text-sm text-gray-500 mb-1">{t('analytics.metrics.thisMonth')}</p>
           {metricsLoading ? (
             <div className="h-8 w-20 bg-gray-200 rounded animate-pulse" />
           ) : (
@@ -74,7 +76,7 @@ const AnalyticsDashboard: React.FC = () => {
           )}
         </div>
         <div className="bg-white rounded-xl border border-gray-100 p-5">
-          <p className="text-sm text-gray-500 mb-1">Active Users</p>
+          <p className="text-sm text-gray-500 mb-1">{t('analytics.metrics.activeUsers')}</p>
           {metricsLoading ? (
             <div className="h-8 w-20 bg-gray-200 rounded animate-pulse" />
           ) : (
@@ -82,7 +84,7 @@ const AnalyticsDashboard: React.FC = () => {
           )}
         </div>
         <div className="bg-white rounded-xl border border-gray-100 p-5">
-          <p className="text-sm text-gray-500 mb-1">Emergency Alerts</p>
+          <p className="text-sm text-gray-500 mb-1">{t('analytics.metrics.emergencyAlerts')}</p>
           {metricsLoading ? (
             <div className="h-8 w-20 bg-gray-200 rounded animate-pulse" />
           ) : (
@@ -96,9 +98,9 @@ const AnalyticsDashboard: React.FC = () => {
         {/* Conversations Over Time */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-gray-900">Conversations Over Time</h2>
+            <h2 className="text-lg font-semibold text-gray-900">{t('analytics.charts.conversationsOverTime')}</h2>
             <span className="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded">
-              Last {dateRangeToDays[dateRange]} days
+              {t('analytics.lastDays', { days: dateRangeToDays[dateRange] })}
             </span>
           </div>
           <ConversationsChart
@@ -110,9 +112,9 @@ const AnalyticsDashboard: React.FC = () => {
         {/* Most Common Symptoms */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-gray-900">Most Common Symptoms</h2>
+            <h2 className="text-lg font-semibold text-gray-900">{t('analytics.charts.mostCommonSymptoms')}</h2>
             <span className="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded">
-              Top mentions
+              {t('analytics.charts.topMentions')}
             </span>
           </div>
           <SymptomsChart
@@ -124,9 +126,9 @@ const AnalyticsDashboard: React.FC = () => {
         {/* Peak Usage Times */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-gray-900">Peak Usage Times</h2>
+            <h2 className="text-lg font-semibold text-gray-900">{t('analytics.charts.peakUsageTimes')}</h2>
             <span className="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded">
-              24-hour distribution
+              {t('analytics.charts.hourDistribution')}
             </span>
           </div>
           <UsageTimesChart
@@ -138,9 +140,9 @@ const AnalyticsDashboard: React.FC = () => {
         {/* Emergency Trends */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-gray-900">Emergency Flag Trends</h2>
+            <h2 className="text-lg font-semibold text-gray-900">{t('analytics.charts.emergencyFlagTrends')}</h2>
             <span className="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded">
-              Critical alerts
+              {t('analytics.charts.criticalAlerts')}
             </span>
           </div>
           <EmergencyTrendsChart
@@ -156,35 +158,35 @@ const AnalyticsDashboard: React.FC = () => {
           <svg className="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
           </svg>
-          Quick Insights
+          {t('analytics.insights.title')}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-white/60 rounded-lg p-4">
-            <p className="text-sm font-medium text-gray-700">Engagement Rate</p>
+            <p className="text-sm font-medium text-gray-700">{t('analytics.insights.engagementRate')}</p>
             <p className="text-2xl font-bold text-primary-700 mt-1">
               {metrics && metrics.totalUsers > 0
                 ? Math.round((metrics.activeUsers / metrics.totalUsers) * 100)
                 : 0}%
             </p>
-            <p className="text-xs text-gray-500 mt-1">Users active in last 7 days</p>
+            <p className="text-xs text-gray-500 mt-1">{t('analytics.insights.engagementDesc')}</p>
           </div>
           <div className="bg-white/60 rounded-lg p-4">
-            <p className="text-sm font-medium text-gray-700">Avg. Conversations/User</p>
+            <p className="text-sm font-medium text-gray-700">{t('analytics.insights.avgConversations')}</p>
             <p className="text-2xl font-bold text-primary-700 mt-1">
               {metrics && metrics.totalUsers > 0
                 ? (metrics.totalConversations / metrics.totalUsers).toFixed(1)
                 : 0}
             </p>
-            <p className="text-xs text-gray-500 mt-1">All time average</p>
+            <p className="text-xs text-gray-500 mt-1">{t('analytics.insights.avgConversationsDesc')}</p>
           </div>
           <div className="bg-white/60 rounded-lg p-4">
-            <p className="text-sm font-medium text-gray-700">Emergency Detection Rate</p>
+            <p className="text-sm font-medium text-gray-700">{t('analytics.insights.emergencyRate')}</p>
             <p className="text-2xl font-bold text-red-600 mt-1">
               {metrics && metrics.totalConversations > 0
                 ? ((metrics.emergencyFlags / metrics.totalConversations) * 100).toFixed(1)
                 : 0}%
             </p>
-            <p className="text-xs text-gray-500 mt-1">Conversations with alerts</p>
+            <p className="text-xs text-gray-500 mt-1">{t('analytics.insights.emergencyRateDesc')}</p>
           </div>
         </div>
       </div>
@@ -204,7 +206,7 @@ const AnalyticsDashboard: React.FC = () => {
           >
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
           </svg>
-          {analyticsLoading ? 'Refreshing...' : 'Refresh Data'}
+          {analyticsLoading ? t('analytics.refreshing') : t('analytics.refreshData')}
         </button>
       </div>
     </div>

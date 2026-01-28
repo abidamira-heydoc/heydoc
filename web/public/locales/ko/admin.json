@@ -4,68 +4,373 @@
     "analytics": "분석",
     "users": "사용자",
     "reports": "보고서",
-    "settings": "설정"
+    "settings": "설정",
+    "backToApp": "앱으로 돌아가기"
+  },
+  "layout": {
+    "loading": "관리자 대시보드 로딩 중...",
+    "organization": "조직",
+    "administrator": "관리자",
+    "logout": "로그아웃",
+    "heyDocAdmin": "HeyDoc 관리자"
   },
   "dashboard": {
     "title": "조직 대시보드",
-    "welcome": "안녕하세요, {{name}}님",
+    "welcome": "돌아오신 것을 환영합니다",
+    "welcomeWithName": "{{name}}님, 돌아오신 것을 환영합니다!",
+    "overview": "조직의 건강 지원 활동 개요입니다.",
     "stats": {
       "totalUsers": "전체 사용자",
       "activeUsers": "활성 사용자",
+      "activeUsersDays": "활성 사용자 (7일)",
       "totalConversations": "전체 대화",
-      "emergencyAlerts": "응급 알림"
+      "emergencyAlerts": "응급 알림",
+      "conversationsThisMonth": "이번 달 대화",
+      "emergencyFlags": "응급 플래그"
+    },
+    "quickActions": {
+      "title": "빠른 작업",
+      "viewAnalytics": "분석 보기",
+      "viewAnalyticsDesc": "상세 사용 차트 및 트렌드 보기",
+      "manageUsers": "사용자 관리",
+      "manageUsersDesc": "사용자 계정 추가, 삭제 또는 보기",
+      "generateReport": "보고서 생성",
+      "generateReportDesc": "리더십을 위한 PDF 영향 보고서 생성"
+    },
+    "recentActivity": {
+      "title": "최근 활동",
+      "comingSoon": "활동 피드 곧 제공 예정",
+      "trackActivity": "사용자 활동 및 중요 이벤트 추적"
     }
+  },
+  "oldDashboard": {
+    "title": "관리자 대시보드",
+    "backToChat": "채팅으로 돌아가기",
+    "accessDenied": "접근 거부",
+    "noAdminAccess": "이 페이지에 대한 관리자 권한이 없습니다.",
+    "goToChat": "채팅으로 이동",
+    "loading": "로딩 중...",
+    "userManagement": "사용자 관리",
+    "addUser": "사용자 추가",
+    "email": "이메일",
+    "password": "비밀번호",
+    "minCharacters": "최소 6자",
+    "createUser": "사용자 생성",
+    "creating": "생성 중...",
+    "cancel": "취소",
+    "role": "역할",
+    "created": "생성됨",
+    "actions": "작업",
+    "admin": "관리자",
+    "user": "사용자",
+    "you": "본인",
+    "delete": "삭제?",
+    "deleting": "삭제 중...",
+    "yes": "예",
+    "no": "아니오",
+    "noUsersYet": "아직 사용자가 없습니다. \"사용자 추가\"를 클릭하여 생성하세요.",
+    "totalUsers": "전체 사용자",
+    "admins": "관리자",
+    "regularUsers": "일반 사용자",
+    "emailRequired": "이메일과 비밀번호가 필요합니다",
+    "passwordMinLength": "비밀번호는 최소 6자 이상이어야 합니다",
+    "userCreated": "사용자 {{email}}이(가) 성공적으로 생성되었습니다!",
+    "userDeleted": "사용자가 성공적으로 삭제되었습니다",
+    "failedToLoadUsers": "사용자를 불러오는데 실패했습니다",
+    "failedToCreateUser": "사용자 생성에 실패했습니다",
+    "failedToDeleteUser": "사용자 삭제에 실패했습니다"
   },
   "users": {
     "title": "사용자 관리",
+    "description": "조직의 사용자 관리",
     "search": "사용자 검색...",
+    "searchByEmail": "이메일로 사용자 검색...",
     "addUser": "사용자 추가",
+    "addNewUser": "새 사용자 추가",
     "columns": {
+      "user": "사용자",
       "name": "이름",
       "email": "이메일",
       "role": "역할",
       "status": "상태",
+      "joined": "가입일",
       "lastActive": "마지막 활동",
+      "conversations": "대화",
       "actions": "작업"
     },
     "roles": {
       "user": "사용자",
       "orgAdmin": "조직 관리자",
       "platformAdmin": "플랫폼 관리자"
-    }
+    },
+    "filters": {
+      "all": "모든 사용자",
+      "active": "활성",
+      "inactive": "비활성"
+    },
+    "modal": {
+      "email": "이메일",
+      "emailPlaceholder": "user@example.com",
+      "password": "비밀번호",
+      "passwordPlaceholder": "최소 6자",
+      "cancel": "취소",
+      "createUser": "사용자 생성",
+      "creating": "생성 중..."
+    },
+    "delete": {
+      "confirm": "삭제?",
+      "yes": "예",
+      "no": "아니오",
+      "deleting": "..."
+    },
+    "actions": {
+      "viewDetails": "상세 보기 (곧 제공 예정)",
+      "deleteUser": "사용자 삭제"
+    },
+    "noResults": "\"{{query}}\"와(과) 일치하는 사용자가 없습니다",
+    "clearSearch": "검색 지우기",
+    "noUsers": "조직에 아직 사용자가 없습니다.",
+    "loadingUsers": "사용자 로딩 중...",
+    "showing": "{{total}}명 중 {{filtered}}명 표시",
+    "refresh": "새로고침",
+    "you": "본인",
+    "never": "없음",
+    "emailRequired": "이메일과 비밀번호가 필요합니다",
+    "passwordMinLength": "비밀번호는 최소 6자 이상이어야 합니다",
+    "userCreated": "사용자 {{email}}이(가) 성공적으로 생성되었습니다!",
+    "userDeleted": "사용자가 성공적으로 삭제되었습니다",
+    "failedToCreateUser": "사용자 생성에 실패했습니다",
+    "failedToDeleteUser": "사용자 삭제에 실패했습니다"
   },
   "analytics": {
-    "title": "분석 대시보드",
+    "title": "분석",
+    "description": "사용 패턴 및 건강 트렌드 추적",
     "dateRange": "기간 선택",
+    "days7": "7일",
+    "days30": "30일",
+    "days90": "90일",
+    "lastDays": "최근 {{days}}일",
     "metrics": {
+      "totalConversations": "전체 대화",
+      "thisMonth": "이번 달",
+      "activeUsers": "활성 사용자",
+      "emergencyAlerts": "응급 알림",
       "conversations": "대화",
       "messages": "메시지",
       "avgSessionTime": "평균 세션 시간",
       "userSatisfaction": "사용자 만족도"
-    }
+    },
+    "charts": {
+      "conversationsOverTime": "시간별 대화",
+      "mostCommonSymptoms": "가장 흔한 증상",
+      "topMentions": "주요 언급",
+      "peakUsageTimes": "피크 사용 시간",
+      "hourDistribution": "24시간 분포",
+      "emergencyFlagTrends": "응급 플래그 트렌드",
+      "criticalAlerts": "중요 알림"
+    },
+    "insights": {
+      "title": "빠른 인사이트",
+      "engagementRate": "참여율",
+      "engagementDesc": "지난 7일 활성 사용자",
+      "avgConversations": "평균 대화/사용자",
+      "avgConversationsDesc": "전체 평균",
+      "emergencyRate": "응급 감지율",
+      "emergencyRateDesc": "알림이 있는 대화"
+    },
+    "refreshData": "데이터 새로고침",
+    "refreshing": "새로고침 중..."
   },
   "reports": {
     "title": "영향 보고서",
+    "description": "리더십과 공유할 보고서 생성",
     "generate": "보고서 생성",
     "download": "다운로드",
+    "downloadPDF": "PDF 다운로드",
+    "generating": "생성 중...",
     "types": {
-      "monthly": "월간 요약",
+      "monthly": "월간 보고서",
       "quarterly": "분기 보고서",
       "annual": "연간 보고서"
+    },
+    "preview": {
+      "title": "HeyDoc 영향 보고서",
+      "reportPeriod": "보고 기간: {{period}}"
+    },
+    "sections": {
+      "executiveSummary": "요약",
+      "summaryText": "이 보고서는 조직 내 HeyDoc 사용에 대한 개요를 제공하며, 보고 기간 동안의 주요 지표, 잠재적 비용 절감 및 건강 영향 지표를 강조합니다.",
+      "keyMetrics": "주요 지표",
+      "estimatedCostSavings": "예상 비용 절감",
+      "estimatedSavings": "예상 절감액",
+      "savingsDescription": "불필요한 응급실 또는 긴급 치료 방문을 피할 수 있었던 건강 상담당 $50 예상 절감을 기준으로 합니다.",
+      "emergencyDetectionImpact": "응급 감지 영향",
+      "emergencySituationsDetected": "{{count}}건의 응급 상황 감지",
+      "emergencyDescription": "HeyDoc의 AI가 잠재적 응급 상황을 감지하고 사용자에게 즉시 응급 치료를 받도록 안내했습니다. 이러한 조기 개입은 더 나은 건강 결과에 기여하고 잠재적으로 생명을 구했을 수 있습니다.",
+      "usageInsights": "사용 인사이트"
+    },
+    "footer": {
+      "generatedBy": "HeyDoc 관리자 대시보드에서 생성",
+      "reportDate": "보고서 날짜: {{date}}"
+    },
+    "info": {
+      "title": "이 보고서에 대하여",
+      "description": "\"PDF 다운로드\"를 클릭하여 리더십, 이사회 구성원 또는 이해관계자와 공유하여 조직 내 HeyDoc의 영향을 보여줄 수 있는 전문 PDF 문서를 생성하세요."
+    },
+    "pdf": {
+      "title": "HeyDoc 영향 보고서",
+      "executiveSummary": "요약",
+      "summaryText": "이 보고서는 {{orgName}} 내 HeyDoc 사용에 대한 개요를 제공하며, 보고 기간 동안의 주요 지표, 잠재적 비용 절감 및 건강 영향 지표를 강조합니다. HeyDoc은 팀이 즉각적인 건강 안내 및 응급 감지에 접근하도록 돕고 있습니다.",
+      "keyMetrics": "주요 지표",
+      "totalUsers": "전체 사용자",
+      "conversations": "대화",
+      "emergencyAlerts": "응급 알림",
+      "activeUsers": "활성 사용자",
+      "estimatedCostSavings": "예상 비용 절감",
+      "savingsNote1": "불필요한 응급실 또는 긴급 치료 방문을 피할 수 있었던",
+      "savingsNote2": "건강 상담당 $50 예상 절감을 기준으로 합니다.",
+      "emergencyDetectionImpact": "응급 감지 영향",
+      "emergencySituationsDetected": "{{count}}건의 응급 상황 감지",
+      "emergencyNote": "HeyDoc의 AI가 잠재적 응급 상황을 감지하고 사용자에게 즉시 응급 치료를 받도록 안내했습니다. 이러한 조기 개입은 더 나은 건강 결과에 기여했을 수 있습니다.",
+      "usageInsights": "사용 인사이트",
+      "engagementRate": "사용자 참여율",
+      "engagementRateDesc": "지난 7일 활성 사용자",
+      "avgConversations": "사용자당 평균 대화",
+      "avgConversationsDesc": "전체 평균",
+      "emergencyRate": "응급 감지율",
+      "emergencyRateDesc": "알림이 있는 대화",
+      "mostCommonHealthTopics": "가장 흔한 건강 주제",
+      "generatedBy": "HeyDoc 관리자 대시보드에서 생성",
+      "page": "{{total}} 중 {{current}} 페이지"
     }
   },
   "settings": {
-    "title": "조직 설정",
+    "title": "설정",
+    "description": "조직 설정 관리",
     "general": {
-      "title": "일반 설정",
+      "title": "조직 정보",
       "orgName": "조직명",
+      "orgNameHint": "조직명 변경은 고객 지원에 문의하세요",
+      "inviteCode": "초대 코드",
+      "copyInviteCode": "초대 코드 복사",
+      "inviteCodeCopied": "초대 코드가 클립보드에 복사되었습니다!",
+      "orgType": "조직 유형",
+      "status": "상태",
+      "active": "활성",
+      "inactive": "비활성",
       "orgCode": "조직 코드",
       "maxUsers": "최대 사용자 수"
+    },
+    "adminAccount": {
+      "title": "관리자 계정",
+      "emailAddress": "이메일 주소",
+      "role": "역할",
+      "administrator": "관리자"
     },
     "notifications": {
       "title": "알림 설정",
       "emailAlerts": "이메일 알림",
-      "emergencyAlerts": "응급 알림"
+      "emergencyAlerts": "응급 알림",
+      "emergencyAlertsDesc": "응급 상황 감지 시 이메일 받기",
+      "weeklyReports": "주간 보고서",
+      "weeklyReportsDesc": "이메일로 주간 사용 요약 받기",
+      "newUserNotifications": "신규 사용자 알림",
+      "newUserNotificationsDesc": "신규 사용자 가입 시 알림 받기",
+      "comingSoon": "알림 설정은 향후 업데이트에서 제공될 예정입니다."
+    },
+    "dangerZone": {
+      "title": "위험 구역",
+      "exportData": "모든 데이터 내보내기",
+      "exportDataDesc": "모든 조직 데이터를 JSON으로 다운로드",
+      "export": "내보내기",
+      "deleteOrg": "조직 삭제",
+      "deleteOrgDesc": "조직 및 모든 데이터 영구 삭제",
+      "delete": "삭제",
+      "contactSupport": "이러한 작업은 HeyDoc 고객 지원에 문의가 필요합니다."
+    },
+    "implementation": {
+      "title": "설정 구현",
+      "description": "이 MVP에서 대부분의 설정은 읽기 전용입니다. 편집 가능한 설정(알림, 데이터 내보내기)은 필요에 따라 향후 단계에서 구현될 예정입니다."
     }
+  },
+  "doctorApproval": {
+    "title": "의사 관리",
+    "description": "의사 신청 검토 및 관리",
+    "stats": {
+      "pendingReview": "검토 대기 중",
+      "approvedDoctors": "승인된 의사",
+      "rejected": "거부됨"
+    },
+    "tabs": {
+      "pending": "대기 중",
+      "approved": "승인됨",
+      "rejected": "거부됨"
+    },
+    "table": {
+      "doctor": "의사",
+      "specialties": "전문 분야",
+      "license": "면허",
+      "applied": "신청일",
+      "actions": "작업",
+      "viewDetails": "상세 보기"
+    },
+    "loading": "의사 로딩 중...",
+    "noDoctors": "{{status}} 의사가 없습니다",
+    "modal": {
+      "title": "의사 상세 정보",
+      "yearsExperience": "{{years}}년 경력",
+      "bio": "소개",
+      "specialties": "전문 분야",
+      "licenseNumber": "면허 번호",
+      "licenseState": "면허 발급 지역",
+      "licensePhoto": "면허 사진",
+      "clickToView": "클릭하여 전체 크기 보기",
+      "rejectionReason": "거부 사유",
+      "rejectionReasonInput": "거부 사유 (거부 시)",
+      "rejectionPlaceholder": "거부 사유를 입력하세요..."
+    },
+    "actions": {
+      "approve": "승인",
+      "reject": "거부",
+      "suspend": "의사 정지",
+      "close": "닫기",
+      "processing": "처리 중..."
+    },
+    "messages": {
+      "approved": "{{name}}이(가) 승인되었습니다!",
+      "rejected": "{{name}}이(가) 거부되었습니다.",
+      "suspended": "{{name}}이(가) 정지되었습니다.",
+      "provideReason": "거부 사유를 입력해 주세요",
+      "failedToLoad": "의사를 불러오는데 실패했습니다",
+      "failedToApprove": "의사 승인에 실패했습니다",
+      "failedToReject": "의사 거부에 실패했습니다",
+      "failedToSuspend": "의사 정지에 실패했습니다"
+    }
+  },
+  "protectedRoute": {
+    "verifying": "관리자 권한 확인 중...",
+    "accessDenied": "접근 거부",
+    "noAccess": "조직 관리자 권한이 없습니다. 오류라고 생각되시면 조직 관리자 또는 플랫폼 고객 지원에 문의하세요.",
+    "goToChat": "채팅으로 이동"
+  },
+  "common": {
+    "loading": "로딩 중...",
+    "error": "오류",
+    "success": "성공",
+    "save": "저장",
+    "cancel": "취소",
+    "close": "닫기",
+    "confirm": "확인",
+    "delete": "삭제",
+    "edit": "편집",
+    "view": "보기",
+    "search": "검색",
+    "filter": "필터",
+    "refresh": "새로고침",
+    "back": "뒤로",
+    "next": "다음",
+    "previous": "이전",
+    "yes": "예",
+    "no": "아니오"
   }
 }

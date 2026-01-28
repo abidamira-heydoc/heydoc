@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
@@ -25,6 +26,7 @@ const defaultSettings: NotificationSettings = {
 };
 
 const DoctorSettings: React.FC = () => {
+  const { t } = useTranslation('doctor');
   const { user } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -78,7 +80,7 @@ const DoctorSettings: React.FC = () => {
       setTimeout(() => setSuccess(false), 3000);
     } catch (err) {
       console.error('Error saving settings:', err);
-      setError('Failed to save settings');
+      setError(t('settings.failedToSave'));
     } finally {
       setSaving(false);
     }
@@ -98,7 +100,7 @@ const DoctorSettings: React.FC = () => {
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto" />
-          <p className="mt-4 text-gray-600">Loading settings...</p>
+          <p className="mt-4 text-gray-600">{t('settings.loadingSettings')}</p>
         </div>
       </div>
     );
@@ -108,8 +110,8 @@ const DoctorSettings: React.FC = () => {
     <div className="max-w-3xl mx-auto space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
-        <p className="text-gray-600">Manage your notification preferences and account</p>
+        <h1 className="text-2xl font-bold text-gray-900">{t('settings.title')}</h1>
+        <p className="text-gray-600">{t('settings.subtitle')}</p>
       </div>
 
       {/* Success/Error Messages */}
@@ -118,7 +120,7 @@ const DoctorSettings: React.FC = () => {
           <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
-          <p className="text-green-700">Settings saved successfully!</p>
+          <p className="text-green-700">{t('settings.settingsSaved')}</p>
         </div>
       )}
 
@@ -140,16 +142,16 @@ const DoctorSettings: React.FC = () => {
             </svg>
           </div>
           <div>
-            <h2 className="text-lg font-semibold text-gray-900">Email Notifications</h2>
-            <p className="text-sm text-gray-500">Choose which emails you'd like to receive</p>
+            <h2 className="text-lg font-semibold text-gray-900">{t('settings.notifications.title')}</h2>
+            <p className="text-sm text-gray-500">{t('settings.notifications.subtitle')}</p>
           </div>
         </div>
 
         <div className="space-y-4">
           <label className="flex items-center justify-between cursor-pointer py-2">
             <div>
-              <p className="font-medium text-gray-900">New Case Available</p>
-              <p className="text-sm text-gray-500">Get notified when a new case is added to your queue</p>
+              <p className="font-medium text-gray-900">{t('settings.notifications.emailNewCase')}</p>
+              <p className="text-sm text-gray-500">{t('settings.notifications.emailNewCaseDesc')}</p>
             </div>
             <button
               type="button"
@@ -159,15 +161,15 @@ const DoctorSettings: React.FC = () => {
               }`}
             >
               <span className={`absolute top-1 w-4 h-4 bg-white rounded-full transition ${
-                settings.emailNewCase ? 'left-7' : 'left-1'
+                settings.emailNewCase ? 'start-7' : 'start-1'
               }`} />
             </button>
           </label>
 
           <label className="flex items-center justify-between cursor-pointer py-2">
             <div>
-              <p className="font-medium text-gray-900">Case Assigned</p>
-              <p className="text-sm text-gray-500">Notification when a priority case is assigned to you</p>
+              <p className="font-medium text-gray-900">{t('settings.notifications.emailCaseAssigned')}</p>
+              <p className="text-sm text-gray-500">{t('settings.notifications.emailCaseAssignedDesc')}</p>
             </div>
             <button
               type="button"
@@ -177,15 +179,15 @@ const DoctorSettings: React.FC = () => {
               }`}
             >
               <span className={`absolute top-1 w-4 h-4 bg-white rounded-full transition ${
-                settings.emailCaseAssigned ? 'left-7' : 'left-1'
+                settings.emailCaseAssigned ? 'start-7' : 'start-1'
               }`} />
             </button>
           </label>
 
           <label className="flex items-center justify-between cursor-pointer py-2">
             <div>
-              <p className="font-medium text-gray-900">Payout Sent</p>
-              <p className="text-sm text-gray-500">Confirmation when your weekly payout is processed</p>
+              <p className="font-medium text-gray-900">{t('settings.notifications.emailPayoutSent')}</p>
+              <p className="text-sm text-gray-500">{t('settings.notifications.emailPayoutSentDesc')}</p>
             </div>
             <button
               type="button"
@@ -195,15 +197,15 @@ const DoctorSettings: React.FC = () => {
               }`}
             >
               <span className={`absolute top-1 w-4 h-4 bg-white rounded-full transition ${
-                settings.emailPayoutSent ? 'left-7' : 'left-1'
+                settings.emailPayoutSent ? 'start-7' : 'start-1'
               }`} />
             </button>
           </label>
 
           <label className="flex items-center justify-between cursor-pointer py-2">
             <div>
-              <p className="font-medium text-gray-900">Weekly Digest</p>
-              <p className="text-sm text-gray-500">Summary of your weekly cases and earnings</p>
+              <p className="font-medium text-gray-900">{t('settings.notifications.emailWeeklyDigest')}</p>
+              <p className="text-sm text-gray-500">{t('settings.notifications.emailWeeklyDigestDesc')}</p>
             </div>
             <button
               type="button"
@@ -213,7 +215,7 @@ const DoctorSettings: React.FC = () => {
               }`}
             >
               <span className={`absolute top-1 w-4 h-4 bg-white rounded-full transition ${
-                settings.emailWeeklyDigest ? 'left-7' : 'left-1'
+                settings.emailWeeklyDigest ? 'start-7' : 'start-1'
               }`} />
             </button>
           </label>
@@ -229,16 +231,16 @@ const DoctorSettings: React.FC = () => {
             </svg>
           </div>
           <div>
-            <h2 className="text-lg font-semibold text-gray-900">Push Notifications</h2>
-            <p className="text-sm text-gray-500">Real-time alerts on your device</p>
+            <h2 className="text-lg font-semibold text-gray-900">{t('settings.push.title')}</h2>
+            <p className="text-sm text-gray-500">{t('settings.push.subtitle')}</p>
           </div>
         </div>
 
         <div className="space-y-4">
           <label className="flex items-center justify-between cursor-pointer py-2">
             <div>
-              <p className="font-medium text-gray-900">New Cases</p>
-              <p className="text-sm text-gray-500">Instant notification when cases become available</p>
+              <p className="font-medium text-gray-900">{t('settings.push.pushNewCase')}</p>
+              <p className="text-sm text-gray-500">{t('settings.push.pushNewCaseDesc')}</p>
             </div>
             <button
               type="button"
@@ -248,15 +250,15 @@ const DoctorSettings: React.FC = () => {
               }`}
             >
               <span className={`absolute top-1 w-4 h-4 bg-white rounded-full transition ${
-                settings.pushNewCase ? 'left-7' : 'left-1'
+                settings.pushNewCase ? 'start-7' : 'start-1'
               }`} />
             </button>
           </label>
 
           <label className="flex items-center justify-between cursor-pointer py-2">
             <div>
-              <p className="font-medium text-gray-900">Patient Messages</p>
-              <p className="text-sm text-gray-500">Alert when a patient sends you a message</p>
+              <p className="font-medium text-gray-900">{t('settings.push.pushMessages')}</p>
+              <p className="text-sm text-gray-500">{t('settings.push.pushMessagesDesc')}</p>
             </div>
             <button
               type="button"
@@ -266,7 +268,7 @@ const DoctorSettings: React.FC = () => {
               }`}
             >
               <span className={`absolute top-1 w-4 h-4 bg-white rounded-full transition ${
-                settings.pushMessages ? 'left-7' : 'left-1'
+                settings.pushMessages ? 'start-7' : 'start-1'
               }`} />
             </button>
           </label>
@@ -286,17 +288,17 @@ const DoctorSettings: React.FC = () => {
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
               </svg>
-              Saving...
+              {t('profile.saving')}
             </>
           ) : (
-            'Save Preferences'
+            t('settings.savePreferences')
           )}
         </button>
       </div>
 
       {/* Account Section */}
       <div className="bg-white rounded-xl border border-gray-200 p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Account</h2>
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('settings.account.title')}</h2>
 
         <div className="space-y-4">
           {/* Stripe Dashboard Link */}
@@ -313,8 +315,8 @@ const DoctorSettings: React.FC = () => {
                 </svg>
               </div>
               <div>
-                <p className="font-medium text-gray-900">Stripe Dashboard</p>
-                <p className="text-sm text-gray-500">Manage payouts, view 1099 forms</p>
+                <p className="font-medium text-gray-900">{t('settings.account.stripeDashboard')}</p>
+                <p className="text-sm text-gray-500">{t('settings.account.stripeDashboardDesc')}</p>
               </div>
             </div>
             <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -334,8 +336,8 @@ const DoctorSettings: React.FC = () => {
                 </svg>
               </div>
               <div>
-                <p className="font-medium text-gray-900">Help & Support</p>
-                <p className="text-sm text-gray-500">Contact us with questions or issues</p>
+                <p className="font-medium text-gray-900">{t('settings.account.helpSupport')}</p>
+                <p className="text-sm text-gray-500">{t('settings.account.helpSupportDesc')}</p>
               </div>
             </div>
             <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -354,9 +356,9 @@ const DoctorSettings: React.FC = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                 </svg>
               </div>
-              <div className="text-left">
-                <p className="font-medium text-red-700">Sign Out</p>
-                <p className="text-sm text-red-500">Log out of your account</p>
+              <div className="text-start">
+                <p className="font-medium text-red-700">{t('settings.account.signOut')}</p>
+                <p className="text-sm text-red-500">{t('settings.account.signOutDesc')}</p>
               </div>
             </div>
             <svg className="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -376,20 +378,20 @@ const DoctorSettings: React.FC = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                 </svg>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Sign Out?</h3>
-              <p className="text-gray-500 mb-6">Are you sure you want to sign out of your account?</p>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('settings.logoutModal.title')}</h3>
+              <p className="text-gray-500 mb-6">{t('settings.logoutModal.message')}</p>
               <div className="flex gap-3">
                 <button
                   onClick={() => setShowLogoutConfirm(false)}
                   className="flex-1 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-lg transition"
                 >
-                  Cancel
+                  {t('settings.logoutModal.cancel')}
                 </button>
                 <button
                   onClick={handleLogout}
                   className="flex-1 px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition"
                 >
-                  Sign Out
+                  {t('settings.logoutModal.signOut')}
                 </button>
               </div>
             </div>

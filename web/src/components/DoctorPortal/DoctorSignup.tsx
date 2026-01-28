@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
@@ -17,6 +18,7 @@ const US_STATES = [
 ];
 
 const DoctorSignup: React.FC = () => {
+  const { t } = useTranslation('doctor');
   const navigate = useNavigate();
 
   // Form state
@@ -63,13 +65,13 @@ const DoctorSignup: React.FC = () => {
 
     // Validate file type
     if (!file.type.startsWith('image/')) {
-      setError('Please upload an image file');
+      setError(t('auth.signup.validation.imageFile'));
       return;
     }
 
     // Validate file size (10MB max)
     if (file.size > 10 * 1024 * 1024) {
-      setError('File must be less than 10MB');
+      setError(t('auth.signup.validation.fileSizeLimit'));
       return;
     }
 
@@ -111,27 +113,27 @@ const DoctorSignup: React.FC = () => {
   };
 
   const validateStep1 = () => {
-    if (!name.trim()) return 'Please enter your full name';
-    if (!email.trim()) return 'Please enter your email';
-    if (!password) return 'Please enter a password';
-    if (password.length < 8) return 'Password must be at least 8 characters';
-    if (password !== confirmPassword) return 'Passwords do not match';
+    if (!name.trim()) return t('auth.signup.validation.enterName');
+    if (!email.trim()) return t('auth.signup.validation.enterEmail');
+    if (!password) return t('auth.signup.validation.enterPassword');
+    if (password.length < 8) return t('auth.signup.validation.passwordMinLength');
+    if (password !== confirmPassword) return t('auth.signup.validation.passwordsNotMatch');
     return null;
   };
 
   const validateStep2 = () => {
-    if (specialties.length === 0) return 'Please select at least one specialty';
-    if (!yearsExperience) return 'Please enter years of experience';
-    if (!licenseNumber.trim()) return 'Please enter your license number';
-    if (!licenseState) return 'Please select your license state';
+    if (specialties.length === 0) return t('auth.signup.validation.selectSpecialty');
+    if (!yearsExperience) return t('auth.signup.validation.enterYearsExperience');
+    if (!licenseNumber.trim()) return t('auth.signup.validation.enterLicenseNumber');
+    if (!licenseState) return t('auth.signup.validation.selectLicenseState');
     return null;
   };
 
   const validateStep3 = () => {
-    if (!licenseFile) return 'Please upload your medical license';
-    if (!photoFile) return 'Please upload a profile photo';
-    if (!bio.trim()) return 'Please enter a short bio';
-    if (bio.length > 250) return 'Bio must be 250 characters or less';
+    if (!licenseFile) return t('auth.signup.validation.uploadLicense');
+    if (!photoFile) return t('auth.signup.validation.uploadPhoto');
+    if (!bio.trim()) return t('auth.signup.validation.enterBio');
+    if (bio.length > 250) return t('auth.signup.validation.bioMaxLength');
     return null;
   };
 
@@ -209,7 +211,7 @@ const DoctorSignup: React.FC = () => {
     } catch (err: any) {
       console.error('Signup error:', err);
       if (err.code === 'auth/email-already-in-use') {
-        setError('An account with this email already exists');
+        setError(t('auth.signup.validation.emailInUse'));
       } else {
         setError(err.message || 'Failed to create account');
       }
@@ -234,10 +236,10 @@ const DoctorSignup: React.FC = () => {
             <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <span className="text-white font-medium">Doctor Portal</span>
+            <span className="text-white font-medium">{t('layout.doctorPortal')}</span>
           </div>
-          <h1 className="text-4xl font-bold text-white mb-2">Join HeyDoc</h1>
-          <p className="text-blue-100">Start earning by helping patients on your own schedule</p>
+          <h1 className="text-4xl font-bold text-white mb-2">{t('auth.signup.title')}</h1>
+          <p className="text-blue-100">{t('auth.signup.subtitle')}</p>
         </div>
 
         {/* Progress Steps */}
@@ -279,51 +281,51 @@ const DoctorSignup: React.FC = () => {
             {/* Step 1: Account Info */}
             {step === 1 && (
               <div className="space-y-5">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Account Information</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">{t('auth.signup.accountInfo')}</h2>
 
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Full Name (as on license)
+                    {t('auth.signup.fullName')}
                   </label>
                   <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                    placeholder="Dr. Jane Smith"
+                    placeholder={t('auth.signup.fullNamePlaceholder')}
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Email Address
+                    {t('auth.signup.email')}
                   </label>
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                    placeholder="doctor@example.com"
+                    placeholder={t('auth.signup.emailPlaceholder')}
                   />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Password
+                      {t('auth.signup.password')}
                     </label>
                     <div className="relative">
                       <input
                         type={showPassword ? 'text' : 'password'}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="w-full px-4 py-3 pr-12 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                        placeholder="Min 8 characters"
+                        className="w-full px-4 py-3 pe-12 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                        placeholder={t('auth.signup.passwordPlaceholder')}
                       />
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                        className="absolute end-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
                       >
                         {showPassword ? (
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -341,14 +343,14 @@ const DoctorSignup: React.FC = () => {
 
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Confirm Password
+                      {t('auth.signup.confirmPassword')}
                     </label>
                     <input
                       type={showPassword ? 'text' : 'password'}
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                      placeholder="Confirm password"
+                      placeholder={t('auth.signup.confirmPasswordPlaceholder')}
                     />
                   </div>
                 </div>
@@ -358,11 +360,11 @@ const DoctorSignup: React.FC = () => {
             {/* Step 2: Professional Info */}
             {step === 2 && (
               <div className="space-y-5">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Professional Information</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">{t('auth.signup.professionalInfo')}</h2>
 
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-3">
-                    Specialties (select all that apply)
+                    {t('auth.signup.specialties')}
                   </label>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                     {(Object.entries(SPECIALTY_LABELS) as [DoctorSpecialty, string][]).map(([key, label]) => (
@@ -384,7 +386,7 @@ const DoctorSignup: React.FC = () => {
 
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Years of Experience
+                    {t('auth.signup.yearsExperience')}
                   </label>
                   <input
                     type="number"
@@ -393,34 +395,34 @@ const DoctorSignup: React.FC = () => {
                     value={yearsExperience}
                     onChange={(e) => setYearsExperience(e.target.value)}
                     className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                    placeholder="e.g., 10"
+                    placeholder={t('auth.signup.yearsExperiencePlaceholder')}
                   />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Medical License Number
+                      {t('auth.signup.licenseNumber')}
                     </label>
                     <input
                       type="text"
                       value={licenseNumber}
                       onChange={(e) => setLicenseNumber(e.target.value)}
                       className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                      placeholder="e.g., MD123456"
+                      placeholder={t('auth.signup.licenseNumberPlaceholder')}
                     />
                   </div>
 
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      License State
+                      {t('auth.signup.licenseState')}
                     </label>
                     <select
                       value={licenseState}
                       onChange={(e) => setLicenseState(e.target.value)}
                       className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
                     >
-                      <option value="">Select state</option>
+                      <option value="">{t('auth.signup.selectState')}</option>
                       {US_STATES.map((state) => (
                         <option key={state} value={state}>{state}</option>
                       ))}
@@ -433,13 +435,13 @@ const DoctorSignup: React.FC = () => {
             {/* Step 3: Documents & Bio */}
             {step === 3 && (
               <div className="space-y-5">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Documents & Profile</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">{t('auth.signup.documentsProfile')}</h2>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   {/* License Upload */}
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Medical License Photo
+                      {t('auth.signup.licensePhoto')}
                     </label>
                     <input
                       ref={licenseInputRef}
@@ -461,7 +463,7 @@ const DoctorSignup: React.FC = () => {
                             setLicenseFile(null);
                             setLicensePreview(null);
                           }}
-                          className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
+                          className="absolute top-2 end-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
                         >
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -477,8 +479,8 @@ const DoctorSignup: React.FC = () => {
                         <svg className="w-12 h-12 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
-                        <span className="font-medium">Upload License</span>
-                        <span className="text-sm text-gray-400">JPG, PNG, HEIC up to 10MB</span>
+                        <span className="font-medium">{t('auth.signup.uploadLicense')}</span>
+                        <span className="text-sm text-gray-400">{t('auth.signup.licenseHint')}</span>
                       </button>
                     )}
                   </div>
@@ -486,7 +488,7 @@ const DoctorSignup: React.FC = () => {
                   {/* Photo Upload */}
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Profile Photo
+                      {t('auth.signup.profilePhoto')}
                     </label>
                     <input
                       ref={photoInputRef}
@@ -508,7 +510,7 @@ const DoctorSignup: React.FC = () => {
                             setPhotoFile(null);
                             setPhotoPreview(null);
                           }}
-                          className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
+                          className="absolute top-2 end-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
                         >
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -524,8 +526,8 @@ const DoctorSignup: React.FC = () => {
                         <svg className="w-12 h-12 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
-                        <span className="font-medium">Upload Photo</span>
-                        <span className="text-sm text-gray-400">Professional headshot</span>
+                        <span className="font-medium">{t('auth.signup.uploadPhoto')}</span>
+                        <span className="text-sm text-gray-400">{t('auth.signup.photoHint')}</span>
                       </button>
                     )}
                   </div>
@@ -533,7 +535,7 @@ const DoctorSignup: React.FC = () => {
 
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Short Bio ({bio.length}/250 characters)
+                    {t('auth.signup.shortBio', { count: bio.length })}
                   </label>
                   <textarea
                     value={bio}
@@ -541,7 +543,7 @@ const DoctorSignup: React.FC = () => {
                     maxLength={250}
                     rows={4}
                     className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition resize-none"
-                    placeholder="Tell patients about your background and approach to care..."
+                    placeholder={t('auth.signup.bioPlaceholder')}
                   />
                 </div>
               </div>
@@ -555,7 +557,7 @@ const DoctorSignup: React.FC = () => {
                   onClick={() => setStep(step - 1)}
                   className="px-6 py-3 text-gray-600 font-semibold hover:text-gray-800 transition"
                 >
-                  Back
+                  {t('common.back')}
                 </button>
               ) : (
                 <div />
@@ -567,7 +569,7 @@ const DoctorSignup: React.FC = () => {
                   onClick={handleNext}
                   className="px-8 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition"
                 >
-                  Continue
+                  {t('common.continue')}
                 </button>
               ) : (
                 <button
@@ -579,11 +581,11 @@ const DoctorSignup: React.FC = () => {
                     <>
                       <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white" />
                       {uploadProgress > 0 && uploadProgress < 100
-                        ? `Uploading... ${uploadProgress}%`
-                        : 'Creating Account...'}
+                        ? t('auth.signup.uploadingProgress', { progress: uploadProgress })
+                        : t('auth.signup.creatingAccount')}
                     </>
                   ) : (
-                    'Submit Application'
+                    t('auth.signup.button')
                   )}
                 </button>
               )}
@@ -592,9 +594,9 @@ const DoctorSignup: React.FC = () => {
 
           <div className="mt-6 text-center">
             <p className="text-gray-600">
-              Already have an account?{' '}
+              {t('auth.signup.alreadyHaveAccount')}{' '}
               <Link to="/doctor/login" className="text-blue-600 hover:text-blue-700 font-semibold">
-                Sign In
+                {t('auth.signup.signIn')}
               </Link>
             </p>
           </div>
@@ -604,15 +606,15 @@ const DoctorSignup: React.FC = () => {
         <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
             <div className="text-3xl font-bold text-white mb-1">$20-$36</div>
-            <div className="text-blue-100">Per consultation</div>
+            <div className="text-blue-100">{t('auth.signup.perConsultation')}</div>
           </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
-            <div className="text-3xl font-bold text-white mb-1">Flexible</div>
-            <div className="text-blue-100">Set your own hours</div>
+            <div className="text-3xl font-bold text-white mb-1">{t('auth.signup.flexible')}</div>
+            <div className="text-blue-100">{t('auth.signup.setYourHours')}</div>
           </div>
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
-            <div className="text-3xl font-bold text-white mb-1">Weekly</div>
-            <div className="text-blue-100">Automatic payouts</div>
+            <div className="text-3xl font-bold text-white mb-1">{t('auth.signup.weekly')}</div>
+            <div className="text-blue-100">{t('auth.signup.automaticPayouts')}</div>
           </div>
         </div>
       </div>

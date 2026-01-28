@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { collection, query, where, orderBy, getDocs, limit } from 'firebase/firestore';
 import { httpsCallable } from 'firebase/functions';
 import { db, functions } from '../../config/firebase';
@@ -18,6 +19,7 @@ interface EarningsData {
 }
 
 const EarningsDashboard: React.FC = () => {
+  const { t } = useTranslation('doctor');
   const { user } = useAuth();
   const { doctor } = useDoctor();
 
@@ -152,7 +154,7 @@ const EarningsDashboard: React.FC = () => {
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto" />
-          <p className="mt-4 text-gray-600">Loading earnings...</p>
+          <p className="mt-4 text-gray-600">{t('earnings.loadingEarnings')}</p>
         </div>
       </div>
     );
@@ -168,15 +170,15 @@ const EarningsDashboard: React.FC = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Connect Your Bank First</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('earnings.connectBankFirst')}</h2>
           <p className="text-gray-600 mb-6">
-            To view earnings and receive payouts, you need to connect your bank account via Stripe.
+            {t('earnings.connectBankMessage')}
           </p>
           <Link
             to="/doctor/payments/connect"
             className="inline-block w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-lg transition"
           >
-            Connect with Stripe
+            {t('earnings.connectWithStripe')}
           </Link>
         </div>
       </div>
@@ -188,12 +190,12 @@ const EarningsDashboard: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Earnings</h1>
-          <p className="text-gray-600">Track your consultations and payouts</p>
+          <h1 className="text-2xl font-bold text-gray-900">{t('earnings.title')}</h1>
+          <p className="text-gray-600">{t('earnings.subtitle')}</p>
         </div>
         <div className="flex items-center gap-3">
-          <div className="text-right">
-            <p className="text-sm text-gray-500">Next payout</p>
+          <div className="text-end">
+            <p className="text-sm text-gray-500">{t('earnings.nextPayout')}</p>
             <p className="font-semibold text-gray-900">{getNextMonday()}</p>
           </div>
         </div>
@@ -203,38 +205,38 @@ const EarningsDashboard: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Pending Balance */}
         <div className="bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl p-5 text-white">
-          <p className="text-green-100 text-sm mb-1">Pending Balance</p>
+          <p className="text-green-100 text-sm mb-1">{t('earnings.pendingBalance')}</p>
           <p className="text-3xl font-bold">{formatCurrency(earnings?.pendingBalance || 0)}</p>
-          <p className="text-green-100 text-xs mt-2">Payout on {getNextMonday()}</p>
+          <p className="text-green-100 text-xs mt-2">{t('earnings.payoutOn', { date: getNextMonday() })}</p>
           {(earnings?.pendingBalance || 0) >= 500 && (
             <button
               onClick={() => setShowTransferModal(true)}
               className="mt-3 w-full bg-white/20 hover:bg-white/30 text-white text-sm font-medium py-2 rounded-lg transition"
             >
-              Instant Transfer ($2 fee)
+              {t('earnings.instantTransfer')}
             </button>
           )}
         </div>
 
         {/* This Week */}
         <div className="bg-white rounded-xl border border-gray-200 p-5">
-          <p className="text-gray-500 text-sm mb-1">This Week</p>
+          <p className="text-gray-500 text-sm mb-1">{t('earnings.thisWeek')}</p>
           <p className="text-2xl font-bold text-gray-900">{formatCurrency(earnings?.thisWeek || 0)}</p>
-          <p className="text-sm text-gray-500 mt-1">{earnings?.casesThisWeek || 0} cases</p>
+          <p className="text-sm text-gray-500 mt-1">{earnings?.casesThisWeek || 0} {t('common.cases')}</p>
         </div>
 
         {/* This Month */}
         <div className="bg-white rounded-xl border border-gray-200 p-5">
-          <p className="text-gray-500 text-sm mb-1">This Month</p>
+          <p className="text-gray-500 text-sm mb-1">{t('earnings.thisMonth')}</p>
           <p className="text-2xl font-bold text-gray-900">{formatCurrency(earnings?.thisMonth || 0)}</p>
-          <p className="text-sm text-gray-500 mt-1">{earnings?.casesThisMonth || 0} cases</p>
+          <p className="text-sm text-gray-500 mt-1">{earnings?.casesThisMonth || 0} {t('common.cases')}</p>
         </div>
 
         {/* Lifetime */}
         <div className="bg-white rounded-xl border border-gray-200 p-5">
-          <p className="text-gray-500 text-sm mb-1">Lifetime Earnings</p>
+          <p className="text-gray-500 text-sm mb-1">{t('earnings.lifetimeEarnings')}</p>
           <p className="text-2xl font-bold text-gray-900">{formatCurrency(earnings?.lifetimeEarnings || 0)}</p>
-          <p className="text-sm text-gray-500 mt-1">{doctor?.totalCases || 0} total cases</p>
+          <p className="text-sm text-gray-500 mt-1">{doctor?.totalCases || 0} {t('earnings.totalCases')}</p>
         </div>
       </div>
 
@@ -243,15 +245,15 @@ const EarningsDashboard: React.FC = () => {
         {/* Recent Cases */}
         <div className="bg-white rounded-xl border border-gray-200">
           <div className="px-5 py-4 border-b border-gray-200 flex items-center justify-between">
-            <h2 className="font-semibold text-gray-900">Recent Earnings</h2>
+            <h2 className="font-semibold text-gray-900">{t('earnings.recentEarnings')}</h2>
             <Link to="/doctor/history" className="text-sm text-blue-600 hover:text-blue-700">
-              View All
+              {t('common.viewAll')}
             </Link>
           </div>
           <div className="divide-y divide-gray-100">
             {recentCases.length === 0 ? (
               <div className="p-8 text-center text-gray-500">
-                <p>No completed cases yet</p>
+                <p>{t('earnings.noCompletedCases')}</p>
               </div>
             ) : (
               recentCases.map((caseItem) => (
@@ -267,7 +269,7 @@ const EarningsDashboard: React.FC = () => {
                       <p className="text-sm text-gray-500">
                         {caseItem.completedAt?.toLocaleDateString()}
                         {caseItem.tier === 'priority' && (
-                          <span className="ml-2 text-amber-600">Priority</span>
+                          <span className="ms-2 text-amber-600">{t('common.priority')}</span>
                         )}
                       </p>
                     </div>
@@ -286,13 +288,13 @@ const EarningsDashboard: React.FC = () => {
         {/* Payout History */}
         <div className="bg-white rounded-xl border border-gray-200">
           <div className="px-5 py-4 border-b border-gray-200">
-            <h2 className="font-semibold text-gray-900">Payout History</h2>
+            <h2 className="font-semibold text-gray-900">{t('earnings.payoutHistory')}</h2>
           </div>
           <div className="divide-y divide-gray-100">
             {payouts.length === 0 ? (
               <div className="p-8 text-center text-gray-500">
-                <p>No payouts yet</p>
-                <p className="text-sm mt-1">Your first payout will be on {getNextMonday()}</p>
+                <p>{t('earnings.noPayouts')}</p>
+                <p className="text-sm mt-1">{t('earnings.firstPayoutOn', { date: getNextMonday() })}</p>
               </div>
             ) : (
               payouts.map((payout) => (
@@ -322,11 +324,11 @@ const EarningsDashboard: React.FC = () => {
                     </div>
                     <div>
                       <p className="font-medium text-gray-900">
-                        {payout.status === 'completed' ? 'Paid' : payout.status === 'processing' ? 'Processing' : 'Pending'}
+                        {payout.status === 'completed' ? t('common.paid') : payout.status === 'processing' ? t('common.processing') : t('common.pending')}
                       </p>
                       <p className="text-sm text-gray-500">
                         {payout.processedAt?.toLocaleDateString() || payout.createdAt.toLocaleDateString()}
-                        {' • '}{payout.cases.length} cases
+                        {' \u2022 '}{payout.cases.length} {t('common.cases')}
                       </p>
                     </div>
                   </div>
@@ -349,17 +351,16 @@ const EarningsDashboard: React.FC = () => {
             </svg>
           </div>
           <div>
-            <h3 className="font-semibold text-blue-900">Tax Documents</h3>
+            <h3 className="font-semibold text-blue-900">{t('earnings.taxDocuments')}</h3>
             <p className="text-sm text-blue-700 mt-1">
-              Stripe will automatically generate your 1099 form at the end of the year if you earn more than $600.
-              You can access it from your{' '}
+              {t('earnings.taxDocumentsDesc')}{' '}
               <a
                 href="https://connect.stripe.com/express_login"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline hover:no-underline"
               >
-                Stripe Express Dashboard
+                {t('earnings.stripeExpressDashboard')}
               </a>.
             </p>
           </div>
@@ -371,24 +372,24 @@ const EarningsDashboard: React.FC = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden">
             <div className="bg-green-600 text-white px-6 py-4">
-              <h2 className="text-xl font-semibold">Instant Transfer</h2>
+              <h2 className="text-xl font-semibold">{t('earnings.instantTransferModal.title')}</h2>
             </div>
             <div className="p-6 space-y-4">
               <div className="bg-gray-50 rounded-lg p-4">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-gray-600">Transfer Amount</span>
+                  <span className="text-gray-600">{t('earnings.instantTransferModal.transferAmount')}</span>
                   <span className="text-xl font-bold text-gray-900">
                     {formatCurrency((earnings?.pendingBalance || 0) - 200)}
                   </span>
                 </div>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-500">Instant transfer fee</span>
+                  <span className="text-gray-500">{t('earnings.instantTransferModal.instantTransferFee')}</span>
                   <span className="text-gray-500">-$2.00</span>
                 </div>
               </div>
 
               <p className="text-sm text-gray-600">
-                Your funds will be deposited to your connected bank account within minutes.
+                {t('earnings.instantTransferModal.fundsDeposited')}
               </p>
 
               <div className="flex gap-3">
@@ -397,7 +398,7 @@ const EarningsDashboard: React.FC = () => {
                   disabled={transferring}
                   className="flex-1 px-4 py-3 border border-gray-300 rounded-lg text-gray-700 font-semibold hover:bg-gray-50 transition disabled:opacity-50"
                 >
-                  Cancel
+                  {t('earnings.instantTransferModal.cancel')}
                 </button>
                 <button
                   onClick={handleInstantTransfer}
@@ -414,7 +415,7 @@ const EarningsDashboard: React.FC = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
                   )}
-                  Transfer Now
+                  {t('earnings.instantTransferModal.transferNow')}
                 </button>
               </div>
             </div>

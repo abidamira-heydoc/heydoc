@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { httpsCallable } from 'firebase/functions';
 import { doc, getDoc } from 'firebase/firestore';
 import { functions, db } from '../../config/firebase';
@@ -13,6 +14,7 @@ interface OrgUser {
 }
 
 const AdminDashboard: React.FC = () => {
+  const { t } = useTranslation('admin');
   const { user } = useAuth();
   const navigate = useNavigate();
   const [users, setUsers] = useState<OrgUser[]>([]);
@@ -77,7 +79,7 @@ const AdminDashboard: React.FC = () => {
       setUsers(data.users || []);
     } catch (err: any) {
       console.error('Error loading users:', err);
-      setError('Failed to load users');
+      setError(t('oldDashboard.failedToLoadUsers'));
     }
   };
 
@@ -87,12 +89,12 @@ const AdminDashboard: React.FC = () => {
     setSuccess('');
 
     if (!newEmail || !newPassword) {
-      setError('Email and password are required');
+      setError(t('oldDashboard.emailRequired'));
       return;
     }
 
     if (newPassword.length < 6) {
-      setError('Password must be at least 6 characters');
+      setError(t('oldDashboard.passwordMinLength'));
       return;
     }
 
@@ -101,14 +103,14 @@ const AdminDashboard: React.FC = () => {
       const createUserAccount = httpsCallable(functions, 'createUserAccount');
       await createUserAccount({ email: newEmail, password: newPassword });
 
-      setSuccess(`User ${newEmail} created successfully!`);
+      setSuccess(t('oldDashboard.userCreated', { email: newEmail }));
       setNewEmail('');
       setNewPassword('');
       setShowAddUser(false);
       await loadUsers();
     } catch (err: any) {
       console.error('Error creating user:', err);
-      setError(err.message || 'Failed to create user');
+      setError(err.message || t('oldDashboard.failedToCreateUser'));
     } finally {
       setAddingUser(false);
     }
@@ -120,12 +122,12 @@ const AdminDashboard: React.FC = () => {
       const deleteUserAccount = httpsCallable(functions, 'deleteUserAccount');
       await deleteUserAccount({ userId });
 
-      setSuccess('User deleted successfully');
+      setSuccess(t('oldDashboard.userDeleted'));
       setDeleteConfirm(null);
       await loadUsers();
     } catch (err: any) {
       console.error('Error deleting user:', err);
-      setError(err.message || 'Failed to delete user');
+      setError(err.message || t('oldDashboard.failedToDeleteUser'));
     } finally {
       setDeleting(false);
     }
@@ -136,7 +138,7 @@ const AdminDashboard: React.FC = () => {
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-cyan-50 to-green-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading...</p>
+          <p className="mt-4 text-gray-600">{t('oldDashboard.loading')}</p>
         </div>
       </div>
     );
@@ -151,13 +153,13 @@ const AdminDashboard: React.FC = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Access Denied</h2>
-          <p className="text-gray-600 mb-6">You don't have admin access to this page.</p>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('oldDashboard.accessDenied')}</h2>
+          <p className="text-gray-600 mb-6">{t('oldDashboard.noAdminAccess')}</p>
           <button
             onClick={() => navigate('/chat')}
             className="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-lg transition"
           >
-            Go to Chat
+            {t('oldDashboard.goToChat')}
           </button>
         </div>
       </div>
@@ -175,7 +177,7 @@ const AdminDashboard: React.FC = () => {
           >
             <img src="/heydoclogo.png" alt="HeyDoc" className="w-10 h-10 object-contain" />
             <div>
-              <h1 className="text-xl font-bold text-gray-900">Admin Dashboard</h1>
+              <h1 className="text-xl font-bold text-gray-900">{t('oldDashboard.title')}</h1>
               <p className="text-sm text-gray-500">{orgName}</p>
             </div>
           </div>
@@ -186,7 +188,7 @@ const AdminDashboard: React.FC = () => {
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
-            Back to Chat
+            {t('oldDashboard.backToChat')}
           </button>
         </div>
       </div>
@@ -218,7 +220,7 @@ const AdminDashboard: React.FC = () => {
         {/* Add User Section */}
         <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-semibold text-gray-900">User Management</h2>
+            <h2 className="text-lg font-semibold text-gray-900">{t('oldDashboard.userManagement')}</h2>
             <button
               onClick={() => setShowAddUser(!showAddUser)}
               className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition flex items-center gap-2"
@@ -226,7 +228,7 @@ const AdminDashboard: React.FC = () => {
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
               </svg>
-              Add User
+              {t('oldDashboard.addUser')}
             </button>
           </div>
 
@@ -234,7 +236,7 @@ const AdminDashboard: React.FC = () => {
             <form onSubmit={handleAddUser} className="bg-gray-50 rounded-xl p-4 mb-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('oldDashboard.email')}</label>
                   <input
                     type="email"
                     value={newEmail}
@@ -245,20 +247,20 @@ const AdminDashboard: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('oldDashboard.password')}</label>
                   <div className="relative">
                     <input
                       type={showNewPassword ? 'text' : 'password'}
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
-                      className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
-                      placeholder="Min 6 characters"
+                      className="w-full px-3 py-2 pe-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
+                      placeholder={t('oldDashboard.minCharacters')}
                       required
                     />
                     <button
                       type="button"
                       onClick={() => setShowNewPassword(!showNewPassword)}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 p-1"
+                      className="absolute end-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 p-1"
                     >
                       {showNewPassword ? (
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -279,7 +281,7 @@ const AdminDashboard: React.FC = () => {
                     disabled={addingUser}
                     className="flex-1 bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition disabled:opacity-50"
                   >
-                    {addingUser ? 'Creating...' : 'Create User'}
+                    {addingUser ? t('oldDashboard.creating') : t('oldDashboard.createUser')}
                   </button>
                   <button
                     type="button"
@@ -290,7 +292,7 @@ const AdminDashboard: React.FC = () => {
                     }}
                     className="px-4 py-2 text-gray-600 hover:text-gray-800"
                   >
-                    Cancel
+                    {t('oldDashboard.cancel')}
                   </button>
                 </div>
               </div>
@@ -302,10 +304,10 @@ const AdminDashboard: React.FC = () => {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-gray-200">
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-600">Email</th>
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-600">Role</th>
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-600">Created</th>
-                  <th className="text-right py-3 px-4 text-sm font-semibold text-gray-600">Actions</th>
+                  <th className="text-start py-3 px-4 text-sm font-semibold text-gray-600">{t('oldDashboard.email')}</th>
+                  <th className="text-start py-3 px-4 text-sm font-semibold text-gray-600">{t('oldDashboard.role')}</th>
+                  <th className="text-start py-3 px-4 text-sm font-semibold text-gray-600">{t('oldDashboard.created')}</th>
+                  <th className="text-end py-3 px-4 text-sm font-semibold text-gray-600">{t('oldDashboard.actions')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -320,7 +322,7 @@ const AdminDashboard: React.FC = () => {
                         </div>
                         <span className="text-gray-900">{u.email}</span>
                         {u.id === user?.uid && (
-                          <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">You</span>
+                          <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">{t('oldDashboard.you')}</span>
                         )}
                       </div>
                     </td>
@@ -330,30 +332,30 @@ const AdminDashboard: React.FC = () => {
                           ? 'bg-purple-100 text-purple-700'
                           : 'bg-gray-100 text-gray-700'
                       }`}>
-                        {u.role === 'admin' ? 'Admin' : 'User'}
+                        {u.role === 'admin' ? t('oldDashboard.admin') : t('oldDashboard.user')}
                       </span>
                     </td>
                     <td className="py-3 px-4 text-gray-500 text-sm">
                       {u.createdAt ? new Date(u.createdAt).toLocaleDateString() : 'N/A'}
                     </td>
-                    <td className="py-3 px-4 text-right">
+                    <td className="py-3 px-4 text-end">
                       {u.id !== user?.uid && u.role !== 'admin' && (
                         <>
                           {deleteConfirm === u.id ? (
                             <div className="flex items-center justify-end gap-2">
-                              <span className="text-sm text-gray-500">Delete?</span>
+                              <span className="text-sm text-gray-500">{t('oldDashboard.delete')}</span>
                               <button
                                 onClick={() => handleDeleteUser(u.id)}
                                 disabled={deleting}
                                 className="text-red-600 hover:text-red-700 font-medium text-sm"
                               >
-                                {deleting ? 'Deleting...' : 'Yes'}
+                                {deleting ? t('oldDashboard.deleting') : t('oldDashboard.yes')}
                               </button>
                               <button
                                 onClick={() => setDeleteConfirm(null)}
                                 className="text-gray-500 hover:text-gray-700 text-sm"
                               >
-                                No
+                                {t('oldDashboard.no')}
                               </button>
                             </div>
                           ) : (
@@ -376,7 +378,7 @@ const AdminDashboard: React.FC = () => {
 
             {users.length === 0 && (
               <div className="text-center py-8 text-gray-500">
-                No users yet. Click "Add User" to create one.
+                {t('oldDashboard.noUsersYet')}
               </div>
             )}
           </div>
@@ -393,7 +395,7 @@ const AdminDashboard: React.FC = () => {
               </div>
               <div>
                 <p className="text-2xl font-bold text-gray-900">{users.length}</p>
-                <p className="text-sm text-gray-500">Total Users</p>
+                <p className="text-sm text-gray-500">{t('oldDashboard.totalUsers')}</p>
               </div>
             </div>
           </div>
@@ -409,7 +411,7 @@ const AdminDashboard: React.FC = () => {
                 <p className="text-2xl font-bold text-gray-900">
                   {users.filter(u => u.role === 'admin').length}
                 </p>
-                <p className="text-sm text-gray-500">Admins</p>
+                <p className="text-sm text-gray-500">{t('oldDashboard.admins')}</p>
               </div>
             </div>
           </div>
@@ -425,7 +427,7 @@ const AdminDashboard: React.FC = () => {
                 <p className="text-2xl font-bold text-gray-900">
                   {users.filter(u => u.role === 'user').length}
                 </p>
-                <p className="text-sm text-gray-500">Regular Users</p>
+                <p className="text-sm text-gray-500">{t('oldDashboard.regularUsers')}</p>
               </div>
             </div>
           </div>

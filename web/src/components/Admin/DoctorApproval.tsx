@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { collection, query, getDocs, doc, updateDoc, orderBy } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { COLLECTIONS } from '@shared/firebase.config';
@@ -8,6 +9,7 @@ import { SPECIALTY_LABELS } from '@shared/types';
 type TabType = 'pending' | 'approved' | 'rejected';
 
 const DoctorApproval: React.FC = () => {
+  const { t } = useTranslation('admin');
   const [doctors, setDoctors] = useState<DoctorProfile[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<TabType>('pending');
@@ -36,7 +38,7 @@ const DoctorApproval: React.FC = () => {
       setDoctors(docs);
     } catch (err: any) {
       console.error('Error fetching doctors:', err);
-      setError('Failed to load doctors');
+      setError(t('doctorApproval.messages.failedToLoad'));
     } finally {
       setLoading(false);
     }
@@ -57,12 +59,12 @@ const DoctorApproval: React.FC = () => {
         approvedAt: new Date(),
         updatedAt: new Date(),
       });
-      setSuccess(`${doctor.name} has been approved!`);
+      setSuccess(t('doctorApproval.messages.approved', { name: doctor.name }));
       await fetchDoctors();
       setSelectedDoctor(null);
     } catch (err: any) {
       console.error('Error approving doctor:', err);
-      setError('Failed to approve doctor');
+      setError(t('doctorApproval.messages.failedToApprove'));
     } finally {
       setActionLoading(false);
     }
@@ -70,7 +72,7 @@ const DoctorApproval: React.FC = () => {
 
   const handleReject = async (doctor: DoctorProfile) => {
     if (!rejectionReason.trim()) {
-      setError('Please provide a rejection reason');
+      setError(t('doctorApproval.messages.provideReason'));
       return;
     }
     setActionLoading(true);
@@ -82,13 +84,13 @@ const DoctorApproval: React.FC = () => {
         rejectionReason: rejectionReason.trim(),
         updatedAt: new Date(),
       });
-      setSuccess(`${doctor.name} has been rejected.`);
+      setSuccess(t('doctorApproval.messages.rejected', { name: doctor.name }));
       setRejectionReason('');
       await fetchDoctors();
       setSelectedDoctor(null);
     } catch (err: any) {
       console.error('Error rejecting doctor:', err);
-      setError('Failed to reject doctor');
+      setError(t('doctorApproval.messages.failedToReject'));
     } finally {
       setActionLoading(false);
     }
@@ -102,12 +104,12 @@ const DoctorApproval: React.FC = () => {
         status: 'suspended' as DoctorStatus,
         updatedAt: new Date(),
       });
-      setSuccess(`${doctor.name} has been suspended.`);
+      setSuccess(t('doctorApproval.messages.suspended', { name: doctor.name }));
       await fetchDoctors();
       setSelectedDoctor(null);
     } catch (err: any) {
       console.error('Error suspending doctor:', err);
-      setError('Failed to suspend doctor');
+      setError(t('doctorApproval.messages.failedToSuspend'));
     } finally {
       setActionLoading(false);
     }
@@ -125,8 +127,8 @@ const DoctorApproval: React.FC = () => {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Doctor Management</h1>
-        <p className="text-gray-600 mt-1">Review and manage doctor applications</p>
+        <h1 className="text-2xl font-bold text-gray-900">{t('doctorApproval.title')}</h1>
+        <p className="text-gray-600 mt-1">{t('doctorApproval.description')}</p>
       </div>
 
       {/* Alerts */}
@@ -158,19 +160,19 @@ const DoctorApproval: React.FC = () => {
           <p className="text-3xl font-bold text-amber-600">
             {doctors.filter(d => d.status === 'pending').length}
           </p>
-          <p className="text-sm text-gray-500">Pending Review</p>
+          <p className="text-sm text-gray-500">{t('doctorApproval.stats.pendingReview')}</p>
         </div>
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
           <p className="text-3xl font-bold text-green-600">
             {doctors.filter(d => d.status === 'approved').length}
           </p>
-          <p className="text-sm text-gray-500">Approved Doctors</p>
+          <p className="text-sm text-gray-500">{t('doctorApproval.stats.approvedDoctors')}</p>
         </div>
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
           <p className="text-3xl font-bold text-red-600">
             {doctors.filter(d => d.status === 'rejected').length}
           </p>
-          <p className="text-sm text-gray-500">Rejected</p>
+          <p className="text-sm text-gray-500">{t('doctorApproval.stats.rejected')}</p>
         </div>
       </div>
 
@@ -188,8 +190,8 @@ const DoctorApproval: React.FC = () => {
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >
-                {tab.charAt(0).toUpperCase() + tab.slice(1)}
-                <span className={`ml-2 px-2 py-0.5 rounded-full text-xs ${
+                {t(`doctorApproval.tabs.${tab}`)}
+                <span className={`ms-2 px-2 py-0.5 rounded-full text-xs ${
                   activeTab === tab
                     ? 'bg-blue-100 text-blue-600'
                     : 'bg-gray-100 text-gray-500'
@@ -206,34 +208,34 @@ const DoctorApproval: React.FC = () => {
           {loading ? (
             <div className="text-center py-12">
               <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600 mx-auto" />
-              <p className="mt-4 text-gray-500">Loading doctors...</p>
+              <p className="mt-4 text-gray-500">{t('doctorApproval.loading')}</p>
             </div>
           ) : filteredDoctors.length === 0 ? (
             <div className="text-center py-12 text-gray-500">
               <svg className="w-12 h-12 mx-auto mb-3 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
               </svg>
-              <p>No {activeTab} doctors</p>
+              <p>{t('doctorApproval.noDoctors', { status: activeTab })}</p>
             </div>
           ) : (
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Doctor
+                    <th className="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      {t('doctorApproval.table.doctor')}
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Specialties
+                    <th className="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      {t('doctorApproval.table.specialties')}
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      License
+                    <th className="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      {t('doctorApproval.table.license')}
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Applied
+                    <th className="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      {t('doctorApproval.table.applied')}
                     </th>
-                    <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Actions
+                    <th className="px-4 py-3 text-end text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      {t('doctorApproval.table.actions')}
                     </th>
                   </tr>
                 </thead>
@@ -285,12 +287,12 @@ const DoctorApproval: React.FC = () => {
                       <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
                         {formatDate(doctor.createdAt)}
                       </td>
-                      <td className="px-4 py-4 whitespace-nowrap text-right">
+                      <td className="px-4 py-4 whitespace-nowrap text-end">
                         <button
                           onClick={() => setSelectedDoctor(doctor)}
                           className="text-blue-600 hover:text-blue-700 font-medium text-sm"
                         >
-                          View Details
+                          {t('doctorApproval.table.viewDetails')}
                         </button>
                       </td>
                     </tr>
@@ -308,7 +310,7 @@ const DoctorApproval: React.FC = () => {
           <div className="bg-white rounded-2xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             {/* Header */}
             <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-              <h2 className="text-xl font-bold text-gray-900">Doctor Details</h2>
+              <h2 className="text-xl font-bold text-gray-900">{t('doctorApproval.modal.title')}</h2>
               <button
                 onClick={() => {
                   setSelectedDoctor(null);
@@ -343,20 +345,20 @@ const DoctorApproval: React.FC = () => {
                   <h3 className="text-xl font-semibold text-gray-900">{selectedDoctor.name}</h3>
                   <p className="text-gray-500">{selectedDoctor.email}</p>
                   <p className="text-sm text-gray-400 mt-1">
-                    {selectedDoctor.yearsExperience} years experience
+                    {t('doctorApproval.modal.yearsExperience', { years: selectedDoctor.yearsExperience })}
                   </p>
                 </div>
               </div>
 
               {/* Bio */}
               <div>
-                <h4 className="text-sm font-semibold text-gray-700 mb-2">Bio</h4>
+                <h4 className="text-sm font-semibold text-gray-700 mb-2">{t('doctorApproval.modal.bio')}</h4>
                 <p className="text-gray-600">{selectedDoctor.bio}</p>
               </div>
 
               {/* Specialties */}
               <div>
-                <h4 className="text-sm font-semibold text-gray-700 mb-2">Specialties</h4>
+                <h4 className="text-sm font-semibold text-gray-700 mb-2">{t('doctorApproval.modal.specialties')}</h4>
                 <div className="flex flex-wrap gap-2">
                   {selectedDoctor.specialties.map((s: DoctorSpecialty) => (
                     <span
@@ -372,11 +374,11 @@ const DoctorApproval: React.FC = () => {
               {/* License */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <h4 className="text-sm font-semibold text-gray-700 mb-2">License Number</h4>
+                  <h4 className="text-sm font-semibold text-gray-700 mb-2">{t('doctorApproval.modal.licenseNumber')}</h4>
                   <p className="text-gray-900">{selectedDoctor.licenseNumber}</p>
                 </div>
                 <div>
-                  <h4 className="text-sm font-semibold text-gray-700 mb-2">License State</h4>
+                  <h4 className="text-sm font-semibold text-gray-700 mb-2">{t('doctorApproval.modal.licenseState')}</h4>
                   <p className="text-gray-900">{selectedDoctor.licenseState}</p>
                 </div>
               </div>
@@ -384,7 +386,7 @@ const DoctorApproval: React.FC = () => {
               {/* License Image */}
               {selectedDoctor.licenseUrl && (
                 <div>
-                  <h4 className="text-sm font-semibold text-gray-700 mb-2">License Photo</h4>
+                  <h4 className="text-sm font-semibold text-gray-700 mb-2">{t('doctorApproval.modal.licensePhoto')}</h4>
                   <a
                     href={selectedDoctor.licenseUrl}
                     target="_blank"
@@ -397,14 +399,14 @@ const DoctorApproval: React.FC = () => {
                       className="max-w-full h-48 object-contain rounded-lg border border-gray-200 hover:border-blue-300 transition"
                     />
                   </a>
-                  <p className="text-xs text-gray-400 mt-1">Click to view full size</p>
+                  <p className="text-xs text-gray-400 mt-1">{t('doctorApproval.modal.clickToView')}</p>
                 </div>
               )}
 
               {/* Status-specific content */}
               {selectedDoctor.status === 'rejected' && selectedDoctor.rejectionReason && (
                 <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                  <h4 className="text-sm font-semibold text-red-800 mb-1">Rejection Reason</h4>
+                  <h4 className="text-sm font-semibold text-red-800 mb-1">{t('doctorApproval.modal.rejectionReason')}</h4>
                   <p className="text-red-700">{selectedDoctor.rejectionReason}</p>
                 </div>
               )}
@@ -413,12 +415,12 @@ const DoctorApproval: React.FC = () => {
               {selectedDoctor.status === 'pending' && (
                 <div>
                   <h4 className="text-sm font-semibold text-gray-700 mb-2">
-                    Rejection Reason (if rejecting)
+                    {t('doctorApproval.modal.rejectionReasonInput')}
                   </h4>
                   <textarea
                     value={rejectionReason}
                     onChange={(e) => setRejectionReason(e.target.value)}
-                    placeholder="Enter reason for rejection..."
+                    placeholder={t('doctorApproval.modal.rejectionPlaceholder')}
                     className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
                     rows={3}
                   />
@@ -435,14 +437,14 @@ const DoctorApproval: React.FC = () => {
                     disabled={actionLoading}
                     className="px-4 py-2 bg-red-100 text-red-700 font-medium rounded-lg hover:bg-red-200 transition disabled:opacity-50"
                   >
-                    {actionLoading ? 'Processing...' : 'Reject'}
+                    {actionLoading ? t('doctorApproval.actions.processing') : t('doctorApproval.actions.reject')}
                   </button>
                   <button
                     onClick={() => handleApprove(selectedDoctor)}
                     disabled={actionLoading}
                     className="px-4 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition disabled:opacity-50"
                   >
-                    {actionLoading ? 'Processing...' : 'Approve'}
+                    {actionLoading ? t('doctorApproval.actions.processing') : t('doctorApproval.actions.approve')}
                   </button>
                 </>
               )}
@@ -452,7 +454,7 @@ const DoctorApproval: React.FC = () => {
                   disabled={actionLoading}
                   className="px-4 py-2 bg-red-100 text-red-700 font-medium rounded-lg hover:bg-red-200 transition disabled:opacity-50"
                 >
-                  {actionLoading ? 'Processing...' : 'Suspend Doctor'}
+                  {actionLoading ? t('doctorApproval.actions.processing') : t('doctorApproval.actions.suspend')}
                 </button>
               )}
               <button
@@ -462,7 +464,7 @@ const DoctorApproval: React.FC = () => {
                 }}
                 className="px-4 py-2 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 transition"
               >
-                Close
+                {t('doctorApproval.actions.close')}
               </button>
             </div>
           </div>

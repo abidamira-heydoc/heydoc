@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAdmin } from '../../contexts/AdminContext';
 
 const MetricCard: React.FC<{
@@ -61,6 +62,7 @@ const QuickAction: React.FC<{
 );
 
 const DashboardHome: React.FC = () => {
+  const { t } = useTranslation('admin');
   const { organization, metrics, metricsLoading } = useAdmin();
 
   return (
@@ -68,17 +70,19 @@ const DashboardHome: React.FC = () => {
       {/* Welcome Header */}
       <div className="bg-gradient-to-r from-primary-600 to-primary-700 rounded-2xl p-6 text-white">
         <h1 className="text-2xl font-bold mb-2">
-          Welcome back{organization?.name ? `, ${organization.name}` : ''}!
+          {organization?.name
+            ? t('dashboard.welcomeWithName', { name: organization.name })
+            : t('dashboard.welcome')}
         </h1>
         <p className="text-primary-100">
-          Here's an overview of your organization's health assistance activity.
+          {t('dashboard.overview')}
         </p>
       </div>
 
       {/* Metrics Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <MetricCard
-          title="Total Users"
+          title={t('dashboard.stats.totalUsers')}
           value={metrics?.totalUsers ?? 0}
           loading={metricsLoading}
           color="green"
@@ -89,7 +93,7 @@ const DashboardHome: React.FC = () => {
           }
         />
         <MetricCard
-          title="Conversations This Month"
+          title={t('dashboard.stats.conversationsThisMonth')}
           value={metrics?.conversationsThisMonth ?? 0}
           loading={metricsLoading}
           color="blue"
@@ -100,7 +104,7 @@ const DashboardHome: React.FC = () => {
           }
         />
         <MetricCard
-          title="Emergency Flags"
+          title={t('dashboard.stats.emergencyFlags')}
           value={metrics?.emergencyFlags ?? 0}
           loading={metricsLoading}
           color="red"
@@ -111,7 +115,7 @@ const DashboardHome: React.FC = () => {
           }
         />
         <MetricCard
-          title="Active Users (7 days)"
+          title={t('dashboard.stats.activeUsersDays')}
           value={metrics?.activeUsers ?? 0}
           loading={metricsLoading}
           color="purple"
@@ -125,11 +129,11 @@ const DashboardHome: React.FC = () => {
 
       {/* Quick Actions */}
       <div>
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h2>
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('dashboard.quickActions.title')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <QuickAction
-            title="View Analytics"
-            description="See detailed usage charts and trends"
+            title={t('dashboard.quickActions.viewAnalytics')}
+            description={t('dashboard.quickActions.viewAnalyticsDesc')}
             to="/admin/analytics"
             icon={
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -138,8 +142,8 @@ const DashboardHome: React.FC = () => {
             }
           />
           <QuickAction
-            title="Manage Users"
-            description="Add, remove, or view user accounts"
+            title={t('dashboard.quickActions.manageUsers')}
+            description={t('dashboard.quickActions.manageUsersDesc')}
             to="/admin/users"
             icon={
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -148,8 +152,8 @@ const DashboardHome: React.FC = () => {
             }
           />
           <QuickAction
-            title="Generate Report"
-            description="Create PDF impact report for leadership"
+            title={t('dashboard.quickActions.generateReport')}
+            description={t('dashboard.quickActions.generateReportDesc')}
             to="/admin/reports"
             icon={
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -162,13 +166,13 @@ const DashboardHome: React.FC = () => {
 
       {/* Recent Activity Placeholder */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h2>
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('dashboard.recentActivity.title')}</h2>
         <div className="text-center py-8 text-gray-500">
           <svg className="w-12 h-12 mx-auto text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          <p>Activity feed coming soon</p>
-          <p className="text-sm text-gray-400 mt-1">Track user activity and important events</p>
+          <p>{t('dashboard.recentActivity.comingSoon')}</p>
+          <p className="text-sm text-gray-400 mt-1">{t('dashboard.recentActivity.trackActivity')}</p>
         </div>
       </div>
     </div>

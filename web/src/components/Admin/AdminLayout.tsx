@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 import { useAdmin, AdminProvider } from '../../contexts/AdminContext';
 
@@ -60,18 +61,18 @@ const BackIcon = () => (
 );
 
 interface NavItem {
-  name: string;
+  nameKey: string;
   path: string;
   icon: React.FC;
   end?: boolean;
 }
 
 const navItems: NavItem[] = [
-  { name: 'Dashboard', path: '/admin', icon: DashboardIcon, end: true },
-  { name: 'Analytics', path: '/admin/analytics', icon: AnalyticsIcon },
-  { name: 'Users', path: '/admin/users', icon: UsersIcon },
-  { name: 'Reports', path: '/admin/reports', icon: ReportsIcon },
-  { name: 'Settings', path: '/admin/settings', icon: SettingsIcon },
+  { nameKey: 'nav.dashboard', path: '/admin', icon: DashboardIcon, end: true },
+  { nameKey: 'nav.analytics', path: '/admin/analytics', icon: AnalyticsIcon },
+  { nameKey: 'nav.users', path: '/admin/users', icon: UsersIcon },
+  { nameKey: 'nav.reports', path: '/admin/reports', icon: ReportsIcon },
+  { nameKey: 'nav.settings', path: '/admin/settings', icon: SettingsIcon },
 ];
 
 // Breadcrumb component
@@ -105,6 +106,7 @@ const Breadcrumb: React.FC = () => {
 
 // Inner layout component that uses admin context
 const AdminLayoutInner: React.FC = () => {
+  const { t } = useTranslation('admin');
   const { signOut } = useAuth();
   const { organization, adminUser, loading, error, clearError } = useAdmin();
   const navigate = useNavigate();
@@ -124,7 +126,7 @@ const AdminLayoutInner: React.FC = () => {
       <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-gray-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto" />
-          <p className="mt-4 text-gray-600">Loading admin dashboard...</p>
+          <p className="mt-4 text-gray-600">{t('layout.loading')}</p>
         </div>
       </div>
     );
@@ -143,10 +145,10 @@ const AdminLayoutInner: React.FC = () => {
       {/* Sidebar */}
       <aside
         className={`
-          fixed lg:static inset-y-0 left-0 z-50
-          w-64 bg-white border-r border-gray-200
+          fixed lg:static inset-y-0 start-0 z-50
+          w-64 bg-white border-e border-gray-200
           transform transition-transform duration-200 ease-in-out
-          ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+          ${sidebarOpen ? 'translate-x-0 rtl:-translate-x-0' : '-translate-x-full rtl:translate-x-full lg:translate-x-0 lg:rtl:-translate-x-0'}
         `}
       >
         {/* Sidebar Header */}
@@ -156,7 +158,7 @@ const AdminLayoutInner: React.FC = () => {
             onClick={() => navigate('/chat')}
           >
             <img src="/heydoclogo.png" alt="HeyDoc" className="w-8 h-8 object-contain" />
-            <span className="font-bold text-lg text-gray-900">HeyDoc Admin</span>
+            <span className="font-bold text-lg text-gray-900">{t('layout.heyDocAdmin')}</span>
           </div>
           <button
             onClick={() => setSidebarOpen(false)}
@@ -168,9 +170,9 @@ const AdminLayoutInner: React.FC = () => {
 
         {/* Organization Info */}
         <div className="px-4 py-3 border-b border-gray-100 bg-gray-50">
-          <p className="text-xs text-gray-500 uppercase tracking-wider">Organization</p>
+          <p className="text-xs text-gray-500 uppercase tracking-wider">{t('layout.organization')}</p>
           <p className="text-sm font-medium text-gray-900 truncate">
-            {organization?.name || 'Loading...'}
+            {organization?.name || t('common.loading')}
           </p>
         </div>
 
@@ -191,19 +193,19 @@ const AdminLayoutInner: React.FC = () => {
               }
             >
               <item.icon />
-              <span>{item.name}</span>
+              <span>{t(item.nameKey)}</span>
             </NavLink>
           ))}
         </nav>
 
         {/* Back to App Link */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-white">
+        <div className="absolute bottom-0 start-0 end-0 p-4 border-t border-gray-200 bg-white">
           <a
             href="/chat"
             className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors"
           >
             <BackIcon />
-            <span>Back to App</span>
+            <span>{t('nav.backToApp')}</span>
           </a>
         </div>
       </aside>
@@ -223,7 +225,7 @@ const AdminLayoutInner: React.FC = () => {
           {/* Page title area - hidden on mobile since we have breadcrumb */}
           <div className="hidden lg:block">
             <h1 className="text-lg font-semibold text-gray-900">
-              {organization?.name || 'Admin Dashboard'}
+              {organization?.name || t('dashboard.title')}
             </h1>
           </div>
 
@@ -231,11 +233,11 @@ const AdminLayoutInner: React.FC = () => {
           <div className="flex items-center gap-4">
             {/* Admin user info */}
             <div className="hidden sm:flex items-center gap-3">
-              <div className="text-right">
+              <div className="text-end">
                 <p className="text-sm font-medium text-gray-900 truncate max-w-[150px]">
                   {adminUser?.email}
                 </p>
-                <p className="text-xs text-gray-500">Administrator</p>
+                <p className="text-xs text-gray-500">{t('layout.administrator')}</p>
               </div>
               <div className="w-9 h-9 bg-primary-100 rounded-full flex items-center justify-center">
                 <span className="text-primary-700 font-medium text-sm">
@@ -248,10 +250,10 @@ const AdminLayoutInner: React.FC = () => {
             <button
               onClick={handleSignOut}
               className="flex items-center gap-2 px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
-              title="Sign out"
+              title={t('layout.logout')}
             >
               <LogoutIcon />
-              <span className="hidden sm:inline text-sm">Logout</span>
+              <span className="hidden sm:inline text-sm">{t('layout.logout')}</span>
             </button>
           </div>
         </header>

@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 
 const DoctorPending: React.FC = () => {
+  const { t } = useTranslation('doctor');
   const { signOut } = useAuth();
 
   return (
@@ -17,33 +19,32 @@ const DoctorPending: React.FC = () => {
           </div>
 
           {/* Content */}
-          <h1 className="text-2xl font-bold text-gray-900 mb-3">Application Under Review</h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-3">{t('auth.pending.title')}</h1>
           <p className="text-gray-600 mb-6">
-            Thank you for applying to join HeyDoc! Our team is reviewing your credentials and license information.
-            This typically takes 1-2 business days.
+            {t('auth.pending.message')}
           </p>
 
           {/* What to expect */}
-          <div className="bg-gray-50 rounded-xl p-6 text-left mb-6">
-            <h3 className="font-semibold text-gray-900 mb-3">What happens next?</h3>
+          <div className="bg-gray-50 rounded-xl p-6 text-start mb-6">
+            <h3 className="font-semibold text-gray-900 mb-3">{t('auth.pending.whatHappensNext')}</h3>
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
                 <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                   <span className="text-blue-600 text-sm font-bold">1</span>
                 </div>
-                <span className="text-gray-600 text-sm">We verify your medical license with the state board</span>
+                <span className="text-gray-600 text-sm">{t('auth.pending.step1')}</span>
               </li>
               <li className="flex items-start gap-3">
                 <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                   <span className="text-blue-600 text-sm font-bold">2</span>
                 </div>
-                <span className="text-gray-600 text-sm">A member of our team reviews your application</span>
+                <span className="text-gray-600 text-sm">{t('auth.pending.step2')}</span>
               </li>
               <li className="flex items-start gap-3">
                 <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                   <span className="text-blue-600 text-sm font-bold">3</span>
                 </div>
-                <span className="text-gray-600 text-sm">You'll receive an email once you're approved</span>
+                <span className="text-gray-600 text-sm">{t('auth.pending.step3')}</span>
               </li>
               <li className="flex items-start gap-3">
                 <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -51,7 +52,7 @@ const DoctorPending: React.FC = () => {
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                 </div>
-                <span className="text-gray-600 text-sm">Set up Stripe Connect and start accepting cases!</span>
+                <span className="text-gray-600 text-sm">{t('auth.pending.step4')}</span>
               </li>
             </ul>
           </div>
@@ -62,19 +63,19 @@ const DoctorPending: React.FC = () => {
               onClick={() => window.location.reload()}
               className="flex-1 px-6 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition"
             >
-              Check Status
+              {t('auth.pending.checkStatus')}
             </button>
             <button
               onClick={signOut}
               className="flex-1 px-6 py-3 bg-gray-100 text-gray-700 font-semibold rounded-xl hover:bg-gray-200 transition"
             >
-              Sign Out
+              {t('auth.pending.signOut')}
             </button>
           </div>
 
           {/* Support */}
           <p className="mt-6 text-sm text-gray-500">
-            Questions? Email us at{' '}
+            {t('auth.pending.questions')}{' '}
             <a href="mailto:doctors@heydoccare.com" className="text-blue-600 hover:underline">
               doctors@heydoccare.com
             </a>
@@ -84,7 +85,7 @@ const DoctorPending: React.FC = () => {
         {/* Back to login */}
         <div className="text-center mt-6">
           <Link to="/doctor/login" className="text-gray-500 hover:text-gray-700 text-sm">
-            Back to login
+            {t('auth.pending.backToLogin')}
           </Link>
         </div>
       </div>

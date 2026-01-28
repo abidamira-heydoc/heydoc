@@ -4,68 +4,373 @@
     "analytics": "Phân Tích",
     "users": "Người Dùng",
     "reports": "Báo Cáo",
-    "settings": "Cài Đặt"
+    "settings": "Cài Đặt",
+    "backToApp": "Quay Lại Ứng Dụng"
+  },
+  "layout": {
+    "loading": "Đang tải bảng điều khiển quản trị...",
+    "organization": "Tổ Chức",
+    "administrator": "Quản Trị Viên",
+    "logout": "Đăng Xuất",
+    "heyDocAdmin": "HeyDoc Admin"
   },
   "dashboard": {
     "title": "Bảng Điều Khiển Tổ Chức",
-    "welcome": "Chào mừng trở lại, {{name}}",
+    "welcome": "Chào mừng trở lại",
+    "welcomeWithName": "Chào mừng trở lại, {{name}}!",
+    "overview": "Đây là tổng quan về hoạt động hỗ trợ sức khỏe của tổ chức bạn.",
     "stats": {
       "totalUsers": "Tổng Số Người Dùng",
       "activeUsers": "Người Dùng Hoạt Động",
+      "activeUsersDays": "Người Dùng Hoạt Động (7 ngày)",
       "totalConversations": "Tổng Số Cuộc Trò Chuyện",
-      "emergencyAlerts": "Cảnh Báo Cấp Cứu"
+      "emergencyAlerts": "Cảnh Báo Cấp Cứu",
+      "conversationsThisMonth": "Cuộc Trò Chuyện Tháng Này",
+      "emergencyFlags": "Đánh Dấu Cấp Cứu"
+    },
+    "quickActions": {
+      "title": "Hành Động Nhanh",
+      "viewAnalytics": "Xem Phân Tích",
+      "viewAnalyticsDesc": "Xem biểu đồ sử dụng chi tiết và xu hướng",
+      "manageUsers": "Quản Lý Người Dùng",
+      "manageUsersDesc": "Thêm, xóa hoặc xem tài khoản người dùng",
+      "generateReport": "Tạo Báo Cáo",
+      "generateReportDesc": "Tạo báo cáo tác động PDF cho ban lãnh đạo"
+    },
+    "recentActivity": {
+      "title": "Hoạt Động Gần Đây",
+      "comingSoon": "Nguồn cấp hoạt động sắp ra mắt",
+      "trackActivity": "Theo dõi hoạt động người dùng và sự kiện quan trọng"
     }
+  },
+  "oldDashboard": {
+    "title": "Bảng Điều Khiển Admin",
+    "backToChat": "Quay Lại Chat",
+    "accessDenied": "Từ Chối Truy Cập",
+    "noAdminAccess": "Bạn không có quyền quản trị viên cho trang này.",
+    "goToChat": "Đi Tới Chat",
+    "loading": "Đang tải...",
+    "userManagement": "Quản Lý Người Dùng",
+    "addUser": "Thêm Người Dùng",
+    "email": "Email",
+    "password": "Mật Khẩu",
+    "minCharacters": "Tối thiểu 6 ký tự",
+    "createUser": "Tạo Người Dùng",
+    "creating": "Đang tạo...",
+    "cancel": "Hủy",
+    "role": "Vai Trò",
+    "created": "Đã Tạo",
+    "actions": "Hành Động",
+    "admin": "Admin",
+    "user": "Người Dùng",
+    "you": "Bạn",
+    "delete": "Xóa?",
+    "deleting": "Đang xóa...",
+    "yes": "Có",
+    "no": "Không",
+    "noUsersYet": "Chưa có người dùng nào. Nhấp \"Thêm Người Dùng\" để tạo.",
+    "totalUsers": "Tổng Số Người Dùng",
+    "admins": "Admin",
+    "regularUsers": "Người Dùng Thường",
+    "emailRequired": "Email và mật khẩu là bắt buộc",
+    "passwordMinLength": "Mật khẩu phải có ít nhất 6 ký tự",
+    "userCreated": "Người dùng {{email}} đã được tạo thành công!",
+    "userDeleted": "Người dùng đã được xóa thành công",
+    "failedToLoadUsers": "Không thể tải danh sách người dùng",
+    "failedToCreateUser": "Không thể tạo người dùng",
+    "failedToDeleteUser": "Không thể xóa người dùng"
   },
   "users": {
     "title": "Quản Lý Người Dùng",
+    "description": "Quản lý người dùng trong tổ chức của bạn",
     "search": "Tìm kiếm người dùng...",
+    "searchByEmail": "Tìm kiếm người dùng theo email...",
     "addUser": "Thêm Người Dùng",
+    "addNewUser": "Thêm Người Dùng Mới",
     "columns": {
+      "user": "Người Dùng",
       "name": "Tên",
       "email": "Email",
       "role": "Vai Trò",
       "status": "Trạng Thái",
+      "joined": "Đã Tham Gia",
       "lastActive": "Hoạt Động Lần Cuối",
+      "conversations": "Cuộc Trò Chuyện",
       "actions": "Hành Động"
     },
     "roles": {
       "user": "Người Dùng",
       "orgAdmin": "Quản Trị Viên Tổ Chức",
       "platformAdmin": "Quản Trị Viên Nền Tảng"
-    }
+    },
+    "filters": {
+      "all": "Tất Cả Người Dùng",
+      "active": "Hoạt Động",
+      "inactive": "Không Hoạt Động"
+    },
+    "modal": {
+      "email": "Email",
+      "emailPlaceholder": "nguoidung@vidu.com",
+      "password": "Mật Khẩu",
+      "passwordPlaceholder": "Tối thiểu 6 ký tự",
+      "cancel": "Hủy",
+      "createUser": "Tạo Người Dùng",
+      "creating": "Đang tạo..."
+    },
+    "delete": {
+      "confirm": "Xóa?",
+      "yes": "Có",
+      "no": "Không",
+      "deleting": "..."
+    },
+    "actions": {
+      "viewDetails": "Xem chi tiết (sắp ra mắt)",
+      "deleteUser": "Xóa người dùng"
+    },
+    "noResults": "Không tìm thấy người dùng phù hợp với \"{{query}}\"",
+    "clearSearch": "Xóa tìm kiếm",
+    "noUsers": "Chưa có người dùng nào trong tổ chức của bạn.",
+    "loadingUsers": "Đang tải người dùng...",
+    "showing": "Hiển thị {{filtered}} trong số {{total}} người dùng",
+    "refresh": "Làm Mới",
+    "you": "Bạn",
+    "never": "Chưa bao giờ",
+    "emailRequired": "Email và mật khẩu là bắt buộc",
+    "passwordMinLength": "Mật khẩu phải có ít nhất 6 ký tự",
+    "userCreated": "Người dùng {{email}} đã được tạo thành công!",
+    "userDeleted": "Người dùng đã được xóa thành công",
+    "failedToCreateUser": "Không thể tạo người dùng",
+    "failedToDeleteUser": "Không thể xóa người dùng"
   },
   "analytics": {
-    "title": "Bảng Phân Tích",
+    "title": "Phân Tích",
+    "description": "Theo dõi mô hình sử dụng và xu hướng sức khỏe",
     "dateRange": "Khoảng Thời Gian",
+    "days7": "7 Ngày",
+    "days30": "30 Ngày",
+    "days90": "90 Ngày",
+    "lastDays": "{{days}} ngày gần đây",
     "metrics": {
+      "totalConversations": "Tổng Số Cuộc Trò Chuyện",
+      "thisMonth": "Tháng Này",
+      "activeUsers": "Người Dùng Hoạt Động",
+      "emergencyAlerts": "Cảnh Báo Cấp Cứu",
       "conversations": "Cuộc Trò Chuyện",
       "messages": "Tin Nhắn",
       "avgSessionTime": "Thời Gian Phiên TB",
       "userSatisfaction": "Mức Độ Hài Lòng"
-    }
+    },
+    "charts": {
+      "conversationsOverTime": "Cuộc Trò Chuyện Theo Thời Gian",
+      "mostCommonSymptoms": "Triệu Chứng Phổ Biến Nhất",
+      "topMentions": "Đề cập hàng đầu",
+      "peakUsageTimes": "Thời Gian Sử Dụng Cao Điểm",
+      "hourDistribution": "Phân bố 24 giờ",
+      "emergencyFlagTrends": "Xu Hướng Đánh Dấu Cấp Cứu",
+      "criticalAlerts": "Cảnh báo nghiêm trọng"
+    },
+    "insights": {
+      "title": "Thông Tin Nhanh",
+      "engagementRate": "Tỷ Lệ Tương Tác",
+      "engagementDesc": "Người dùng hoạt động trong 7 ngày qua",
+      "avgConversations": "TB Cuộc Trò Chuyện/Người Dùng",
+      "avgConversationsDesc": "Trung bình mọi thời điểm",
+      "emergencyRate": "Tỷ Lệ Phát Hiện Cấp Cứu",
+      "emergencyRateDesc": "Cuộc trò chuyện có cảnh báo"
+    },
+    "refreshData": "Làm Mới Dữ Liệu",
+    "refreshing": "Đang làm mới..."
   },
   "reports": {
     "title": "Báo Cáo Tác Động",
+    "description": "Tạo báo cáo để chia sẻ với ban lãnh đạo",
     "generate": "Tạo Báo Cáo",
     "download": "Tải Xuống",
+    "downloadPDF": "Tải PDF",
+    "generating": "Đang tạo...",
     "types": {
-      "monthly": "Tóm Tắt Hàng Tháng",
+      "monthly": "Báo Cáo Hàng Tháng",
       "quarterly": "Báo Cáo Hàng Quý",
       "annual": "Báo Cáo Hàng Năm"
+    },
+    "preview": {
+      "title": "Báo Cáo Tác Động HeyDoc",
+      "reportPeriod": "Kỳ Báo Cáo: {{period}}"
+    },
+    "sections": {
+      "executiveSummary": "Tóm Tắt Điều Hành",
+      "summaryText": "Báo cáo này cung cấp tổng quan về việc sử dụng HeyDoc trong tổ chức của bạn, nêu bật các chỉ số chính, tiết kiệm chi phí tiềm năng và các chỉ số tác động sức khỏe cho kỳ báo cáo.",
+      "keyMetrics": "Chỉ Số Chính",
+      "estimatedCostSavings": "Ước Tính Tiết Kiệm Chi Phí",
+      "estimatedSavings": "Tiết Kiệm Ước Tính",
+      "savingsDescription": "Dựa trên ước tính tiết kiệm $50 mỗi lần tư vấn sức khỏe mà nếu không có thể dẫn đến việc đến phòng cấp cứu hoặc chăm sóc khẩn cấp không cần thiết.",
+      "emergencyDetectionImpact": "Tác Động Phát Hiện Cấp Cứu",
+      "emergencySituationsDetected": "{{count}} Tình Huống Cấp Cứu Được Phát Hiện",
+      "emergencyDescription": "AI của HeyDoc đã phát hiện các tình huống cấp cứu tiềm ẩn và ngay lập tức hướng dẫn người dùng tìm kiếm chăm sóc cấp cứu. Những can thiệp sớm này có thể đã góp phần vào kết quả sức khỏe tốt hơn và có khả năng cứu sống.",
+      "usageInsights": "Thông Tin Sử Dụng"
+    },
+    "footer": {
+      "generatedBy": "Được tạo bởi HeyDoc Admin Dashboard",
+      "reportDate": "Ngày Báo Cáo: {{date}}"
+    },
+    "info": {
+      "title": "Về Báo Cáo Này",
+      "description": "Nhấp \"Tải PDF\" để tạo tài liệu PDF chuyên nghiệp mà bạn có thể chia sẻ với ban lãnh đạo, thành viên hội đồng hoặc các bên liên quan để chứng minh tác động của HeyDoc trong tổ chức của bạn."
+    },
+    "pdf": {
+      "title": "Báo Cáo Tác Động HeyDoc",
+      "executiveSummary": "Tóm Tắt Điều Hành",
+      "summaryText": "Báo cáo này cung cấp tổng quan về việc sử dụng HeyDoc trong {{orgName}}, nêu bật các chỉ số chính, tiết kiệm chi phí tiềm năng và các chỉ số tác động sức khỏe cho kỳ báo cáo. HeyDoc đã giúp nhóm của bạn tiếp cận hướng dẫn sức khỏe ngay lập tức và phát hiện cấp cứu.",
+      "keyMetrics": "Chỉ Số Chính",
+      "totalUsers": "Tổng Số Người Dùng",
+      "conversations": "Cuộc Trò Chuyện",
+      "emergencyAlerts": "Cảnh Báo Cấp Cứu",
+      "activeUsers": "Người Dùng Hoạt Động",
+      "estimatedCostSavings": "Ước Tính Tiết Kiệm Chi Phí",
+      "savingsNote1": "Tiết kiệm ước tính dựa trên $50 mỗi lần tư vấn sức khỏe có thể đã",
+      "savingsNote2": "tránh được việc đến phòng cấp cứu hoặc chăm sóc khẩn cấp không cần thiết.",
+      "emergencyDetectionImpact": "Tác Động Phát Hiện Cấp Cứu",
+      "emergencySituationsDetected": "{{count}} Tình Huống Cấp Cứu Được Phát Hiện",
+      "emergencyNote": "AI của HeyDoc đã phát hiện các tình huống cấp cứu tiềm ẩn và ngay lập tức hướng dẫn người dùng tìm kiếm chăm sóc cấp cứu. Những can thiệp sớm này có thể đã góp phần vào kết quả sức khỏe tốt hơn.",
+      "usageInsights": "Thông Tin Sử Dụng",
+      "engagementRate": "Tỷ Lệ Tương Tác Người Dùng",
+      "engagementRateDesc": "Người dùng hoạt động trong 7 ngày qua",
+      "avgConversations": "TB Cuộc Trò Chuyện/Người Dùng",
+      "avgConversationsDesc": "Trung bình mọi thời điểm",
+      "emergencyRate": "Tỷ Lệ Phát Hiện Cấp Cứu",
+      "emergencyRateDesc": "Cuộc trò chuyện có cảnh báo",
+      "mostCommonHealthTopics": "Chủ Đề Sức Khỏe Phổ Biến Nhất",
+      "generatedBy": "Được tạo bởi HeyDoc Admin Dashboard",
+      "page": "Trang {{current}} / {{total}}"
     }
   },
   "settings": {
-    "title": "Cài Đặt Tổ Chức",
+    "title": "Cài Đặt",
+    "description": "Quản lý cài đặt tổ chức của bạn",
     "general": {
-      "title": "Cài Đặt Chung",
+      "title": "Thông Tin Tổ Chức",
       "orgName": "Tên Tổ Chức",
+      "orgNameHint": "Liên hệ hỗ trợ để thay đổi tên tổ chức",
+      "inviteCode": "Mã Mời",
+      "copyInviteCode": "Sao chép mã mời",
+      "inviteCodeCopied": "Mã mời đã được sao chép vào clipboard!",
+      "orgType": "Loại Tổ Chức",
+      "status": "Trạng Thái",
+      "active": "Hoạt Động",
+      "inactive": "Không Hoạt Động",
       "orgCode": "Mã Tổ Chức",
       "maxUsers": "Số Người Dùng Tối Đa"
+    },
+    "adminAccount": {
+      "title": "Tài Khoản Quản Trị Viên",
+      "emailAddress": "Địa Chỉ Email",
+      "role": "Vai Trò",
+      "administrator": "Quản Trị Viên"
     },
     "notifications": {
       "title": "Cài Đặt Thông Báo",
       "emailAlerts": "Cảnh Báo Email",
-      "emergencyAlerts": "Cảnh Báo Cấp Cứu"
+      "emergencyAlerts": "Cảnh Báo Cấp Cứu",
+      "emergencyAlertsDesc": "Nhận email khi phát hiện cấp cứu",
+      "weeklyReports": "Báo Cáo Hàng Tuần",
+      "weeklyReportsDesc": "Nhận tóm tắt sử dụng hàng tuần qua email",
+      "newUserNotifications": "Thông Báo Người Dùng Mới",
+      "newUserNotificationsDesc": "Nhận thông báo khi có người dùng mới tham gia",
+      "comingSoon": "Cài đặt thông báo sẽ có trong bản cập nhật tương lai."
+    },
+    "dangerZone": {
+      "title": "Vùng Nguy Hiểm",
+      "exportData": "Xuất Tất Cả Dữ Liệu",
+      "exportDataDesc": "Tải xuống tất cả dữ liệu tổ chức dưới dạng JSON",
+      "export": "Xuất",
+      "deleteOrg": "Xóa Tổ Chức",
+      "deleteOrgDesc": "Xóa vĩnh viễn tổ chức và tất cả dữ liệu",
+      "delete": "Xóa",
+      "contactSupport": "Những hành động này cần liên hệ bộ phận hỗ trợ HeyDoc."
+    },
+    "implementation": {
+      "title": "Triển Khai Cài Đặt",
+      "description": "Hầu hết cài đặt là chỉ đọc trong MVP này. Cài đặt có thể chỉnh sửa (thông báo, xuất dữ liệu) sẽ được triển khai trong các giai đoạn tương lai khi cần."
     }
+  },
+  "doctorApproval": {
+    "title": "Quản Lý Bác Sĩ",
+    "description": "Xem xét và quản lý đơn đăng ký bác sĩ",
+    "stats": {
+      "pendingReview": "Đang Chờ Xem Xét",
+      "approvedDoctors": "Bác Sĩ Đã Phê Duyệt",
+      "rejected": "Đã Từ Chối"
+    },
+    "tabs": {
+      "pending": "Đang Chờ",
+      "approved": "Đã Phê Duyệt",
+      "rejected": "Đã Từ Chối"
+    },
+    "table": {
+      "doctor": "Bác Sĩ",
+      "specialties": "Chuyên Khoa",
+      "license": "Giấy Phép",
+      "applied": "Đã Đăng Ký",
+      "actions": "Hành Động",
+      "viewDetails": "Xem Chi Tiết"
+    },
+    "loading": "Đang tải danh sách bác sĩ...",
+    "noDoctors": "Không có bác sĩ {{status}}",
+    "modal": {
+      "title": "Chi Tiết Bác Sĩ",
+      "yearsExperience": "{{years}} năm kinh nghiệm",
+      "bio": "Tiểu Sử",
+      "specialties": "Chuyên Khoa",
+      "licenseNumber": "Số Giấy Phép",
+      "licenseState": "Tiểu Bang Cấp Giấy Phép",
+      "licensePhoto": "Ảnh Giấy Phép",
+      "clickToView": "Nhấp để xem kích thước đầy đủ",
+      "rejectionReason": "Lý Do Từ Chối",
+      "rejectionReasonInput": "Lý Do Từ Chối (nếu từ chối)",
+      "rejectionPlaceholder": "Nhập lý do từ chối..."
+    },
+    "actions": {
+      "approve": "Phê Duyệt",
+      "reject": "Từ Chối",
+      "suspend": "Đình Chỉ Bác Sĩ",
+      "close": "Đóng",
+      "processing": "Đang xử lý..."
+    },
+    "messages": {
+      "approved": "{{name}} đã được phê duyệt!",
+      "rejected": "{{name}} đã bị từ chối.",
+      "suspended": "{{name}} đã bị đình chỉ.",
+      "provideReason": "Vui lòng cung cấp lý do từ chối",
+      "failedToLoad": "Không thể tải danh sách bác sĩ",
+      "failedToApprove": "Không thể phê duyệt bác sĩ",
+      "failedToReject": "Không thể từ chối bác sĩ",
+      "failedToSuspend": "Không thể đình chỉ bác sĩ"
+    }
+  },
+  "protectedRoute": {
+    "verifying": "Đang xác minh quyền quản trị viên...",
+    "accessDenied": "Từ Chối Truy Cập",
+    "noAccess": "Bạn không có quyền quản trị viên tổ chức. Vui lòng liên hệ quản trị viên tổ chức của bạn hoặc bộ phận hỗ trợ nền tảng nếu bạn cho rằng đây là lỗi.",
+    "goToChat": "Đi Tới Chat"
+  },
+  "common": {
+    "loading": "Đang tải...",
+    "error": "Lỗi",
+    "success": "Thành Công",
+    "save": "Lưu",
+    "cancel": "Hủy",
+    "close": "Đóng",
+    "confirm": "Xác Nhận",
+    "delete": "Xóa",
+    "edit": "Chỉnh Sửa",
+    "view": "Xem",
+    "search": "Tìm Kiếm",
+    "filter": "Lọc",
+    "refresh": "Làm Mới",
+    "back": "Quay Lại",
+    "next": "Tiếp",
+    "previous": "Trước",
+    "yes": "Có",
+    "no": "Không"
   }
 }

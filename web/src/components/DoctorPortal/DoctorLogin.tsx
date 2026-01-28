@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../../config/firebase';
@@ -7,6 +8,7 @@ import { COLLECTIONS } from '@shared/firebase.config';
 import type { DoctorProfile } from '@shared/types';
 
 const DoctorLogin: React.FC = () => {
+  const { t } = useTranslation('doctor');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -25,7 +27,7 @@ const DoctorLogin: React.FC = () => {
 
       if (!doctorDoc.exists()) {
         await auth.signOut();
-        setError('No doctor account found with this email. Please sign up first.');
+        setError(t('auth.login.noAccountFound'));
         return;
       }
 
@@ -38,7 +40,7 @@ const DoctorLogin: React.FC = () => {
         navigate('/doctor/rejected');
       } else if (doctorData.status === 'suspended') {
         await auth.signOut();
-        setError('Your account has been suspended. Please contact support.');
+        setError(t('auth.login.accountSuspended'));
       } else if (doctorData.status === 'approved') {
         // Check if Stripe onboarding is complete
         if (!doctorData.stripeOnboardingComplete) {
@@ -50,9 +52,9 @@ const DoctorLogin: React.FC = () => {
     } catch (err: any) {
       console.error('Login error:', err);
       if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
-        setError('Invalid email or password');
+        setError(t('auth.login.invalidCredentials'));
       } else if (err.code === 'auth/invalid-credential') {
-        setError('Invalid email or password');
+        setError(t('auth.login.invalidCredentials'));
       } else {
         setError(err.message || 'Failed to sign in');
       }
@@ -87,13 +89,13 @@ const DoctorLogin: React.FC = () => {
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <span className="font-medium">Doctor Portal</span>
+              <span className="font-medium">{t('layout.doctorPortal')}</span>
             </div>
             <p className="text-2xl font-light text-blue-100 mb-6">
-              Welcome back, Doctor
+              {t('auth.login.welcomeBack')}
             </p>
             <p className="text-lg text-blue-50 leading-relaxed">
-              Access your dashboard to manage consultations, view earnings, and help patients.
+              {t('auth.login.accessDashboard')}
             </p>
           </div>
 
@@ -105,8 +107,8 @@ const DoctorLogin: React.FC = () => {
                 </svg>
               </div>
               <div>
-                <h3 className="font-semibold text-lg mb-1">Earn $20-$36 per case</h3>
-                <p className="text-blue-100 text-sm">Standard cases pay $20, priority requests pay $36</p>
+                <h3 className="font-semibold text-lg mb-1">{t('auth.login.earnPerCase')}</h3>
+                <p className="text-blue-100 text-sm">{t('auth.login.earnPerCaseDesc')}</p>
               </div>
             </div>
 
@@ -117,8 +119,8 @@ const DoctorLogin: React.FC = () => {
                 </svg>
               </div>
               <div>
-                <h3 className="font-semibold text-lg mb-1">Flexible Schedule</h3>
-                <p className="text-blue-100 text-sm">Toggle availability on/off anytime</p>
+                <h3 className="font-semibold text-lg mb-1">{t('auth.login.flexibleSchedule')}</h3>
+                <p className="text-blue-100 text-sm">{t('auth.login.flexibleScheduleDesc')}</p>
               </div>
             </div>
 
@@ -129,8 +131,8 @@ const DoctorLogin: React.FC = () => {
                 </svg>
               </div>
               <div>
-                <h3 className="font-semibold text-lg mb-1">Weekly Payouts</h3>
-                <p className="text-blue-100 text-sm">Automatic deposits every Monday via Stripe</p>
+                <h3 className="font-semibold text-lg mb-1">{t('auth.login.weeklyPayouts')}</h3>
+                <p className="text-blue-100 text-sm">{t('auth.login.weeklyPayoutsDesc')}</p>
               </div>
             </div>
           </div>
@@ -140,8 +142,8 @@ const DoctorLogin: React.FC = () => {
         <div className="max-w-md w-full mx-auto">
           <div className="bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl p-8 border border-white/50">
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">Doctor Sign In</h2>
-              <p className="text-gray-600">Access your physician dashboard</p>
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">{t('auth.login.title')}</h2>
+              <p className="text-gray-600">{t('auth.login.subtitle')}</p>
             </div>
 
             {error && (
@@ -156,7 +158,7 @@ const DoctorLogin: React.FC = () => {
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
                 <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
-                  Email Address
+                  {t('auth.login.email')}
                 </label>
                 <input
                   type="email"
@@ -165,13 +167,13 @@ const DoctorLogin: React.FC = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                  placeholder="doctor@example.com"
+                  placeholder={t('auth.login.emailPlaceholder')}
                 />
               </div>
 
               <div>
                 <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-2">
-                  Password
+                  {t('auth.login.password')}
                 </label>
                 <div className="relative">
                   <input
@@ -180,13 +182,13 @@ const DoctorLogin: React.FC = () => {
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full px-4 py-3 pr-12 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                    placeholder="Enter your password"
+                    className="w-full px-4 py-3 pe-12 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                    placeholder={t('auth.login.passwordPlaceholder')}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 p-1"
+                    className="absolute end-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 p-1"
                   >
                     {showPassword ? (
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -210,26 +212,26 @@ const DoctorLogin: React.FC = () => {
                 {loading ? (
                   <span className="flex items-center justify-center gap-2">
                     <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white" />
-                    Signing In...
+                    {t('auth.login.signingIn')}
                   </span>
                 ) : (
-                  'Sign In'
+                  t('auth.login.button')
                 )}
               </button>
             </form>
 
             <div className="mt-6 text-center space-y-3">
               <p className="text-gray-600">
-                New to HeyDoc?{' '}
+                {t('auth.login.newToHeyDoc')}{' '}
                 <Link to="/doctor/signup" className="text-blue-600 hover:text-blue-700 font-semibold">
-                  Apply to join
+                  {t('auth.login.applyToJoin')}
                 </Link>
               </p>
               <Link
                 to="/"
                 className="inline-block text-sm text-gray-500 hover:text-gray-700"
               >
-                Go to patient portal
+                {t('auth.login.goToPatientPortal')}
               </Link>
             </div>
           </div>

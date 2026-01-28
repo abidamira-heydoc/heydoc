@@ -4,68 +4,373 @@
     "analytics": "التحليلات",
     "users": "المستخدمون",
     "reports": "التقارير",
-    "settings": "الإعدادات"
+    "settings": "الإعدادات",
+    "backToApp": "العودة للتطبيق"
+  },
+  "layout": {
+    "loading": "جاري تحميل لوحة التحكم...",
+    "organization": "المنظمة",
+    "administrator": "مسؤول",
+    "logout": "تسجيل الخروج",
+    "heyDocAdmin": "HeyDoc للإدارة"
   },
   "dashboard": {
     "title": "لوحة تحكم المنظمة",
-    "welcome": "مرحباً بعودتك، {{name}}",
+    "welcome": "مرحباً بعودتك",
+    "welcomeWithName": "مرحباً بعودتك، {{name}}!",
+    "overview": "إليك نظرة عامة على نشاط المساعدة الصحية في منظمتك.",
     "stats": {
       "totalUsers": "إجمالي المستخدمين",
       "activeUsers": "المستخدمون النشطون",
+      "activeUsersDays": "المستخدمون النشطون (7 أيام)",
       "totalConversations": "إجمالي المحادثات",
-      "emergencyAlerts": "تنبيهات الطوارئ"
+      "emergencyAlerts": "تنبيهات الطوارئ",
+      "conversationsThisMonth": "محادثات هذا الشهر",
+      "emergencyFlags": "علامات الطوارئ"
+    },
+    "quickActions": {
+      "title": "إجراءات سريعة",
+      "viewAnalytics": "عرض التحليلات",
+      "viewAnalyticsDesc": "عرض الرسوم البيانية والاتجاهات التفصيلية",
+      "manageUsers": "إدارة المستخدمين",
+      "manageUsersDesc": "إضافة أو إزالة أو عرض حسابات المستخدمين",
+      "generateReport": "إنشاء تقرير",
+      "generateReportDesc": "إنشاء تقرير PDF للقيادة"
+    },
+    "recentActivity": {
+      "title": "النشاط الأخير",
+      "comingSoon": "موجز النشاط قادم قريباً",
+      "trackActivity": "تتبع نشاط المستخدم والأحداث المهمة"
     }
+  },
+  "oldDashboard": {
+    "title": "لوحة تحكم المسؤول",
+    "backToChat": "العودة للمحادثة",
+    "accessDenied": "الوصول مرفوض",
+    "noAdminAccess": "ليس لديك صلاحية الوصول للمسؤول لهذه الصفحة.",
+    "goToChat": "الذهاب للمحادثة",
+    "loading": "جاري التحميل...",
+    "userManagement": "إدارة المستخدمين",
+    "addUser": "إضافة مستخدم",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "minCharacters": "6 أحرف كحد أدنى",
+    "createUser": "إنشاء مستخدم",
+    "creating": "جاري الإنشاء...",
+    "cancel": "إلغاء",
+    "role": "الدور",
+    "created": "تاريخ الإنشاء",
+    "actions": "الإجراءات",
+    "admin": "مسؤول",
+    "user": "مستخدم",
+    "you": "أنت",
+    "delete": "حذف؟",
+    "deleting": "جاري الحذف...",
+    "yes": "نعم",
+    "no": "لا",
+    "noUsersYet": "لا يوجد مستخدمون بعد. انقر على \"إضافة مستخدم\" لإنشاء واحد.",
+    "totalUsers": "إجمالي المستخدمين",
+    "admins": "المسؤولون",
+    "regularUsers": "المستخدمون العاديون",
+    "emailRequired": "البريد الإلكتروني وكلمة المرور مطلوبان",
+    "passwordMinLength": "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
+    "userCreated": "تم إنشاء المستخدم {{email}} بنجاح!",
+    "userDeleted": "تم حذف المستخدم بنجاح",
+    "failedToLoadUsers": "فشل في تحميل المستخدمين",
+    "failedToCreateUser": "فشل في إنشاء المستخدم",
+    "failedToDeleteUser": "فشل في حذف المستخدم"
   },
   "users": {
     "title": "إدارة المستخدمين",
+    "description": "إدارة المستخدمين في منظمتك",
     "search": "البحث عن مستخدمين...",
+    "searchByEmail": "البحث عن مستخدمين بالبريد الإلكتروني...",
     "addUser": "إضافة مستخدم",
+    "addNewUser": "إضافة مستخدم جديد",
     "columns": {
+      "user": "المستخدم",
       "name": "الاسم",
       "email": "البريد الإلكتروني",
       "role": "الدور",
       "status": "الحالة",
+      "joined": "تاريخ الانضمام",
       "lastActive": "آخر نشاط",
+      "conversations": "المحادثات",
       "actions": "الإجراءات"
     },
     "roles": {
       "user": "مستخدم",
       "orgAdmin": "مسؤول المنظمة",
       "platformAdmin": "مسؤول المنصة"
-    }
+    },
+    "filters": {
+      "all": "جميع المستخدمين",
+      "active": "نشط",
+      "inactive": "غير نشط"
+    },
+    "modal": {
+      "email": "البريد الإلكتروني",
+      "emailPlaceholder": "user@example.com",
+      "password": "كلمة المرور",
+      "passwordPlaceholder": "6 أحرف كحد أدنى",
+      "cancel": "إلغاء",
+      "createUser": "إنشاء مستخدم",
+      "creating": "جاري الإنشاء..."
+    },
+    "delete": {
+      "confirm": "حذف؟",
+      "yes": "نعم",
+      "no": "لا",
+      "deleting": "..."
+    },
+    "actions": {
+      "viewDetails": "عرض التفاصيل (قريباً)",
+      "deleteUser": "حذف المستخدم"
+    },
+    "noResults": "لم يتم العثور على مستخدمين مطابقين لـ \"{{query}}\"",
+    "clearSearch": "مسح البحث",
+    "noUsers": "لا يوجد مستخدمون في منظمتك بعد.",
+    "loadingUsers": "جاري تحميل المستخدمين...",
+    "showing": "عرض {{filtered}} من {{total}} مستخدم",
+    "refresh": "تحديث",
+    "you": "أنت",
+    "never": "أبداً",
+    "emailRequired": "البريد الإلكتروني وكلمة المرور مطلوبان",
+    "passwordMinLength": "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
+    "userCreated": "تم إنشاء المستخدم {{email}} بنجاح!",
+    "userDeleted": "تم حذف المستخدم بنجاح",
+    "failedToCreateUser": "فشل في إنشاء المستخدم",
+    "failedToDeleteUser": "فشل في حذف المستخدم"
   },
   "analytics": {
-    "title": "لوحة التحليلات",
+    "title": "التحليلات",
+    "description": "تتبع أنماط الاستخدام والاتجاهات الصحية",
     "dateRange": "نطاق التاريخ",
+    "days7": "7 أيام",
+    "days30": "30 يوم",
+    "days90": "90 يوم",
+    "lastDays": "آخر {{days}} يوم",
     "metrics": {
+      "totalConversations": "إجمالي المحادثات",
+      "thisMonth": "هذا الشهر",
+      "activeUsers": "المستخدمون النشطون",
+      "emergencyAlerts": "تنبيهات الطوارئ",
       "conversations": "المحادثات",
       "messages": "الرسائل",
       "avgSessionTime": "متوسط وقت الجلسة",
       "userSatisfaction": "رضا المستخدمين"
-    }
+    },
+    "charts": {
+      "conversationsOverTime": "المحادثات عبر الوقت",
+      "mostCommonSymptoms": "الأعراض الأكثر شيوعاً",
+      "topMentions": "أكثر الإشارات",
+      "peakUsageTimes": "أوقات الذروة",
+      "hourDistribution": "التوزيع على مدار 24 ساعة",
+      "emergencyFlagTrends": "اتجاهات علامات الطوارئ",
+      "criticalAlerts": "التنبيهات الحرجة"
+    },
+    "insights": {
+      "title": "رؤى سريعة",
+      "engagementRate": "معدل التفاعل",
+      "engagementDesc": "المستخدمون النشطون في آخر 7 أيام",
+      "avgConversations": "متوسط المحادثات/المستخدم",
+      "avgConversationsDesc": "المتوسط الكلي",
+      "emergencyRate": "معدل اكتشاف الطوارئ",
+      "emergencyRateDesc": "المحادثات مع التنبيهات"
+    },
+    "refreshData": "تحديث البيانات",
+    "refreshing": "جاري التحديث..."
   },
   "reports": {
     "title": "تقارير التأثير",
+    "description": "إنشاء تقارير لمشاركتها مع القيادة",
     "generate": "إنشاء تقرير",
     "download": "تنزيل",
+    "downloadPDF": "تنزيل PDF",
+    "generating": "جاري الإنشاء...",
     "types": {
-      "monthly": "ملخص شهري",
+      "monthly": "تقرير شهري",
       "quarterly": "تقرير ربع سنوي",
       "annual": "تقرير سنوي"
+    },
+    "preview": {
+      "title": "تقرير تأثير HeyDoc",
+      "reportPeriod": "فترة التقرير: {{period}}"
+    },
+    "sections": {
+      "executiveSummary": "الملخص التنفيذي",
+      "summaryText": "يقدم هذا التقرير نظرة عامة على استخدام HeyDoc داخل منظمتك، مع تسليط الضوء على المقاييس الرئيسية والتوفير المحتمل في التكاليف ومؤشرات التأثير الصحي لفترة التقرير.",
+      "keyMetrics": "المقاييس الرئيسية",
+      "estimatedCostSavings": "التوفير المقدر في التكاليف",
+      "estimatedSavings": "التوفير المقدر",
+      "savingsDescription": "بناءً على توفير مقدر بـ 50 دولار لكل استشارة صحية كان من الممكن أن تؤدي إلى زيارة غير ضرورية لغرفة الطوارئ أو الرعاية العاجلة.",
+      "emergencyDetectionImpact": "تأثير اكتشاف الطوارئ",
+      "emergencySituationsDetected": "تم اكتشاف {{count}} حالة طوارئ",
+      "emergencyDescription": "اكتشف الذكاء الاصطناعي في HeyDoc حالات طوارئ محتملة ووجه المستخدمين فوراً لطلب الرعاية الطارئة. قد تكون هذه التدخلات المبكرة قد ساهمت في نتائج صحية أفضل وربما أنقذت أرواحاً.",
+      "usageInsights": "رؤى الاستخدام"
+    },
+    "footer": {
+      "generatedBy": "تم إنشاؤه بواسطة لوحة تحكم HeyDoc",
+      "reportDate": "تاريخ التقرير: {{date}}"
+    },
+    "info": {
+      "title": "حول هذا التقرير",
+      "description": "انقر على \"تنزيل PDF\" لإنشاء مستند PDF احترافي يمكنك مشاركته مع القيادة أو أعضاء مجلس الإدارة أو أصحاب المصلحة لإظهار تأثير HeyDoc في منظمتك."
+    },
+    "pdf": {
+      "title": "تقرير تأثير HeyDoc",
+      "executiveSummary": "الملخص التنفيذي",
+      "summaryText": "يقدم هذا التقرير نظرة عامة على استخدام HeyDoc داخل {{orgName}}، مع تسليط الضوء على المقاييس الرئيسية والتوفير المحتمل في التكاليف ومؤشرات التأثير الصحي لفترة التقرير. ساعد HeyDoc فريقك في الوصول إلى الإرشادات الصحية الفورية واكتشاف الطوارئ.",
+      "keyMetrics": "المقاييس الرئيسية",
+      "totalUsers": "إجمالي المستخدمين",
+      "conversations": "المحادثات",
+      "emergencyAlerts": "تنبيهات الطوارئ",
+      "activeUsers": "المستخدمون النشطون",
+      "estimatedCostSavings": "التوفير المقدر في التكاليف",
+      "savingsNote1": "التوفير المقدر بناءً على 50 دولار لكل استشارة صحية قد تكون",
+      "savingsNote2": "تجنبت زيارة غير ضرورية لغرفة الطوارئ أو الرعاية العاجلة.",
+      "emergencyDetectionImpact": "تأثير اكتشاف الطوارئ",
+      "emergencySituationsDetected": "تم اكتشاف {{count}} حالة طوارئ",
+      "emergencyNote": "اكتشف الذكاء الاصطناعي في HeyDoc حالات طوارئ محتملة ووجه المستخدمين فوراً لطلب الرعاية الطارئة. قد تكون هذه التدخلات المبكرة قد ساهمت في نتائج صحية أفضل.",
+      "usageInsights": "رؤى الاستخدام",
+      "engagementRate": "معدل تفاعل المستخدمين",
+      "engagementRateDesc": "المستخدمون النشطون في آخر 7 أيام",
+      "avgConversations": "متوسط المحادثات لكل مستخدم",
+      "avgConversationsDesc": "المتوسط الكلي",
+      "emergencyRate": "معدل اكتشاف الطوارئ",
+      "emergencyRateDesc": "المحادثات مع التنبيهات",
+      "mostCommonHealthTopics": "أكثر المواضيع الصحية شيوعاً",
+      "generatedBy": "تم إنشاؤه بواسطة لوحة تحكم HeyDoc",
+      "page": "صفحة {{current}} من {{total}}"
     }
   },
   "settings": {
-    "title": "إعدادات المنظمة",
+    "title": "الإعدادات",
+    "description": "إدارة إعدادات منظمتك",
     "general": {
-      "title": "الإعدادات العامة",
+      "title": "معلومات المنظمة",
       "orgName": "اسم المنظمة",
+      "orgNameHint": "اتصل بالدعم لتغيير اسم المنظمة",
+      "inviteCode": "رمز الدعوة",
+      "copyInviteCode": "نسخ رمز الدعوة",
+      "inviteCodeCopied": "تم نسخ رمز الدعوة إلى الحافظة!",
+      "orgType": "نوع المنظمة",
+      "status": "الحالة",
+      "active": "نشط",
+      "inactive": "غير نشط",
       "orgCode": "رمز المنظمة",
       "maxUsers": "الحد الأقصى للمستخدمين"
+    },
+    "adminAccount": {
+      "title": "حساب المسؤول",
+      "emailAddress": "عنوان البريد الإلكتروني",
+      "role": "الدور",
+      "administrator": "مسؤول"
     },
     "notifications": {
       "title": "إعدادات الإشعارات",
       "emailAlerts": "تنبيهات البريد الإلكتروني",
-      "emergencyAlerts": "تنبيهات الطوارئ"
+      "emergencyAlerts": "تنبيهات الطوارئ",
+      "emergencyAlertsDesc": "استلام بريد إلكتروني عند اكتشاف حالة طوارئ",
+      "weeklyReports": "التقارير الأسبوعية",
+      "weeklyReportsDesc": "استلام ملخص استخدام أسبوعي عبر البريد الإلكتروني",
+      "newUserNotifications": "إشعارات المستخدم الجديد",
+      "newUserNotificationsDesc": "الحصول على إشعار عند انضمام مستخدمين جدد",
+      "comingSoon": "ستتوفر إعدادات الإشعارات في تحديث مستقبلي."
+    },
+    "dangerZone": {
+      "title": "منطقة الخطر",
+      "exportData": "تصدير جميع البيانات",
+      "exportDataDesc": "تنزيل جميع بيانات المنظمة بتنسيق JSON",
+      "export": "تصدير",
+      "deleteOrg": "حذف المنظمة",
+      "deleteOrgDesc": "حذف المنظمة وجميع البيانات بشكل دائم",
+      "delete": "حذف",
+      "contactSupport": "هذه الإجراءات تتطلب الاتصال بدعم HeyDoc."
+    },
+    "implementation": {
+      "title": "تنفيذ الإعدادات",
+      "description": "معظم الإعدادات للقراءة فقط في هذا الإصدار التجريبي. سيتم تنفيذ الإعدادات القابلة للتعديل (الإشعارات، تصدير البيانات) في المراحل المستقبلية حسب الحاجة."
     }
+  },
+  "doctorApproval": {
+    "title": "إدارة الأطباء",
+    "description": "مراجعة وإدارة طلبات الأطباء",
+    "stats": {
+      "pendingReview": "قيد المراجعة",
+      "approvedDoctors": "الأطباء المعتمدون",
+      "rejected": "مرفوض"
+    },
+    "tabs": {
+      "pending": "قيد الانتظار",
+      "approved": "معتمد",
+      "rejected": "مرفوض"
+    },
+    "table": {
+      "doctor": "الطبيب",
+      "specialties": "التخصصات",
+      "license": "الترخيص",
+      "applied": "تاريخ التقديم",
+      "actions": "الإجراءات",
+      "viewDetails": "عرض التفاصيل"
+    },
+    "loading": "جاري تحميل الأطباء...",
+    "noDoctors": "لا يوجد أطباء {{status}}",
+    "modal": {
+      "title": "تفاصيل الطبيب",
+      "yearsExperience": "{{years}} سنوات خبرة",
+      "bio": "السيرة الذاتية",
+      "specialties": "التخصصات",
+      "licenseNumber": "رقم الترخيص",
+      "licenseState": "ولاية الترخيص",
+      "licensePhoto": "صورة الترخيص",
+      "clickToView": "انقر لعرض الحجم الكامل",
+      "rejectionReason": "سبب الرفض",
+      "rejectionReasonInput": "سبب الرفض (في حالة الرفض)",
+      "rejectionPlaceholder": "أدخل سبب الرفض..."
+    },
+    "actions": {
+      "approve": "اعتماد",
+      "reject": "رفض",
+      "suspend": "إيقاف الطبيب",
+      "close": "إغلاق",
+      "processing": "جاري المعالجة..."
+    },
+    "messages": {
+      "approved": "تم اعتماد {{name}}!",
+      "rejected": "تم رفض {{name}}.",
+      "suspended": "تم إيقاف {{name}}.",
+      "provideReason": "الرجاء تقديم سبب الرفض",
+      "failedToLoad": "فشل في تحميل الأطباء",
+      "failedToApprove": "فشل في اعتماد الطبيب",
+      "failedToReject": "فشل في رفض الطبيب",
+      "failedToSuspend": "فشل في إيقاف الطبيب"
+    }
+  },
+  "protectedRoute": {
+    "verifying": "جاري التحقق من صلاحية المسؤول...",
+    "accessDenied": "الوصول مرفوض",
+    "noAccess": "ليس لديك صلاحية مسؤول المنظمة. يرجى الاتصال بمسؤول منظمتك أو دعم المنصة إذا كنت تعتقد أن هذا خطأ.",
+    "goToChat": "الذهاب للمحادثة"
+  },
+  "common": {
+    "loading": "جاري التحميل...",
+    "error": "خطأ",
+    "success": "نجاح",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "close": "إغلاق",
+    "confirm": "تأكيد",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "view": "عرض",
+    "search": "بحث",
+    "filter": "تصفية",
+    "refresh": "تحديث",
+    "back": "رجوع",
+    "next": "التالي",
+    "previous": "السابق",
+    "yes": "نعم",
+    "no": "لا"
   }
 }

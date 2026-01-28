@@ -4,68 +4,373 @@
     "analytics": "تجزیات",
     "users": "صارفین",
     "reports": "رپورٹس",
-    "settings": "ترتیبات"
+    "settings": "ترتیبات",
+    "backToApp": "ایپ پر واپس جائیں"
+  },
+  "layout": {
+    "loading": "ایڈمن ڈیش بورڈ لوڈ ہو رہا ہے...",
+    "organization": "تنظیم",
+    "administrator": "منتظم",
+    "logout": "لاگ آؤٹ",
+    "heyDocAdmin": "HeyDoc ایڈمن"
   },
   "dashboard": {
     "title": "تنظیم کا ڈیش بورڈ",
-    "welcome": "خوش آمدید، {{name}}",
+    "welcome": "خوش آمدید",
+    "welcomeWithName": "خوش آمدید، {{name}}!",
+    "overview": "آپ کی تنظیم کی صحت کی معاونت سرگرمی کا جائزہ یہ ہے۔",
     "stats": {
       "totalUsers": "کل صارفین",
       "activeUsers": "فعال صارفین",
+      "activeUsersDays": "فعال صارفین (7 دن)",
       "totalConversations": "کل گفتگو",
-      "emergencyAlerts": "ایمرجنسی الرٹس"
+      "emergencyAlerts": "ایمرجنسی الرٹس",
+      "conversationsThisMonth": "اس ماہ کی گفتگو",
+      "emergencyFlags": "ایمرجنسی فلیگز"
+    },
+    "quickActions": {
+      "title": "فوری کارروائیاں",
+      "viewAnalytics": "تجزیات دیکھیں",
+      "viewAnalyticsDesc": "تفصیلی استعمال چارٹس اور رجحانات دیکھیں",
+      "manageUsers": "صارفین کا انتظام کریں",
+      "manageUsersDesc": "صارف اکاؤنٹس شامل کریں، ہٹائیں یا دیکھیں",
+      "generateReport": "رپورٹ بنائیں",
+      "generateReportDesc": "قیادت کے لیے PDF اثر رپورٹ بنائیں"
+    },
+    "recentActivity": {
+      "title": "حالیہ سرگرمی",
+      "comingSoon": "سرگرمی فیڈ جلد آ رہی ہے",
+      "trackActivity": "صارف کی سرگرمی اور اہم واقعات کا سراغ لگائیں"
     }
+  },
+  "oldDashboard": {
+    "title": "ایڈمن ڈیش بورڈ",
+    "backToChat": "چیٹ پر واپس جائیں",
+    "accessDenied": "رسائی مسترد",
+    "noAdminAccess": "آپ کو اس صفحے تک ایڈمن رسائی نہیں ہے۔",
+    "goToChat": "چیٹ پر جائیں",
+    "loading": "لوڈ ہو رہا ہے...",
+    "userManagement": "صارف کا انتظام",
+    "addUser": "صارف شامل کریں",
+    "email": "ای میل",
+    "password": "پاس ورڈ",
+    "minCharacters": "کم از کم 6 حروف",
+    "createUser": "صارف بنائیں",
+    "creating": "بنا رہا ہے...",
+    "cancel": "منسوخ کریں",
+    "role": "کردار",
+    "created": "بنایا گیا",
+    "actions": "کارروائیاں",
+    "admin": "ایڈمن",
+    "user": "صارف",
+    "you": "آپ",
+    "delete": "حذف کریں؟",
+    "deleting": "حذف ہو رہا ہے...",
+    "yes": "ہاں",
+    "no": "نہیں",
+    "noUsersYet": "ابھی تک کوئی صارف نہیں۔ ایک بنانے کے لیے \"صارف شامل کریں\" پر کلک کریں۔",
+    "totalUsers": "کل صارفین",
+    "admins": "ایڈمنز",
+    "regularUsers": "عام صارفین",
+    "emailRequired": "ای میل اور پاس ورڈ درکار ہیں",
+    "passwordMinLength": "پاس ورڈ کم از کم 6 حروف کا ہونا چاہیے",
+    "userCreated": "صارف {{email}} کامیابی سے بنایا گیا!",
+    "userDeleted": "صارف کامیابی سے حذف ہو گیا",
+    "failedToLoadUsers": "صارفین لوڈ کرنے میں ناکام",
+    "failedToCreateUser": "صارف بنانے میں ناکام",
+    "failedToDeleteUser": "صارف حذف کرنے میں ناکام"
   },
   "users": {
     "title": "صارف کا انتظام",
+    "description": "اپنی تنظیم کے صارفین کا انتظام کریں",
     "search": "صارفین تلاش کریں...",
+    "searchByEmail": "ای میل سے صارفین تلاش کریں...",
     "addUser": "صارف شامل کریں",
+    "addNewUser": "نیا صارف شامل کریں",
     "columns": {
+      "user": "صارف",
       "name": "نام",
       "email": "ای میل",
       "role": "کردار",
       "status": "حیثیت",
+      "joined": "شامل ہوئے",
       "lastActive": "آخری سرگرمی",
+      "conversations": "گفتگو",
       "actions": "کارروائیاں"
     },
     "roles": {
       "user": "صارف",
       "orgAdmin": "تنظیم کا ایڈمن",
       "platformAdmin": "پلیٹ فارم ایڈمن"
-    }
+    },
+    "filters": {
+      "all": "تمام صارفین",
+      "active": "فعال",
+      "inactive": "غیر فعال"
+    },
+    "modal": {
+      "email": "ای میل",
+      "emailPlaceholder": "user@example.com",
+      "password": "پاس ورڈ",
+      "passwordPlaceholder": "کم از کم 6 حروف",
+      "cancel": "منسوخ کریں",
+      "createUser": "صارف بنائیں",
+      "creating": "بنا رہا ہے..."
+    },
+    "delete": {
+      "confirm": "حذف کریں؟",
+      "yes": "ہاں",
+      "no": "نہیں",
+      "deleting": "..."
+    },
+    "actions": {
+      "viewDetails": "تفصیلات دیکھیں (جلد آ رہا ہے)",
+      "deleteUser": "صارف حذف کریں"
+    },
+    "noResults": "\"{{query}}\" سے مماثل کوئی صارف نہیں ملا",
+    "clearSearch": "تلاش صاف کریں",
+    "noUsers": "آپ کی تنظیم میں ابھی تک کوئی صارف نہیں۔",
+    "loadingUsers": "صارفین لوڈ ہو رہے ہیں...",
+    "showing": "{{total}} میں سے {{filtered}} صارفین دکھا رہے ہیں",
+    "refresh": "ریفریش کریں",
+    "you": "آپ",
+    "never": "کبھی نہیں",
+    "emailRequired": "ای میل اور پاس ورڈ درکار ہیں",
+    "passwordMinLength": "پاس ورڈ کم از کم 6 حروف کا ہونا چاہیے",
+    "userCreated": "صارف {{email}} کامیابی سے بنایا گیا!",
+    "userDeleted": "صارف کامیابی سے حذف ہو گیا",
+    "failedToCreateUser": "صارف بنانے میں ناکام",
+    "failedToDeleteUser": "صارف حذف کرنے میں ناکام"
   },
   "analytics": {
-    "title": "تجزیاتی ڈیش بورڈ",
+    "title": "تجزیات",
+    "description": "استعمال کے نمونوں اور صحت کے رجحانات کا سراغ لگائیں",
     "dateRange": "تاریخ کی حد",
+    "days7": "7 دن",
+    "days30": "30 دن",
+    "days90": "90 دن",
+    "lastDays": "پچھلے {{days}} دن",
     "metrics": {
+      "totalConversations": "کل گفتگو",
+      "thisMonth": "اس ماہ",
+      "activeUsers": "فعال صارفین",
+      "emergencyAlerts": "ایمرجنسی الرٹس",
       "conversations": "گفتگو",
       "messages": "پیغامات",
       "avgSessionTime": "اوسط سیشن کا وقت",
       "userSatisfaction": "صارف کی اطمینان"
-    }
+    },
+    "charts": {
+      "conversationsOverTime": "وقت کے ساتھ گفتگو",
+      "mostCommonSymptoms": "سب سے عام علامات",
+      "topMentions": "اہم ذکر",
+      "peakUsageTimes": "چوٹی کے استعمال کے اوقات",
+      "hourDistribution": "24 گھنٹے کی تقسیم",
+      "emergencyFlagTrends": "ایمرجنسی فلیگ رجحانات",
+      "criticalAlerts": "اہم الرٹس"
+    },
+    "insights": {
+      "title": "فوری بصیرت",
+      "engagementRate": "شرکت کی شرح",
+      "engagementDesc": "پچھلے 7 دنوں میں فعال صارفین",
+      "avgConversations": "اوسط گفتگو/صارف",
+      "avgConversationsDesc": "ہمہ وقت کی اوسط",
+      "emergencyRate": "ایمرجنسی کا پتہ لگانے کی شرح",
+      "emergencyRateDesc": "الرٹس والی گفتگو"
+    },
+    "refreshData": "ڈیٹا ریفریش کریں",
+    "refreshing": "ریفریش ہو رہا ہے..."
   },
   "reports": {
     "title": "اثر رپورٹس",
+    "description": "قیادت کے ساتھ شیئر کرنے کے لیے رپورٹس بنائیں",
     "generate": "رپورٹ بنائیں",
     "download": "ڈاؤن لوڈ",
+    "downloadPDF": "PDF ڈاؤن لوڈ کریں",
+    "generating": "بنا رہا ہے...",
     "types": {
-      "monthly": "ماہانہ خلاصہ",
+      "monthly": "ماہانہ رپورٹ",
       "quarterly": "سہ ماہی رپورٹ",
       "annual": "سالانہ رپورٹ"
+    },
+    "preview": {
+      "title": "HeyDoc اثر رپورٹ",
+      "reportPeriod": "رپورٹ کی مدت: {{period}}"
+    },
+    "sections": {
+      "executiveSummary": "ایگزیکٹو خلاصہ",
+      "summaryText": "یہ رپورٹ آپ کی تنظیم میں HeyDoc کے استعمال کا جائزہ فراہم کرتی ہے، جو رپورٹنگ مدت کے لیے کلیدی میٹرکس، ممکنہ لاگت کی بچت اور صحت کے اثر اشاریوں کو نمایاں کرتی ہے۔",
+      "keyMetrics": "کلیدی میٹرکس",
+      "estimatedCostSavings": "تخمینی لاگت کی بچت",
+      "estimatedSavings": "تخمینی بچت",
+      "savingsDescription": "فی صحت مشاورت $50 کی تخمینی بچت پر مبنی جو بصورت دیگر غیر ضروری ایمرجنسی روم یا فوری دیکھ بھال کے دورے کا نتیجہ ہو سکتی تھی۔",
+      "emergencyDetectionImpact": "ایمرجنسی کا پتہ لگانے کا اثر",
+      "emergencySituationsDetected": "{{count}} ایمرجنسی صورتحال کا پتہ چلا",
+      "emergencyDescription": "HeyDoc کی AI نے ممکنہ ایمرجنسی صورتحال کا پتہ لگایا اور فوری طور پر صارفین کو ایمرجنسی دیکھ بھال حاصل کرنے کی ہدایت کی۔ ان ابتدائی مداخلتوں نے بہتر صحت کے نتائج میں حصہ ڈالا ہو سکتا ہے اور ممکنہ طور پر جانیں بچائیں۔",
+      "usageInsights": "استعمال کی بصیرت"
+    },
+    "footer": {
+      "generatedBy": "HeyDoc ایڈمن ڈیش بورڈ سے تیار کردہ",
+      "reportDate": "رپورٹ کی تاریخ: {{date}}"
+    },
+    "info": {
+      "title": "اس رپورٹ کے بارے میں",
+      "description": "ایک پیشہ ورانہ PDF دستاویز بنانے کے لیے \"PDF ڈاؤن لوڈ کریں\" پر کلک کریں جسے آپ قیادت، بورڈ کے اراکین یا اسٹیک ہولڈرز کے ساتھ شیئر کر سکتے ہیں تاکہ اپنی تنظیم میں HeyDoc کے اثر کا مظاہرہ کریں۔"
+    },
+    "pdf": {
+      "title": "HeyDoc اثر رپورٹ",
+      "executiveSummary": "ایگزیکٹو خلاصہ",
+      "summaryText": "یہ رپورٹ {{orgName}} میں HeyDoc کے استعمال کا جائزہ فراہم کرتی ہے، جو رپورٹنگ مدت کے لیے کلیدی میٹرکس، ممکنہ لاگت کی بچت اور صحت کے اثر اشاریوں کو نمایاں کرتی ہے۔ HeyDoc آپ کی ٹیم کو فوری صحت رہنمائی اور ایمرجنسی کا پتہ لگانے میں مدد کر رہا ہے۔",
+      "keyMetrics": "کلیدی میٹرکس",
+      "totalUsers": "کل صارفین",
+      "conversations": "گفتگو",
+      "emergencyAlerts": "ایمرجنسی الرٹس",
+      "activeUsers": "فعال صارفین",
+      "estimatedCostSavings": "تخمینی لاگت کی بچت",
+      "savingsNote1": "فی صحت مشاورت $50 کی تخمینی بچت پر مبنی جو",
+      "savingsNote2": "غیر ضروری ایمرجنسی روم یا فوری دیکھ بھال کے دورے سے بچ سکتی تھی۔",
+      "emergencyDetectionImpact": "ایمرجنسی کا پتہ لگانے کا اثر",
+      "emergencySituationsDetected": "{{count}} ایمرجنسی صورتحال کا پتہ چلا",
+      "emergencyNote": "HeyDoc کی AI نے ممکنہ ایمرجنسی صورتحال کا پتہ لگایا اور فوری طور پر صارفین کو ایمرجنسی دیکھ بھال حاصل کرنے کی ہدایت کی۔ ان ابتدائی مداخلتوں نے بہتر صحت کے نتائج میں حصہ ڈالا ہو سکتا ہے۔",
+      "usageInsights": "استعمال کی بصیرت",
+      "engagementRate": "صارف کی شرکت کی شرح",
+      "engagementRateDesc": "پچھلے 7 دنوں میں فعال صارفین",
+      "avgConversations": "فی صارف اوسط گفتگو",
+      "avgConversationsDesc": "ہمہ وقت کی اوسط",
+      "emergencyRate": "ایمرجنسی کا پتہ لگانے کی شرح",
+      "emergencyRateDesc": "الرٹس والی گفتگو",
+      "mostCommonHealthTopics": "سب سے عام صحت کے موضوعات",
+      "generatedBy": "HeyDoc ایڈمن ڈیش بورڈ سے تیار کردہ",
+      "page": "صفحہ {{current}} از {{total}}"
     }
   },
   "settings": {
-    "title": "تنظیم کی ترتیبات",
+    "title": "ترتیبات",
+    "description": "اپنی تنظیم کی ترتیبات کا انتظام کریں",
     "general": {
-      "title": "عمومی ترتیبات",
+      "title": "تنظیم کی معلومات",
       "orgName": "تنظیم کا نام",
+      "orgNameHint": "تنظیم کا نام تبدیل کرنے کے لیے سپورٹ سے رابطہ کریں",
+      "inviteCode": "دعوتی کوڈ",
+      "copyInviteCode": "دعوتی کوڈ کاپی کریں",
+      "inviteCodeCopied": "دعوتی کوڈ کلپ بورڈ پر کاپی ہو گیا!",
+      "orgType": "تنظیم کی قسم",
+      "status": "حیثیت",
+      "active": "فعال",
+      "inactive": "غیر فعال",
       "orgCode": "تنظیم کا کوڈ",
       "maxUsers": "زیادہ سے زیادہ صارفین"
+    },
+    "adminAccount": {
+      "title": "ایڈمن اکاؤنٹ",
+      "emailAddress": "ای میل ایڈریس",
+      "role": "کردار",
+      "administrator": "منتظم"
     },
     "notifications": {
       "title": "نوٹیفکیشن کی ترتیبات",
       "emailAlerts": "ای میل الرٹس",
-      "emergencyAlerts": "ایمرجنسی الرٹس"
+      "emergencyAlerts": "ایمرجنسی الرٹس",
+      "emergencyAlertsDesc": "ایمرجنسی کا پتہ چلنے پر ای میل وصول کریں",
+      "weeklyReports": "ہفتہ وار رپورٹس",
+      "weeklyReportsDesc": "ای میل کے ذریعے ہفتہ وار استعمال کا خلاصہ وصول کریں",
+      "newUserNotifications": "نئے صارف کی اطلاعات",
+      "newUserNotificationsDesc": "نئے صارفین شامل ہونے پر مطلع ہوں",
+      "comingSoon": "نوٹیفکیشن کی ترتیبات مستقبل کی اپ ڈیٹ میں دستیاب ہوں گی۔"
+    },
+    "dangerZone": {
+      "title": "خطرناک زون",
+      "exportData": "تمام ڈیٹا ایکسپورٹ کریں",
+      "exportDataDesc": "تمام تنظیم کا ڈیٹا JSON کے طور پر ڈاؤن لوڈ کریں",
+      "export": "ایکسپورٹ کریں",
+      "deleteOrg": "تنظیم حذف کریں",
+      "deleteOrgDesc": "تنظیم اور تمام ڈیٹا مستقل طور پر حذف کریں",
+      "delete": "حذف کریں",
+      "contactSupport": "ان کارروائیوں کے لیے HeyDoc سپورٹ سے رابطہ درکار ہے۔"
+    },
+    "implementation": {
+      "title": "ترتیبات کا نفاذ",
+      "description": "اس MVP میں زیادہ تر ترتیبات صرف پڑھنے کے لیے ہیں۔ قابل ترمیم ترتیبات (نوٹیفکیشنز، ڈیٹا ایکسپورٹ) مستقبل کے مراحل میں ضرورت کے مطابق نافذ کی جائیں گی۔"
     }
+  },
+  "doctorApproval": {
+    "title": "ڈاکٹر کا انتظام",
+    "description": "ڈاکٹر کی درخواستوں کا جائزہ لیں اور انتظام کریں",
+    "stats": {
+      "pendingReview": "جائزے کے منتظر",
+      "approvedDoctors": "منظور شدہ ڈاکٹرز",
+      "rejected": "مسترد"
+    },
+    "tabs": {
+      "pending": "زیر التواء",
+      "approved": "منظور شدہ",
+      "rejected": "مسترد"
+    },
+    "table": {
+      "doctor": "ڈاکٹر",
+      "specialties": "تخصصات",
+      "license": "لائسنس",
+      "applied": "درخواست دی",
+      "actions": "کارروائیاں",
+      "viewDetails": "تفصیلات دیکھیں"
+    },
+    "loading": "ڈاکٹرز لوڈ ہو رہے ہیں...",
+    "noDoctors": "کوئی {{status}} ڈاکٹر نہیں",
+    "modal": {
+      "title": "ڈاکٹر کی تفصیلات",
+      "yearsExperience": "{{years}} سال کا تجربہ",
+      "bio": "تعارف",
+      "specialties": "تخصصات",
+      "licenseNumber": "لائسنس نمبر",
+      "licenseState": "لائسنس کی ریاست",
+      "licensePhoto": "لائسنس کی تصویر",
+      "clickToView": "مکمل سائز دیکھنے کے لیے کلک کریں",
+      "rejectionReason": "مسترد کرنے کی وجہ",
+      "rejectionReasonInput": "مسترد کرنے کی وجہ (اگر مسترد کر رہے ہیں)",
+      "rejectionPlaceholder": "مسترد کرنے کی وجہ درج کریں..."
+    },
+    "actions": {
+      "approve": "منظور کریں",
+      "reject": "مسترد کریں",
+      "suspend": "ڈاکٹر کو معطل کریں",
+      "close": "بند کریں",
+      "processing": "پروسیسنگ..."
+    },
+    "messages": {
+      "approved": "{{name}} کو منظور کر لیا گیا ہے!",
+      "rejected": "{{name}} کو مسترد کر دیا گیا ہے۔",
+      "suspended": "{{name}} کو معطل کر دیا گیا ہے۔",
+      "provideReason": "براہ کرم مسترد کرنے کی وجہ فراہم کریں",
+      "failedToLoad": "ڈاکٹرز لوڈ کرنے میں ناکام",
+      "failedToApprove": "ڈاکٹر کو منظور کرنے میں ناکام",
+      "failedToReject": "ڈاکٹر کو مسترد کرنے میں ناکام",
+      "failedToSuspend": "ڈاکٹر کو معطل کرنے میں ناکام"
+    }
+  },
+  "protectedRoute": {
+    "verifying": "ایڈمن رسائی کی تصدیق ہو رہی ہے...",
+    "accessDenied": "رسائی مسترد",
+    "noAccess": "آپ کے پاس تنظیم کے منتظم کی رسائی نہیں ہے۔ اگر آپ کو لگتا ہے کہ یہ ایک غلطی ہے تو براہ کرم اپنی تنظیم کے ایڈمن یا پلیٹ فارم سپورٹ سے رابطہ کریں۔",
+    "goToChat": "چیٹ پر جائیں"
+  },
+  "common": {
+    "loading": "لوڈ ہو رہا ہے...",
+    "error": "خرابی",
+    "success": "کامیابی",
+    "save": "محفوظ کریں",
+    "cancel": "منسوخ کریں",
+    "close": "بند کریں",
+    "confirm": "تصدیق کریں",
+    "delete": "حذف کریں",
+    "edit": "ترمیم کریں",
+    "view": "دیکھیں",
+    "search": "تلاش کریں",
+    "filter": "فلٹر کریں",
+    "refresh": "ریفریش کریں",
+    "back": "واپس",
+    "next": "اگلا",
+    "previous": "پچھلا",
+    "yes": "ہاں",
+    "no": "نہیں"
   }
 }

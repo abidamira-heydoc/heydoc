@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { httpsCallable } from 'firebase/functions';
 import { functions } from '../../config/firebase';
 import { useAdmin } from '../../contexts/AdminContext';
 import { useAuth } from '../../contexts/AuthContext';
 
 const UserManagement: React.FC = () => {
+  const { t } = useTranslation('admin');
   const { user } = useAuth();
   const { orgUsers, usersLoading, refreshUsers } = useAdmin();
 
@@ -40,12 +42,12 @@ const UserManagement: React.FC = () => {
     setSuccess('');
 
     if (!newEmail || !newPassword) {
-      setError('Email and password are required');
+      setError(t('users.emailRequired'));
       return;
     }
 
     if (newPassword.length < 6) {
-      setError('Password must be at least 6 characters');
+      setError(t('users.passwordMinLength'));
       return;
     }
 
@@ -54,14 +56,14 @@ const UserManagement: React.FC = () => {
       const createUserAccount = httpsCallable(functions, 'createUserAccount');
       await createUserAccount({ email: newEmail, password: newPassword });
 
-      setSuccess(`User ${newEmail} created successfully!`);
+      setSuccess(t('users.userCreated', { email: newEmail }));
       setNewEmail('');
       setNewPassword('');
       setShowAddUser(false);
       await refreshUsers();
     } catch (err: any) {
       console.error('Error creating user:', err);
-      setError(err.message || 'Failed to create user');
+      setError(err.message || t('users.failedToCreateUser'));
     } finally {
       setAddingUser(false);
     }
@@ -73,12 +75,12 @@ const UserManagement: React.FC = () => {
       const deleteUserAccount = httpsCallable(functions, 'deleteUserAccount');
       await deleteUserAccount({ userId });
 
-      setSuccess('User deleted successfully');
+      setSuccess(t('users.userDeleted'));
       setDeleteConfirm(null);
       await refreshUsers();
     } catch (err: any) {
       console.error('Error deleting user:', err);
-      setError(err.message || 'Failed to delete user');
+      setError(err.message || t('users.failedToDeleteUser'));
     } finally {
       setDeleting(false);
     }
@@ -89,8 +91,8 @@ const UserManagement: React.FC = () => {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">User Management</h1>
-          <p className="text-gray-500 mt-1">Manage users in your organization</p>
+          <h1 className="text-2xl font-bold text-gray-900">{t('users.title')}</h1>
+          <p className="text-gray-500 mt-1">{t('users.description')}</p>
         </div>
         <button
           onClick={() => setShowAddUser(true)}
@@ -99,7 +101,7 @@ const UserManagement: React.FC = () => {
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
           </svg>
-          Add User
+          {t('users.addUser')}
         </button>
       </div>
 
@@ -131,7 +133,7 @@ const UserManagement: React.FC = () => {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold text-gray-900">Add New User</h2>
+              <h2 className="text-xl font-bold text-gray-900">{t('users.addNewUser')}</h2>
               <button
                 onClick={() => {
                   setShowAddUser(false);
@@ -149,32 +151,32 @@ const UserManagement: React.FC = () => {
 
             <form onSubmit={handleAddUser} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{t('users.modal.email')}</label>
                 <input
                   type="email"
                   value={newEmail}
                   onChange={(e) => setNewEmail(e.target.value)}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none"
-                  placeholder="user@example.com"
+                  placeholder={t('users.modal.emailPlaceholder')}
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{t('users.modal.password')}</label>
                 <div className="relative">
                   <input
                     type={showPassword ? 'text' : 'password'}
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
-                    className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none"
-                    placeholder="Minimum 6 characters"
+                    className="w-full px-4 py-2 pe-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none"
+                    placeholder={t('users.modal.passwordPlaceholder')}
                     required
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    className="absolute end-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                   >
                     {showPassword ? (
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -200,14 +202,14 @@ const UserManagement: React.FC = () => {
                   }}
                   className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
                 >
-                  Cancel
+                  {t('users.modal.cancel')}
                 </button>
                 <button
                   type="submit"
                   disabled={addingUser}
                   className="flex-1 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors disabled:opacity-50"
                 >
-                  {addingUser ? 'Creating...' : 'Create User'}
+                  {addingUser ? t('users.modal.creating') : t('users.modal.createUser')}
                 </button>
               </div>
             </form>
@@ -219,15 +221,15 @@ const UserManagement: React.FC = () => {
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="flex-1 relative">
-            <svg className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-gray-400 absolute start-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
             <input
               type="text"
-              placeholder="Search users by email..."
+              placeholder={t('users.searchByEmail')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none"
+              className="w-full ps-10 pe-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none"
             />
           </div>
           <select
@@ -235,9 +237,9 @@ const UserManagement: React.FC = () => {
             onChange={(e) => setStatusFilter(e.target.value as 'all' | 'active' | 'inactive')}
             className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none bg-white"
           >
-            <option value="all">All Users</option>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
+            <option value="all">{t('users.filters.all')}</option>
+            <option value="active">{t('users.filters.active')}</option>
+            <option value="inactive">{t('users.filters.inactive')}</option>
           </select>
         </div>
       </div>
@@ -247,19 +249,19 @@ const UserManagement: React.FC = () => {
         {usersLoading ? (
           <div className="p-8 text-center">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600 mx-auto" />
-            <p className="mt-3 text-gray-500">Loading users...</p>
+            <p className="mt-3 text-gray-500">{t('users.loadingUsers')}</p>
           </div>
         ) : filteredUsers.length === 0 ? (
           <div className="p-8 text-center text-gray-500">
             {searchQuery ? (
               <>
-                <p>No users found matching "{searchQuery}"</p>
+                <p>{t('users.noResults', { query: searchQuery })}</p>
                 <button onClick={() => setSearchQuery('')} className="text-primary-600 hover:text-primary-700 mt-2">
-                  Clear search
+                  {t('users.clearSearch')}
                 </button>
               </>
             ) : (
-              <p>No users in your organization yet.</p>
+              <p>{t('users.noUsers')}</p>
             )}
           </div>
         ) : (
@@ -267,12 +269,12 @@ const UserManagement: React.FC = () => {
             <table className="w-full">
               <thead className="bg-gray-50 border-b border-gray-200">
                 <tr>
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-600">User</th>
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-600">Role</th>
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-600">Joined</th>
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-600">Last Active</th>
-                  <th className="text-left py-3 px-4 text-sm font-semibold text-gray-600">Conversations</th>
-                  <th className="text-right py-3 px-4 text-sm font-semibold text-gray-600">Actions</th>
+                  <th className="text-start py-3 px-4 text-sm font-semibold text-gray-600">{t('users.columns.user')}</th>
+                  <th className="text-start py-3 px-4 text-sm font-semibold text-gray-600">{t('users.columns.role')}</th>
+                  <th className="text-start py-3 px-4 text-sm font-semibold text-gray-600">{t('users.columns.joined')}</th>
+                  <th className="text-start py-3 px-4 text-sm font-semibold text-gray-600">{t('users.columns.lastActive')}</th>
+                  <th className="text-start py-3 px-4 text-sm font-semibold text-gray-600">{t('users.columns.conversations')}</th>
+                  <th className="text-end py-3 px-4 text-sm font-semibold text-gray-600">{t('users.columns.actions')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -288,7 +290,7 @@ const UserManagement: React.FC = () => {
                         <div>
                           <p className="text-gray-900 font-medium">{u.email}</p>
                           {u.id === user?.uid && (
-                            <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">You</span>
+                            <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">{t('users.you')}</span>
                           )}
                         </div>
                       </div>
@@ -299,43 +301,43 @@ const UserManagement: React.FC = () => {
                           ? 'bg-purple-100 text-purple-700'
                           : 'bg-gray-100 text-gray-700'
                       }`}>
-                        {u.role === 'org_admin' ? 'Org Admin' : u.role === 'platform_admin' ? 'Platform Admin' : 'User'}
+                        {u.role === 'org_admin' ? t('users.roles.orgAdmin') : u.role === 'platform_admin' ? t('users.roles.platformAdmin') : t('users.roles.user')}
                       </span>
                     </td>
                     <td className="py-3 px-4 text-gray-500 text-sm">
                       {u.createdAt ? new Date(u.createdAt).toLocaleDateString() : 'N/A'}
                     </td>
                     <td className="py-3 px-4 text-gray-500 text-sm">
-                      {u.lastActive ? new Date(u.lastActive).toLocaleDateString() : 'Never'}
+                      {u.lastActive ? new Date(u.lastActive).toLocaleDateString() : t('users.never')}
                     </td>
                     <td className="py-3 px-4 text-gray-500 text-sm">
                       <span className="text-gray-400">-</span>
                     </td>
-                    <td className="py-3 px-4 text-right">
+                    <td className="py-3 px-4 text-end">
                       {u.id !== user?.uid && u.role === 'user' && (
                         <>
                           {deleteConfirm === u.id ? (
                             <div className="flex items-center justify-end gap-2">
-                              <span className="text-sm text-gray-500">Delete?</span>
+                              <span className="text-sm text-gray-500">{t('users.delete.confirm')}</span>
                               <button
                                 onClick={() => handleDeleteUser(u.id)}
                                 disabled={deleting}
                                 className="text-red-600 hover:text-red-700 font-medium text-sm"
                               >
-                                {deleting ? '...' : 'Yes'}
+                                {deleting ? t('users.delete.deleting') : t('users.delete.yes')}
                               </button>
                               <button
                                 onClick={() => setDeleteConfirm(null)}
                                 className="text-gray-500 hover:text-gray-700 text-sm"
                               >
-                                No
+                                {t('users.delete.no')}
                               </button>
                             </div>
                           ) : (
                             <div className="flex items-center justify-end gap-2">
                               <button
                                 className="text-gray-400 hover:text-gray-600 p-1"
-                                title="View details (coming soon)"
+                                title={t('users.actions.viewDetails')}
                                 disabled
                               >
                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -346,7 +348,7 @@ const UserManagement: React.FC = () => {
                               <button
                                 onClick={() => setDeleteConfirm(u.id)}
                                 className="text-red-400 hover:text-red-600 p-1"
-                                title="Delete user"
+                                title={t('users.actions.deleteUser')}
                               >
                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -368,7 +370,7 @@ const UserManagement: React.FC = () => {
       {/* Summary */}
       <div className="flex items-center justify-between text-sm text-gray-500">
         <span>
-          Showing {filteredUsers.length} of {orgUsers.length} users
+          {t('users.showing', { filtered: filteredUsers.length, total: orgUsers.length })}
         </span>
         <button
           onClick={() => refreshUsers()}
@@ -377,7 +379,7 @@ const UserManagement: React.FC = () => {
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
           </svg>
-          Refresh
+          {t('users.refresh')}
         </button>
       </div>
     </div>

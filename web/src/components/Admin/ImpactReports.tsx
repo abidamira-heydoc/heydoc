@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { jsPDF } from 'jspdf';
 import { useAdmin } from '../../contexts/AdminContext';
 
 type ReportType = 'monthly' | 'quarterly' | 'annual';
 
 const ImpactReports: React.FC = () => {
+  const { t } = useTranslation('admin');
   const { organization, metrics, metricsLoading, analyticsData } = useAdmin();
   const [reportType, setReportType] = useState<ReportType>('monthly');
   const [generating, setGenerating] = useState(false);
@@ -48,7 +50,7 @@ const ImpactReports: React.FC = () => {
       doc.setTextColor(255, 255, 255);
       doc.setFontSize(24);
       doc.setFont('helvetica', 'bold');
-      doc.text('HeyDoc Impact Report', margin, 25);
+      doc.text(t('reports.pdf.title'), margin, 25);
 
       // Organization name
       doc.setFontSize(12);
@@ -69,13 +71,13 @@ const ImpactReports: React.FC = () => {
       doc.setTextColor(31, 41, 55); // gray-800
       doc.setFontSize(16);
       doc.setFont('helvetica', 'bold');
-      doc.text('Executive Summary', margin, yPos);
+      doc.text(t('reports.pdf.executiveSummary'), margin, yPos);
       yPos += 10;
 
       doc.setFontSize(10);
       doc.setFont('helvetica', 'normal');
       doc.setTextColor(75, 85, 99); // gray-600
-      const summaryText = `This report provides an overview of HeyDoc usage within ${organization?.name || 'your organization'}, highlighting key metrics, potential cost savings, and health impact indicators for the reporting period. HeyDoc has been helping your team access immediate health guidance and emergency detection.`;
+      const summaryText = t('reports.pdf.summaryText', { orgName: organization?.name || 'your organization' });
       yPos = addWrappedText(summaryText, margin, yPos, pageWidth - (margin * 2));
       yPos += 10;
 
@@ -84,17 +86,17 @@ const ImpactReports: React.FC = () => {
       doc.setTextColor(31, 41, 55);
       doc.setFontSize(16);
       doc.setFont('helvetica', 'bold');
-      doc.text('Key Metrics', margin, yPos);
+      doc.text(t('reports.pdf.keyMetrics'), margin, yPos);
       yPos += 12;
 
       // Metrics boxes
       const boxWidth = (pageWidth - (margin * 2) - 15) / 4;
       const boxHeight = 35;
       const metrics_data = [
-        { label: 'Total Users', value: String(metrics?.totalUsers ?? 0), color: [16, 185, 129] },
-        { label: 'Conversations', value: String(metrics?.totalConversations ?? 0), color: [59, 130, 246] },
-        { label: 'Emergency Alerts', value: String(metrics?.emergencyFlags ?? 0), color: [239, 68, 68] },
-        { label: 'Active Users', value: String(metrics?.activeUsers ?? 0), color: [139, 92, 246] },
+        { label: t('reports.pdf.totalUsers'), value: String(metrics?.totalUsers ?? 0), color: [16, 185, 129] },
+        { label: t('reports.pdf.conversations'), value: String(metrics?.totalConversations ?? 0), color: [59, 130, 246] },
+        { label: t('reports.pdf.emergencyAlerts'), value: String(metrics?.emergencyFlags ?? 0), color: [239, 68, 68] },
+        { label: t('reports.pdf.activeUsers'), value: String(metrics?.activeUsers ?? 0), color: [139, 92, 246] },
       ];
 
       metrics_data.forEach((metric, index) => {
@@ -128,7 +130,7 @@ const ImpactReports: React.FC = () => {
       doc.setTextColor(31, 41, 55);
       doc.setFontSize(16);
       doc.setFont('helvetica', 'bold');
-      doc.text('Estimated Cost Savings', margin, yPos);
+      doc.text(t('reports.pdf.estimatedCostSavings'), margin, yPos);
       yPos += 10;
 
       // Green savings box
@@ -150,8 +152,8 @@ const ImpactReports: React.FC = () => {
       doc.setFontSize(9);
       doc.setFont('helvetica', 'normal');
       doc.setTextColor(21, 128, 61); // green-700
-      doc.text('Estimated savings based on $50 per health consultation that may have', margin + 10, yPos + 30);
-      doc.text('avoided an unnecessary emergency room or urgent care visit.', margin + 10, yPos + 37);
+      doc.text(t('reports.pdf.savingsNote1'), margin + 10, yPos + 30);
+      doc.text(t('reports.pdf.savingsNote2'), margin + 10, yPos + 37);
 
       yPos += 55;
 
@@ -160,7 +162,7 @@ const ImpactReports: React.FC = () => {
       doc.setTextColor(31, 41, 55);
       doc.setFontSize(16);
       doc.setFont('helvetica', 'bold');
-      doc.text('Emergency Detection Impact', margin, yPos);
+      doc.text(t('reports.pdf.emergencyDetectionImpact'), margin, yPos);
       yPos += 10;
 
       // Red alert box
@@ -176,13 +178,13 @@ const ImpactReports: React.FC = () => {
       doc.setTextColor(127, 29, 29); // red-900
       doc.setFontSize(14);
       doc.setFont('helvetica', 'bold');
-      doc.text(`${metrics?.emergencyFlags ?? 0} Emergency Situations Detected`, margin + 10, yPos + 14);
+      doc.text(t('reports.pdf.emergencySituationsDetected', { count: metrics?.emergencyFlags ?? 0 }), margin + 10, yPos + 14);
 
       // Description
       doc.setFontSize(9);
       doc.setFont('helvetica', 'normal');
       doc.setTextColor(185, 28, 28); // red-700
-      const emergencyText = "HeyDoc's AI detected potential emergency situations and immediately directed users to seek emergency care. These early interventions may have contributed to better health outcomes.";
+      const emergencyText = t('reports.pdf.emergencyNote');
       addWrappedText(emergencyText, margin + 10, yPos + 22, pageWidth - (margin * 2) - 20, 5);
 
       yPos += 50;
@@ -192,7 +194,7 @@ const ImpactReports: React.FC = () => {
       doc.setTextColor(31, 41, 55);
       doc.setFontSize(16);
       doc.setFont('helvetica', 'bold');
-      doc.text('Usage Insights', margin, yPos);
+      doc.text(t('reports.pdf.usageInsights'), margin, yPos);
       yPos += 12;
 
       // Calculate insights
@@ -207,9 +209,9 @@ const ImpactReports: React.FC = () => {
         : '0';
 
       const insights = [
-        { label: 'User Engagement Rate', value: `${engagementRate}%`, desc: 'Users active in the last 7 days' },
-        { label: 'Avg. Conversations per User', value: avgConversations, desc: 'All-time average' },
-        { label: 'Emergency Detection Rate', value: `${emergencyRate}%`, desc: 'Conversations with alerts' },
+        { label: t('reports.pdf.engagementRate'), value: `${engagementRate}%`, desc: t('reports.pdf.engagementRateDesc') },
+        { label: t('reports.pdf.avgConversations'), value: avgConversations, desc: t('reports.pdf.avgConversationsDesc') },
+        { label: t('reports.pdf.emergencyRate'), value: `${emergencyRate}%`, desc: t('reports.pdf.emergencyRateDesc') },
       ];
 
       insights.forEach((insight, index) => {
@@ -242,7 +244,7 @@ const ImpactReports: React.FC = () => {
         doc.setTextColor(31, 41, 55);
         doc.setFontSize(16);
         doc.setFont('helvetica', 'bold');
-        doc.text('Most Common Health Topics', margin, yPos);
+        doc.text(t('reports.pdf.mostCommonHealthTopics'), margin, yPos);
         yPos += 10;
 
         analyticsData.topSymptoms.slice(0, 5).forEach((symptom) => {
@@ -280,8 +282,8 @@ const ImpactReports: React.FC = () => {
         doc.line(margin, pageHeight - 15, pageWidth - margin, pageHeight - 15);
 
         // Footer text
-        doc.text('Generated by HeyDoc Admin Dashboard', margin, pageHeight - 8);
-        doc.text(`Page ${pageNum} of ${totalPages}`, pageWidth - margin - 20, pageHeight - 8);
+        doc.text(t('reports.pdf.generatedBy'), margin, pageHeight - 8);
+        doc.text(t('reports.pdf.page', { current: pageNum, total: totalPages }), pageWidth - margin - 20, pageHeight - 8);
         doc.text(reportDate, pageWidth / 2, pageHeight - 8, { align: 'center' });
       };
 
@@ -313,8 +315,8 @@ const ImpactReports: React.FC = () => {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Impact Reports</h1>
-          <p className="text-gray-500 mt-1">Generate reports to share with leadership</p>
+          <h1 className="text-2xl font-bold text-gray-900">{t('reports.title')}</h1>
+          <p className="text-gray-500 mt-1">{t('reports.description')}</p>
         </div>
         <div className="flex items-center gap-3">
           <select
@@ -322,9 +324,9 @@ const ImpactReports: React.FC = () => {
             onChange={(e) => setReportType(e.target.value as ReportType)}
             className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none bg-white"
           >
-            <option value="monthly">Monthly Report</option>
-            <option value="quarterly">Quarterly Report</option>
-            <option value="annual">Annual Report</option>
+            <option value="monthly">{t('reports.types.monthly')}</option>
+            <option value="quarterly">{t('reports.types.quarterly')}</option>
+            <option value="annual">{t('reports.types.annual')}</option>
           </select>
           <button
             onClick={generatePDF}
@@ -334,14 +336,14 @@ const ImpactReports: React.FC = () => {
             {generating ? (
               <>
                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
-                Generating...
+                {t('reports.generating')}
               </>
             ) : (
               <>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
-                Download PDF
+                {t('reports.downloadPDF')}
               </>
             )}
           </button>
@@ -355,12 +357,12 @@ const ImpactReports: React.FC = () => {
           <div className="flex items-center gap-4 mb-4">
             <img src="/heydoclogo.png" alt="HeyDoc" className="w-12 h-12 object-contain bg-white rounded-lg p-1" />
             <div>
-              <h2 className="text-2xl font-bold">HeyDoc Impact Report</h2>
+              <h2 className="text-2xl font-bold">{t('reports.preview.title')}</h2>
               <p className="text-primary-100">{organization?.name || 'Organization'}</p>
             </div>
           </div>
           <p className="text-sm text-primary-100">
-            Report Period: {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+            {t('reports.preview.reportPeriod', { period: new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) })}
           </p>
         </div>
 
@@ -372,13 +374,11 @@ const ImpactReports: React.FC = () => {
               <svg className="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
-              Executive Summary
+              {t('reports.sections.executiveSummary')}
             </h3>
             <div className="bg-gray-50 rounded-lg p-4">
               <p className="text-gray-700">
-                This report provides an overview of HeyDoc usage within your organization,
-                highlighting key metrics, potential cost savings, and health impact indicators
-                for the reporting period.
+                {t('reports.sections.summaryText')}
               </p>
             </div>
           </section>
@@ -389,11 +389,11 @@ const ImpactReports: React.FC = () => {
               <svg className="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
               </svg>
-              Key Metrics
+              {t('reports.sections.keyMetrics')}
             </h3>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               <div className="bg-green-50 rounded-lg p-4 border border-green-100">
-                <p className="text-sm text-green-700 mb-1">Total Users</p>
+                <p className="text-sm text-green-700 mb-1">{t('dashboard.stats.totalUsers')}</p>
                 {metricsLoading ? (
                   <div className="h-8 w-16 bg-green-200 rounded animate-pulse" />
                 ) : (
@@ -401,7 +401,7 @@ const ImpactReports: React.FC = () => {
                 )}
               </div>
               <div className="bg-blue-50 rounded-lg p-4 border border-blue-100">
-                <p className="text-sm text-blue-700 mb-1">Conversations</p>
+                <p className="text-sm text-blue-700 mb-1">{t('analytics.metrics.conversations')}</p>
                 {metricsLoading ? (
                   <div className="h-8 w-16 bg-blue-200 rounded animate-pulse" />
                 ) : (
@@ -409,7 +409,7 @@ const ImpactReports: React.FC = () => {
                 )}
               </div>
               <div className="bg-red-50 rounded-lg p-4 border border-red-100">
-                <p className="text-sm text-red-700 mb-1">Emergency Alerts</p>
+                <p className="text-sm text-red-700 mb-1">{t('dashboard.stats.emergencyAlerts')}</p>
                 {metricsLoading ? (
                   <div className="h-8 w-16 bg-red-200 rounded animate-pulse" />
                 ) : (
@@ -417,7 +417,7 @@ const ImpactReports: React.FC = () => {
                 )}
               </div>
               <div className="bg-purple-50 rounded-lg p-4 border border-purple-100">
-                <p className="text-sm text-purple-700 mb-1">Active Users</p>
+                <p className="text-sm text-purple-700 mb-1">{t('dashboard.stats.activeUsers')}</p>
                 {metricsLoading ? (
                   <div className="h-8 w-16 bg-purple-200 rounded animate-pulse" />
                 ) : (
@@ -433,12 +433,12 @@ const ImpactReports: React.FC = () => {
               <svg className="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              Estimated Cost Savings
+              {t('reports.sections.estimatedCostSavings')}
             </h3>
             <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-6 border border-green-200">
               <div className="flex items-center justify-between mb-4">
                 <div>
-                  <p className="text-sm text-green-700 mb-1">Estimated Savings</p>
+                  <p className="text-sm text-green-700 mb-1">{t('reports.sections.estimatedSavings')}</p>
                   <p className="text-3xl font-bold text-green-900">
                     ${estimatedSavings.toLocaleString()}
                   </p>
@@ -450,8 +450,7 @@ const ImpactReports: React.FC = () => {
                 </div>
               </div>
               <p className="text-sm text-green-700">
-                Based on an estimated $50 savings per health consultation that may have otherwise
-                resulted in an unnecessary emergency room visit or urgent care visit.
+                {t('reports.sections.savingsDescription')}
               </p>
             </div>
           </section>
@@ -462,7 +461,7 @@ const ImpactReports: React.FC = () => {
               <svg className="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
               </svg>
-              Emergency Detection Impact
+              {t('reports.sections.emergencyDetectionImpact')}
             </h3>
             <div className="bg-red-50 rounded-lg p-6 border border-red-200">
               <div className="flex items-start gap-4">
@@ -473,12 +472,10 @@ const ImpactReports: React.FC = () => {
                 </div>
                 <div>
                   <p className="font-semibold text-red-900 mb-2">
-                    {metrics?.emergencyFlags ?? 0} Emergency Situations Detected
+                    {t('reports.sections.emergencySituationsDetected', { count: metrics?.emergencyFlags ?? 0 })}
                   </p>
                   <p className="text-sm text-red-700">
-                    HeyDoc's AI detected potential emergency situations and immediately directed
-                    users to seek emergency care. These early interventions may have contributed
-                    to better health outcomes and potentially saved lives.
+                    {t('reports.sections.emergencyDescription')}
                   </p>
                 </div>
               </div>
@@ -491,35 +488,35 @@ const ImpactReports: React.FC = () => {
               <svg className="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
               </svg>
-              Usage Insights
+              {t('reports.sections.usageInsights')}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="bg-gray-50 rounded-lg p-4">
-                <p className="text-sm font-medium text-gray-700">Engagement Rate</p>
+                <p className="text-sm font-medium text-gray-700">{t('analytics.insights.engagementRate')}</p>
                 <p className="text-2xl font-bold text-primary-700 mt-1">
                   {metrics && metrics.totalUsers > 0
                     ? Math.round((metrics.activeUsers / metrics.totalUsers) * 100)
                     : 0}%
                 </p>
-                <p className="text-xs text-gray-500 mt-1">Users active in last 7 days</p>
+                <p className="text-xs text-gray-500 mt-1">{t('analytics.insights.engagementDesc')}</p>
               </div>
               <div className="bg-gray-50 rounded-lg p-4">
-                <p className="text-sm font-medium text-gray-700">Avg. Conversations/User</p>
+                <p className="text-sm font-medium text-gray-700">{t('analytics.insights.avgConversations')}</p>
                 <p className="text-2xl font-bold text-primary-700 mt-1">
                   {metrics && metrics.totalUsers > 0
                     ? (metrics.totalConversations / metrics.totalUsers).toFixed(1)
                     : 0}
                 </p>
-                <p className="text-xs text-gray-500 mt-1">All time average</p>
+                <p className="text-xs text-gray-500 mt-1">{t('analytics.insights.avgConversationsDesc')}</p>
               </div>
               <div className="bg-gray-50 rounded-lg p-4">
-                <p className="text-sm font-medium text-gray-700">Emergency Detection Rate</p>
+                <p className="text-sm font-medium text-gray-700">{t('analytics.insights.emergencyRate')}</p>
                 <p className="text-2xl font-bold text-red-600 mt-1">
                   {metrics && metrics.totalConversations > 0
                     ? ((metrics.emergencyFlags / metrics.totalConversations) * 100).toFixed(1)
                     : 0}%
                 </p>
-                <p className="text-xs text-gray-500 mt-1">Conversations with alerts</p>
+                <p className="text-xs text-gray-500 mt-1">{t('analytics.insights.emergencyRateDesc')}</p>
               </div>
             </div>
           </section>
@@ -528,7 +525,7 @@ const ImpactReports: React.FC = () => {
         {/* Report Footer */}
         <div className="bg-gray-50 border-t border-gray-200 px-6 py-4">
           <p className="text-xs text-gray-500 text-center">
-            Generated by HeyDoc Admin Dashboard | Report Date: {new Date().toLocaleDateString()}
+            {t('reports.footer.generatedBy')} | {t('reports.footer.reportDate', { date: new Date().toLocaleDateString() })}
           </p>
         </div>
       </div>
@@ -540,10 +537,9 @@ const ImpactReports: React.FC = () => {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           <div>
-            <p className="text-sm font-medium text-blue-800">About This Report</p>
+            <p className="text-sm font-medium text-blue-800">{t('reports.info.title')}</p>
             <p className="text-sm text-blue-700 mt-1">
-              Click "Download PDF" to generate a professional PDF document that you can share with
-              leadership, board members, or stakeholders to demonstrate the impact of HeyDoc in your organization.
+              {t('reports.info.description')}
             </p>
           </div>
         </div>
