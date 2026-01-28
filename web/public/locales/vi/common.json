@@ -123,10 +123,10 @@
       "promotionalDesc": "Nhận thông tin cập nhật về các tính năng mới và ưu đãi"
     },
     "advanced": {
-      "dataSharing": "Chia Sẻ Dữ Liệu Ẩn Danh",
-      "dataSharingDesc": "Giúp cải thiện HeyDoc bằng cách chia sẻ dữ liệu sử dụng ẩn danh",
-      "analytics": "Phân Tích",
-      "analyticsDesc": "Cho phép phân tích để cải thiện trải nghiệm của bạn",
+      "compactMode": "Chế độ thu gọn",
+      "compactModeDesc": "Sử dụng bố cục gọn hơn cho tin nhắn",
+      "soundEffects": "Hiệu ứng âm thanh",
+      "soundEffectsDesc": "Phát âm thanh cho thông báo và tin nhắn",
       "autoSave": "Tự Động Lưu Cuộc Trò Chuyện",
       "autoSaveDesc": "Tự động lưu các cuộc trò chuyện của bạn",
       "healthProfile": "Hồ Sơ Sức Khỏe",

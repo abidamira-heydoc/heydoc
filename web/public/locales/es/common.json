@@ -123,10 +123,10 @@
       "promotionalDesc": "Recibe actualizaciones sobre nuevas características y ofertas"
     },
     "advanced": {
-      "dataSharing": "Compartir Datos Anónimos",
-      "dataSharingDesc": "Ayuda a mejorar HeyDoc compartiendo datos de uso anónimos",
-      "analytics": "Análisis",
-      "analyticsDesc": "Permite análisis para mejorar tu experiencia",
+      "compactMode": "Modo compacto",
+      "compactModeDesc": "Usar un diseño más condensado para los mensajes",
+      "soundEffects": "Efectos de sonido",
+      "soundEffectsDesc": "Reproducir sonidos para notificaciones y mensajes",
       "autoSave": "Guardar Conversaciones Automáticamente",
       "autoSaveDesc": "Guarda automáticamente tus conversaciones de chat",
       "healthProfile": "Perfil de Salud",

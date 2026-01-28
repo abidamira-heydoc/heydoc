@@ -50,8 +50,8 @@ const UserSettings: React.FC = () => {
 
   // Advanced settings
   const [advanced, setAdvanced] = useState({
-    dataSharing: true,
-    analytics: true,
+    compactMode: false,
+    soundEffects: true,
     autoSaveChats: true,
   });
 
@@ -522,8 +522,8 @@ const UserSettings: React.FC = () => {
               <div className="space-y-6">
                 <div className="space-y-4">
                   {[
-                    { key: 'dataSharing', label: t('settings.advanced.dataSharing'), description: t('settings.advanced.dataSharingDesc') },
-                    { key: 'analytics', label: t('settings.advanced.analytics'), description: t('settings.advanced.analyticsDesc') },
+                    { key: 'compactMode', label: t('settings.advanced.compactMode'), description: t('settings.advanced.compactModeDesc') },
+                    { key: 'soundEffects', label: t('settings.advanced.soundEffects'), description: t('settings.advanced.soundEffectsDesc') },
                     { key: 'autoSaveChats', label: t('settings.advanced.autoSave'), description: t('settings.advanced.autoSaveDesc') },
                   ].map((item) => (
                     <div key={item.key} className="flex items-center justify-between p-4 bg-gray-50 rounded-xl">

@@ -123,10 +123,10 @@
       "promotionalDesc": "接收有关新功能和优惠的更新"
     },
     "advanced": {
-      "dataSharing": "匿名数据共享",
-      "dataSharingDesc": "通过共享匿名使用数据帮助改进 HeyDoc",
-      "analytics": "分析",
-      "analyticsDesc": "允许分析以改进您的体验",
+      "compactMode": "紧凑模式",
+      "compactModeDesc": "使用更紧凑的消息布局",
+      "soundEffects": "声音效果",
+      "soundEffectsDesc": "播放通知和消息的声音",
       "autoSave": "自动保存对话",
       "autoSaveDesc": "自动保存您的聊天对话",
       "healthProfile": "健康档案",

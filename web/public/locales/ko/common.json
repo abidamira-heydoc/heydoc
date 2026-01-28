@@ -123,10 +123,10 @@
       "promotionalDesc": "새로운 기능 및 오퍼에 대한 업데이트를 받으세요"
     },
     "advanced": {
-      "dataSharing": "익명 데이터 공유",
-      "dataSharingDesc": "익명 사용 데이터를 공유하여 HeyDoc 개선에 도움을 주세요",
-      "analytics": "분석",
-      "analyticsDesc": "분석을 통해 경험을 개선할 수 있도록 허용하세요",
+      "compactMode": "컴팩트 모드",
+      "compactModeDesc": "메시지에 더 간결한 레이아웃 사용",
+      "soundEffects": "소리 효과",
+      "soundEffectsDesc": "알림 및 메시지에 소리 재생",
       "autoSave": "대화 자동 저장",
       "autoSaveDesc": "채팅 대화를 자동으로 저장하세요",
       "healthProfile": "건강 프로필",
