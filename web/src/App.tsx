@@ -8,6 +8,7 @@ import ConsentForm from './components/Consent/ConsentForm';
 import IntakeForm from './components/Intake/IntakeForm';
 import Chat from './components/Chat/Chat';
 import ProfileView from './components/Profile/ProfileView';
+import { UserSettings } from './components/Settings';
 import { LanguageSelector } from './components/LanguageSelector';
 
 // Admin components
@@ -171,6 +172,14 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <ProfileView />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/settings"
+        element={
+          <ProtectedRoute>
+            <UserSettings />
           </ProtectedRoute>
         }
       />

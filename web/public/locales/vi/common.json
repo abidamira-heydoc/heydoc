@@ -74,5 +74,64 @@
     "menuClose": "Đóng menu",
     "loading": "Đang tải nội dung",
     "newWindow": "Mở trong cửa sổ mới"
+  },
+  "settings": {
+    "title": "Cài đặt",
+    "saved": "Đã lưu cài đặt",
+    "saveFailed": "Lưu cài đặt không thành công",
+    "saving": "Đang lưu...",
+    "saveChanges": "Lưu Thay Đổi",
+    "tabs": {
+      "profile": "Hồ sơ",
+      "language": "Ngôn ngữ",
+      "notifications": "Thông báo",
+      "advanced": "Nâng cao"
+    },
+    "profile": {
+      "accountInfo": "Thông Tin Tài Khoản",
+      "email": "Email",
+      "age": "Tuổi",
+      "sex": "Giới tính",
+      "personalInfo": "Thông Tin Cá Nhân",
+      "displayName": "Tên Hiển Thị",
+      "displayNamePlaceholder": "Nhập tên của bạn",
+      "phone": "Số Điện Thoại",
+      "dateOfBirth": "Ngày Sinh",
+      "address": "Địa Chỉ",
+      "addressPlaceholder": "Nhập địa chỉ của bạn",
+      "emergencyContact": "Liên Hệ Khẩn Cấp",
+      "contactName": "Tên Liên Hệ",
+      "contactNamePlaceholder": "Nhập tên liên hệ khẩn cấp",
+      "contactPhone": "Số Điện Thoại Liên Hệ"
+    },
+    "language": {
+      "interfaceTitle": "Ngôn Ngữ Giao Diện",
+      "interfaceDescription": "Chọn ngôn ngữ cho menu, nút và các yếu tố giao diện khác.",
+      "chatTitle": "Ngôn Ngữ Trò Chuyện",
+      "chatDescription": "Chọn ngôn ngữ ưu tiên cho phản hồi của AI. AI cũng sẽ tự động phát hiện và phản hồi bằng ngôn ngữ của tin nhắn bạn."
+    },
+    "notifications": {
+      "email": "Thông Báo Qua Email",
+      "emailDesc": "Nhận các bản cập nhật quan trọng qua email",
+      "push": "Thông Báo Đẩy",
+      "pushDesc": "Nhận thông báo trên thiết bị của bạn",
+      "doctorResponses": "Phản Hồi Của Bác Sĩ",
+      "doctorResponsesDesc": "Nhận thông báo khi bác sĩ phản hồi tư vấn của bạn",
+      "healthReminders": "Nhắc Nhở Sức Khỏe",
+      "healthRemindersDesc": "Nhận nhắc nhở về kiểm tra sức khỏe và dùng thuốc",
+      "promotional": "Email Khuyến Mãi",
+      "promotionalDesc": "Nhận thông tin cập nhật về các tính năng mới và ưu đãi"
+    },
+    "advanced": {
+      "dataSharing": "Chia Sẻ Dữ Liệu Ẩn Danh",
+      "dataSharingDesc": "Giúp cải thiện HeyDoc bằng cách chia sẻ dữ liệu sử dụng ẩn danh",
+      "analytics": "Phân Tích",
+      "analyticsDesc": "Cho phép phân tích để cải thiện trải nghiệm của bạn",
+      "autoSave": "Tự Động Lưu Cuộc Trò Chuyện",
+      "autoSaveDesc": "Tự động lưu các cuộc trò chuyện của bạn",
+      "healthProfile": "Hồ Sơ Sức Khỏe",
+      "healthProfileDesc": "Xem và chỉnh sửa thông tin sức khỏe của bạn",
+      "editHealthProfile": "Chỉnh Sửa Hồ Sơ Sức Khỏe"
+    }
   }
 }

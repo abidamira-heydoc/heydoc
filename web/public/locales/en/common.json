@@ -74,5 +74,64 @@
     "menuClose": "Close menu",
     "loading": "Loading content",
     "newWindow": "Opens in new window"
+  },
+  "settings": {
+    "title": "Settings",
+    "saved": "Settings saved",
+    "saveFailed": "Failed to save settings",
+    "saving": "Saving...",
+    "saveChanges": "Save Changes",
+    "tabs": {
+      "profile": "Profile",
+      "language": "Language",
+      "notifications": "Notifications",
+      "advanced": "Advanced"
+    },
+    "profile": {
+      "accountInfo": "Account Information",
+      "email": "Email",
+      "age": "Age",
+      "sex": "Sex",
+      "personalInfo": "Personal Information",
+      "displayName": "Display Name",
+      "displayNamePlaceholder": "Enter your name",
+      "phone": "Phone Number",
+      "dateOfBirth": "Date of Birth",
+      "address": "Address",
+      "addressPlaceholder": "Enter your address",
+      "emergencyContact": "Emergency Contact",
+      "contactName": "Contact Name",
+      "contactNamePlaceholder": "Enter emergency contact name",
+      "contactPhone": "Contact Phone"
+    },
+    "language": {
+      "interfaceTitle": "Interface Language",
+      "interfaceDescription": "Choose the language for menus, buttons, and other interface elements.",
+      "chatTitle": "Chat Language",
+      "chatDescription": "Choose the preferred language for AI responses. The AI will also auto-detect and respond in your message language."
+    },
+    "notifications": {
+      "email": "Email Notifications",
+      "emailDesc": "Receive important updates via email",
+      "push": "Push Notifications",
+      "pushDesc": "Receive notifications on your device",
+      "doctorResponses": "Doctor Responses",
+      "doctorResponsesDesc": "Get notified when a doctor responds to your consultation",
+      "healthReminders": "Health Reminders",
+      "healthRemindersDesc": "Receive reminders for health check-ups and medications",
+      "promotional": "Promotional Emails",
+      "promotionalDesc": "Receive updates about new features and offers"
+    },
+    "advanced": {
+      "dataSharing": "Anonymous Data Sharing",
+      "dataSharingDesc": "Help improve HeyDoc by sharing anonymous usage data",
+      "analytics": "Analytics",
+      "analyticsDesc": "Allow analytics to improve your experience",
+      "autoSave": "Auto-save Conversations",
+      "autoSaveDesc": "Automatically save your chat conversations",
+      "healthProfile": "Health Profile",
+      "healthProfileDesc": "View and edit your health information",
+      "editHealthProfile": "Edit Health Profile"
+    }
   }
 }

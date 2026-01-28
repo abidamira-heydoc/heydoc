@@ -74,5 +74,64 @@
     "menuClose": "मेनू बंद करें",
     "loading": "सामग्री लोड हो रही है",
     "newWindow": "नई विंडो में खुलता है"
+  },
+  "settings": {
+    "title": "सेटिंग्स",
+    "saved": "सेटिंग्स सहेजे गए",
+    "saveFailed": "सेटिंग्स सहेजने में विफल",
+    "saving": "सहेजा जा रहा है...",
+    "saveChanges": "परिवर्तन सहेजें",
+    "tabs": {
+      "profile": "प्रोफाइल",
+      "language": "भाषा",
+      "notifications": "सूचनाएं",
+      "advanced": "उन्नत"
+    },
+    "profile": {
+      "accountInfo": "खाता जानकारी",
+      "email": "ईमेल",
+      "age": "आयु",
+      "sex": "लिंग",
+      "personalInfo": "व्यक्तिगत जानकारी",
+      "displayName": "प्रदर्शन नाम",
+      "displayNamePlaceholder": "अपना नाम दर्ज करें",
+      "phone": "फोन नंबर",
+      "dateOfBirth": "जन्म तारीख",
+      "address": "पता",
+      "addressPlaceholder": "अपना पता दर्ज करें",
+      "emergencyContact": "आपातकालीन संपर्क",
+      "contactName": "संपर्क नाम",
+      "contactNamePlaceholder": "आपातकालीन संपर्क का नाम दर्ज करें",
+      "contactPhone": "संपर्क फोन"
+    },
+    "language": {
+      "interfaceTitle": "इंटरफेस भाषा",
+      "interfaceDescription": "मेनू, बटन और अन्य इंटरफेस तत्वों के लिए भाषा चुनें।",
+      "chatTitle": "चैट भाषा",
+      "chatDescription": "एआई प्रतिक्रियाओं के लिए पसंदीदा भाषा चुनें। एआई आपके संदेश की भाषा को स्वचालित रूप से पहचान कर उसी में प्रतिक्रिया देगा।"
+    },
+    "notifications": {
+      "email": "ईमेल सूचनाएं",
+      "emailDesc": "ईमेल के माध्यम से महत्वपूर्ण अपडेट प्राप्त करें",
+      "push": "पुश सूचनाएं",
+      "pushDesc": "अपने डिवाइस पर सूचनाएं प्राप्त करें",
+      "doctorResponses": "डॉक्टर की प्रतिक्रियाएं",
+      "doctorResponsesDesc": "जब कोई डॉक्टर आपके परामर्श का जवाब देता है तो सूचना प्राप्त करें",
+      "healthReminders": "स्वास्थ्य अनुस्मारक",
+      "healthRemindersDesc": "स्वास्थ्य जांच और दवाइयों के अनुस्मारक प्राप्त करें",
+      "promotional": "प्रचारणात्मक ईमेल",
+      "promotionalDesc": "नई सुविधाओं और ऑफर के बारे में अपडेट प्राप्त करें"
+    },
+    "advanced": {
+      "dataSharing": "गुमनाम डेटा साझाकरण",
+      "dataSharingDesc": "गुमनाम उपयोग डेटा साझा करके HeyDoc को बेहतर बनाने में मदद करें",
+      "analytics": "विश्लेषण",
+      "analyticsDesc": "आपके अनुभव को बेहतर बनाने के लिए विश्लेषण की अनुमति दें",
+      "autoSave": "स्वचालित सहेजें - वार्तालाप",
+      "autoSaveDesc": "आपकी चैट वार्तालापों को स्वचालित रूप से सहेजें",
+      "healthProfile": "स्वास्थ्य प्रोफाइल",
+      "healthProfileDesc": "अपनी स्वास्थ्य जानकारी को देखें और संपादित करें",
+      "editHealthProfile": "स्वास्थ्य प्रोफाइल संपादित करें"
+    }
   }
 }

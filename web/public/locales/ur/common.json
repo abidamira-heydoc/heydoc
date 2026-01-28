@@ -74,5 +74,64 @@
     "menuClose": "مینو بند کریں",
     "loading": "مواد لوڈ ہو رہا ہے",
     "newWindow": "نئی ونڈو میں کھلتا ہے"
+  },
+  "settings": {
+    "title": "ترتیبات",
+    "saved": "ترتیبات محفوظ ہو گئیں",
+    "saveFailed": "ترتیبات محفوظ کرنے میں ناکامی",
+    "saving": "محفوظ ہو رہا ہے...",
+    "saveChanges": "تبدیلیاں محفوظ کریں",
+    "tabs": {
+      "profile": "پروفائل",
+      "language": "زبان",
+      "notifications": "اطلاعات",
+      "advanced": "اعلیٰ"
+    },
+    "profile": {
+      "accountInfo": "اکاؤنٹ کی معلومات",
+      "email": "ای میل",
+      "age": "عمر",
+      "sex": "جنس",
+      "personalInfo": "ذاتی معلومات",
+      "displayName": "نام دکھائیں",
+      "displayNamePlaceholder": "اپنا نام درج کریں",
+      "phone": "فون نمبر",
+      "dateOfBirth": "پیدائش کی تاریخ",
+      "address": "پتہ",
+      "addressPlaceholder": "اپنا پتہ درج کریں",
+      "emergencyContact": "ہنگامی رابطہ",
+      "contactName": "رابطہ کا نام",
+      "contactNamePlaceholder": "ہنگامی رابطہ کا نام درج کریں",
+      "contactPhone": "رابطہ فون"
+    },
+    "language": {
+      "interfaceTitle": "انٹرفیس کی زبان",
+      "interfaceDescription": "مینو، بٹن اور دیگر انٹرفیس عناصر کے لیے زبان منتخب کریں۔",
+      "chatTitle": "چیٹ کی زبان",
+      "chatDescription": "AI کی ردعمل کے لیے ترجیحی زبان منتخب کریں۔ AI آپ کے پیغام کی زبان کو خود بخود شناخت کر کے جواب دے گا۔"
+    },
+    "notifications": {
+      "email": "ای میل اطلاعات",
+      "emailDesc": "اہم اپڈیٹ ای میل کے ذریعے حاصل کریں",
+      "push": "پش اطلاعات",
+      "pushDesc": "اپنے آلے پر اطلاعات حاصل کریں",
+      "doctorResponses": "ڈاکٹر کے جوابات",
+      "doctorResponsesDesc": "جب ڈاکٹر آپ کے مشورے کا جواب دے تو مطلع ہوں",
+      "healthReminders": "صحت یابی کی یادیں",
+      "healthRemindersDesc": "صحت کی جانچ اور ادویات کے لیے یادیں حاصل کریں",
+      "promotional": "تشہیری ای میلز",
+      "promotionalDesc": "نئی سہولیات اور آفرز کے بارے میں اپڈیٹ حاصل کریں"
+    },
+    "advanced": {
+      "dataSharing": "نام نہاد ڈیٹا شیئرنگ",
+      "dataSharingDesc": "نام نہاد استعمال کی معلومات شیئر کر کے HeyDoc کو بہتر بنانے میں مدد کریں",
+      "analytics": "تجزیہ",
+      "analyticsDesc": "اپنے تجربے کو بہتر بنانے کے لیے تجزیہ کی اجازت دیں",
+      "autoSave": "خودکار طور پر گفتگو محفوظ کریں",
+      "autoSaveDesc": "اپنی چیٹ گفتگو خودکار طور پر محفوظ کریں",
+      "healthProfile": "صحت کی پروفائل",
+      "healthProfileDesc": "اپنی صحت کی معلومات دیکھیں اور ترمیم کریں",
+      "editHealthProfile": "صحت کی پروفائل میں ترمیم کریں"
+    }
   }
 }

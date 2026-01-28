@@ -74,5 +74,64 @@
     "menuClose": "Fermer le menu",
     "loading": "Chargement du contenu",
     "newWindow": "S'ouvre dans une nouvelle fenetre"
+  },
+  "settings": {
+    "title": "Parametres",
+    "saved": "Parametres enregistres",
+    "saveFailed": "Echec de l'enregistrement des parametres",
+    "saving": "Enregistrement...",
+    "saveChanges": "Enregistrer les modifications",
+    "tabs": {
+      "profile": "Profil",
+      "language": "Langue",
+      "notifications": "Notifications",
+      "advanced": "Avance"
+    },
+    "profile": {
+      "accountInfo": "Informations du compte",
+      "email": "Adresse e-mail",
+      "age": "Age",
+      "sex": "Sexe",
+      "personalInfo": "Informations personnelles",
+      "displayName": "Nom d'affichage",
+      "displayNamePlaceholder": "Entrez votre nom",
+      "phone": "Numero de telephone",
+      "dateOfBirth": "Date de naissance",
+      "address": "Adresse",
+      "addressPlaceholder": "Entrez votre adresse",
+      "emergencyContact": "Contact d'urgence",
+      "contactName": "Nom du contact",
+      "contactNamePlaceholder": "Entrez le nom du contact d'urgence",
+      "contactPhone": "Telephone du contact"
+    },
+    "language": {
+      "interfaceTitle": "Langue de l'interface",
+      "interfaceDescription": "Choisissez la langue pour les menus, boutons et autres elements d'interface.",
+      "chatTitle": "Langue de la discussion",
+      "chatDescription": "Choisissez la langue preferee pour les reponses de l'IA. L'IA detectera egalement automatiquement et repondra dans la langue de votre message."
+    },
+    "notifications": {
+      "email": "Notifications par e-mail",
+      "emailDesc": "Recevez des mises a jour importantes par e-mail",
+      "push": "Notifications push",
+      "pushDesc": "Recevez des notifications sur votre appareil",
+      "doctorResponses": "Reponses des medecins",
+      "doctorResponsesDesc": "Soyez notifie lorsqu'un medecin repond a votre consultation",
+      "healthReminders": "Rappels de sante",
+      "healthRemindersDesc": "Recevez des rappels pour les verifications de sante et les medicaments",
+      "promotional": "E-mails promotionnels",
+      "promotionalDesc": "Recevez les mises a jour sur les nouvelles fonctionnalites et les offres"
+    },
+    "advanced": {
+      "dataSharing": "Partage de donnees anonymes",
+      "dataSharingDesc": "Aidez a ameliorer HeyDoc en partageant les donnees d'utilisation anonymes",
+      "analytics": "Analyse",
+      "analyticsDesc": "Autorisez l'analyse pour ameliorer votre experience",
+      "autoSave": "Enregistrement automatique des discussions",
+      "autoSaveDesc": "Enregistrez automatiquement vos discussions en chat",
+      "healthProfile": "Profil de sante",
+      "healthProfileDesc": "Consultez et modifiez vos informations de sante",
+      "editHealthProfile": "Modifier le profil de sante"
+    }
   }
 }

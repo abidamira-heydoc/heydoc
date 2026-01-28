@@ -74,5 +74,64 @@
     "menuClose": "إغلاق القائمة",
     "loading": "جاري تحميل المحتوى",
     "newWindow": "يفتح في نافذة جديدة"
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "saved": "تم حفظ الإعدادات",
+    "saveFailed": "فشل حفظ الإعدادات",
+    "saving": "جاري الحفظ...",
+    "saveChanges": "حفظ التغييرات",
+    "tabs": {
+      "profile": "الملف الشخصي",
+      "language": "اللغة",
+      "notifications": "الإشعارات",
+      "advanced": "متقدم"
+    },
+    "profile": {
+      "accountInfo": "معلومات الحساب",
+      "email": "البريد الإلكتروني",
+      "age": "العمر",
+      "sex": "الجنس",
+      "personalInfo": "البيانات الشخصية",
+      "displayName": "اسم العرض",
+      "displayNamePlaceholder": "أدخل اسمك",
+      "phone": "رقم الهاتف",
+      "dateOfBirth": "تاريخ الميلاد",
+      "address": "العنوان",
+      "addressPlaceholder": "أدخل عنوانك",
+      "emergencyContact": "جهة الاتصال في حالات الطوارئ",
+      "contactName": "اسم جهة الاتصال",
+      "contactNamePlaceholder": "أدخل اسم جهة الاتصال في حالات الطوارئ",
+      "contactPhone": "هاتف جهة الاتصال"
+    },
+    "language": {
+      "interfaceTitle": "لغة الواجهة",
+      "interfaceDescription": "اختر اللغة للقوائم والأزرار وعناصر الواجهة الأخرى.",
+      "chatTitle": "لغة المحادثة",
+      "chatDescription": "اختر اللغة المفضلة لاستجابات الذكاء الاصطناعي. سيقوم الذكاء الاصطناعي أيضاً بالكشف التلقائي والرد باللغة التي تكتب بها."
+    },
+    "notifications": {
+      "email": "إشعارات البريد الإلكتروني",
+      "emailDesc": "استقبل التحديثات المهمة عبر البريد الإلكتروني",
+      "push": "إشعارات الدفع",
+      "pushDesc": "استقبل الإشعارات على جهازك",
+      "doctorResponses": "ردود الأطباء",
+      "doctorResponsesDesc": "احصل على إشعار عند رد الطبيب على استشارتك",
+      "healthReminders": "تذكيرات صحية",
+      "healthRemindersDesc": "استقبل تذكيرات للفحوصات الصحية والأدوية",
+      "promotional": "رسائل ترويجية",
+      "promotionalDesc": "استقبل تحديثات عن الميزات الجديدة والعروض"
+    },
+    "advanced": {
+      "dataSharing": "مشاركة البيانات المجهولة",
+      "dataSharingDesc": "ساعد في تحسين HeyDoc بمشاركة بيانات الاستخدام المجهولة",
+      "analytics": "التحليلات",
+      "analyticsDesc": "السماح بالتحليلات لتحسين تجربتك",
+      "autoSave": "الحفظ التلقائي للمحادثات",
+      "autoSaveDesc": "احفظ محادثات الدردشة الخاصة بك تلقائياً",
+      "healthProfile": "الملف الصحي",
+      "healthProfileDesc": "اعرض وعدّل معلوماتك الصحية",
+      "editHealthProfile": "تعديل الملف الصحي"
+    }
   }
 }

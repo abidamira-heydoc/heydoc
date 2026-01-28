@@ -74,5 +74,64 @@
     "menuClose": "关闭菜单",
     "loading": "正在加载内容",
     "newWindow": "在新窗口中打开"
+  },
+  "settings": {
+    "title": "设置",
+    "saved": "设置已保存",
+    "saveFailed": "保存设置失败",
+    "saving": "保存中...",
+    "saveChanges": "保存更改",
+    "tabs": {
+      "profile": "个人资料",
+      "language": "语言",
+      "notifications": "通知",
+      "advanced": "高级"
+    },
+    "profile": {
+      "accountInfo": "账户信息",
+      "email": "电子邮箱",
+      "age": "年龄",
+      "sex": "性别",
+      "personalInfo": "个人信息",
+      "displayName": "显示名称",
+      "displayNamePlaceholder": "输入您的名字",
+      "phone": "电话号码",
+      "dateOfBirth": "出生日期",
+      "address": "地址",
+      "addressPlaceholder": "输入您的地址",
+      "emergencyContact": "紧急联系人",
+      "contactName": "联系人名称",
+      "contactNamePlaceholder": "输入紧急联系人名称",
+      "contactPhone": "联系电话"
+    },
+    "language": {
+      "interfaceTitle": "界面语言",
+      "interfaceDescription": "选择菜单、按钮和其他界面元素的语言。",
+      "chatTitle": "聊天语言",
+      "chatDescription": "选择 AI 响应的首选语言。AI 还将自动检测并用您的消息语言进行响应。"
+    },
+    "notifications": {
+      "email": "电子邮件通知",
+      "emailDesc": "通过电子邮件接收重要更新",
+      "push": "推送通知",
+      "pushDesc": "在您的设备上接收通知",
+      "doctorResponses": "医生回复",
+      "doctorResponsesDesc": "医生回复您的咨询时获得通知",
+      "healthReminders": "健康提醒",
+      "healthRemindersDesc": "接收健康检查和药物提醒",
+      "promotional": "促销电子邮件",
+      "promotionalDesc": "接收有关新功能和优惠的更新"
+    },
+    "advanced": {
+      "dataSharing": "匿名数据共享",
+      "dataSharingDesc": "通过共享匿名使用数据帮助改进 HeyDoc",
+      "analytics": "分析",
+      "analyticsDesc": "允许分析以改进您的体验",
+      "autoSave": "自动保存对话",
+      "autoSaveDesc": "自动保存您的聊天对话",
+      "healthProfile": "健康档案",
+      "healthProfileDesc": "查看和编辑您的健康信息",
+      "editHealthProfile": "编辑健康档案"
+    }
   }
 }
