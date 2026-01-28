@@ -1,0 +1,71 @@
+{
+  "nav": {
+    "dashboard": "डैशबोर्ड",
+    "analytics": "विश्लेषण",
+    "users": "उपयोगकर्ता",
+    "reports": "रिपोर्ट",
+    "settings": "सेटिंग्स"
+  },
+  "dashboard": {
+    "title": "संगठन डैशबोर्ड",
+    "welcome": "वापसी पर स्वागत है, {{name}}",
+    "stats": {
+      "totalUsers": "कुल उपयोगकर्ता",
+      "activeUsers": "सक्रिय उपयोगकर्ता",
+      "totalConversations": "कुल वार्तालाप",
+      "emergencyAlerts": "आपातकालीन अलर्ट"
+    }
+  },
+  "users": {
+    "title": "उपयोगकर्ता प्रबंधन",
+    "search": "उपयोगकर्ता खोजें...",
+    "addUser": "उपयोगकर्ता जोड़ें",
+    "columns": {
+      "name": "नाम",
+      "email": "ईमेल",
+      "role": "भूमिका",
+      "status": "स्थिति",
+      "lastActive": "अंतिम सक्रिय",
+      "actions": "कार्रवाई"
+    },
+    "roles": {
+      "user": "उपयोगकर्ता",
+      "orgAdmin": "संगठन व्यवस्थापक",
+      "platformAdmin": "प्लेटफॉर्म व्यवस्थापक"
+    }
+  },
+  "analytics": {
+    "title": "विश्लेषण डैशबोर्ड",
+    "dateRange": "दिनांक सीमा",
+    "metrics": {
+      "conversations": "वार्तालाप",
+      "messages": "संदेश",
+      "avgSessionTime": "औसत सत्र समय",
+      "userSatisfaction": "उपयोगकर्ता संतुष्टि"
+    }
+  },
+  "reports": {
+    "title": "प्रभाव रिपोर्ट",
+    "generate": "रिपोर्ट बनाएं",
+    "download": "डाउनलोड",
+    "types": {
+      "monthly": "मासिक सारांश",
+      "quarterly": "त्रैमासिक रिपोर्ट",
+      "annual": "वार्षिक रिपोर्ट"
+    }
+  },
+  "settings": {
+    "title": "संगठन सेटिंग्स",
+    "general": {
+      "title": "सामान्य सेटिंग्स",
+      "orgName": "संगठन का नाम",
+      "orgCode": "संगठन कोड",
+      "maxUsers": "अधिकतम उपयोगकर्ता"
+    },
+    "notifications": {
+      "title": "सूचना सेटिंग्स",
+      "emailAlerts": "ईमेल अलर्ट",
+      "emergencyAlerts": "आपातकालीन अलर्ट"
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "banner": {
+    "title": "SINTOMAS DE EMERGENCIA DETECTADOS",
+    "subtitle": "Com base nos seus sintomas, isso pode exigir atencao medica imediata.",
+    "actionTitle": "POR FAVOR, TOME UMA ACAO AGORA:",
+    "actions": {
+      "call911": "Ligue 192 (SAMU) ou o numero de emergencia local imediatamente",
+      "goToER": "Se for seguro, va ao pronto-socorro mais proximo",
+      "stayWithSomeone": "Se possivel, tenha alguem com voce",
+      "noSelfTreat": "NAO tente autotratar condicoes de emergencia"
+    },
+    "disclaimer": "HeyDoc nao substitui o atendimento medico de emergencia. Sua seguranca e nossa prioridade."
+  },
+  "numbers": {
+    "us": "911",
+    "uk": "999",
+    "eu": "112",
+    "br": "192",
+    "label": "Numero de Emergencia"
+  },
+  "symptoms": {
+    "chestPain": "Dor ou pressao no peito",
+    "breathingDifficulty": "Dificuldade respiratoria grave",
+    "severeBleeding": "Sangramento grave ou descontrolado",
+    "unconscious": "Perda de consciencia",
+    "stroke": "Sinais de AVC (derrame)",
+    "headInjury": "Traumatismo craniano grave",
+    "seizure": "Convulsoes",
+    "suicidal": "Pensamentos suicidas",
+    "allergicReaction": "Reacao alergica grave (anafilaxia)",
+    "poisoning": "Envenenamento ou overdose",
+    "fracture": "Fratura grave",
+    "burns": "Queimaduras graves"
+  },
+  "mentalHealth": {
+    "crisisLine": "Se voce esta tendo pensamentos suicidas, por favor ligue para o CVV - Centro de Valorizacao da Vida: 188 (Brasil) ou procure ajuda local.",
+    "notAlone": "Voce nao esta sozinho. Ajuda esta disponivel."
+  }
+}

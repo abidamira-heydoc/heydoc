@@ -1,0 +1,154 @@
+{
+  "nav": {
+    "dashboard": "Tableau de bord",
+    "cases": "Dossiers",
+    "activeCases": "Dossiers actifs",
+    "history": "Historique",
+    "earnings": "Revenus",
+    "profile": "Profil",
+    "settings": "Parametres"
+  },
+  "auth": {
+    "signup": {
+      "title": "Rejoignez HeyDoc en tant que medecin",
+      "subtitle": "Aidez les patients a obtenir les soins dont ils ont besoin",
+      "name": "Nom complet",
+      "email": "Adresse e-mail",
+      "password": "Mot de passe",
+      "specialties": "Specialites",
+      "licenseNumber": "Numero de licence",
+      "licenseState": "Region de licence",
+      "yearsExperience": "Annees d'experience",
+      "bio": "Biographie professionnelle",
+      "uploadLicense": "Telecharger la licence",
+      "button": "Soumettre la candidature"
+    },
+    "login": {
+      "title": "Portail medecin",
+      "subtitle": "Connectez-vous a votre compte",
+      "email": "E-mail",
+      "password": "Mot de passe",
+      "button": "Se connecter",
+      "noAccount": "Pas encore inscrit ?",
+      "applyNow": "Postuler maintenant"
+    },
+    "pending": {
+      "title": "Candidature en cours d'examen",
+      "message": "Votre candidature est en cours d'examen. Nous vous informerons par e-mail une fois approuvee.",
+      "checkStatus": "Verifier le statut"
+    },
+    "rejected": {
+      "title": "Candidature non approuvee",
+      "message": "Malheureusement, votre candidature n'a pas ete approuvee.",
+      "reason": "Raison : {{reason}}",
+      "contact": "Contactez le support pour plus d'informations."
+    }
+  },
+  "dashboard": {
+    "title": "Tableau de bord medecin",
+    "welcome": "Bienvenue, Dr {{name}}",
+    "stats": {
+      "pendingCases": "Dossiers en attente",
+      "activeCases": "Dossiers actifs",
+      "completedToday": "Termines aujourd'hui",
+      "totalEarnings": "Revenus totaux"
+    },
+    "quickActions": {
+      "title": "Actions rapides",
+      "viewQueue": "Voir la file d'attente",
+      "activeCases": "Dossiers actifs",
+      "earnings": "Voir les revenus"
+    }
+  },
+  "cases": {
+    "queue": {
+      "title": "File d'attente des dossiers",
+      "empty": "Aucun dossier en attente",
+      "claim": "Prendre le dossier",
+      "view": "Voir les details"
+    },
+    "active": {
+      "title": "Dossiers actifs",
+      "empty": "Aucun dossier actif",
+      "respond": "Repondre",
+      "complete": "Marquer comme termine"
+    },
+    "history": {
+      "title": "Historique des dossiers",
+      "empty": "Aucun dossier termine",
+      "viewDetails": "Voir les details"
+    },
+    "details": {
+      "patient": "Patient",
+      "age": "Age",
+      "sex": "Sexe",
+      "complaint": "Motif de consultation",
+      "symptoms": "Symptomes",
+      "medicalHistory": "Antecedents medicaux",
+      "attachments": "Pieces jointes"
+    },
+    "tiers": {
+      "standard": "Standard",
+      "priority": "Prioritaire"
+    }
+  },
+  "chat": {
+    "title": "Consultation patient",
+    "placeholder": "Tapez votre reponse...",
+    "send": "Envoyer",
+    "endConsultation": "Terminer la consultation",
+    "patientInfo": "Informations patient"
+  },
+  "earnings": {
+    "title": "Tableau de bord des revenus",
+    "available": "Solde disponible",
+    "pending": "En attente",
+    "totalEarned": "Total gagne",
+    "withdraw": "Retirer",
+    "history": "Historique des paiements",
+    "setupStripe": "Configurer Stripe"
+  },
+  "profile": {
+    "title": "Profil du medecin",
+    "edit": "Modifier le profil",
+    "photo": "Photo de profil",
+    "displayName": "Nom affiche",
+    "specialties": "Specialites",
+    "credentials": "Diplomes et certifications",
+    "bio": "Biographie",
+    "availability": "Disponibilite",
+    "available": "Disponible pour les consultations",
+    "unavailable": "Non disponible"
+  },
+  "settings": {
+    "title": "Parametres",
+    "notifications": {
+      "title": "Notifications",
+      "emailNewCase": "E-mail pour nouveaux dossiers",
+      "emailCaseAssigned": "E-mail quand un dossier est attribue",
+      "emailPayoutSent": "E-mail quand un paiement est envoye",
+      "emailWeeklyDigest": "Resume hebdomadaire par e-mail",
+      "pushNewCase": "Notification push pour nouveaux dossiers",
+      "pushMessages": "Notification push pour messages patients"
+    },
+    "account": {
+      "title": "Compte",
+      "email": "E-mail",
+      "changePassword": "Changer le mot de passe",
+      "deleteAccount": "Supprimer le compte"
+    }
+  },
+  "specialties": {
+    "family_medicine": "Medecine generale",
+    "internal_medicine": "Medecine interne",
+    "pediatrics": "Pediatrie",
+    "dermatology": "Dermatologie",
+    "psychiatry": "Psychiatrie",
+    "obgyn": "Gynecologie-Obstetrique",
+    "cardiology": "Cardiologie",
+    "orthopedics": "Orthopedie",
+    "neurology": "Neurologie",
+    "emergency_medicine": "Medecine d'urgence",
+    "other": "Autre"
+  }
+}

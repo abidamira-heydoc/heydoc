@@ -1,0 +1,71 @@
+{
+  "nav": {
+    "dashboard": "控制面板",
+    "analytics": "数据分析",
+    "users": "用户管理",
+    "reports": "报告",
+    "settings": "设置"
+  },
+  "dashboard": {
+    "title": "机构控制面板",
+    "welcome": "欢迎回来，{{name}}",
+    "stats": {
+      "totalUsers": "总用户数",
+      "activeUsers": "活跃用户",
+      "totalConversations": "总对话数",
+      "emergencyAlerts": "紧急警报"
+    }
+  },
+  "users": {
+    "title": "用户管理",
+    "search": "搜索用户...",
+    "addUser": "添加用户",
+    "columns": {
+      "name": "姓名",
+      "email": "电子邮箱",
+      "role": "角色",
+      "status": "状态",
+      "lastActive": "最后活跃",
+      "actions": "操作"
+    },
+    "roles": {
+      "user": "用户",
+      "orgAdmin": "机构管理员",
+      "platformAdmin": "平台管理员"
+    }
+  },
+  "analytics": {
+    "title": "数据分析面板",
+    "dateRange": "日期范围",
+    "metrics": {
+      "conversations": "对话数",
+      "messages": "消息数",
+      "avgSessionTime": "平均会话时长",
+      "userSatisfaction": "用户满意度"
+    }
+  },
+  "reports": {
+    "title": "影响报告",
+    "generate": "生成报告",
+    "download": "下载",
+    "types": {
+      "monthly": "月度总结",
+      "quarterly": "季度报告",
+      "annual": "年度报告"
+    }
+  },
+  "settings": {
+    "title": "机构设置",
+    "general": {
+      "title": "常规设置",
+      "orgName": "机构名称",
+      "orgCode": "机构代码",
+      "maxUsers": "最大用户数"
+    },
+    "notifications": {
+      "title": "通知设置",
+      "emailAlerts": "邮件提醒",
+      "emergencyAlerts": "紧急警报"
+    }
+  }
+}

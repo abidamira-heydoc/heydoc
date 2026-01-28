@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 const SignIn: React.FC = () => {
+  const { t } = useTranslation('auth');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -23,7 +25,7 @@ const SignIn: React.FC = () => {
       await signIn(email, password);
       navigate('/chat');
     } catch (err: any) {
-      setError('Invalid email or password');
+      setError(t('signIn.errors.invalid'));
     } finally {
       setLoading(false);
     }
@@ -52,10 +54,10 @@ const SignIn: React.FC = () => {
               </div>
             </div>
             <p className="text-2xl font-light text-green-100 mb-6">
-              Your AI-Powered Health Assistant
+              {t('features.noInsurance.title', { defaultValue: 'Your AI-Powered Health Assistant' })}
             </p>
             <p className="text-lg text-green-50 leading-relaxed">
-              Get personalized health guidance, natural remedies, and connect with real doctors—all in one place.
+              {t('features.noInsurance.description', { defaultValue: 'Get personalized health guidance, natural remedies, and connect with real doctors—all in one place.' })}
             </p>
           </div>
 
@@ -67,8 +69,8 @@ const SignIn: React.FC = () => {
                 </svg>
               </div>
               <div>
-                <h3 className="font-semibold text-lg mb-1">No Insurance Required</h3>
-                <p className="text-green-100 text-sm">Affordable healthcare without the hassle of insurance paperwork</p>
+                <h3 className="font-semibold text-lg mb-1">{t('features.noInsurance.title')}</h3>
+                <p className="text-green-100 text-sm">{t('features.noInsurance.description')}</p>
               </div>
             </div>
 
@@ -79,8 +81,8 @@ const SignIn: React.FC = () => {
                 </svg>
               </div>
               <div>
-                <h3 className="font-semibold text-lg mb-1">Licensed Doctors Available</h3>
-                <p className="text-green-100 text-sm">Connect with certified healthcare professionals when you need them</p>
+                <h3 className="font-semibold text-lg mb-1">{t('features.licensedDoctors.title')}</h3>
+                <p className="text-green-100 text-sm">{t('features.licensedDoctors.description')}</p>
               </div>
             </div>
 
@@ -91,8 +93,8 @@ const SignIn: React.FC = () => {
                 </svg>
               </div>
               <div>
-                <h3 className="font-semibold text-lg mb-1">Natural Remedies First</h3>
-                <p className="text-green-100 text-sm">Evidence-based natural solutions and holistic health guidance</p>
+                <h3 className="font-semibold text-lg mb-1">{t('features.naturalRemedies.title')}</h3>
+                <p className="text-green-100 text-sm">{t('features.naturalRemedies.description')}</p>
               </div>
             </div>
           </div>
@@ -105,8 +107,8 @@ const SignIn: React.FC = () => {
               <div className="inline-block bg-green-100 text-green-800 text-sm font-medium px-4 py-1 rounded-full mb-4">
                 {orgName}
               </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back!</h2>
-              <p className="text-gray-600">Sign in to continue your health journey</p>
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">{t('signIn.title')}</h2>
+              <p className="text-gray-600">{t('signIn.subtitle')}</p>
             </div>
 
             {error && (
@@ -121,7 +123,7 @@ const SignIn: React.FC = () => {
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
                 <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
-                  Email Address
+                  {t('signIn.email.label')}
                 </label>
                 <input
                   type="email"
@@ -130,13 +132,13 @@ const SignIn: React.FC = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition"
-                  placeholder="you@example.com"
+                  placeholder={t('signIn.email.placeholder')}
                 />
               </div>
 
               <div>
                 <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-2">
-                  Password
+                  {t('signIn.password.label')}
                 </label>
                 <div className="relative">
                   <input
@@ -145,13 +147,13 @@ const SignIn: React.FC = () => {
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full px-4 py-3 pr-12 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition"
-                    placeholder="Enter your password"
+                    className="w-full px-4 py-3 pe-12 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition"
+                    placeholder={t('signIn.password.placeholder')}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 p-1"
+                    className="absolute end-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 p-1"
                   >
                     {showPassword ? (
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -172,15 +174,15 @@ const SignIn: React.FC = () => {
                 disabled={loading}
                 className="w-full bg-gradient-to-r from-green-600 via-emerald-600 to-green-700 hover:from-green-700 hover:via-emerald-700 hover:to-green-800 text-white font-semibold py-4 px-4 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-6 shadow-lg hover:shadow-xl"
               >
-                {loading ? 'Signing In...' : 'Sign In'}
+                {loading ? t('signIn.signingIn') : t('signIn.button')}
               </button>
             </form>
 
             <div className="mt-6 text-center space-y-3">
               <p className="text-gray-600">
-                Don't have an account?{' '}
+                {t('signIn.noAccount')}{' '}
                 <span className="text-gray-700 font-medium">
-                  Contact your organization admin.
+                  {t('signIn.contactAdmin')}
                 </span>
               </p>
               <button
@@ -190,7 +192,7 @@ const SignIn: React.FC = () => {
                 }}
                 className="text-sm text-gray-500 hover:text-gray-700"
               >
-                ← Enter a different organization code
+                ← {t('signIn.differentOrg')}
               </button>
             </div>
           </div>

@@ -1,0 +1,26 @@
+{
+  "title": "Privacidad y Consentimiento",
+  "subtitle": "Antes de continuar, por favor revisa y acepta nuestras políticas de privacidad.",
+  "hipaa": {
+    "title": "Aviso de Privacidad HIPAA",
+    "description": "Entiendo que mi información de salud será almacenada de forma segura y encriptada en cumplimiento con las regulaciones HIPAA. Mis datos solo serán utilizados para proporcionarme orientación de salud y nunca serán compartidos sin mi consentimiento explícito."
+  },
+  "gdpr": {
+    "title": "Protección de Datos GDPR",
+    "description": "Reconozco mis derechos bajo GDPR, incluyendo el derecho a acceder, corregir y eliminar mis datos personales en cualquier momento. Puedo retirar este consentimiento en cualquier momento eliminando mi cuenta."
+  },
+  "dataCollection": {
+    "title": "Recopilación y Uso de Datos",
+    "description": "Doy mi consentimiento para que HeyDoc recopile y procese mi información de salud, incluyendo síntomas, historial médico y conversaciones de chat, únicamente con el propósito de proporcionar orientación de salud personalizada y recomendaciones de remedios naturales."
+  },
+  "privacyNotice": {
+    "title": "Tu Privacidad Importa:",
+    "description": "Todos tus datos de salud están encriptados de extremo a extremo. Usamos seguridad de nivel bancario para proteger tu información. Puedes solicitar ver, exportar o eliminar tus datos en cualquier momento."
+  },
+  "button": "Acepto - Continuar al Perfil de Salud",
+  "saving": "Guardando...",
+  "errors": {
+    "mustAgree": "Debes aceptar todos los consentimientos para continuar",
+    "saveFailed": "Error al guardar consentimiento. Por favor, inténtalo de nuevo."
+  }
+}

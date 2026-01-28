@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../../config/firebase';
+import { useTranslation } from 'react-i18next';
 
 const InviteCode: React.FC = () => {
+  const { t } = useTranslation('auth');
   const [code, setCode] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -13,7 +15,7 @@ const InviteCode: React.FC = () => {
     e.preventDefault();
 
     if (!code.trim()) {
-      setError('Please enter an organization code');
+      setError(t('inviteCode.errors.required'));
       return;
     }
 
@@ -31,14 +33,14 @@ const InviteCode: React.FC = () => {
       const snapshot = await getDocs(q);
 
       if (snapshot.empty) {
-        setError('Invalid organization code. Please check with your administrator.');
+        setError(t('inviteCode.errors.invalid'));
         return;
       }
 
       // Check if org is active
       const orgData = snapshot.docs[0].data();
       if (!orgData.isActive) {
-        setError('This organization is no longer active.');
+        setError(t('inviteCode.errors.inactive'));
         return;
       }
 
@@ -77,8 +79,8 @@ const InviteCode: React.FC = () => {
                 className="w-32 h-32 object-contain"
               />
             </div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome to HeyDoc</h1>
-            <p className="text-gray-600">Enter your organization code to continue</p>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('inviteCode.title')}</h1>
+            <p className="text-gray-600">{t('inviteCode.subtitle')}</p>
           </div>
 
           {error && (
@@ -93,7 +95,7 @@ const InviteCode: React.FC = () => {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="code" className="block text-sm font-semibold text-gray-700 mb-2">
-                Organization Code
+                {t('inviteCode.label')}
               </label>
               <input
                 type="text"
@@ -102,11 +104,11 @@ const InviteCode: React.FC = () => {
                 value={code}
                 onChange={(e) => setCode(e.target.value.toUpperCase())}
                 className="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition text-center text-2xl font-mono tracking-widest uppercase"
-                placeholder="ENTER CODE"
+                placeholder={t('inviteCode.placeholder')}
                 maxLength={20}
               />
               <p className="text-sm text-gray-500 mt-2 text-center">
-                Contact your organization administrator for the code
+                {t('inviteCode.hint')}
               </p>
             </div>
 
@@ -118,11 +120,11 @@ const InviteCode: React.FC = () => {
               {loading ? (
                 <>
                   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                  Validating...
+                  {t('inviteCode.validating')}
                 </>
               ) : (
                 <>
-                  Continue
+                  {t('inviteCode.button')}
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </svg>
@@ -133,7 +135,7 @@ const InviteCode: React.FC = () => {
 
           <div className="mt-8 pt-6 border-t border-gray-200">
             <p className="text-center text-sm text-gray-500">
-              HeyDoc is a B2B health platform. Access is provided through your organization.
+              {t('inviteCode.footer')}
             </p>
           </div>
         </div>

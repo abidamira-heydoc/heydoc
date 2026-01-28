@@ -1,0 +1,68 @@
+{
+  "welcome": {
+    "title": "HeyDoc में आपका स्वागत है!",
+    "subtitle": "बेहतर देखभाल की ओर आपका पहला कदम - प्राकृतिक उपचार मार्गदर्शन के साथ।",
+    "describeSymptoms": {
+      "title": "लक्षण बताएं",
+      "description": "आप क्या अनुभव कर रहे हैं साझा करें"
+    },
+    "getGuidance": {
+      "title": "मार्गदर्शन प्राप्त करें",
+      "description": "व्यक्तिगत सलाह प्राप्त करें"
+    }
+  },
+  "header": {
+    "title": "HeyDoc",
+    "subtitle": "आपका AI स्वास्थ्य सहायक",
+    "profile": "{{age}} वर्ष {{sex}}"
+  },
+  "loading": {
+    "profile": "आपकी प्रोफ़ाइल लोड हो रही है..."
+  },
+  "dropZone": {
+    "title": "छवि यहां छोड़ें",
+    "formats": "JPG, PNG, HEIC, या WebP (अधिकतम 10MB)"
+  },
+  "input": {
+    "placeholder": "अपने लक्षण बताएं...",
+    "emergencyPlaceholder": "कृपया तुरंत आपातकालीन सेवाओं को कॉल करें",
+    "imagePlaceholder": "विवरण जोड़ें (वैकल्पिक)...",
+    "send": "भेजें",
+    "attachImage": "छवि संलग्न करें"
+  },
+  "speakToDoctor": "डॉक्टर से बात करें",
+  "message": {
+    "emergencyDetected": "आपातकालीन कीवर्ड का पता चला"
+  },
+  "sources": {
+    "title": "स्रोत ({{count}})",
+    "webSearch": "वेब खोज"
+  },
+  "sidebar": {
+    "newConversation": "नई बातचीत",
+    "emergency": "आपातकालीन",
+    "delete": "हटाएं",
+    "cancel": "रद्द करें",
+    "noConversations": "अभी तक कोई वार्तालाप नहीं",
+    "startNew": "शुरू करने के लिए नई चैट शुरू करें",
+    "platformDashboard": "प्लेटफ़ॉर्म डैशबोर्ड",
+    "orgDashboard": "संगठन डैशबोर्ड",
+    "healthProfile": "स्वास्थ्य प्रोफ़ाइल",
+    "signOut": "साइन आउट"
+  },
+  "doctorConsult": {
+    "title": "असली डॉक्टर से बात करें",
+    "subtitle": "पेशेवर चिकित्सा सलाह प्राप्त करें",
+    "standard": {
+      "title": "सामान्य परामर्श",
+      "price": "$25",
+      "description": "अगले उपलब्ध डॉक्टर 24 घंटे के भीतर जवाब देंगे"
+    },
+    "priority": {
+      "title": "प्राथमिकता परामर्श",
+      "price": "$45",
+      "description": "अपना डॉक्टर चुनें, 2 घंटे के भीतर जवाब"
+    }
+  },
+  "disclaimer": "HeyDoc केवल सूचनात्मक मार्गदर्शन प्रदान करता है, चिकित्सा सलाह नहीं। चिकित्सा निर्णयों के लिए हमेशा किसी स्वास्थ्य सेवा प्रदाता से परामर्श करें।"
+}

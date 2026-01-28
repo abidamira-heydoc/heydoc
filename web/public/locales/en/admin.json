@@ -1,0 +1,71 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "analytics": "Analytics",
+    "users": "Users",
+    "reports": "Reports",
+    "settings": "Settings"
+  },
+  "dashboard": {
+    "title": "Organization Dashboard",
+    "welcome": "Welcome back, {{name}}",
+    "stats": {
+      "totalUsers": "Total Users",
+      "activeUsers": "Active Users",
+      "totalConversations": "Total Conversations",
+      "emergencyAlerts": "Emergency Alerts"
+    }
+  },
+  "users": {
+    "title": "User Management",
+    "search": "Search users...",
+    "addUser": "Add User",
+    "columns": {
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "status": "Status",
+      "lastActive": "Last Active",
+      "actions": "Actions"
+    },
+    "roles": {
+      "user": "User",
+      "orgAdmin": "Organization Admin",
+      "platformAdmin": "Platform Admin"
+    }
+  },
+  "analytics": {
+    "title": "Analytics Dashboard",
+    "dateRange": "Date Range",
+    "metrics": {
+      "conversations": "Conversations",
+      "messages": "Messages",
+      "avgSessionTime": "Avg. Session Time",
+      "userSatisfaction": "User Satisfaction"
+    }
+  },
+  "reports": {
+    "title": "Impact Reports",
+    "generate": "Generate Report",
+    "download": "Download",
+    "types": {
+      "monthly": "Monthly Summary",
+      "quarterly": "Quarterly Report",
+      "annual": "Annual Report"
+    }
+  },
+  "settings": {
+    "title": "Organization Settings",
+    "general": {
+      "title": "General Settings",
+      "orgName": "Organization Name",
+      "orgCode": "Organization Code",
+      "maxUsers": "Maximum Users"
+    },
+    "notifications": {
+      "title": "Notification Settings",
+      "emailAlerts": "Email Alerts",
+      "emergencyAlerts": "Emergency Alerts"
+    }
+  }
+}

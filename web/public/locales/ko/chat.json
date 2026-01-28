@@ -1,0 +1,68 @@
+{
+  "welcome": {
+    "title": "HeyDoc에 오신 것을 환영합니다!",
+    "subtitle": "더 나은 건강 관리의 첫걸음 - 자연 요법 안내와 함께하세요.",
+    "describeSymptoms": {
+      "title": "증상 설명",
+      "description": "현재 겪고 있는 증상을 알려주세요"
+    },
+    "getGuidance": {
+      "title": "맞춤형 안내",
+      "description": "개인 맞춤 건강 조언을 받으세요"
+    }
+  },
+  "header": {
+    "title": "HeyDoc",
+    "subtitle": "AI 건강 도우미",
+    "profile": "{{age}}세 {{sex}}"
+  },
+  "loading": {
+    "profile": "프로필 로딩 중..."
+  },
+  "dropZone": {
+    "title": "여기에 이미지를 놓으세요",
+    "formats": "JPG, PNG, HEIC, 또는 WebP (최대 10MB)"
+  },
+  "input": {
+    "placeholder": "증상을 설명해 주세요...",
+    "emergencyPlaceholder": "즉시 응급 서비스에 연락해 주세요",
+    "imagePlaceholder": "설명을 추가하세요 (선택사항)...",
+    "send": "전송",
+    "attachImage": "이미지 첨부"
+  },
+  "speakToDoctor": "의사와 상담하기",
+  "message": {
+    "emergencyDetected": "응급 키워드 감지됨"
+  },
+  "sources": {
+    "title": "출처 ({{count}})",
+    "webSearch": "웹 검색"
+  },
+  "sidebar": {
+    "newConversation": "새 대화",
+    "emergency": "응급",
+    "delete": "삭제",
+    "cancel": "취소",
+    "noConversations": "대화 내역이 없습니다",
+    "startNew": "새 대화를 시작하세요",
+    "platformDashboard": "플랫폼 대시보드",
+    "orgDashboard": "조직 대시보드",
+    "healthProfile": "건강 프로필",
+    "signOut": "로그아웃"
+  },
+  "doctorConsult": {
+    "title": "실제 의사와 상담",
+    "subtitle": "전문 의료 조언을 받으세요",
+    "standard": {
+      "title": "일반 상담",
+      "price": "$25",
+      "description": "24시간 이내에 담당 의사가 답변합니다"
+    },
+    "priority": {
+      "title": "우선 상담",
+      "price": "$45",
+      "description": "의사를 선택하고 2시간 이내에 답변을 받으세요"
+    }
+  },
+  "disclaimer": "HeyDoc은 의료 조언이 아닌 정보 안내만 제공합니다. 의료 결정은 반드시 의료 전문가와 상담하세요."
+}

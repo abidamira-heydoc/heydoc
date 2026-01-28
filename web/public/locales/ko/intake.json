@@ -1,0 +1,105 @@
+{
+  "title": "건강 프로필",
+  "subtitle": "맞춤형 건강 안내를 제공하기 위해 귀하에 대해 알려주세요.",
+  "steps": {
+    "basic": "기본 정보",
+    "medical": "병력",
+    "lifestyle": "생활습관"
+  },
+  "step1": {
+    "title": "기본 정보",
+    "age": {
+      "label": "나이",
+      "placeholder": "예: 30"
+    },
+    "sex": {
+      "label": "성별",
+      "options": {
+        "male": "남성",
+        "female": "여성",
+        "other": "기타",
+        "preferNotToSay": "밝히고 싶지 않음"
+      }
+    },
+    "height": {
+      "label": "키",
+      "feet": "피트",
+      "feetHint": "피트 (예: 5)",
+      "inches": "인치",
+      "inchesHint": "인치 (예: 10)"
+    },
+    "weight": {
+      "label": "체중 (파운드)",
+      "placeholder": "예: 150"
+    }
+  },
+  "step2": {
+    "title": "병력",
+    "pastConditions": {
+      "label": "과거 병력",
+      "placeholder": "예: 천식, 당뇨병 (쉼표로 구분)"
+    },
+    "currentConditions": {
+      "label": "현재 질환",
+      "placeholder": "예: 고혈압 (쉼표로 구분)"
+    },
+    "allergies": {
+      "label": "알레르기",
+      "placeholder": "예: 페니실린, 땅콩 (쉼표로 구분)"
+    },
+    "medications": {
+      "label": "현재 복용 중인 약물",
+      "placeholder": "각 약물을 한 줄에 하나씩 입력하세요"
+    },
+    "familyHistory": {
+      "label": "가족력",
+      "placeholder": "예: 심장병: 아버지\n당뇨병: 어머니"
+    }
+  },
+  "step3": {
+    "title": "생활습관",
+    "smoking": {
+      "label": "흡연 상태",
+      "options": {
+        "never": "비흡연",
+        "former": "과거 흡연",
+        "current": "현재 흡연"
+      },
+      "detailsLabel": "흡연 세부 정보",
+      "detailsPlaceholder": "예: 하루 5개비, 2년 전에 금연"
+    },
+    "alcohol": {
+      "label": "음주량",
+      "options": {
+        "never": "전혀 안 함",
+        "occasionally": "가끔",
+        "regularly": "규칙적으로",
+        "heavily": "과음"
+      },
+      "detailsLabel": "음주 세부 정보",
+      "detailsPlaceholder": "예: 주말에 1-2잔"
+    },
+    "exercise": {
+      "label": "운동량",
+      "options": {
+        "sedentary": "좌식 생활 (거의 운동 안 함)",
+        "light": "가벼움 (주 1-2일)",
+        "moderate": "보통 (주 3-5일)",
+        "active": "활발함 (주 6-7일)",
+        "veryActive": "매우 활발함 (매일 격렬한 운동)"
+      },
+      "detailsLabel": "운동 세부 정보",
+      "detailsPlaceholder": "예: 주 3회 러닝, 매일 요가"
+    }
+  },
+  "buttons": {
+    "continue": "계속",
+    "back": "뒤로",
+    "complete": "설정 완료",
+    "saving": "저장 중..."
+  },
+  "errors": {
+    "saveFailed": "건강 프로필 저장 실패: {{message}}"
+  },
+  "required": "*"
+}

@@ -1,0 +1,38 @@
+{
+  "banner": {
+    "title": "SYMPTOMES D'URGENCE DETECTES",
+    "subtitle": "D'apres vos symptomes, cela peut necessiter une attention medicale immediate.",
+    "actionTitle": "VEUILLEZ AGIR IMMEDIATEMENT :",
+    "actions": {
+      "call911": "Appelez le 15 (SAMU) ou le 112 (numero d'urgence europeen) immediatement",
+      "goToER": "Si possible, rendez-vous aux urgences les plus proches",
+      "stayWithSomeone": "Si possible, restez avec quelqu'un",
+      "noSelfTreat": "N'essayez PAS de vous soigner vous-meme pour les situations d'urgence"
+    },
+    "disclaimer": "HeyDoc ne remplace pas les soins medicaux d'urgence. Votre securite est notre priorite."
+  },
+  "numbers": {
+    "us": "911",
+    "uk": "999",
+    "eu": "112",
+    "label": "Numero d'urgence"
+  },
+  "symptoms": {
+    "chestPain": "Douleur ou pression thoracique",
+    "breathingDifficulty": "Difficulte respiratoire severe",
+    "severeBleeding": "Saignement severe ou incontrolable",
+    "unconscious": "Perte de connaissance",
+    "stroke": "Signes d'accident vasculaire cerebral (AVC)",
+    "headInjury": "Traumatisme cranien severe",
+    "seizure": "Crise d'epilepsie ou convulsions",
+    "suicidal": "Pensees suicidaires",
+    "allergicReaction": "Reaction allergique severe (choc anaphylactique)",
+    "poisoning": "Empoisonnement ou surdosage",
+    "fracture": "Fracture severe",
+    "burns": "Brulures graves"
+  },
+  "mentalHealth": {
+    "crisisLine": "Si vous avez des pensees suicidaires, veuillez appeler le 3114 (numero national de prevention du suicide) ou votre ligne de crise locale.",
+    "notAlone": "Vous n'etes pas seul. De l'aide est disponible."
+  }
+}

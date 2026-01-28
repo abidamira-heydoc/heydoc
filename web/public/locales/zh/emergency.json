@@ -1,0 +1,38 @@
+{
+  "banner": {
+    "title": "检测到紧急症状",
+    "subtitle": "根据您描述的症状，可能需要立即就医。",
+    "actionTitle": "请立即采取行动：",
+    "actions": {
+      "call911": "立即拨打 120（中国）或当地急救电话",
+      "goToER": "如果安全，请前往最近的急诊室",
+      "stayWithSomeone": "如果可能，请让人陪伴您",
+      "noSelfTreat": "紧急情况切勿自行处理"
+    },
+    "disclaimer": "HeyDoc 不能替代紧急医疗救护。您的安全是我们的首要任务。"
+  },
+  "numbers": {
+    "us": "911",
+    "uk": "999",
+    "eu": "112",
+    "label": "急救电话"
+  },
+  "symptoms": {
+    "chestPain": "胸痛或胸闷",
+    "breathingDifficulty": "严重呼吸困难",
+    "severeBleeding": "严重或无法控制的出血",
+    "unconscious": "意识丧失",
+    "stroke": "中风症状",
+    "headInjury": "严重头部外伤",
+    "seizure": "癫痫发作或抽搐",
+    "suicidal": "自杀念头",
+    "allergicReaction": "严重过敏反应",
+    "poisoning": "中毒或药物过量",
+    "fracture": "严重骨折",
+    "burns": "严重烧伤"
+  },
+  "mentalHealth": {
+    "crisisLine": "如果您有自杀念头，请拨打北京心理危机研究与干预中心热线 010-82951332，或当地心理援助热线。",
+    "notAlone": "您并不孤单，帮助就在身边。"
+  }
+}

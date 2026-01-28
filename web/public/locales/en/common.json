@@ -1,0 +1,78 @@
+{
+  "app": {
+    "name": "HeyDoc",
+    "tagline": "Your AI Health Assistant",
+    "subtitle": "Your AI-Powered Health Assistant"
+  },
+  "nav": {
+    "home": "Home",
+    "chat": "Chat",
+    "profile": "Profile",
+    "settings": "Settings",
+    "admin": "Admin",
+    "logout": "Sign Out"
+  },
+  "buttons": {
+    "continue": "Continue",
+    "back": "Back",
+    "cancel": "Cancel",
+    "save": "Save",
+    "submit": "Submit",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "confirm": "Confirm",
+    "next": "Next",
+    "previous": "Previous",
+    "loading": "Loading...",
+    "saving": "Saving...",
+    "sending": "Sending...",
+    "validating": "Validating..."
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "network": "Network error. Please check your connection.",
+    "unauthorized": "You are not authorized to perform this action.",
+    "notFound": "The requested resource was not found.",
+    "required": "This field is required.",
+    "invalidEmail": "Please enter a valid email address.",
+    "invalidPassword": "Password must be at least 6 characters.",
+    "mustBeLoggedIn": "You must be logged in."
+  },
+  "validation": {
+    "required": "This field is required",
+    "minLength": "Must be at least {{min}} characters",
+    "maxLength": "Must be at most {{max}} characters",
+    "email": "Please enter a valid email",
+    "number": "Please enter a valid number"
+  },
+  "status": {
+    "active": "Active",
+    "inactive": "Inactive",
+    "pending": "Pending",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "completed": "Completed",
+    "cancelled": "Cancelled"
+  },
+  "time": {
+    "now": "Just now",
+    "minutesAgo": "{{count}} minute ago",
+    "minutesAgo_plural": "{{count}} minutes ago",
+    "hoursAgo": "{{count}} hour ago",
+    "hoursAgo_plural": "{{count}} hours ago",
+    "daysAgo": "{{count}} day ago",
+    "daysAgo_plural": "{{count}} days ago"
+  },
+  "language": {
+    "select": "Select Language",
+    "change": "Change Language",
+    "current": "Current: {{language}}"
+  },
+  "accessibility": {
+    "menuOpen": "Open menu",
+    "menuClose": "Close menu",
+    "loading": "Loading content",
+    "newWindow": "Opens in new window"
+  }
+}

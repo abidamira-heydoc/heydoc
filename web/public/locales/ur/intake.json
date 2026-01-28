@@ -1,0 +1,105 @@
+{
+  "title": "صحت پروفائل",
+  "subtitle": "ہمیں آپ کو بہتر سمجھنے میں مدد کریں تاکہ ہم ذاتی رہنمائی فراہم کر سکیں۔",
+  "steps": {
+    "basic": "بنیادی معلومات",
+    "medical": "طبی تاریخ",
+    "lifestyle": "طرز زندگی"
+  },
+  "step1": {
+    "title": "بنیادی معلومات",
+    "age": {
+      "label": "عمر",
+      "placeholder": "مثلاً 30"
+    },
+    "sex": {
+      "label": "جنس",
+      "options": {
+        "male": "مرد",
+        "female": "عورت",
+        "other": "دیگر",
+        "preferNotToSay": "بتانا نہیں چاہتے"
+      }
+    },
+    "height": {
+      "label": "قد",
+      "feet": "فٹ",
+      "feetHint": "فٹ (مثلاً 5)",
+      "inches": "انچ",
+      "inchesHint": "انچ (مثلاً 10)"
+    },
+    "weight": {
+      "label": "وزن (پاؤنڈ)",
+      "placeholder": "مثلاً 150"
+    }
+  },
+  "step2": {
+    "title": "طبی تاریخ",
+    "pastConditions": {
+      "label": "پچھلی طبی حالات",
+      "placeholder": "مثلاً دمہ، ذیابیطس (کوما سے الگ کریں)"
+    },
+    "currentConditions": {
+      "label": "موجودہ حالات",
+      "placeholder": "مثلاً ہائی بلڈ پریشر (کوما سے الگ کریں)"
+    },
+    "allergies": {
+      "label": "الرجیاں",
+      "placeholder": "مثلاً پینسلین، مونگ پھلی (کوما سے الگ کریں)"
+    },
+    "medications": {
+      "label": "موجودہ ادویات",
+      "placeholder": "ہر دوائی نئی لائن پر لکھیں"
+    },
+    "familyHistory": {
+      "label": "خاندانی تاریخ",
+      "placeholder": "مثلاً دل کی بیماری: والد\nذیابیطس: والدہ"
+    }
+  },
+  "step3": {
+    "title": "طرز زندگی کے عوامل",
+    "smoking": {
+      "label": "تمباکو نوشی کی حیثیت",
+      "options": {
+        "never": "کبھی نہیں پیا",
+        "former": "سابق تمباکو نوش",
+        "current": "موجودہ تمباکو نوش"
+      },
+      "detailsLabel": "تمباکو نوشی کی تفصیلات",
+      "detailsPlaceholder": "مثلاً 5 سگریٹ/دن، 2 سال پہلے چھوڑا"
+    },
+    "alcohol": {
+      "label": "شراب نوشی",
+      "options": {
+        "never": "کبھی نہیں",
+        "occasionally": "کبھی کبھار",
+        "regularly": "باقاعدگی سے",
+        "heavily": "زیادہ مقدار میں"
+      },
+      "detailsLabel": "شراب نوشی کی تفصیلات",
+      "detailsPlaceholder": "مثلاً ہفتے کے آخر میں 1-2 مشروبات"
+    },
+    "exercise": {
+      "label": "ورزش کی سطح",
+      "options": {
+        "sedentary": "بیٹھا رہنے والا (بہت کم یا کوئی ورزش نہیں)",
+        "light": "ہلکی (1-2 دن/ہفتہ)",
+        "moderate": "معتدل (3-5 دن/ہفتہ)",
+        "active": "متحرک (6-7 دن/ہفتہ)",
+        "veryActive": "بہت متحرک (شدید روزانہ ورزش)"
+      },
+      "detailsLabel": "ورزش کی تفصیلات",
+      "detailsPlaceholder": "مثلاً دوڑنا 3x/ہفتہ، روزانہ یوگا"
+    }
+  },
+  "buttons": {
+    "continue": "جاری رکھیں",
+    "back": "واپس",
+    "complete": "سیٹ اپ مکمل کریں",
+    "saving": "محفوظ ہو رہا ہے..."
+  },
+  "errors": {
+    "saveFailed": "صحت پروفائل محفوظ کرنے میں ناکامی: {{message}}"
+  },
+  "required": "*"
+}

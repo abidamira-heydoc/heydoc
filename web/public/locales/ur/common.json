@@ -1,0 +1,78 @@
+{
+  "app": {
+    "name": "HeyDoc",
+    "tagline": "آپ کا AI صحت معاون",
+    "subtitle": "آپ کا AI سے چلنے والا صحت معاون"
+  },
+  "nav": {
+    "home": "ہوم",
+    "chat": "چیٹ",
+    "profile": "پروفائل",
+    "settings": "ترتیبات",
+    "admin": "ایڈمن",
+    "logout": "سائن آؤٹ"
+  },
+  "buttons": {
+    "continue": "جاری رکھیں",
+    "back": "واپس",
+    "cancel": "منسوخ",
+    "save": "محفوظ کریں",
+    "submit": "جمع کرائیں",
+    "delete": "حذف کریں",
+    "edit": "ترمیم",
+    "close": "بند کریں",
+    "confirm": "تصدیق کریں",
+    "next": "اگلا",
+    "previous": "پچھلا",
+    "loading": "لوڈ ہو رہا ہے...",
+    "saving": "محفوظ ہو رہا ہے...",
+    "sending": "بھیجا جا رہا ہے...",
+    "validating": "تصدیق ہو رہی ہے..."
+  },
+  "errors": {
+    "generic": "کچھ غلط ہو گیا۔ براہ کرم دوبارہ کوشش کریں۔",
+    "network": "نیٹ ورک کی خرابی۔ براہ کرم اپنا کنکشن چیک کریں۔",
+    "unauthorized": "آپ کو یہ کارروائی کرنے کی اجازت نہیں ہے۔",
+    "notFound": "مطلوبہ وسائل نہیں ملے۔",
+    "required": "یہ فیلڈ ضروری ہے۔",
+    "invalidEmail": "براہ کرم درست ای میل ایڈریس درج کریں۔",
+    "invalidPassword": "پاس ورڈ کم از کم 6 حروف کا ہونا چاہیے۔",
+    "mustBeLoggedIn": "آپ کا لاگ ان ہونا ضروری ہے۔"
+  },
+  "validation": {
+    "required": "یہ فیلڈ ضروری ہے",
+    "minLength": "کم از کم {{min}} حروف ہونے چاہیئیں",
+    "maxLength": "زیادہ سے زیادہ {{max}} حروف ہونے چاہیئیں",
+    "email": "براہ کرم درست ای میل درج کریں",
+    "number": "براہ کرم درست نمبر درج کریں"
+  },
+  "status": {
+    "active": "فعال",
+    "inactive": "غیر فعال",
+    "pending": "زیر التواء",
+    "approved": "منظور شدہ",
+    "rejected": "مسترد",
+    "completed": "مکمل",
+    "cancelled": "منسوخ"
+  },
+  "time": {
+    "now": "ابھی ابھی",
+    "minutesAgo": "{{count}} منٹ پہلے",
+    "minutesAgo_plural": "{{count}} منٹ پہلے",
+    "hoursAgo": "{{count}} گھنٹہ پہلے",
+    "hoursAgo_plural": "{{count}} گھنٹے پہلے",
+    "daysAgo": "{{count}} دن پہلے",
+    "daysAgo_plural": "{{count}} دن پہلے"
+  },
+  "language": {
+    "select": "زبان منتخب کریں",
+    "change": "زبان تبدیل کریں",
+    "current": "موجودہ: {{language}}"
+  },
+  "accessibility": {
+    "menuOpen": "مینو کھولیں",
+    "menuClose": "مینو بند کریں",
+    "loading": "مواد لوڈ ہو رہا ہے",
+    "newWindow": "نئی ونڈو میں کھلتا ہے"
+  }
+}

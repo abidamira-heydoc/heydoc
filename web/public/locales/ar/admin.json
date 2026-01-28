@@ -1,0 +1,71 @@
+{
+  "nav": {
+    "dashboard": "لوحة التحكم",
+    "analytics": "التحليلات",
+    "users": "المستخدمون",
+    "reports": "التقارير",
+    "settings": "الإعدادات"
+  },
+  "dashboard": {
+    "title": "لوحة تحكم المنظمة",
+    "welcome": "مرحباً بعودتك، {{name}}",
+    "stats": {
+      "totalUsers": "إجمالي المستخدمين",
+      "activeUsers": "المستخدمون النشطون",
+      "totalConversations": "إجمالي المحادثات",
+      "emergencyAlerts": "تنبيهات الطوارئ"
+    }
+  },
+  "users": {
+    "title": "إدارة المستخدمين",
+    "search": "البحث عن مستخدمين...",
+    "addUser": "إضافة مستخدم",
+    "columns": {
+      "name": "الاسم",
+      "email": "البريد الإلكتروني",
+      "role": "الدور",
+      "status": "الحالة",
+      "lastActive": "آخر نشاط",
+      "actions": "الإجراءات"
+    },
+    "roles": {
+      "user": "مستخدم",
+      "orgAdmin": "مسؤول المنظمة",
+      "platformAdmin": "مسؤول المنصة"
+    }
+  },
+  "analytics": {
+    "title": "لوحة التحليلات",
+    "dateRange": "نطاق التاريخ",
+    "metrics": {
+      "conversations": "المحادثات",
+      "messages": "الرسائل",
+      "avgSessionTime": "متوسط وقت الجلسة",
+      "userSatisfaction": "رضا المستخدمين"
+    }
+  },
+  "reports": {
+    "title": "تقارير التأثير",
+    "generate": "إنشاء تقرير",
+    "download": "تنزيل",
+    "types": {
+      "monthly": "ملخص شهري",
+      "quarterly": "تقرير ربع سنوي",
+      "annual": "تقرير سنوي"
+    }
+  },
+  "settings": {
+    "title": "إعدادات المنظمة",
+    "general": {
+      "title": "الإعدادات العامة",
+      "orgName": "اسم المنظمة",
+      "orgCode": "رمز المنظمة",
+      "maxUsers": "الحد الأقصى للمستخدمين"
+    },
+    "notifications": {
+      "title": "إعدادات الإشعارات",
+      "emailAlerts": "تنبيهات البريد الإلكتروني",
+      "emergencyAlerts": "تنبيهات الطوارئ"
+    }
+  }
+}

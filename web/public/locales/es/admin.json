@@ -1,0 +1,71 @@
+{
+  "nav": {
+    "dashboard": "Panel",
+    "analytics": "Analíticas",
+    "users": "Usuarios",
+    "reports": "Informes",
+    "settings": "Configuración"
+  },
+  "dashboard": {
+    "title": "Panel de la Organización",
+    "welcome": "Bienvenido de nuevo, {{name}}",
+    "stats": {
+      "totalUsers": "Total de Usuarios",
+      "activeUsers": "Usuarios Activos",
+      "totalConversations": "Total de Conversaciones",
+      "emergencyAlerts": "Alertas de Emergencia"
+    }
+  },
+  "users": {
+    "title": "Gestión de Usuarios",
+    "search": "Buscar usuarios...",
+    "addUser": "Añadir Usuario",
+    "columns": {
+      "name": "Nombre",
+      "email": "Correo",
+      "role": "Rol",
+      "status": "Estado",
+      "lastActive": "Última Actividad",
+      "actions": "Acciones"
+    },
+    "roles": {
+      "user": "Usuario",
+      "orgAdmin": "Admin de Organización",
+      "platformAdmin": "Admin de Plataforma"
+    }
+  },
+  "analytics": {
+    "title": "Panel de Analíticas",
+    "dateRange": "Rango de Fechas",
+    "metrics": {
+      "conversations": "Conversaciones",
+      "messages": "Mensajes",
+      "avgSessionTime": "Tiempo Promedio de Sesión",
+      "userSatisfaction": "Satisfacción del Usuario"
+    }
+  },
+  "reports": {
+    "title": "Informes de Impacto",
+    "generate": "Generar Informe",
+    "download": "Descargar",
+    "types": {
+      "monthly": "Resumen Mensual",
+      "quarterly": "Informe Trimestral",
+      "annual": "Informe Anual"
+    }
+  },
+  "settings": {
+    "title": "Configuración de la Organización",
+    "general": {
+      "title": "Configuración General",
+      "orgName": "Nombre de la Organización",
+      "orgCode": "Código de la Organización",
+      "maxUsers": "Máximo de Usuarios"
+    },
+    "notifications": {
+      "title": "Configuración de Notificaciones",
+      "emailAlerts": "Alertas por Correo",
+      "emergencyAlerts": "Alertas de Emergencia"
+    }
+  }
+}

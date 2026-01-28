@@ -15,12 +15,16 @@ export interface Organization {
 // Role type for hierarchical RBAC
 export type UserRole = 'user' | 'org_admin' | 'platform_admin';
 
+// Supported language codes
+export type PreferredLanguage = 'en' | 'es' | 'ar' | 'zh' | 'hi' | 'ur' | 'fr' | 'pt' | 'vi' | 'ko';
+
 export interface UserProfile {
   id: string;
   email: string;
   organizationId: string | null;  // null for platform_admin
   role: UserRole;
   avatarUrl?: string;
+  preferredLanguage?: PreferredLanguage;  // User's preferred UI language
   createdAt: Date;
   updatedAt: Date;
 }

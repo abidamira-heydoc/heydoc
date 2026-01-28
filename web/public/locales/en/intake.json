@@ -1,0 +1,105 @@
+{
+  "title": "Health Profile",
+  "subtitle": "Help us understand you better so we can provide personalized guidance.",
+  "steps": {
+    "basic": "Basic Info",
+    "medical": "Medical History",
+    "lifestyle": "Lifestyle"
+  },
+  "step1": {
+    "title": "Basic Information",
+    "age": {
+      "label": "Age",
+      "placeholder": "e.g., 30"
+    },
+    "sex": {
+      "label": "Sex",
+      "options": {
+        "male": "Male",
+        "female": "Female",
+        "other": "Other",
+        "preferNotToSay": "Prefer not to say"
+      }
+    },
+    "height": {
+      "label": "Height",
+      "feet": "Feet",
+      "feetHint": "Feet (e.g., 5)",
+      "inches": "Inches",
+      "inchesHint": "Inches (e.g., 10)"
+    },
+    "weight": {
+      "label": "Weight (lbs)",
+      "placeholder": "e.g., 150"
+    }
+  },
+  "step2": {
+    "title": "Medical History",
+    "pastConditions": {
+      "label": "Past Medical Conditions",
+      "placeholder": "e.g., Asthma, Diabetes (comma-separated)"
+    },
+    "currentConditions": {
+      "label": "Current Conditions",
+      "placeholder": "e.g., High blood pressure (comma-separated)"
+    },
+    "allergies": {
+      "label": "Allergies",
+      "placeholder": "e.g., Penicillin, Peanuts (comma-separated)"
+    },
+    "medications": {
+      "label": "Current Medications",
+      "placeholder": "Enter each medication on a new line"
+    },
+    "familyHistory": {
+      "label": "Family History",
+      "placeholder": "e.g., Heart disease: father\nDiabetes: mother"
+    }
+  },
+  "step3": {
+    "title": "Lifestyle Factors",
+    "smoking": {
+      "label": "Smoking Status",
+      "options": {
+        "never": "Never smoked",
+        "former": "Former smoker",
+        "current": "Current smoker"
+      },
+      "detailsLabel": "Smoking Details",
+      "detailsPlaceholder": "e.g., 5 cigarettes/day, quit 2 years ago"
+    },
+    "alcohol": {
+      "label": "Alcohol Consumption",
+      "options": {
+        "never": "Never",
+        "occasionally": "Occasionally",
+        "regularly": "Regularly",
+        "heavily": "Heavily"
+      },
+      "detailsLabel": "Alcohol Details",
+      "detailsPlaceholder": "e.g., 1-2 drinks on weekends"
+    },
+    "exercise": {
+      "label": "Exercise Level",
+      "options": {
+        "sedentary": "Sedentary (little to no exercise)",
+        "light": "Light (1-2 days/week)",
+        "moderate": "Moderate (3-5 days/week)",
+        "active": "Active (6-7 days/week)",
+        "veryActive": "Very Active (intense daily exercise)"
+      },
+      "detailsLabel": "Exercise Details",
+      "detailsPlaceholder": "e.g., Running 3x/week, yoga daily"
+    }
+  },
+  "buttons": {
+    "continue": "Continue",
+    "back": "Back",
+    "complete": "Complete Setup",
+    "saving": "Saving..."
+  },
+  "errors": {
+    "saveFailed": "Failed to save health profile: {{message}}"
+  },
+  "required": "*"
+}

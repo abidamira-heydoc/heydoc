@@ -1,0 +1,68 @@
+{
+  "welcome": {
+    "title": "¡Bienvenido a HeyDoc!",
+    "subtitle": "Tu primer paso hacia un mejor cuidado — con guía de remedios naturales.",
+    "describeSymptoms": {
+      "title": "Describe Síntomas",
+      "description": "Comparte lo que estás experimentando"
+    },
+    "getGuidance": {
+      "title": "Obtén Orientación",
+      "description": "Recibe consejos personalizados"
+    }
+  },
+  "header": {
+    "title": "HeyDoc",
+    "subtitle": "Tu Asistente de Salud con IA",
+    "profile": "{{age}} años, {{sex}}"
+  },
+  "loading": {
+    "profile": "Cargando tu perfil..."
+  },
+  "dropZone": {
+    "title": "Suelta la imagen aquí",
+    "formats": "JPG, PNG, HEIC o WebP (máx 10MB)"
+  },
+  "input": {
+    "placeholder": "Describe tus síntomas...",
+    "emergencyPlaceholder": "Por favor llama a servicios de emergencia inmediatamente",
+    "imagePlaceholder": "Añade una descripción (opcional)...",
+    "send": "Enviar",
+    "attachImage": "Adjuntar imagen"
+  },
+  "speakToDoctor": "Hablar con un Doctor",
+  "message": {
+    "emergencyDetected": "Palabras de Emergencia Detectadas"
+  },
+  "sources": {
+    "title": "Fuentes ({{count}})",
+    "webSearch": "Búsqueda web"
+  },
+  "sidebar": {
+    "newConversation": "Nueva Conversación",
+    "emergency": "Emergencia",
+    "delete": "Eliminar",
+    "cancel": "Cancelar",
+    "noConversations": "Aún no hay conversaciones",
+    "startNew": "Inicia un nuevo chat para comenzar",
+    "platformDashboard": "Panel de Plataforma",
+    "orgDashboard": "Panel de Organización",
+    "healthProfile": "Perfil de Salud",
+    "signOut": "Cerrar Sesión"
+  },
+  "doctorConsult": {
+    "title": "Habla con un Doctor Real",
+    "subtitle": "Obtén asesoramiento médico profesional",
+    "standard": {
+      "title": "Consulta Estándar",
+      "price": "$25",
+      "description": "El próximo doctor disponible responde en 24 horas"
+    },
+    "priority": {
+      "title": "Consulta Prioritaria",
+      "price": "$45",
+      "description": "Elige tu doctor, respuesta en 2 horas"
+    }
+  },
+  "disclaimer": "HeyDoc proporciona solo orientación informativa, no consejos médicos. Siempre consulta a un proveedor de salud para decisiones médicas."
+}

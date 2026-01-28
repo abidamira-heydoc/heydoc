@@ -1,0 +1,154 @@
+{
+  "nav": {
+    "dashboard": "대시보드",
+    "cases": "케이스",
+    "activeCases": "진행 중인 케이스",
+    "history": "이력",
+    "earnings": "수익",
+    "profile": "프로필",
+    "settings": "설정"
+  },
+  "auth": {
+    "signup": {
+      "title": "HeyDoc 의사로 가입하기",
+      "subtitle": "환자들에게 필요한 의료 서비스를 제공하세요",
+      "name": "성명",
+      "email": "이메일 주소",
+      "password": "비밀번호",
+      "specialties": "전문 분야",
+      "licenseNumber": "면허 번호",
+      "licenseState": "면허 발급 지역",
+      "yearsExperience": "경력 연수",
+      "bio": "전문 소개",
+      "uploadLicense": "면허증 업로드",
+      "button": "신청서 제출"
+    },
+    "login": {
+      "title": "의사 포털",
+      "subtitle": "계정에 로그인하세요",
+      "email": "이메일",
+      "password": "비밀번호",
+      "button": "로그인",
+      "noAccount": "아직 등록하지 않으셨나요?",
+      "applyNow": "지금 신청하기"
+    },
+    "pending": {
+      "title": "신청서 검토 중",
+      "message": "신청서가 검토 중입니다. 승인되면 이메일로 알려드리겠습니다.",
+      "checkStatus": "상태 확인"
+    },
+    "rejected": {
+      "title": "신청 미승인",
+      "message": "안타깝게도 신청이 승인되지 않았습니다.",
+      "reason": "사유: {{reason}}",
+      "contact": "자세한 내용은 고객 지원에 문의하세요."
+    }
+  },
+  "dashboard": {
+    "title": "의사 대시보드",
+    "welcome": "안녕하세요, {{name}} 선생님",
+    "stats": {
+      "pendingCases": "대기 중인 케이스",
+      "activeCases": "진행 중인 케이스",
+      "completedToday": "오늘 완료",
+      "totalEarnings": "총 수익"
+    },
+    "quickActions": {
+      "title": "빠른 작업",
+      "viewQueue": "케이스 대기열 보기",
+      "activeCases": "진행 중인 케이스",
+      "earnings": "수익 확인"
+    }
+  },
+  "cases": {
+    "queue": {
+      "title": "케이스 대기열",
+      "empty": "대기 중인 케이스가 없습니다",
+      "claim": "케이스 수락",
+      "view": "상세 보기"
+    },
+    "active": {
+      "title": "진행 중인 케이스",
+      "empty": "진행 중인 케이스가 없습니다",
+      "respond": "답변하기",
+      "complete": "완료 처리"
+    },
+    "history": {
+      "title": "케이스 이력",
+      "empty": "완료된 케이스가 없습니다",
+      "viewDetails": "상세 보기"
+    },
+    "details": {
+      "patient": "환자",
+      "age": "나이",
+      "sex": "성별",
+      "complaint": "주 증상",
+      "symptoms": "증상",
+      "medicalHistory": "병력",
+      "attachments": "첨부 파일"
+    },
+    "tiers": {
+      "standard": "일반",
+      "priority": "우선"
+    }
+  },
+  "chat": {
+    "title": "환자 상담",
+    "placeholder": "답변을 입력하세요...",
+    "send": "전송",
+    "endConsultation": "상담 종료",
+    "patientInfo": "환자 정보"
+  },
+  "earnings": {
+    "title": "수익 대시보드",
+    "available": "출금 가능 잔액",
+    "pending": "대기 중",
+    "totalEarned": "총 수익",
+    "withdraw": "출금",
+    "history": "정산 이력",
+    "setupStripe": "Stripe 설정"
+  },
+  "profile": {
+    "title": "의사 프로필",
+    "edit": "프로필 편집",
+    "photo": "프로필 사진",
+    "displayName": "표시 이름",
+    "specialties": "전문 분야",
+    "credentials": "자격",
+    "bio": "소개",
+    "availability": "상담 가능 여부",
+    "available": "상담 가능",
+    "unavailable": "상담 불가"
+  },
+  "settings": {
+    "title": "설정",
+    "notifications": {
+      "title": "알림",
+      "emailNewCase": "새 케이스 이메일 알림",
+      "emailCaseAssigned": "케이스 배정 이메일 알림",
+      "emailPayoutSent": "정산 완료 이메일 알림",
+      "emailWeeklyDigest": "주간 요약 이메일",
+      "pushNewCase": "새 케이스 푸시 알림",
+      "pushMessages": "환자 메시지 푸시 알림"
+    },
+    "account": {
+      "title": "계정",
+      "email": "이메일",
+      "changePassword": "비밀번호 변경",
+      "deleteAccount": "계정 삭제"
+    }
+  },
+  "specialties": {
+    "family_medicine": "가정의학과",
+    "internal_medicine": "내과",
+    "pediatrics": "소아청소년과",
+    "dermatology": "피부과",
+    "psychiatry": "정신건강의학과",
+    "obgyn": "산부인과",
+    "cardiology": "심장내과",
+    "orthopedics": "정형외과",
+    "neurology": "신경과",
+    "emergency_medicine": "응급의학과",
+    "other": "기타"
+  }
+}

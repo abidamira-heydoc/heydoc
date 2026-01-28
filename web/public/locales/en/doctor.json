@@ -1,0 +1,154 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "cases": "Cases",
+    "activeCases": "Active Cases",
+    "history": "History",
+    "earnings": "Earnings",
+    "profile": "Profile",
+    "settings": "Settings"
+  },
+  "auth": {
+    "signup": {
+      "title": "Join HeyDoc as a Doctor",
+      "subtitle": "Help patients get the care they need",
+      "name": "Full Name",
+      "email": "Email Address",
+      "password": "Password",
+      "specialties": "Specialties",
+      "licenseNumber": "License Number",
+      "licenseState": "License State",
+      "yearsExperience": "Years of Experience",
+      "bio": "Professional Bio",
+      "uploadLicense": "Upload License",
+      "button": "Submit Application"
+    },
+    "login": {
+      "title": "Doctor Portal",
+      "subtitle": "Sign in to your account",
+      "email": "Email",
+      "password": "Password",
+      "button": "Sign In",
+      "noAccount": "Not registered yet?",
+      "applyNow": "Apply now"
+    },
+    "pending": {
+      "title": "Application Pending",
+      "message": "Your application is being reviewed. We'll notify you by email once approved.",
+      "checkStatus": "Check Status"
+    },
+    "rejected": {
+      "title": "Application Not Approved",
+      "message": "Unfortunately, your application was not approved.",
+      "reason": "Reason: {{reason}}",
+      "contact": "Contact support for more information."
+    }
+  },
+  "dashboard": {
+    "title": "Doctor Dashboard",
+    "welcome": "Welcome, Dr. {{name}}",
+    "stats": {
+      "pendingCases": "Pending Cases",
+      "activeCases": "Active Cases",
+      "completedToday": "Completed Today",
+      "totalEarnings": "Total Earnings"
+    },
+    "quickActions": {
+      "title": "Quick Actions",
+      "viewQueue": "View Case Queue",
+      "activeCases": "Active Cases",
+      "earnings": "View Earnings"
+    }
+  },
+  "cases": {
+    "queue": {
+      "title": "Case Queue",
+      "empty": "No cases in queue",
+      "claim": "Claim Case",
+      "view": "View Details"
+    },
+    "active": {
+      "title": "Active Cases",
+      "empty": "No active cases",
+      "respond": "Respond",
+      "complete": "Mark Complete"
+    },
+    "history": {
+      "title": "Case History",
+      "empty": "No completed cases",
+      "viewDetails": "View Details"
+    },
+    "details": {
+      "patient": "Patient",
+      "age": "Age",
+      "sex": "Sex",
+      "complaint": "Chief Complaint",
+      "symptoms": "Symptoms",
+      "medicalHistory": "Medical History",
+      "attachments": "Attachments"
+    },
+    "tiers": {
+      "standard": "Standard",
+      "priority": "Priority"
+    }
+  },
+  "chat": {
+    "title": "Patient Consultation",
+    "placeholder": "Type your response...",
+    "send": "Send",
+    "endConsultation": "End Consultation",
+    "patientInfo": "Patient Information"
+  },
+  "earnings": {
+    "title": "Earnings Dashboard",
+    "available": "Available Balance",
+    "pending": "Pending",
+    "totalEarned": "Total Earned",
+    "withdraw": "Withdraw",
+    "history": "Payout History",
+    "setupStripe": "Set Up Stripe"
+  },
+  "profile": {
+    "title": "Doctor Profile",
+    "edit": "Edit Profile",
+    "photo": "Profile Photo",
+    "displayName": "Display Name",
+    "specialties": "Specialties",
+    "credentials": "Credentials",
+    "bio": "Bio",
+    "availability": "Availability",
+    "available": "Available for cases",
+    "unavailable": "Not available"
+  },
+  "settings": {
+    "title": "Settings",
+    "notifications": {
+      "title": "Notifications",
+      "emailNewCase": "Email for new cases",
+      "emailCaseAssigned": "Email when case assigned",
+      "emailPayoutSent": "Email when payout sent",
+      "emailWeeklyDigest": "Weekly digest email",
+      "pushNewCase": "Push for new cases",
+      "pushMessages": "Push for patient messages"
+    },
+    "account": {
+      "title": "Account",
+      "email": "Email",
+      "changePassword": "Change Password",
+      "deleteAccount": "Delete Account"
+    }
+  },
+  "specialties": {
+    "family_medicine": "Family Medicine",
+    "internal_medicine": "Internal Medicine",
+    "pediatrics": "Pediatrics",
+    "dermatology": "Dermatology",
+    "psychiatry": "Psychiatry",
+    "obgyn": "OB/GYN",
+    "cardiology": "Cardiology",
+    "orthopedics": "Orthopedics",
+    "neurology": "Neurology",
+    "emergency_medicine": "Emergency Medicine",
+    "other": "Other"
+  }
+}

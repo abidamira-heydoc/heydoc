@@ -1,0 +1,68 @@
+{
+  "welcome": {
+    "title": "欢迎使用 HeyDoc！",
+    "subtitle": "迈向更好医疗的第一步 - 获取自然疗法指导。",
+    "describeSymptoms": {
+      "title": "描述症状",
+      "description": "告诉我们您的身体状况"
+    },
+    "getGuidance": {
+      "title": "获取指导",
+      "description": "接收个性化建议"
+    }
+  },
+  "header": {
+    "title": "HeyDoc",
+    "subtitle": "您的AI健康助手",
+    "profile": "{{age}}岁 {{sex}}"
+  },
+  "loading": {
+    "profile": "正在加载您的个人资料..."
+  },
+  "dropZone": {
+    "title": "将图片拖放到此处",
+    "formats": "支持 JPG、PNG、HEIC 或 WebP 格式（最大 10MB）"
+  },
+  "input": {
+    "placeholder": "请描述您的症状...",
+    "emergencyPlaceholder": "请立即拨打急救电话",
+    "imagePlaceholder": "添加描述（可选）...",
+    "send": "发送",
+    "attachImage": "添加图片"
+  },
+  "speakToDoctor": "咨询医生",
+  "message": {
+    "emergencyDetected": "检测到紧急关键词"
+  },
+  "sources": {
+    "title": "参考来源 ({{count}})",
+    "webSearch": "网络搜索"
+  },
+  "sidebar": {
+    "newConversation": "新对话",
+    "emergency": "紧急情况",
+    "delete": "删除",
+    "cancel": "取消",
+    "noConversations": "暂无对话记录",
+    "startNew": "开始新对话",
+    "platformDashboard": "平台控制台",
+    "orgDashboard": "组织控制台",
+    "healthProfile": "健康档案",
+    "signOut": "退出登录"
+  },
+  "doctorConsult": {
+    "title": "与真人医生交流",
+    "subtitle": "获取专业医疗建议",
+    "standard": {
+      "title": "标准咨询",
+      "price": "$25",
+      "description": "下一位空闲医生将在24小时内回复"
+    },
+    "priority": {
+      "title": "优先咨询",
+      "price": "$45",
+      "description": "选择您的医生，2小时内回复"
+    }
+  },
+  "disclaimer": "HeyDoc 仅提供健康信息指导，不构成医疗建议。医疗决策请务必咨询医疗专业人员。"
+}

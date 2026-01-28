@@ -1,0 +1,68 @@
+{
+  "welcome": {
+    "title": "Chào mừng đến với HeyDoc!",
+    "subtitle": "Bước đầu tiên để được chăm sóc tốt hơn - với hướng dẫn liệu pháp tự nhiên.",
+    "describeSymptoms": {
+      "title": "Mô Tả Triệu Chứng",
+      "description": "Chia sẻ những gì bạn đang gặp phải"
+    },
+    "getGuidance": {
+      "title": "Nhận Hướng Dẫn",
+      "description": "Nhận lời khuyên được cá nhân hóa"
+    }
+  },
+  "header": {
+    "title": "HeyDoc",
+    "subtitle": "Trợ Lý Sức Khỏe AI Của Bạn",
+    "profile": "{{age}} tuổi, {{sex}}"
+  },
+  "loading": {
+    "profile": "Đang tải hồ sơ của bạn..."
+  },
+  "dropZone": {
+    "title": "Thả hình ảnh vào đây",
+    "formats": "JPG, PNG, HEIC, hoặc WebP (tối đa 10MB)"
+  },
+  "input": {
+    "placeholder": "Mô tả triệu chứng của bạn...",
+    "emergencyPlaceholder": "Vui lòng gọi dịch vụ cấp cứu ngay lập tức",
+    "imagePlaceholder": "Thêm mô tả (tùy chọn)...",
+    "send": "Gửi",
+    "attachImage": "Đính kèm hình ảnh"
+  },
+  "speakToDoctor": "Nói Chuyện Với Bác Sĩ",
+  "message": {
+    "emergencyDetected": "Phát hiện từ khóa khẩn cấp"
+  },
+  "sources": {
+    "title": "Nguồn Tham Khảo ({{count}})",
+    "webSearch": "Tìm kiếm web"
+  },
+  "sidebar": {
+    "newConversation": "Cuộc Trò Chuyện Mới",
+    "emergency": "Khẩn cấp",
+    "delete": "Xóa",
+    "cancel": "Hủy",
+    "noConversations": "Chưa có cuộc trò chuyện nào",
+    "startNew": "Bắt đầu cuộc trò chuyện mới",
+    "platformDashboard": "Bảng Điều Khiển Nền Tảng",
+    "orgDashboard": "Bảng Điều Khiển Tổ Chức",
+    "healthProfile": "Hồ Sơ Sức Khỏe",
+    "signOut": "Đăng Xuất"
+  },
+  "doctorConsult": {
+    "title": "Nói Chuyện Với Bác Sĩ Thực",
+    "subtitle": "Nhận tư vấn y khoa chuyên nghiệp",
+    "standard": {
+      "title": "Tư Vấn Tiêu Chuẩn",
+      "price": "$25",
+      "description": "Bác sĩ sẵn có tiếp theo sẽ phản hồi trong vòng 24 giờ"
+    },
+    "priority": {
+      "title": "Tư Vấn Ưu Tiên",
+      "price": "$45",
+      "description": "Chọn bác sĩ của bạn, phản hồi trong vòng 2 giờ"
+    }
+  },
+  "disclaimer": "HeyDoc chỉ cung cấp hướng dẫn thông tin, không phải lời khuyên y tế. Luôn tham khảo ý kiến của nhà cung cấp dịch vụ y tế cho các quyết định y khoa."
+}

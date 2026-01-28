@@ -1,0 +1,154 @@
+{
+  "nav": {
+    "dashboard": "控制面板",
+    "cases": "病例",
+    "activeCases": "进行中的病例",
+    "history": "历史记录",
+    "earnings": "收入",
+    "profile": "个人资料",
+    "settings": "设置"
+  },
+  "auth": {
+    "signup": {
+      "title": "加入 HeyDoc 成为医生",
+      "subtitle": "帮助患者获得所需的医疗服务",
+      "name": "姓名",
+      "email": "电子邮箱",
+      "password": "密码",
+      "specialties": "专业领域",
+      "licenseNumber": "执照编号",
+      "licenseState": "执照所在地",
+      "yearsExperience": "从业年限",
+      "bio": "专业简介",
+      "uploadLicense": "上传执照",
+      "button": "提交申请"
+    },
+    "login": {
+      "title": "医生门户",
+      "subtitle": "登录您的账户",
+      "email": "电子邮箱",
+      "password": "密码",
+      "button": "登录",
+      "noAccount": "还未注册？",
+      "applyNow": "立即申请"
+    },
+    "pending": {
+      "title": "申请审核中",
+      "message": "您的申请正在审核中，审核通过后我们将通过邮件通知您。",
+      "checkStatus": "查看状态"
+    },
+    "rejected": {
+      "title": "申请未通过",
+      "message": "很遗憾，您的申请未获批准。",
+      "reason": "原因：{{reason}}",
+      "contact": "如需更多信息，请联系客服。"
+    }
+  },
+  "dashboard": {
+    "title": "医生工作台",
+    "welcome": "欢迎，{{name}}医生",
+    "stats": {
+      "pendingCases": "待处理病例",
+      "activeCases": "进行中的病例",
+      "completedToday": "今日已完成",
+      "totalEarnings": "总收入"
+    },
+    "quickActions": {
+      "title": "快捷操作",
+      "viewQueue": "查看病例队列",
+      "activeCases": "进行中的病例",
+      "earnings": "查看收入"
+    }
+  },
+  "cases": {
+    "queue": {
+      "title": "病例队列",
+      "empty": "队列中没有病例",
+      "claim": "认领病例",
+      "view": "查看详情"
+    },
+    "active": {
+      "title": "进行中的病例",
+      "empty": "没有进行中的病例",
+      "respond": "回复",
+      "complete": "标记完成"
+    },
+    "history": {
+      "title": "病例历史",
+      "empty": "没有已完成的病例",
+      "viewDetails": "查看详情"
+    },
+    "details": {
+      "patient": "患者",
+      "age": "年龄",
+      "sex": "性别",
+      "complaint": "主诉",
+      "symptoms": "症状",
+      "medicalHistory": "病史",
+      "attachments": "附件"
+    },
+    "tiers": {
+      "standard": "标准",
+      "priority": "优先"
+    }
+  },
+  "chat": {
+    "title": "患者咨询",
+    "placeholder": "输入您的回复...",
+    "send": "发送",
+    "endConsultation": "结束咨询",
+    "patientInfo": "患者信息"
+  },
+  "earnings": {
+    "title": "收入面板",
+    "available": "可提现余额",
+    "pending": "待结算",
+    "totalEarned": "总收入",
+    "withdraw": "提现",
+    "history": "提现记录",
+    "setupStripe": "设置 Stripe"
+  },
+  "profile": {
+    "title": "医生资料",
+    "edit": "编辑资料",
+    "photo": "头像",
+    "displayName": "显示名称",
+    "specialties": "专业领域",
+    "credentials": "资质证书",
+    "bio": "简介",
+    "availability": "接诊状态",
+    "available": "可接诊",
+    "unavailable": "暂不接诊"
+  },
+  "settings": {
+    "title": "设置",
+    "notifications": {
+      "title": "通知",
+      "emailNewCase": "新病例邮件通知",
+      "emailCaseAssigned": "病例分配邮件通知",
+      "emailPayoutSent": "收款到账邮件通知",
+      "emailWeeklyDigest": "每周摘要邮件",
+      "pushNewCase": "新病例推送通知",
+      "pushMessages": "患者消息推送通知"
+    },
+    "account": {
+      "title": "账户",
+      "email": "电子邮箱",
+      "changePassword": "修改密码",
+      "deleteAccount": "删除账户"
+    }
+  },
+  "specialties": {
+    "family_medicine": "全科医学",
+    "internal_medicine": "内科",
+    "pediatrics": "儿科",
+    "dermatology": "皮肤科",
+    "psychiatry": "精神科",
+    "obgyn": "妇产科",
+    "cardiology": "心内科",
+    "orthopedics": "骨科",
+    "neurology": "神经内科",
+    "emergency_medicine": "急诊医学",
+    "other": "其他"
+  }
+}

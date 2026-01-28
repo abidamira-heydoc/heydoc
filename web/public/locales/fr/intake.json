@@ -1,0 +1,105 @@
+{
+  "title": "Profil de sante",
+  "subtitle": "Aidez-nous a mieux vous connaitre afin de vous fournir des conseils personnalises.",
+  "steps": {
+    "basic": "Informations de base",
+    "medical": "Antecedents medicaux",
+    "lifestyle": "Mode de vie"
+  },
+  "step1": {
+    "title": "Informations de base",
+    "age": {
+      "label": "Age",
+      "placeholder": "ex. 30"
+    },
+    "sex": {
+      "label": "Sexe",
+      "options": {
+        "male": "Homme",
+        "female": "Femme",
+        "other": "Autre",
+        "preferNotToSay": "Prefere ne pas repondre"
+      }
+    },
+    "height": {
+      "label": "Taille",
+      "feet": "Pieds",
+      "feetHint": "Pieds (ex. 5)",
+      "inches": "Pouces",
+      "inchesHint": "Pouces (ex. 10)"
+    },
+    "weight": {
+      "label": "Poids (lb)",
+      "placeholder": "ex. 150"
+    }
+  },
+  "step2": {
+    "title": "Antecedents medicaux",
+    "pastConditions": {
+      "label": "Antecedents medicaux passes",
+      "placeholder": "ex. Asthme, Diabete (separes par des virgules)"
+    },
+    "currentConditions": {
+      "label": "Affections actuelles",
+      "placeholder": "ex. Hypertension arterielle (separes par des virgules)"
+    },
+    "allergies": {
+      "label": "Allergies",
+      "placeholder": "ex. Penicilline, Arachides (separes par des virgules)"
+    },
+    "medications": {
+      "label": "Medicaments actuels",
+      "placeholder": "Entrez chaque medicament sur une nouvelle ligne"
+    },
+    "familyHistory": {
+      "label": "Antecedents familiaux",
+      "placeholder": "ex. Maladie cardiaque : pere\nDiabete : mere"
+    }
+  },
+  "step3": {
+    "title": "Facteurs de mode de vie",
+    "smoking": {
+      "label": "Statut tabagique",
+      "options": {
+        "never": "N'a jamais fume",
+        "former": "Ancien fumeur",
+        "current": "Fumeur actuel"
+      },
+      "detailsLabel": "Details sur le tabagisme",
+      "detailsPlaceholder": "ex. 5 cigarettes/jour, arrete il y a 2 ans"
+    },
+    "alcohol": {
+      "label": "Consommation d'alcool",
+      "options": {
+        "never": "Jamais",
+        "occasionally": "Occasionnellement",
+        "regularly": "Regulierement",
+        "heavily": "Fortement"
+      },
+      "detailsLabel": "Details sur l'alcool",
+      "detailsPlaceholder": "ex. 1-2 verres le week-end"
+    },
+    "exercise": {
+      "label": "Niveau d'activite physique",
+      "options": {
+        "sedentary": "Sedentaire (peu ou pas d'exercice)",
+        "light": "Leger (1-2 jours/semaine)",
+        "moderate": "Modere (3-5 jours/semaine)",
+        "active": "Actif (6-7 jours/semaine)",
+        "veryActive": "Tres actif (exercice intense quotidien)"
+      },
+      "detailsLabel": "Details sur l'exercice",
+      "detailsPlaceholder": "ex. Course 3x/semaine, yoga quotidien"
+    }
+  },
+  "buttons": {
+    "continue": "Continuer",
+    "back": "Retour",
+    "complete": "Terminer la configuration",
+    "saving": "Enregistrement..."
+  },
+  "errors": {
+    "saveFailed": "Echec de l'enregistrement du profil de sante : {{message}}"
+  },
+  "required": "*"
+}

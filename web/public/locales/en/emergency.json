@@ -1,0 +1,38 @@
+{
+  "banner": {
+    "title": "EMERGENCY SYMPTOMS DETECTED",
+    "subtitle": "Based on your symptoms, this may require immediate medical attention.",
+    "actionTitle": "PLEASE TAKE ACTION NOW:",
+    "actions": {
+      "call911": "Call 911 (US) or your local emergency number immediately",
+      "goToER": "If safe, go to the nearest emergency room",
+      "stayWithSomeone": "If possible, have someone stay with you",
+      "noSelfTreat": "Do NOT attempt self-treatment for emergency conditions"
+    },
+    "disclaimer": "HeyDoc is not a substitute for emergency medical care. Your safety is our priority."
+  },
+  "numbers": {
+    "us": "911",
+    "uk": "999",
+    "eu": "112",
+    "label": "Emergency Number"
+  },
+  "symptoms": {
+    "chestPain": "Chest pain or pressure",
+    "breathingDifficulty": "Severe breathing difficulty",
+    "severeBleeding": "Severe or uncontrolled bleeding",
+    "unconscious": "Loss of consciousness",
+    "stroke": "Signs of stroke",
+    "headInjury": "Severe head injury",
+    "seizure": "Seizure or convulsions",
+    "suicidal": "Suicidal thoughts",
+    "allergicReaction": "Severe allergic reaction",
+    "poisoning": "Poisoning or overdose",
+    "fracture": "Severe fracture",
+    "burns": "Severe burns"
+  },
+  "mentalHealth": {
+    "crisisLine": "If you're having thoughts of suicide, please call the 988 Suicide & Crisis Lifeline (US) or your local crisis line.",
+    "notAlone": "You are not alone. Help is available."
+  }
+}

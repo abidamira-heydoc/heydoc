@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
+import { useLanguage } from '../../contexts/LanguageContext';
 import { chatService, type ConversationStage } from '../../services/chatService';
 import { documentService } from '../../services/documentService';
 import { doc, getDoc, collection, addDoc, updateDoc, query, where, orderBy, getDocs, onSnapshot, writeBatch } from 'firebase/firestore';
@@ -13,13 +15,16 @@ import ChatSidebar from './ChatSidebar';
 import DoctorConsultModal from './DoctorConsultModal';
 
 const Chat: React.FC = () => {
+  const { t } = useTranslation('chat');
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { currentLanguage } = useLanguage();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [emergencyDetected, setEmergencyDetected] = useState(false);
   const [healthProfile, setHealthProfile] = useState<any>(null);
+  const [healthProfileChecked, setHealthProfileChecked] = useState(false);
   const [currentConversationId, setCurrentConversationId] = useState<string | null>(null);
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [showDoctorModal, setShowDoctorModal] = useState(false);
@@ -90,7 +95,7 @@ const Chat: React.FC = () => {
     }
   }, []);
 
-  // Load health profile
+  // Load health profile - redirect to intake if not completed
   useEffect(() => {
     const loadHealthProfile = async () => {
       if (!user) return;
@@ -99,14 +104,19 @@ const Chat: React.FC = () => {
         const profileDoc = await getDoc(doc(db, COLLECTIONS.HEALTH_PROFILES, user.uid));
         if (profileDoc.exists()) {
           setHealthProfile(profileDoc.data());
+          setHealthProfileChecked(true);
+        } else {
+          // No health profile - redirect to intake form
+          navigate('/intake');
         }
       } catch (error) {
         console.error('Error loading health profile:', error);
+        setHealthProfileChecked(true); // Allow access on error to prevent blocking
       }
     };
 
     loadHealthProfile();
-  }, [user]);
+  }, [user, navigate]);
 
   // Load conversations
   useEffect(() => {
@@ -316,7 +326,7 @@ const Chat: React.FC = () => {
         messageHistory,
         healthProfile,
         conversationStage,
-        { enableWebSearch: true }
+        { enableWebSearch: true, userPreferredLanguage: currentLanguage }
       );
 
       // Update stage for next turn
@@ -454,6 +464,18 @@ const Chat: React.FC = () => {
     }
   };
 
+  // Show loading while checking health profile
+  if (!healthProfileChecked) {
+    return (
+      <div className="h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-cyan-50 to-green-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">{t('loading.profile')}</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
       className="h-screen flex overflow-hidden bg-gradient-to-br from-blue-50 via-cyan-50 to-green-50 relative"
@@ -470,8 +492,8 @@ const Chat: React.FC = () => {
             <svg className="w-16 h-16 text-green-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
             </svg>
-            <p className="text-xl font-semibold text-gray-700">Drop image here</p>
-            <p className="text-sm text-gray-500 mt-1">JPG, PNG, HEIC, or WebP (max 10MB)</p>
+            <p className="text-xl font-semibold text-gray-700">{t('dropZone.title')}</p>
+            <p className="text-sm text-gray-500 mt-1">{t('dropZone.formats')}</p>
           </div>
         </div>
       )}
@@ -497,7 +519,7 @@ const Chat: React.FC = () => {
           <div className="flex items-center">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="mr-4 p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              className="me-4 p-2 hover:bg-gray-100 rounded-lg transition-colors"
             >
               <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -513,8 +535,8 @@ const Chat: React.FC = () => {
                 className="w-10 h-10 object-contain"
               />
               <div>
-                <h1 className="text-xl font-semibold text-gray-900">HeyDoc</h1>
-                <p className="text-xs text-green-600">Your AI Health Assistant</p>
+                <h1 className="text-xl font-semibold text-gray-900">{t('header.title')}</h1>
+                <p className="text-xs text-green-600">{t('header.subtitle')}</p>
               </div>
             </div>
           </div>
@@ -543,10 +565,10 @@ const Chat: React.FC = () => {
                 />
               </div>
               <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 sm:mb-3">
-                Welcome to HeyDoc!
+                {t('welcome.title')}
               </h2>
               <p className="text-gray-700 max-w-lg mx-auto text-base sm:text-lg mb-4 sm:mb-6">
-                Your first step to better care — with natural remedy guidance.
+                {t('welcome.subtitle')}
               </p>
               <div className="max-w-2xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mt-6 sm:mt-8">
                 <div className="bg-white/60 backdrop-blur-sm p-4 sm:p-5 rounded-xl shadow-md border border-green-200/50 hover:shadow-lg transition-all">
@@ -555,8 +577,8 @@ const Chat: React.FC = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
                   </div>
-                  <h3 className="font-semibold text-gray-900 mb-1 text-sm sm:text-base">Describe Symptoms</h3>
-                  <p className="text-xs sm:text-sm text-gray-600">Share what you're experiencing</p>
+                  <h3 className="font-semibold text-gray-900 mb-1 text-sm sm:text-base">{t('welcome.describeSymptoms.title')}</h3>
+                  <p className="text-xs sm:text-sm text-gray-600">{t('welcome.describeSymptoms.description')}</p>
                 </div>
                 <div className="bg-white/60 backdrop-blur-sm p-4 sm:p-5 rounded-xl shadow-md border border-blue-200/50 hover:shadow-lg transition-all">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-green-400 to-emerald-500 rounded-lg flex items-center justify-center mb-2 sm:mb-3">
@@ -564,8 +586,8 @@ const Chat: React.FC = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <h3 className="font-semibold text-gray-900 mb-1 text-sm sm:text-base">Get Guidance</h3>
-                  <p className="text-xs sm:text-sm text-gray-600">Receive personalized advice</p>
+                  <h3 className="font-semibold text-gray-900 mb-1 text-sm sm:text-base">{t('welcome.getGuidance.title')}</h3>
+                  <p className="text-xs sm:text-sm text-gray-600">{t('welcome.getGuidance.description')}</p>
                 </div>
               </div>
             </div>
@@ -604,11 +626,11 @@ const Chat: React.FC = () => {
                 className="group relative w-full bg-gradient-to-r from-green-500 via-emerald-500 to-cyan-500 hover:from-green-600 hover:via-emerald-600 hover:to-cyan-600 text-white font-bold py-3 sm:py-4 px-4 sm:px-6 rounded-xl transition-all shadow-lg hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-700"></div>
-                <svg className="w-5 h-5 sm:w-6 sm:h-6 mr-2 relative z-10 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6 me-2 relative z-10 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
-                <span className="relative z-10 text-base sm:text-lg">Speak to a Doctor</span>
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 ml-2 relative z-10 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <span className="relative z-10 text-base sm:text-lg">{t('speakToDoctor')}</span>
+                <svg className="w-4 h-4 sm:w-5 sm:h-5 ms-2 relative z-10 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </button>
@@ -673,10 +695,10 @@ const Chat: React.FC = () => {
                 onKeyPress={handleKeyPress}
                 placeholder={
                   emergencyDetected
-                    ? 'Please call emergency services immediately'
+                    ? t('input.emergencyPlaceholder')
                     : selectedImage
-                    ? 'Add a description (optional)...'
-                    : 'Describe your symptoms...'
+                    ? t('input.imagePlaceholder')
+                    : t('input.placeholder')
                 }
                 disabled={emergencyDetected || loading || isUploading}
                 className="w-full px-3 sm:px-5 py-2.5 sm:py-3.5 border-2 border-green-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none resize-none disabled:bg-gray-50 disabled:cursor-not-allowed transition-all shadow-sm bg-white/80 text-sm sm:text-base"
@@ -703,7 +725,7 @@ const Chat: React.FC = () => {
 
           {/* Permanent Disclaimer */}
           <p className="text-xs text-gray-500 text-center mt-3 px-4">
-            HeyDoc provides informational guidance only, not medical advice. Always consult a healthcare provider for medical decisions.
+            {t('disclaimer')}
           </p>
         </div>
       </div>

@@ -1,12 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 import InviteCode from './components/Auth/InviteCode';
 import SignIn from './components/Auth/SignIn';
 import ConsentForm from './components/Consent/ConsentForm';
 import IntakeForm from './components/Intake/IntakeForm';
 import Chat from './components/Chat/Chat';
 import ProfileView from './components/Profile/ProfileView';
+import { LanguageSelector } from './components/LanguageSelector';
 
 // Admin components
 import AdminProtectedRoute from './components/Admin/AdminProtectedRoute';
@@ -92,9 +94,34 @@ const SubdomainRedirect: React.FC<{ children: React.ReactNode }> = ({ children }
   return <>{children}</>;
 };
 
+// Require language selection before continuing to consent/intake
+const LanguageGate: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { hasSelectedLanguage, loading } = useLanguage();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen calm-gradient flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto" />
+          <p className="mt-4 text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!hasSelectedLanguage) {
+    return <Navigate to="/select-language" replace />;
+  }
+
+  return <>{children}</>;
+};
+
 function AppRoutes() {
   return (
     <Routes>
+      {/* Language Selection - first step for new users */}
+      <Route path="/select-language" element={<LanguageSelector />} />
+
       {/* Public: Invite code entry (redirects to doctor portal on doctors subdomain) */}
       <Route path="/" element={
         <SubdomainRedirect>
@@ -112,12 +139,14 @@ function AppRoutes() {
         }
       />
 
-      {/* Requires auth */}
+      {/* Requires auth + language selection */}
       <Route
         path="/consent"
         element={
           <ProtectedRoute>
-            <ConsentForm />
+            <LanguageGate>
+              <ConsentForm />
+            </LanguageGate>
           </ProtectedRoute>
         }
       />
@@ -207,7 +236,9 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-        <AppRoutes />
+        <LanguageProvider>
+          <AppRoutes />
+        </LanguageProvider>
       </AuthProvider>
     </Router>
   );

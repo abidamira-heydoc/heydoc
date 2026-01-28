@@ -1,0 +1,154 @@
+{
+  "nav": {
+    "dashboard": "डैशबोर्ड",
+    "cases": "मामले",
+    "activeCases": "सक्रिय मामले",
+    "history": "इतिहास",
+    "earnings": "आय",
+    "profile": "प्रोफाइल",
+    "settings": "सेटिंग्स"
+  },
+  "auth": {
+    "signup": {
+      "title": "HeyDoc पर डॉक्टर के रूप में जुड़ें",
+      "subtitle": "रोगियों को उनकी आवश्यक देखभाल प्राप्त करने में मदद करें",
+      "name": "पूरा नाम",
+      "email": "ईमेल पता",
+      "password": "पासवर्ड",
+      "specialties": "विशेषज्ञताएं",
+      "licenseNumber": "लाइसेंस नंबर",
+      "licenseState": "लाइसेंस राज्य",
+      "yearsExperience": "अनुभव के वर्ष",
+      "bio": "पेशेवर परिचय",
+      "uploadLicense": "लाइसेंस अपलोड करें",
+      "button": "आवेदन जमा करें"
+    },
+    "login": {
+      "title": "डॉक्टर पोर्टल",
+      "subtitle": "अपने खाते में साइन इन करें",
+      "email": "ईमेल",
+      "password": "पासवर्ड",
+      "button": "साइन इन करें",
+      "noAccount": "अभी तक पंजीकृत नहीं?",
+      "applyNow": "अभी आवेदन करें"
+    },
+    "pending": {
+      "title": "आवेदन लंबित",
+      "message": "आपके आवेदन की समीक्षा की जा रही है। स्वीकृति के बाद हम आपको ईमेल द्वारा सूचित करेंगे।",
+      "checkStatus": "स्थिति जांचें"
+    },
+    "rejected": {
+      "title": "आवेदन स्वीकृत नहीं",
+      "message": "दुर्भाग्य से, आपका आवेदन स्वीकृत नहीं हुआ।",
+      "reason": "कारण: {{reason}}",
+      "contact": "अधिक जानकारी के लिए सहायता से संपर्क करें।"
+    }
+  },
+  "dashboard": {
+    "title": "डॉक्टर डैशबोर्ड",
+    "welcome": "स्वागत है, डॉ. {{name}}",
+    "stats": {
+      "pendingCases": "लंबित मामले",
+      "activeCases": "सक्रिय मामले",
+      "completedToday": "आज पूर्ण",
+      "totalEarnings": "कुल आय"
+    },
+    "quickActions": {
+      "title": "त्वरित कार्रवाई",
+      "viewQueue": "मामला कतार देखें",
+      "activeCases": "सक्रिय मामले",
+      "earnings": "आय देखें"
+    }
+  },
+  "cases": {
+    "queue": {
+      "title": "मामला कतार",
+      "empty": "कतार में कोई मामला नहीं",
+      "claim": "मामला लें",
+      "view": "विवरण देखें"
+    },
+    "active": {
+      "title": "सक्रिय मामले",
+      "empty": "कोई सक्रिय मामला नहीं",
+      "respond": "जवाब दें",
+      "complete": "पूर्ण चिह्नित करें"
+    },
+    "history": {
+      "title": "मामला इतिहास",
+      "empty": "कोई पूर्ण मामला नहीं",
+      "viewDetails": "विवरण देखें"
+    },
+    "details": {
+      "patient": "रोगी",
+      "age": "आयु",
+      "sex": "लिंग",
+      "complaint": "मुख्य शिकायत",
+      "symptoms": "लक्षण",
+      "medicalHistory": "चिकित्सा इतिहास",
+      "attachments": "संलग्नक"
+    },
+    "tiers": {
+      "standard": "सामान्य",
+      "priority": "प्राथमिकता"
+    }
+  },
+  "chat": {
+    "title": "रोगी परामर्श",
+    "placeholder": "अपना जवाब टाइप करें...",
+    "send": "भेजें",
+    "endConsultation": "परामर्श समाप्त करें",
+    "patientInfo": "रोगी जानकारी"
+  },
+  "earnings": {
+    "title": "आय डैशबोर्ड",
+    "available": "उपलब्ध शेष",
+    "pending": "लंबित",
+    "totalEarned": "कुल अर्जित",
+    "withdraw": "निकालें",
+    "history": "भुगतान इतिहास",
+    "setupStripe": "Stripe सेट अप करें"
+  },
+  "profile": {
+    "title": "डॉक्टर प्रोफाइल",
+    "edit": "प्रोफाइल संपादित करें",
+    "photo": "प्रोफाइल फोटो",
+    "displayName": "प्रदर्शन नाम",
+    "specialties": "विशेषज्ञताएं",
+    "credentials": "प्रमाण पत्र",
+    "bio": "परिचय",
+    "availability": "उपलब्धता",
+    "available": "मामलों के लिए उपलब्ध",
+    "unavailable": "उपलब्ध नहीं"
+  },
+  "settings": {
+    "title": "सेटिंग्स",
+    "notifications": {
+      "title": "सूचनाएं",
+      "emailNewCase": "नए मामलों के लिए ईमेल",
+      "emailCaseAssigned": "मामला सौंपे जाने पर ईमेल",
+      "emailPayoutSent": "भुगतान भेजे जाने पर ईमेल",
+      "emailWeeklyDigest": "साप्ताहिक सारांश ईमेल",
+      "pushNewCase": "नए मामलों के लिए पुश सूचना",
+      "pushMessages": "रोगी संदेशों के लिए पुश सूचना"
+    },
+    "account": {
+      "title": "खाता",
+      "email": "ईमेल",
+      "changePassword": "पासवर्ड बदलें",
+      "deleteAccount": "खाता हटाएं"
+    }
+  },
+  "specialties": {
+    "family_medicine": "पारिवारिक चिकित्सा",
+    "internal_medicine": "आंतरिक चिकित्सा",
+    "pediatrics": "बाल चिकित्सा",
+    "dermatology": "त्वचा विज्ञान",
+    "psychiatry": "मनोचिकित्सा",
+    "obgyn": "प्रसूति एवं स्त्री रोग",
+    "cardiology": "हृदय रोग",
+    "orthopedics": "अस्थि रोग",
+    "neurology": "तंत्रिका विज्ञान",
+    "emergency_medicine": "आपातकालीन चिकित्सा",
+    "other": "अन्य"
+  }
+}

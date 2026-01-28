@@ -1,0 +1,68 @@
+{
+  "welcome": {
+    "title": "HeyDoc میں خوش آمدید!",
+    "subtitle": "بہتر دیکھ بھال کی طرف آپ کا پہلا قدم - قدرتی علاج کی رہنمائی کے ساتھ۔",
+    "describeSymptoms": {
+      "title": "علامات بیان کریں",
+      "description": "اپنی تکلیف بتائیں"
+    },
+    "getGuidance": {
+      "title": "رہنمائی حاصل کریں",
+      "description": "ذاتی مشورہ حاصل کریں"
+    }
+  },
+  "header": {
+    "title": "HeyDoc",
+    "subtitle": "آپ کا AI صحت معاون",
+    "profile": "{{age}} سال {{sex}}"
+  },
+  "loading": {
+    "profile": "آپ کی پروفائل لوڈ ہو رہی ہے..."
+  },
+  "dropZone": {
+    "title": "تصویر یہاں چھوڑیں",
+    "formats": "JPG، PNG، HEIC، یا WebP (زیادہ سے زیادہ 10MB)"
+  },
+  "input": {
+    "placeholder": "اپنی علامات بیان کریں...",
+    "emergencyPlaceholder": "براہ کرم فوری طور پر ایمرجنسی سروسز کو کال کریں",
+    "imagePlaceholder": "تفصیل شامل کریں (اختیاری)...",
+    "send": "بھیجیں",
+    "attachImage": "تصویر منسلک کریں"
+  },
+  "speakToDoctor": "ڈاکٹر سے بات کریں",
+  "message": {
+    "emergencyDetected": "ایمرجنسی کلیدی الفاظ کا پتہ چلا"
+  },
+  "sources": {
+    "title": "ذرائع ({{count}})",
+    "webSearch": "ویب سرچ"
+  },
+  "sidebar": {
+    "newConversation": "نئی گفتگو",
+    "emergency": "ایمرجنسی",
+    "delete": "حذف کریں",
+    "cancel": "منسوخ کریں",
+    "noConversations": "ابھی کوئی گفتگو نہیں",
+    "startNew": "شروع کرنے کے لیے نئی چیٹ شروع کریں",
+    "platformDashboard": "پلیٹ فارم ڈیش بورڈ",
+    "orgDashboard": "تنظیم ڈیش بورڈ",
+    "healthProfile": "صحت پروفائل",
+    "signOut": "سائن آؤٹ"
+  },
+  "doctorConsult": {
+    "title": "اصلی ڈاکٹر سے بات کریں",
+    "subtitle": "پیشہ ورانہ طبی مشورہ حاصل کریں",
+    "standard": {
+      "title": "معیاری مشاورت",
+      "price": "$25",
+      "description": "اگلا دستیاب ڈاکٹر 24 گھنٹے کے اندر جواب دے گا"
+    },
+    "priority": {
+      "title": "ترجیحی مشاورت",
+      "price": "$45",
+      "description": "اپنا ڈاکٹر منتخب کریں، 2 گھنٹے کے اندر جواب"
+    }
+  },
+  "disclaimer": "HeyDoc صرف معلوماتی رہنمائی فراہم کرتا ہے، طبی مشورہ نہیں۔ طبی فیصلوں کے لیے ہمیشہ صحت کی دیکھ بھال کرنے والے سے مشورہ کریں۔"
+}

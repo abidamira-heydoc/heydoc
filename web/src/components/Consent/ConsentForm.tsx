@@ -4,8 +4,10 @@ import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { useAuth } from '../../contexts/AuthContext';
 import { COLLECTIONS } from '@shared/firebase.config';
+import { useTranslation } from 'react-i18next';
 
 const ConsentForm: React.FC = () => {
+  const { t } = useTranslation('consent');
   const [hipaaConsent, setHipaaConsent] = useState(false);
   const [gdprConsent, setGdprConsent] = useState(false);
   const [dataConsent, setDataConsent] = useState(false);
@@ -18,7 +20,7 @@ const ConsentForm: React.FC = () => {
     e.preventDefault();
 
     if (!hipaaConsent || !gdprConsent || !dataConsent) {
-      setError('You must agree to all consents to continue');
+      setError(t('errors.mustAgree'));
       return;
     }
 
@@ -43,7 +45,7 @@ const ConsentForm: React.FC = () => {
       // Redirect to intake form
       navigate('/intake');
     } catch (err: any) {
-      setError('Failed to save consent. Please try again.');
+      setError(t('errors.saveFailed'));
       console.error(err);
     } finally {
       setLoading(false);
@@ -53,9 +55,9 @@ const ConsentForm: React.FC = () => {
   return (
     <div className="min-h-screen calm-gradient py-12 px-4">
       <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Privacy & Consent</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('title')}</h1>
         <p className="text-gray-600 mb-8">
-          Before we continue, please review and accept our privacy policies.
+          {t('subtitle')}
         </p>
 
         {error && (
@@ -75,14 +77,12 @@ const ConsentForm: React.FC = () => {
                 onChange={(e) => setHipaaConsent(e.target.checked)}
                 className="mt-1 h-5 w-5 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
               />
-              <div className="ml-3">
+              <div className="ms-3">
                 <label htmlFor="hipaa" className="font-semibold text-gray-900 cursor-pointer">
-                  HIPAA Privacy Notice
+                  {t('hipaa.title')}
                 </label>
                 <p className="mt-2 text-sm text-gray-600">
-                  I understand that my health information will be stored securely and encrypted in
-                  compliance with HIPAA regulations. My data will only be used to provide me with
-                  health guidance and will never be shared without my explicit consent.
+                  {t('hipaa.description')}
                 </p>
               </div>
             </div>
@@ -98,14 +98,12 @@ const ConsentForm: React.FC = () => {
                 onChange={(e) => setGdprConsent(e.target.checked)}
                 className="mt-1 h-5 w-5 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
               />
-              <div className="ml-3">
+              <div className="ms-3">
                 <label htmlFor="gdpr" className="font-semibold text-gray-900 cursor-pointer">
-                  GDPR Data Protection
+                  {t('gdpr.title')}
                 </label>
                 <p className="mt-2 text-sm text-gray-600">
-                  I acknowledge my rights under GDPR, including the right to access, correct, and
-                  delete my personal data at any time. I can withdraw this consent at any time by
-                  deleting my account.
+                  {t('gdpr.description')}
                 </p>
               </div>
             </div>
@@ -121,14 +119,12 @@ const ConsentForm: React.FC = () => {
                 onChange={(e) => setDataConsent(e.target.checked)}
                 className="mt-1 h-5 w-5 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
               />
-              <div className="ml-3">
+              <div className="ms-3">
                 <label htmlFor="data" className="font-semibold text-gray-900 cursor-pointer">
-                  Data Collection & Usage
+                  {t('dataCollection.title')}
                 </label>
                 <p className="mt-2 text-sm text-gray-600">
-                  I consent to HeyDoc collecting and processing my health information, including
-                  symptoms, medical history, and chat conversations, solely for the purpose of
-                  providing personalized health guidance and natural remedy recommendations.
+                  {t('dataCollection.description')}
                 </p>
               </div>
             </div>
@@ -136,9 +132,7 @@ const ConsentForm: React.FC = () => {
 
           <div className="bg-calm-50 border border-calm-200 rounded-lg p-4">
             <p className="text-sm text-gray-700">
-              <strong>Your Privacy Matters:</strong> All your health data is encrypted end-to-end.
-              We use bank-level security to protect your information. You can request to view,
-              export, or delete your data at any time.
+              <strong>{t('privacyNotice.title')}</strong> {t('privacyNotice.description')}
             </p>
           </div>
 
@@ -147,7 +141,7 @@ const ConsentForm: React.FC = () => {
             disabled={loading || !hipaaConsent || !gdprConsent || !dataConsent}
             className="w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-4 px-6 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? 'Saving...' : 'I Agree - Continue to Health Profile'}
+            {loading ? t('saving') : t('button')}
           </button>
         </form>
       </div>

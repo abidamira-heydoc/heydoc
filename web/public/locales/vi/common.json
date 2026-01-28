@@ -1,0 +1,78 @@
+{
+  "app": {
+    "name": "HeyDoc",
+    "tagline": "Trợ Lý Sức Khỏe AI Của Bạn",
+    "subtitle": "Trợ Lý Sức Khỏe Hỗ Trợ Bởi AI"
+  },
+  "nav": {
+    "home": "Trang chủ",
+    "chat": "Trò chuyện",
+    "profile": "Hồ sơ",
+    "settings": "Cài đặt",
+    "admin": "Quản trị",
+    "logout": "Đăng xuất"
+  },
+  "buttons": {
+    "continue": "Tiếp tục",
+    "back": "Quay lại",
+    "cancel": "Hủy",
+    "save": "Lưu",
+    "submit": "Gửi",
+    "delete": "Xóa",
+    "edit": "Chỉnh sửa",
+    "close": "Đóng",
+    "confirm": "Xác nhận",
+    "next": "Tiếp theo",
+    "previous": "Trước đó",
+    "loading": "Đang tải...",
+    "saving": "Đang lưu...",
+    "sending": "Đang gửi...",
+    "validating": "Đang xác thực..."
+  },
+  "errors": {
+    "generic": "Đã xảy ra lỗi. Vui lòng thử lại.",
+    "network": "Lỗi kết nối mạng. Vui lòng kiểm tra kết nối của bạn.",
+    "unauthorized": "Bạn không có quyền thực hiện hành động này.",
+    "notFound": "Không tìm thấy tài nguyên yêu cầu.",
+    "required": "Trường này là bắt buộc.",
+    "invalidEmail": "Vui lòng nhập địa chỉ email hợp lệ.",
+    "invalidPassword": "Mật khẩu phải có ít nhất 6 ký tự.",
+    "mustBeLoggedIn": "Bạn phải đăng nhập."
+  },
+  "validation": {
+    "required": "Trường này là bắt buộc",
+    "minLength": "Phải có ít nhất {{min}} ký tự",
+    "maxLength": "Tối đa {{max}} ký tự",
+    "email": "Vui lòng nhập email hợp lệ",
+    "number": "Vui lòng nhập số hợp lệ"
+  },
+  "status": {
+    "active": "Hoạt động",
+    "inactive": "Không hoạt động",
+    "pending": "Đang chờ",
+    "approved": "Đã duyệt",
+    "rejected": "Bị từ chối",
+    "completed": "Hoàn thành",
+    "cancelled": "Đã hủy"
+  },
+  "time": {
+    "now": "Vừa xong",
+    "minutesAgo": "{{count}} phút trước",
+    "minutesAgo_plural": "{{count}} phút trước",
+    "hoursAgo": "{{count}} giờ trước",
+    "hoursAgo_plural": "{{count}} giờ trước",
+    "daysAgo": "{{count}} ngày trước",
+    "daysAgo_plural": "{{count}} ngày trước"
+  },
+  "language": {
+    "select": "Chọn ngôn ngữ",
+    "change": "Đổi ngôn ngữ",
+    "current": "Hiện tại: {{language}}"
+  },
+  "accessibility": {
+    "menuOpen": "Mở menu",
+    "menuClose": "Đóng menu",
+    "loading": "Đang tải nội dung",
+    "newWindow": "Mở trong cửa sổ mới"
+  }
+}

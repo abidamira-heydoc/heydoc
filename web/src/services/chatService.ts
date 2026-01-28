@@ -31,12 +31,13 @@ export const chatService = {
    * Send a message to the AI and get a response
    * Messages can include optional imageUrl for vision analysis
    * Options can include enableWebSearch to control web search behavior
+   * Options can include userPreferredLanguage for multilingual support
    */
   async sendMessage(
     messages: Array<{ role: 'user' | 'assistant' | 'system'; content: string; imageUrl?: string }>,
     healthProfile?: any,
     stage: ConversationStage = 'INTAKE1',
-    options?: { enableWebSearch?: boolean }
+    options?: { enableWebSearch?: boolean; userPreferredLanguage?: string }
   ): Promise<SendMessageResult> {
     const chat = httpsCallable<any, ChatResponse>(functions, 'chat');
 
@@ -45,6 +46,7 @@ export const chatService = {
       healthProfile,
       stage,
       enableWebSearch: options?.enableWebSearch,
+      userPreferredLanguage: options?.userPreferredLanguage,
     });
 
     return {

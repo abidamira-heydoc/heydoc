@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { Message, SourceCitation } from '@shared/types';
 
 interface ChatMessageProps {
@@ -10,6 +11,7 @@ const SourcesSection: React.FC<{ sources: SourceCitation[]; usedWebSearch?: bool
   sources,
   usedWebSearch,
 }) => {
+  const { t } = useTranslation('chat');
   const [expanded, setExpanded] = useState(false);
 
   if (sources.length === 0) return null;
@@ -20,10 +22,10 @@ const SourcesSection: React.FC<{ sources: SourceCitation[]; usedWebSearch?: bool
         onClick={() => setExpanded(!expanded)}
         className="flex items-center text-sm text-gray-600 hover:text-gray-800 transition-colors"
       >
-        <span className="mr-1.5">📚</span>
-        <span className="font-medium">Sources ({sources.length})</span>
+        <span className="me-1.5">📚</span>
+        <span className="font-medium">{t('sources.title', { count: sources.length })}</span>
         <svg
-          className={`w-4 h-4 ml-1 transition-transform ${expanded ? 'rotate-180' : ''}`}
+          className={`w-4 h-4 ms-1 transition-transform ${expanded ? 'rotate-180' : ''}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -31,8 +33,8 @@ const SourcesSection: React.FC<{ sources: SourceCitation[]; usedWebSearch?: bool
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
         {usedWebSearch && (
-          <span className="ml-2 text-xs text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded">
-            🔍 Web search
+          <span className="ms-2 text-xs text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded">
+            🔍 {t('sources.webSearch')}
           </span>
         )}
       </button>
@@ -41,7 +43,7 @@ const SourcesSection: React.FC<{ sources: SourceCitation[]; usedWebSearch?: bool
         <ul className="mt-2 space-y-1.5 text-sm">
           {sources.map((source, idx) => (
             <li key={idx} className="flex items-start">
-              <span className="text-gray-400 mr-2">•</span>
+              <span className="text-gray-400 me-2">•</span>
               <a
                 href={source.url}
                 target="_blank"
@@ -67,7 +69,7 @@ const ImageLightbox: React.FC<{ imageUrl: string; onClose: () => void }> = ({ im
     >
       <button
         onClick={onClose}
-        className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors z-10"
+        className="absolute top-4 end-4 text-white hover:text-gray-300 transition-colors z-10"
       >
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -150,6 +152,7 @@ function parseMessageContent(content: string, isUser: boolean): React.ReactNode 
 }
 
 const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
+  const { t } = useTranslation('chat');
   const isUser = message.role === 'user';
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
@@ -175,14 +178,14 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
         >
           {message.emergencyFlag && (
             <div className="flex items-center mb-2 text-red-200">
-              <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-4 h-4 me-1" fill="currentColor" viewBox="0 0 20 20">
                 <path
                   fillRule="evenodd"
                   d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
                   clipRule="evenodd"
                 />
               </svg>
-              <span className="text-xs font-semibold">Emergency Keywords Detected</span>
+              <span className="text-xs font-semibold">{t('message.emergencyDetected')}</span>
             </div>
           )}
 

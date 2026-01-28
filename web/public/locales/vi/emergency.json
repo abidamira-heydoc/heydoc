@@ -1,0 +1,38 @@
+{
+  "banner": {
+    "title": "PHÁT HIỆN TRIỆU CHỨNG CẤP CỨU",
+    "subtitle": "Dựa trên triệu chứng của bạn, đây có thể là tình huống cần được chăm sóc y tế ngay lập tức.",
+    "actionTitle": "VUI LÒNG HÀNH ĐỘNG NGAY:",
+    "actions": {
+      "call911": "Gọi 115 (Việt Nam) hoặc số cấp cứu địa phương của bạn ngay lập tức",
+      "goToER": "Nếu an toàn, hãy đến phòng cấp cứu gần nhất",
+      "stayWithSomeone": "Nếu có thể, hãy có người ở bên cạnh bạn",
+      "noSelfTreat": "KHÔNG tự điều trị các tình trạng cấp cứu"
+    },
+    "disclaimer": "HeyDoc không thay thế chăm sóc y tế cấp cứu. Sự an toàn của bạn là ưu tiên hàng đầu của chúng tôi."
+  },
+  "numbers": {
+    "us": "911",
+    "uk": "999",
+    "eu": "112",
+    "label": "Số Cấp Cứu"
+  },
+  "symptoms": {
+    "chestPain": "Đau hoặc tức ngực",
+    "breathingDifficulty": "Khó thở nghiêm trọng",
+    "severeBleeding": "Chảy máu nhiều hoặc không kiểm soát được",
+    "unconscious": "Mất ý thức",
+    "stroke": "Dấu hiệu đột quỵ",
+    "headInjury": "Chấn thương đầu nghiêm trọng",
+    "seizure": "Co giật hoặc động kinh",
+    "suicidal": "Có ý định tự tử",
+    "allergicReaction": "Phản ứng dị ứng nghiêm trọng",
+    "poisoning": "Ngộ độc hoặc quá liều",
+    "fracture": "Gãy xương nghiêm trọng",
+    "burns": "Bỏng nặng"
+  },
+  "mentalHealth": {
+    "crisisLine": "Nếu bạn có ý định tự tử, vui lòng gọi Đường dây nóng hỗ trợ tâm lý 1800 599 920 (Việt Nam) hoặc đường dây khủng hoảng địa phương của bạn.",
+    "notAlone": "Bạn không đơn độc. Sự giúp đỡ luôn sẵn có."
+  }
+}

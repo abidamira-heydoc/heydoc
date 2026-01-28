@@ -1,0 +1,71 @@
+{
+  "nav": {
+    "dashboard": "ڈیش بورڈ",
+    "analytics": "تجزیات",
+    "users": "صارفین",
+    "reports": "رپورٹس",
+    "settings": "ترتیبات"
+  },
+  "dashboard": {
+    "title": "تنظیم کا ڈیش بورڈ",
+    "welcome": "خوش آمدید، {{name}}",
+    "stats": {
+      "totalUsers": "کل صارفین",
+      "activeUsers": "فعال صارفین",
+      "totalConversations": "کل گفتگو",
+      "emergencyAlerts": "ایمرجنسی الرٹس"
+    }
+  },
+  "users": {
+    "title": "صارف کا انتظام",
+    "search": "صارفین تلاش کریں...",
+    "addUser": "صارف شامل کریں",
+    "columns": {
+      "name": "نام",
+      "email": "ای میل",
+      "role": "کردار",
+      "status": "حیثیت",
+      "lastActive": "آخری سرگرمی",
+      "actions": "کارروائیاں"
+    },
+    "roles": {
+      "user": "صارف",
+      "orgAdmin": "تنظیم کا ایڈمن",
+      "platformAdmin": "پلیٹ فارم ایڈمن"
+    }
+  },
+  "analytics": {
+    "title": "تجزیاتی ڈیش بورڈ",
+    "dateRange": "تاریخ کی حد",
+    "metrics": {
+      "conversations": "گفتگو",
+      "messages": "پیغامات",
+      "avgSessionTime": "اوسط سیشن کا وقت",
+      "userSatisfaction": "صارف کی اطمینان"
+    }
+  },
+  "reports": {
+    "title": "اثر رپورٹس",
+    "generate": "رپورٹ بنائیں",
+    "download": "ڈاؤن لوڈ",
+    "types": {
+      "monthly": "ماہانہ خلاصہ",
+      "quarterly": "سہ ماہی رپورٹ",
+      "annual": "سالانہ رپورٹ"
+    }
+  },
+  "settings": {
+    "title": "تنظیم کی ترتیبات",
+    "general": {
+      "title": "عمومی ترتیبات",
+      "orgName": "تنظیم کا نام",
+      "orgCode": "تنظیم کا کوڈ",
+      "maxUsers": "زیادہ سے زیادہ صارفین"
+    },
+    "notifications": {
+      "title": "نوٹیفکیشن کی ترتیبات",
+      "emailAlerts": "ای میل الرٹس",
+      "emergencyAlerts": "ایمرجنسی الرٹس"
+    }
+  }
+}

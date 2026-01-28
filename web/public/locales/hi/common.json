@@ -1,0 +1,78 @@
+{
+  "app": {
+    "name": "HeyDoc",
+    "tagline": "आपका AI स्वास्थ्य सहायक",
+    "subtitle": "आपका AI-संचालित स्वास्थ्य सहायक"
+  },
+  "nav": {
+    "home": "होम",
+    "chat": "चैट",
+    "profile": "प्रोफाइल",
+    "settings": "सेटिंग्स",
+    "admin": "व्यवस्थापक",
+    "logout": "साइन आउट"
+  },
+  "buttons": {
+    "continue": "जारी रखें",
+    "back": "वापस",
+    "cancel": "रद्द करें",
+    "save": "सहेजें",
+    "submit": "जमा करें",
+    "delete": "हटाएं",
+    "edit": "संपादित करें",
+    "close": "बंद करें",
+    "confirm": "पुष्टि करें",
+    "next": "अगला",
+    "previous": "पिछला",
+    "loading": "लोड हो रहा है...",
+    "saving": "सहेजा जा रहा है...",
+    "sending": "भेजा जा रहा है...",
+    "validating": "सत्यापित हो रहा है..."
+  },
+  "errors": {
+    "generic": "कुछ गलत हो गया। कृपया पुनः प्रयास करें।",
+    "network": "नेटवर्क त्रुटि। कृपया अपना कनेक्शन जांचें।",
+    "unauthorized": "आप इस कार्य को करने के लिए अधिकृत नहीं हैं।",
+    "notFound": "अनुरोधित संसाधन नहीं मिला।",
+    "required": "यह फ़ील्ड आवश्यक है।",
+    "invalidEmail": "कृपया एक वैध ईमेल पता दर्ज करें।",
+    "invalidPassword": "पासवर्ड कम से कम 6 अक्षरों का होना चाहिए।",
+    "mustBeLoggedIn": "आपको लॉग इन होना चाहिए।"
+  },
+  "validation": {
+    "required": "यह फ़ील्ड आवश्यक है",
+    "minLength": "कम से कम {{min}} अक्षर होने चाहिए",
+    "maxLength": "अधिकतम {{max}} अक्षर होने चाहिए",
+    "email": "कृपया एक वैध ईमेल दर्ज करें",
+    "number": "कृपया एक वैध संख्या दर्ज करें"
+  },
+  "status": {
+    "active": "सक्रिय",
+    "inactive": "निष्क्रिय",
+    "pending": "लंबित",
+    "approved": "स्वीकृत",
+    "rejected": "अस्वीकृत",
+    "completed": "पूर्ण",
+    "cancelled": "रद्द"
+  },
+  "time": {
+    "now": "अभी",
+    "minutesAgo": "{{count}} मिनट पहले",
+    "minutesAgo_plural": "{{count}} मिनट पहले",
+    "hoursAgo": "{{count}} घंटा पहले",
+    "hoursAgo_plural": "{{count}} घंटे पहले",
+    "daysAgo": "{{count}} दिन पहले",
+    "daysAgo_plural": "{{count}} दिन पहले"
+  },
+  "language": {
+    "select": "भाषा चुनें",
+    "change": "भाषा बदलें",
+    "current": "वर्तमान: {{language}}"
+  },
+  "accessibility": {
+    "menuOpen": "मेनू खोलें",
+    "menuClose": "मेनू बंद करें",
+    "loading": "सामग्री लोड हो रही है",
+    "newWindow": "नई विंडो में खुलता है"
+  }
+}

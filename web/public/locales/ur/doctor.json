@@ -1,0 +1,154 @@
+{
+  "nav": {
+    "dashboard": "ڈیش بورڈ",
+    "cases": "کیسز",
+    "activeCases": "فعال کیسز",
+    "history": "تاریخ",
+    "earnings": "آمدنی",
+    "profile": "پروفائل",
+    "settings": "ترتیبات"
+  },
+  "auth": {
+    "signup": {
+      "title": "HeyDoc میں بطور ڈاکٹر شامل ہوں",
+      "subtitle": "مریضوں کو ضروری دیکھ بھال حاصل کرنے میں مدد کریں",
+      "name": "پورا نام",
+      "email": "ای میل ایڈریس",
+      "password": "پاس ورڈ",
+      "specialties": "تخصصات",
+      "licenseNumber": "لائسنس نمبر",
+      "licenseState": "لائسنس کی ریاست",
+      "yearsExperience": "تجربے کے سال",
+      "bio": "پیشہ ورانہ تعارف",
+      "uploadLicense": "لائسنس اپ لوڈ کریں",
+      "button": "درخواست جمع کرائیں"
+    },
+    "login": {
+      "title": "ڈاکٹر پورٹل",
+      "subtitle": "اپنے اکاؤنٹ میں سائن ان کریں",
+      "email": "ای میل",
+      "password": "پاس ورڈ",
+      "button": "سائن ان",
+      "noAccount": "ابھی رجسٹرڈ نہیں؟",
+      "applyNow": "ابھی درخواست دیں"
+    },
+    "pending": {
+      "title": "درخواست زیر التواء",
+      "message": "آپ کی درخواست کا جائزہ لیا جا رہا ہے۔ منظوری ملنے پر ہم آپ کو ای میل کے ذریعے مطلع کریں گے۔",
+      "checkStatus": "حیثیت چیک کریں"
+    },
+    "rejected": {
+      "title": "درخواست منظور نہیں ہوئی",
+      "message": "بدقسمتی سے، آپ کی درخواست منظور نہیں ہوئی۔",
+      "reason": "وجہ: {{reason}}",
+      "contact": "مزید معلومات کے لیے سپورٹ سے رابطہ کریں۔"
+    }
+  },
+  "dashboard": {
+    "title": "ڈاکٹر ڈیش بورڈ",
+    "welcome": "خوش آمدید، ڈاکٹر {{name}}",
+    "stats": {
+      "pendingCases": "زیر التواء کیسز",
+      "activeCases": "فعال کیسز",
+      "completedToday": "آج مکمل ہوئے",
+      "totalEarnings": "کل آمدنی"
+    },
+    "quickActions": {
+      "title": "فوری کارروائیاں",
+      "viewQueue": "کیس کی قطار دیکھیں",
+      "activeCases": "فعال کیسز",
+      "earnings": "آمدنی دیکھیں"
+    }
+  },
+  "cases": {
+    "queue": {
+      "title": "کیس کی قطار",
+      "empty": "قطار میں کوئی کیس نہیں",
+      "claim": "کیس لیں",
+      "view": "تفصیلات دیکھیں"
+    },
+    "active": {
+      "title": "فعال کیسز",
+      "empty": "کوئی فعال کیس نہیں",
+      "respond": "جواب دیں",
+      "complete": "مکمل کریں"
+    },
+    "history": {
+      "title": "کیس کی تاریخ",
+      "empty": "کوئی مکمل کیس نہیں",
+      "viewDetails": "تفصیلات دیکھیں"
+    },
+    "details": {
+      "patient": "مریض",
+      "age": "عمر",
+      "sex": "جنس",
+      "complaint": "بنیادی شکایت",
+      "symptoms": "علامات",
+      "medicalHistory": "طبی تاریخ",
+      "attachments": "منسلکات"
+    },
+    "tiers": {
+      "standard": "معیاری",
+      "priority": "ترجیحی"
+    }
+  },
+  "chat": {
+    "title": "مریض کی مشاورت",
+    "placeholder": "اپنا جواب لکھیں...",
+    "send": "بھیجیں",
+    "endConsultation": "مشاورت ختم کریں",
+    "patientInfo": "مریض کی معلومات"
+  },
+  "earnings": {
+    "title": "آمدنی کا ڈیش بورڈ",
+    "available": "دستیاب بیلنس",
+    "pending": "زیر التواء",
+    "totalEarned": "کل کمائی",
+    "withdraw": "نکالیں",
+    "history": "ادائیگی کی تاریخ",
+    "setupStripe": "Stripe ترتیب دیں"
+  },
+  "profile": {
+    "title": "ڈاکٹر پروفائل",
+    "edit": "پروفائل میں ترمیم",
+    "photo": "پروفائل فوٹو",
+    "displayName": "ظاہری نام",
+    "specialties": "تخصصات",
+    "credentials": "اسناد",
+    "bio": "تعارف",
+    "availability": "دستیابی",
+    "available": "کیسز کے لیے دستیاب",
+    "unavailable": "دستیاب نہیں"
+  },
+  "settings": {
+    "title": "ترتیبات",
+    "notifications": {
+      "title": "نوٹیفکیشنز",
+      "emailNewCase": "نئے کیسز کے لیے ای میل",
+      "emailCaseAssigned": "کیس تفویض ہونے پر ای میل",
+      "emailPayoutSent": "ادائیگی بھیجنے پر ای میل",
+      "emailWeeklyDigest": "ہفتہ وار خلاصہ ای میل",
+      "pushNewCase": "نئے کیسز کے لیے پش",
+      "pushMessages": "مریض کے پیغامات کے لیے پش"
+    },
+    "account": {
+      "title": "اکاؤنٹ",
+      "email": "ای میل",
+      "changePassword": "پاس ورڈ تبدیل کریں",
+      "deleteAccount": "اکاؤنٹ حذف کریں"
+    }
+  },
+  "specialties": {
+    "family_medicine": "فیملی میڈیسن",
+    "internal_medicine": "داخلی طب",
+    "pediatrics": "اطفال",
+    "dermatology": "جلدیات",
+    "psychiatry": "نفسیات",
+    "obgyn": "زچگی و امراض نسواں",
+    "cardiology": "امراض قلب",
+    "orthopedics": "ہڈیوں کی سرجری",
+    "neurology": "اعصابی امراض",
+    "emergency_medicine": "ایمرجنسی میڈیسن",
+    "other": "دیگر"
+  }
+}

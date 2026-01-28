@@ -1,0 +1,78 @@
+{
+  "app": {
+    "name": "HeyDoc",
+    "tagline": "مساعدك الصحي بالذكاء الاصطناعي",
+    "subtitle": "مساعدك الصحي المدعوم بالذكاء الاصطناعي"
+  },
+  "nav": {
+    "home": "الرئيسية",
+    "chat": "المحادثة",
+    "profile": "الملف الشخصي",
+    "settings": "الإعدادات",
+    "admin": "الإدارة",
+    "logout": "تسجيل الخروج"
+  },
+  "buttons": {
+    "continue": "متابعة",
+    "back": "رجوع",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "submit": "إرسال",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "close": "إغلاق",
+    "confirm": "تأكيد",
+    "next": "التالي",
+    "previous": "السابق",
+    "loading": "جاري التحميل...",
+    "saving": "جاري الحفظ...",
+    "sending": "جاري الإرسال...",
+    "validating": "جاري التحقق..."
+  },
+  "errors": {
+    "generic": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+    "network": "خطأ في الشبكة. يرجى التحقق من اتصالك.",
+    "unauthorized": "غير مصرح لك بتنفيذ هذا الإجراء.",
+    "notFound": "المورد المطلوب غير موجود.",
+    "required": "هذا الحقل مطلوب.",
+    "invalidEmail": "يرجى إدخال بريد إلكتروني صالح.",
+    "invalidPassword": "يجب أن تكون كلمة المرور 6 أحرف على الأقل.",
+    "mustBeLoggedIn": "يجب تسجيل الدخول."
+  },
+  "validation": {
+    "required": "هذا الحقل مطلوب",
+    "minLength": "يجب أن يكون {{min}} أحرف على الأقل",
+    "maxLength": "يجب ألا يتجاوز {{max}} أحرف",
+    "email": "يرجى إدخال بريد إلكتروني صالح",
+    "number": "يرجى إدخال رقم صالح"
+  },
+  "status": {
+    "active": "نشط",
+    "inactive": "غير نشط",
+    "pending": "قيد الانتظار",
+    "approved": "موافق عليه",
+    "rejected": "مرفوض",
+    "completed": "مكتمل",
+    "cancelled": "ملغى"
+  },
+  "time": {
+    "now": "الآن",
+    "minutesAgo": "منذ دقيقة",
+    "minutesAgo_plural": "منذ {{count}} دقائق",
+    "hoursAgo": "منذ ساعة",
+    "hoursAgo_plural": "منذ {{count}} ساعات",
+    "daysAgo": "منذ يوم",
+    "daysAgo_plural": "منذ {{count}} أيام"
+  },
+  "language": {
+    "select": "اختر اللغة",
+    "change": "تغيير اللغة",
+    "current": "الحالية: {{language}}"
+  },
+  "accessibility": {
+    "menuOpen": "فتح القائمة",
+    "menuClose": "إغلاق القائمة",
+    "loading": "جاري تحميل المحتوى",
+    "newWindow": "يفتح في نافذة جديدة"
+  }
+}

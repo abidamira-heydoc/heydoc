@@ -1,0 +1,105 @@
+{
+  "title": "Hồ Sơ Sức Khỏe",
+  "subtitle": "Giúp chúng tôi hiểu bạn hơn để có thể cung cấp hướng dẫn được cá nhân hóa.",
+  "steps": {
+    "basic": "Thông Tin Cơ Bản",
+    "medical": "Tiền Sử Bệnh",
+    "lifestyle": "Lối Sống"
+  },
+  "step1": {
+    "title": "Thông Tin Cơ Bản",
+    "age": {
+      "label": "Tuổi",
+      "placeholder": "ví dụ: 30"
+    },
+    "sex": {
+      "label": "Giới Tính",
+      "options": {
+        "male": "Nam",
+        "female": "Nữ",
+        "other": "Khác",
+        "preferNotToSay": "Không muốn tiết lộ"
+      }
+    },
+    "height": {
+      "label": "Chiều Cao",
+      "feet": "Feet",
+      "feetHint": "Feet (ví dụ: 5)",
+      "inches": "Inches",
+      "inchesHint": "Inches (ví dụ: 10)"
+    },
+    "weight": {
+      "label": "Cân Nặng (lbs)",
+      "placeholder": "ví dụ: 150"
+    }
+  },
+  "step2": {
+    "title": "Tiền Sử Bệnh",
+    "pastConditions": {
+      "label": "Các Bệnh Lý Trong Quá Khứ",
+      "placeholder": "ví dụ: Hen suyễn, Tiểu đường (cách nhau bằng dấu phẩy)"
+    },
+    "currentConditions": {
+      "label": "Các Bệnh Lý Hiện Tại",
+      "placeholder": "ví dụ: Cao huyết áp (cách nhau bằng dấu phẩy)"
+    },
+    "allergies": {
+      "label": "Dị Ứng",
+      "placeholder": "ví dụ: Penicillin, Đậu phộng (cách nhau bằng dấu phẩy)"
+    },
+    "medications": {
+      "label": "Thuốc Đang Dùng",
+      "placeholder": "Nhập mỗi loại thuốc trên một dòng mới"
+    },
+    "familyHistory": {
+      "label": "Tiền Sử Bệnh Gia Đình",
+      "placeholder": "ví dụ: Bệnh tim: cha\nTiểu đường: mẹ"
+    }
+  },
+  "step3": {
+    "title": "Yếu Tố Lối Sống",
+    "smoking": {
+      "label": "Tình Trạng Hút Thuốc",
+      "options": {
+        "never": "Chưa bao giờ hút thuốc",
+        "former": "Đã từng hút thuốc",
+        "current": "Đang hút thuốc"
+      },
+      "detailsLabel": "Chi Tiết Hút Thuốc",
+      "detailsPlaceholder": "ví dụ: 5 điếu/ngày, đã bỏ 2 năm trước"
+    },
+    "alcohol": {
+      "label": "Mức Độ Uống Rượu",
+      "options": {
+        "never": "Không bao giờ",
+        "occasionally": "Thỉnh thoảng",
+        "regularly": "Thường xuyên",
+        "heavily": "Nhiều"
+      },
+      "detailsLabel": "Chi Tiết Uống Rượu",
+      "detailsPlaceholder": "ví dụ: 1-2 ly vào cuối tuần"
+    },
+    "exercise": {
+      "label": "Mức Độ Vận Động",
+      "options": {
+        "sedentary": "Ít vận động (hầu như không tập thể dục)",
+        "light": "Nhẹ (1-2 ngày/tuần)",
+        "moderate": "Vừa phải (3-5 ngày/tuần)",
+        "active": "Tích cực (6-7 ngày/tuần)",
+        "veryActive": "Rất tích cực (tập luyện cường độ cao hàng ngày)"
+      },
+      "detailsLabel": "Chi Tiết Vận Động",
+      "detailsPlaceholder": "ví dụ: Chạy bộ 3 lần/tuần, yoga hàng ngày"
+    }
+  },
+  "buttons": {
+    "continue": "Tiếp Tục",
+    "back": "Quay Lại",
+    "complete": "Hoàn Tất Thiết Lập",
+    "saving": "Đang Lưu..."
+  },
+  "errors": {
+    "saveFailed": "Không thể lưu hồ sơ sức khỏe: {{message}}"
+  },
+  "required": "*"
+}

@@ -876,6 +876,7 @@ interface ChatRequest {
   healthProfile?: any;
   stage?: ConversationStage;
   enableWebSearch?: boolean; // Optional toggle for web search
+  userPreferredLanguage?: string; // User's UI language preference (en, es, ar, zh, hi, ur, fr, pt, vi, ko)
 }
 
 
@@ -1011,7 +1012,7 @@ export const chat = functions.https.onCall(async (data: ChatRequest, context) =>
 
   const anthropic = new Anthropic({ apiKey });
 
-  const { messages, healthProfile, stage: requestedStage } = data;
+  const { messages, healthProfile, stage: requestedStage, userPreferredLanguage } = data;
 
   // Detect if this is a brand-new conversation (no prior assistant messages)
   const hasAssistantMessages = messages.some(m => m.role === 'assistant');
@@ -1222,6 +1223,32 @@ Purpose: Provide structured assessment + guidance.
         systemPrompt += `- Current medications: ${healthProfile.currentMedications.map((m: any) => m.name).join(', ')}\n`;
       }
     }
+
+    // Add multilingual support instructions
+    systemPrompt += `
+
+## LANGUAGE GUIDELINES
+
+User's Preferred Language: ${userPreferredLanguage || 'English'}
+
+**LANGUAGE RULES:**
+1. **Auto-detect and respond:** Detect the language of each user message and respond in that SAME language
+2. **Follow the user:** If the user writes in Spanish, respond in Spanish. If they switch to English, switch with them.
+3. **Preferred language hint:** The user has set "${userPreferredLanguage || 'en'}" as their preferred language. If their message language is ambiguous, default to this.
+4. **Medical terminology:** Use culturally appropriate medical terms. For non-English languages, you may include the English medical term in parentheses if it aids understanding.
+5. **Emergency responses:** For ANY emergency/urgent situation, ALWAYS include an English translation of critical instructions to ensure safety.
+
+**EXAMPLE EMERGENCY (bilingual):**
+If user writes in Spanish about chest pain:
+"⚠️ Esto podría ser una emergencia. Por favor llama al 911 inmediatamente.
+(English: This could be an emergency. Please call 911 immediately.)"
+
+**CULTURAL SENSITIVITY:**
+- Use culturally appropriate health examples when relevant
+- Be aware of different health practices and dietary customs
+- Maintain a respectful, warm tone appropriate to the user's culture
+
+`;
 
     // RAG: Retrieve relevant knowledge for FULL_RESPONSE stage
     if (effectiveStage === 'FULL_RESPONSE') {

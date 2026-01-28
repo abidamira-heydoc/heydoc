@@ -1,0 +1,78 @@
+{
+  "app": {
+    "name": "HeyDoc",
+    "tagline": "Tu Asistente de Salud con IA",
+    "subtitle": "Tu Asistente de Salud Impulsado por IA"
+  },
+  "nav": {
+    "home": "Inicio",
+    "chat": "Chat",
+    "profile": "Perfil",
+    "settings": "Configuración",
+    "admin": "Administración",
+    "logout": "Cerrar Sesión"
+  },
+  "buttons": {
+    "continue": "Continuar",
+    "back": "Atrás",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "submit": "Enviar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "close": "Cerrar",
+    "confirm": "Confirmar",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "loading": "Cargando...",
+    "saving": "Guardando...",
+    "sending": "Enviando...",
+    "validating": "Validando..."
+  },
+  "errors": {
+    "generic": "Algo salió mal. Por favor, inténtalo de nuevo.",
+    "network": "Error de red. Por favor, verifica tu conexión.",
+    "unauthorized": "No estás autorizado para realizar esta acción.",
+    "notFound": "El recurso solicitado no fue encontrado.",
+    "required": "Este campo es obligatorio.",
+    "invalidEmail": "Por favor, ingresa un correo electrónico válido.",
+    "invalidPassword": "La contraseña debe tener al menos 6 caracteres.",
+    "mustBeLoggedIn": "Debes iniciar sesión."
+  },
+  "validation": {
+    "required": "Este campo es obligatorio",
+    "minLength": "Debe tener al menos {{min}} caracteres",
+    "maxLength": "Debe tener como máximo {{max}} caracteres",
+    "email": "Por favor, ingresa un correo válido",
+    "number": "Por favor, ingresa un número válido"
+  },
+  "status": {
+    "active": "Activo",
+    "inactive": "Inactivo",
+    "pending": "Pendiente",
+    "approved": "Aprobado",
+    "rejected": "Rechazado",
+    "completed": "Completado",
+    "cancelled": "Cancelado"
+  },
+  "time": {
+    "now": "Ahora mismo",
+    "minutesAgo": "Hace {{count}} minuto",
+    "minutesAgo_plural": "Hace {{count}} minutos",
+    "hoursAgo": "Hace {{count}} hora",
+    "hoursAgo_plural": "Hace {{count}} horas",
+    "daysAgo": "Hace {{count}} día",
+    "daysAgo_plural": "Hace {{count}} días"
+  },
+  "language": {
+    "select": "Seleccionar Idioma",
+    "change": "Cambiar Idioma",
+    "current": "Actual: {{language}}"
+  },
+  "accessibility": {
+    "menuOpen": "Abrir menú",
+    "menuClose": "Cerrar menú",
+    "loading": "Cargando contenido",
+    "newWindow": "Abre en nueva ventana"
+  }
+}

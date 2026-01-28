@@ -1,0 +1,105 @@
+{
+  "title": "الملف الصحي",
+  "subtitle": "ساعدنا في فهمك بشكل أفضل لنقدم لك توجيهات مخصصة.",
+  "steps": {
+    "basic": "معلومات أساسية",
+    "medical": "التاريخ الطبي",
+    "lifestyle": "نمط الحياة"
+  },
+  "step1": {
+    "title": "المعلومات الأساسية",
+    "age": {
+      "label": "العمر",
+      "placeholder": "مثال: 30"
+    },
+    "sex": {
+      "label": "الجنس",
+      "options": {
+        "male": "ذكر",
+        "female": "أنثى",
+        "other": "آخر",
+        "preferNotToSay": "أفضل عدم الإفصاح"
+      }
+    },
+    "height": {
+      "label": "الطول",
+      "feet": "قدم",
+      "feetHint": "قدم (مثال: 5)",
+      "inches": "بوصة",
+      "inchesHint": "بوصة (مثال: 10)"
+    },
+    "weight": {
+      "label": "الوزن (رطل)",
+      "placeholder": "مثال: 150"
+    }
+  },
+  "step2": {
+    "title": "التاريخ الطبي",
+    "pastConditions": {
+      "label": "الحالات الطبية السابقة",
+      "placeholder": "مثال: الربو، السكري (مفصولة بفواصل)"
+    },
+    "currentConditions": {
+      "label": "الحالات الحالية",
+      "placeholder": "مثال: ارتفاع ضغط الدم (مفصولة بفواصل)"
+    },
+    "allergies": {
+      "label": "الحساسية",
+      "placeholder": "مثال: البنسلين، الفول السوداني (مفصولة بفواصل)"
+    },
+    "medications": {
+      "label": "الأدوية الحالية",
+      "placeholder": "أدخل كل دواء في سطر جديد"
+    },
+    "familyHistory": {
+      "label": "التاريخ العائلي",
+      "placeholder": "مثال: أمراض القلب: الأب\nالسكري: الأم"
+    }
+  },
+  "step3": {
+    "title": "عوامل نمط الحياة",
+    "smoking": {
+      "label": "حالة التدخين",
+      "options": {
+        "never": "لم أدخن أبداً",
+        "former": "مدخن سابق",
+        "current": "مدخن حالي"
+      },
+      "detailsLabel": "تفاصيل التدخين",
+      "detailsPlaceholder": "مثال: 5 سجائر/يوم، توقفت منذ سنتين"
+    },
+    "alcohol": {
+      "label": "استهلاك الكحول",
+      "options": {
+        "never": "أبداً",
+        "occasionally": "أحياناً",
+        "regularly": "بانتظام",
+        "heavily": "بكثرة"
+      },
+      "detailsLabel": "تفاصيل الكحول",
+      "detailsPlaceholder": "مثال: 1-2 مشروبات في عطلة نهاية الأسبوع"
+    },
+    "exercise": {
+      "label": "مستوى التمارين",
+      "options": {
+        "sedentary": "خامل (قليل أو بدون تمارين)",
+        "light": "خفيف (1-2 أيام/أسبوع)",
+        "moderate": "معتدل (3-5 أيام/أسبوع)",
+        "active": "نشط (6-7 أيام/أسبوع)",
+        "veryActive": "نشط جداً (تمارين مكثفة يومية)"
+      },
+      "detailsLabel": "تفاصيل التمارين",
+      "detailsPlaceholder": "مثال: الجري 3 مرات/أسبوع، يوغا يومياً"
+    }
+  },
+  "buttons": {
+    "continue": "متابعة",
+    "back": "رجوع",
+    "complete": "إكمال الإعداد",
+    "saving": "جاري الحفظ..."
+  },
+  "errors": {
+    "saveFailed": "فشل حفظ الملف الصحي: {{message}}"
+  },
+  "required": "*"
+}

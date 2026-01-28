@@ -1,0 +1,154 @@
+{
+  "nav": {
+    "dashboard": "لوحة التحكم",
+    "cases": "الحالات",
+    "activeCases": "الحالات النشطة",
+    "history": "السجل",
+    "earnings": "الأرباح",
+    "profile": "الملف الشخصي",
+    "settings": "الإعدادات"
+  },
+  "auth": {
+    "signup": {
+      "title": "انضم إلى HeyDoc كطبيب",
+      "subtitle": "ساعد المرضى في الحصول على الرعاية التي يحتاجونها",
+      "name": "الاسم الكامل",
+      "email": "البريد الإلكتروني",
+      "password": "كلمة المرور",
+      "specialties": "التخصصات",
+      "licenseNumber": "رقم الترخيص",
+      "licenseState": "ولاية الترخيص",
+      "yearsExperience": "سنوات الخبرة",
+      "bio": "السيرة المهنية",
+      "uploadLicense": "رفع الترخيص",
+      "button": "تقديم الطلب"
+    },
+    "login": {
+      "title": "بوابة الأطباء",
+      "subtitle": "سجل الدخول إلى حسابك",
+      "email": "البريد الإلكتروني",
+      "password": "كلمة المرور",
+      "button": "تسجيل الدخول",
+      "noAccount": "غير مسجل بعد؟",
+      "applyNow": "تقدم الآن"
+    },
+    "pending": {
+      "title": "الطلب قيد المراجعة",
+      "message": "طلبك قيد المراجعة. سنخطرك عبر البريد الإلكتروني عند الموافقة.",
+      "checkStatus": "التحقق من الحالة"
+    },
+    "rejected": {
+      "title": "لم تتم الموافقة على الطلب",
+      "message": "للأسف، لم تتم الموافقة على طلبك.",
+      "reason": "السبب: {{reason}}",
+      "contact": "تواصل مع الدعم لمزيد من المعلومات."
+    }
+  },
+  "dashboard": {
+    "title": "لوحة تحكم الطبيب",
+    "welcome": "مرحباً، د. {{name}}",
+    "stats": {
+      "pendingCases": "الحالات المعلقة",
+      "activeCases": "الحالات النشطة",
+      "completedToday": "المكتملة اليوم",
+      "totalEarnings": "إجمالي الأرباح"
+    },
+    "quickActions": {
+      "title": "إجراءات سريعة",
+      "viewQueue": "عرض قائمة الحالات",
+      "activeCases": "الحالات النشطة",
+      "earnings": "عرض الأرباح"
+    }
+  },
+  "cases": {
+    "queue": {
+      "title": "قائمة الحالات",
+      "empty": "لا توجد حالات في الانتظار",
+      "claim": "المطالبة بالحالة",
+      "view": "عرض التفاصيل"
+    },
+    "active": {
+      "title": "الحالات النشطة",
+      "empty": "لا توجد حالات نشطة",
+      "respond": "الرد",
+      "complete": "وضع علامة مكتمل"
+    },
+    "history": {
+      "title": "سجل الحالات",
+      "empty": "لا توجد حالات مكتملة",
+      "viewDetails": "عرض التفاصيل"
+    },
+    "details": {
+      "patient": "المريض",
+      "age": "العمر",
+      "sex": "الجنس",
+      "complaint": "الشكوى الرئيسية",
+      "symptoms": "الأعراض",
+      "medicalHistory": "التاريخ الطبي",
+      "attachments": "المرفقات"
+    },
+    "tiers": {
+      "standard": "عادي",
+      "priority": "أولوية"
+    }
+  },
+  "chat": {
+    "title": "استشارة المريض",
+    "placeholder": "اكتب ردك...",
+    "send": "إرسال",
+    "endConsultation": "إنهاء الاستشارة",
+    "patientInfo": "معلومات المريض"
+  },
+  "earnings": {
+    "title": "لوحة الأرباح",
+    "available": "الرصيد المتاح",
+    "pending": "قيد الانتظار",
+    "totalEarned": "إجمالي المكتسب",
+    "withdraw": "سحب",
+    "history": "سجل المدفوعات",
+    "setupStripe": "إعداد Stripe"
+  },
+  "profile": {
+    "title": "ملف الطبيب",
+    "edit": "تعديل الملف",
+    "photo": "صورة الملف",
+    "displayName": "اسم العرض",
+    "specialties": "التخصصات",
+    "credentials": "المؤهلات",
+    "bio": "السيرة",
+    "availability": "التوفر",
+    "available": "متاح للحالات",
+    "unavailable": "غير متاح"
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "notifications": {
+      "title": "الإشعارات",
+      "emailNewCase": "بريد للحالات الجديدة",
+      "emailCaseAssigned": "بريد عند تعيين حالة",
+      "emailPayoutSent": "بريد عند إرسال الدفع",
+      "emailWeeklyDigest": "ملخص أسبوعي بالبريد",
+      "pushNewCase": "إشعار للحالات الجديدة",
+      "pushMessages": "إشعار لرسائل المرضى"
+    },
+    "account": {
+      "title": "الحساب",
+      "email": "البريد الإلكتروني",
+      "changePassword": "تغيير كلمة المرور",
+      "deleteAccount": "حذف الحساب"
+    }
+  },
+  "specialties": {
+    "family_medicine": "طب الأسرة",
+    "internal_medicine": "الطب الباطني",
+    "pediatrics": "طب الأطفال",
+    "dermatology": "الأمراض الجلدية",
+    "psychiatry": "الطب النفسي",
+    "obgyn": "أمراض النساء والتوليد",
+    "cardiology": "أمراض القلب",
+    "orthopedics": "جراحة العظام",
+    "neurology": "الأعصاب",
+    "emergency_medicine": "طب الطوارئ",
+    "other": "أخرى"
+  }
+}

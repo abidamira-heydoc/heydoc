@@ -1,0 +1,38 @@
+{
+  "banner": {
+    "title": "SÍNTOMAS DE EMERGENCIA DETECTADOS",
+    "subtitle": "Según tus síntomas, esto puede requerir atención médica inmediata.",
+    "actionTitle": "POR FAVOR ACTÚA AHORA:",
+    "actions": {
+      "call911": "Llama al 911 (EE.UU.) o tu número de emergencia local inmediatamente",
+      "goToER": "Si es seguro, ve a la sala de emergencias más cercana",
+      "stayWithSomeone": "Si es posible, que alguien se quede contigo",
+      "noSelfTreat": "NO intentes auto-tratamiento para condiciones de emergencia"
+    },
+    "disclaimer": "HeyDoc no es un sustituto de la atención médica de emergencia. Tu seguridad es nuestra prioridad."
+  },
+  "numbers": {
+    "us": "911",
+    "uk": "999",
+    "eu": "112",
+    "label": "Número de Emergencia"
+  },
+  "symptoms": {
+    "chestPain": "Dolor o presión en el pecho",
+    "breathingDifficulty": "Dificultad respiratoria severa",
+    "severeBleeding": "Sangrado severo o incontrolado",
+    "unconscious": "Pérdida del conocimiento",
+    "stroke": "Signos de derrame cerebral",
+    "headInjury": "Lesión severa en la cabeza",
+    "seizure": "Convulsiones",
+    "suicidal": "Pensamientos suicidas",
+    "allergicReaction": "Reacción alérgica severa",
+    "poisoning": "Envenenamiento o sobredosis",
+    "fracture": "Fractura severa",
+    "burns": "Quemaduras severas"
+  },
+  "mentalHealth": {
+    "crisisLine": "Si tienes pensamientos suicidas, llama a la Línea de Crisis 988 (EE.UU.) o tu línea de crisis local.",
+    "notAlone": "No estás solo. La ayuda está disponible."
+  }
+}

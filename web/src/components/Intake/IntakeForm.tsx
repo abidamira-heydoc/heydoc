@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { useAuth } from '../../contexts/AuthContext';
@@ -7,6 +8,7 @@ import { COLLECTIONS } from '@shared/firebase.config';
 import type { HealthProfile, Medication, FamilyHistory } from '@shared/types';
 
 const IntakeForm: React.FC = () => {
+  const { t } = useTranslation('intake');
   const { user } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -128,9 +130,9 @@ const IntakeForm: React.FC = () => {
   return (
     <div className="min-h-screen calm-gradient py-6 sm:py-12 px-3 sm:px-4">
       <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-4 sm:p-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Health Profile</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">{t('title')}</h1>
         <p className="text-gray-600 mb-6 sm:mb-8 text-sm sm:text-base">
-          Help us understand you better so we can provide personalized guidance.
+          {t('subtitle')}
         </p>
 
         {/* Progress Steps */}
@@ -165,12 +167,12 @@ const IntakeForm: React.FC = () => {
           {/* Step 1: Basic Info */}
           {currentStep === 1 && (
             <div className="space-y-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Basic Information</h2>
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">{t('step1.title')}</h2>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Age <span className="text-red-500">*</span>
+                    {t('step1.age.label')} <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="number"
@@ -178,13 +180,13 @@ const IntakeForm: React.FC = () => {
                     value={age}
                     onChange={(e) => setAge(e.target.value)}
                     className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
-                    placeholder="e.g., 30"
+                    placeholder={t('step1.age.placeholder')}
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Sex <span className="text-red-500">*</span>
+                    {t('step1.sex.label')} <span className="text-red-500">*</span>
                   </label>
                   <select
                     required
@@ -192,17 +194,17 @@ const IntakeForm: React.FC = () => {
                     onChange={(e) => setSex(e.target.value as any)}
                     className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
                   >
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
-                    <option value="prefer_not_to_say">Prefer not to say</option>
+                    <option value="male">{t('step1.sex.options.male')}</option>
+                    <option value="female">{t('step1.sex.options.female')}</option>
+                    <option value="other">{t('step1.sex.options.other')}</option>
+                    <option value="prefer_not_to_say">{t('step1.sex.options.preferNotToSay')}</option>
                   </select>
                 </div>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Height <span className="text-red-500">*</span>
+                  {t('step1.height.label')} <span className="text-red-500">*</span>
                 </label>
                 <div className="grid grid-cols-2 gap-3 sm:gap-4">
                   <div>
@@ -214,9 +216,9 @@ const IntakeForm: React.FC = () => {
                       value={heightFeet}
                       onChange={(e) => setHeightFeet(e.target.value)}
                       className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
-                      placeholder="Feet"
+                      placeholder={t('step1.height.feetPlaceholder')}
                     />
-                    <p className="text-xs text-gray-500 mt-1">Feet (e.g., 5)</p>
+                    <p className="text-xs text-gray-500 mt-1">{t('step1.height.feetHint')}</p>
                   </div>
                   <div>
                     <input
@@ -227,16 +229,16 @@ const IntakeForm: React.FC = () => {
                       value={heightInches}
                       onChange={(e) => setHeightInches(e.target.value)}
                       className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
-                      placeholder="Inches"
+                      placeholder={t('step1.height.inchesPlaceholder')}
                     />
-                    <p className="text-xs text-gray-500 mt-1">Inches (e.g., 10)</p>
+                    <p className="text-xs text-gray-500 mt-1">{t('step1.height.inchesHint')}</p>
                   </div>
                 </div>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Weight (lbs) <span className="text-red-500">*</span>
+                  {t('step1.weight.label')} <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="number"
@@ -245,7 +247,7 @@ const IntakeForm: React.FC = () => {
                   value={weightLbs}
                   onChange={(e) => setWeightLbs(e.target.value)}
                   className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
-                  placeholder="e.g., 150"
+                  placeholder={t('step1.weight.placeholder')}
                 />
               </div>
 
@@ -254,7 +256,7 @@ const IntakeForm: React.FC = () => {
                 onClick={nextStep}
                 className="w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-4 rounded-lg transition"
               >
-                Continue
+                {t('buttons.continue')}
               </button>
             </div>
           )}
@@ -262,70 +264,70 @@ const IntakeForm: React.FC = () => {
           {/* Step 2: Medical History */}
           {currentStep === 2 && (
             <div className="space-y-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Medical History</h2>
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">{t('step2.title')}</h2>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Past Medical Conditions
+                  {t('step2.pastConditions.label')}
                 </label>
                 <input
                   type="text"
                   value={medicalHistory}
                   onChange={(e) => setMedicalHistory(e.target.value)}
                   className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none text-sm sm:text-base"
-                  placeholder="e.g., Asthma, Diabetes (comma-separated)"
+                  placeholder={t('step2.pastConditions.placeholder')}
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Current Conditions
+                  {t('step2.currentConditions.label')}
                 </label>
                 <input
                   type="text"
                   value={currentConditions}
                   onChange={(e) => setCurrentConditions(e.target.value)}
                   className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none text-sm sm:text-base"
-                  placeholder="e.g., High blood pressure (comma-separated)"
+                  placeholder={t('step2.currentConditions.placeholder')}
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Allergies
+                  {t('step2.allergies.label')}
                 </label>
                 <input
                   type="text"
                   value={allergies}
                   onChange={(e) => setAllergies(e.target.value)}
                   className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none text-sm sm:text-base"
-                  placeholder="e.g., Penicillin, Peanuts (comma-separated)"
+                  placeholder={t('step2.allergies.placeholder')}
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Current Medications
+                  {t('step2.medications.label')}
                 </label>
                 <textarea
                   value={medications}
                   onChange={(e) => setMedications(e.target.value)}
                   rows={3}
                   className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none text-sm sm:text-base"
-                  placeholder="Enter each medication on a new line"
+                  placeholder={t('step2.medications.placeholder')}
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Family History
+                  {t('step2.familyHistory.label')}
                 </label>
                 <textarea
                   value={familyHistoryInput}
                   onChange={(e) => setFamilyHistoryInput(e.target.value)}
                   rows={3}
                   className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none text-sm sm:text-base"
-                  placeholder="e.g., Heart disease: father&#10;Diabetes: mother"
+                  placeholder={t('step2.familyHistory.placeholder')}
                 />
               </div>
 
@@ -335,14 +337,14 @@ const IntakeForm: React.FC = () => {
                   onClick={prevStep}
                   className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-4 rounded-lg transition"
                 >
-                  Back
+                  {t('buttons.back')}
                 </button>
                 <button
                   type="button"
                   onClick={nextStep}
                   className="flex-1 bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-4 rounded-lg transition"
                 >
-                  Continue
+                  {t('buttons.continue')}
                 </button>
               </div>
             </div>
@@ -351,11 +353,11 @@ const IntakeForm: React.FC = () => {
           {/* Step 3: Lifestyle */}
           {currentStep === 3 && (
             <div className="space-y-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Lifestyle Factors</h2>
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">{t('step3.title')}</h2>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Smoking Status <span className="text-red-500">*</span>
+                  {t('step3.smoking.label')} <span className="text-red-500">*</span>
                 </label>
                 <select
                   required
@@ -363,30 +365,30 @@ const IntakeForm: React.FC = () => {
                   onChange={(e) => setSmoking(e.target.value as any)}
                   className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none text-sm sm:text-base"
                 >
-                  <option value="never">Never smoked</option>
-                  <option value="former">Former smoker</option>
-                  <option value="current">Current smoker</option>
+                  <option value="never">{t('step3.smoking.options.never')}</option>
+                  <option value="former">{t('step3.smoking.options.former')}</option>
+                  <option value="current">{t('step3.smoking.options.current')}</option>
                 </select>
               </div>
 
               {smoking !== 'never' && (
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Smoking Details
+                    {t('step3.smoking.detailsLabel')}
                   </label>
                   <input
                     type="text"
                     value={smokingDetails}
                     onChange={(e) => setSmokingDetails(e.target.value)}
                     className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none text-sm sm:text-base"
-                    placeholder="e.g., 5 cigarettes/day, quit 2 years ago"
+                    placeholder={t('step3.smoking.detailsPlaceholder')}
                   />
                 </div>
               )}
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Alcohol Consumption <span className="text-red-500">*</span>
+                  {t('step3.alcohol.label')} <span className="text-red-500">*</span>
                 </label>
                 <select
                   required
@@ -394,31 +396,31 @@ const IntakeForm: React.FC = () => {
                   onChange={(e) => setAlcohol(e.target.value as any)}
                   className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none text-sm sm:text-base"
                 >
-                  <option value="never">Never</option>
-                  <option value="occasionally">Occasionally</option>
-                  <option value="regularly">Regularly</option>
-                  <option value="heavily">Heavily</option>
+                  <option value="never">{t('step3.alcohol.options.never')}</option>
+                  <option value="occasionally">{t('step3.alcohol.options.occasionally')}</option>
+                  <option value="regularly">{t('step3.alcohol.options.regularly')}</option>
+                  <option value="heavily">{t('step3.alcohol.options.heavily')}</option>
                 </select>
               </div>
 
               {alcohol !== 'never' && (
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Alcohol Details
+                    {t('step3.alcohol.detailsLabel')}
                   </label>
                   <input
                     type="text"
                     value={alcoholDetails}
                     onChange={(e) => setAlcoholDetails(e.target.value)}
                     className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none text-sm sm:text-base"
-                    placeholder="e.g., 1-2 drinks on weekends"
+                    placeholder={t('step3.alcohol.detailsPlaceholder')}
                   />
                 </div>
               )}
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Exercise Level <span className="text-red-500">*</span>
+                  {t('step3.exercise.label')} <span className="text-red-500">*</span>
                 </label>
                 <select
                   required
@@ -426,24 +428,24 @@ const IntakeForm: React.FC = () => {
                   onChange={(e) => setExercise(e.target.value as any)}
                   className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none text-sm sm:text-base"
                 >
-                  <option value="sedentary">Sedentary (little to no exercise)</option>
-                  <option value="light">Light (1-2 days/week)</option>
-                  <option value="moderate">Moderate (3-5 days/week)</option>
-                  <option value="active">Active (6-7 days/week)</option>
-                  <option value="very_active">Very Active (intense daily exercise)</option>
+                  <option value="sedentary">{t('step3.exercise.options.sedentary')}</option>
+                  <option value="light">{t('step3.exercise.options.light')}</option>
+                  <option value="moderate">{t('step3.exercise.options.moderate')}</option>
+                  <option value="active">{t('step3.exercise.options.active')}</option>
+                  <option value="very_active">{t('step3.exercise.options.veryActive')}</option>
                 </select>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Exercise Details
+                  {t('step3.exercise.detailsLabel')}
                 </label>
                 <input
                   type="text"
                   value={exerciseDetails}
                   onChange={(e) => setExerciseDetails(e.target.value)}
                   className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none text-sm sm:text-base"
-                  placeholder="e.g., Running 3x/week, yoga daily"
+                  placeholder={t('step3.exercise.detailsPlaceholder')}
                 />
               </div>
 
@@ -453,14 +455,14 @@ const IntakeForm: React.FC = () => {
                   onClick={prevStep}
                   className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-4 rounded-lg transition"
                 >
-                  Back
+                  {t('buttons.back')}
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
                   className="flex-1 bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-4 rounded-lg transition disabled:opacity-50"
                 >
-                  {loading ? 'Saving...' : 'Complete Setup'}
+                  {loading ? t('buttons.saving') : t('buttons.complete')}
                 </button>
               </div>
             </div>

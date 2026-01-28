@@ -1,6 +1,9 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const EmergencyBanner: React.FC = () => {
+  const { t } = useTranslation('emergency');
+
   return (
     <div className="bg-emergency-600 text-white px-6 py-4 shadow-lg">
       <div className="max-w-4xl mx-auto">
@@ -14,22 +17,22 @@ const EmergencyBanner: React.FC = () => {
               />
             </svg>
           </div>
-          <div className="ml-4 flex-1">
-            <h3 className="text-xl font-bold mb-2">⚠️ EMERGENCY SYMPTOMS DETECTED</h3>
+          <div className="ms-4 flex-1">
+            <h3 className="text-xl font-bold mb-2">⚠️ {t('banner.title')}</h3>
             <p className="text-lg mb-3">
-              Based on your symptoms, this may require immediate medical attention.
+              {t('banner.subtitle')}
             </p>
             <div className="bg-white bg-opacity-20 rounded-lg p-4 mb-3">
-              <p className="font-semibold mb-2">PLEASE TAKE ACTION NOW:</p>
+              <p className="font-semibold mb-2">{t('banner.actionTitle')}</p>
               <ul className="space-y-1 text-sm">
-                <li>🚨 Call 911 (US) or your local emergency number immediately</li>
-                <li>📍 If safe, go to the nearest emergency room</li>
-                <li>👥 If possible, have someone stay with you</li>
-                <li>💊 Do NOT attempt self-treatment for emergency conditions</li>
+                <li>🚨 {t('banner.actions.call911')}</li>
+                <li>📍 {t('banner.actions.goToER')}</li>
+                <li>👥 {t('banner.actions.stayWithSomeone')}</li>
+                <li>💊 {t('banner.actions.noSelfTreat')}</li>
               </ul>
             </div>
             <p className="text-sm opacity-90">
-              HeyDoc is not a substitute for emergency medical care. Your safety is our priority.
+              {t('banner.disclaimer')}
             </p>
           </div>
         </div>

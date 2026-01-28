@@ -1,0 +1,105 @@
+{
+  "title": "健康档案",
+  "subtitle": "帮助我们更好地了解您，以便提供个性化的健康指导。",
+  "steps": {
+    "basic": "基本信息",
+    "medical": "病史",
+    "lifestyle": "生活方式"
+  },
+  "step1": {
+    "title": "基本信息",
+    "age": {
+      "label": "年龄",
+      "placeholder": "例如：30"
+    },
+    "sex": {
+      "label": "性别",
+      "options": {
+        "male": "男",
+        "female": "女",
+        "other": "其他",
+        "preferNotToSay": "不愿透露"
+      }
+    },
+    "height": {
+      "label": "身高",
+      "feet": "英尺",
+      "feetHint": "英尺（例如：5）",
+      "inches": "英寸",
+      "inchesHint": "英寸（例如：10）"
+    },
+    "weight": {
+      "label": "体重（磅）",
+      "placeholder": "例如：150"
+    }
+  },
+  "step2": {
+    "title": "病史",
+    "pastConditions": {
+      "label": "既往病史",
+      "placeholder": "例如：哮喘、糖尿病（用逗号分隔）"
+    },
+    "currentConditions": {
+      "label": "当前疾病",
+      "placeholder": "例如：高血压（用逗号分隔）"
+    },
+    "allergies": {
+      "label": "过敏史",
+      "placeholder": "例如：青霉素、花生（用逗号分隔）"
+    },
+    "medications": {
+      "label": "当前用药",
+      "placeholder": "每种药物另起一行填写"
+    },
+    "familyHistory": {
+      "label": "家族病史",
+      "placeholder": "例如：心脏病：父亲\n糖尿病：母亲"
+    }
+  },
+  "step3": {
+    "title": "生活方式",
+    "smoking": {
+      "label": "吸烟状况",
+      "options": {
+        "never": "从不吸烟",
+        "former": "已戒烟",
+        "current": "目前吸烟"
+      },
+      "detailsLabel": "吸烟详情",
+      "detailsPlaceholder": "例如：每天5支，2年前戒烟"
+    },
+    "alcohol": {
+      "label": "饮酒情况",
+      "options": {
+        "never": "从不",
+        "occasionally": "偶尔",
+        "regularly": "经常",
+        "heavily": "大量"
+      },
+      "detailsLabel": "饮酒详情",
+      "detailsPlaceholder": "例如：周末1-2杯"
+    },
+    "exercise": {
+      "label": "运动水平",
+      "options": {
+        "sedentary": "久坐（几乎不运动）",
+        "light": "轻度（每周1-2天）",
+        "moderate": "中度（每周3-5天）",
+        "active": "活跃（每周6-7天）",
+        "veryActive": "非常活跃（每天高强度运动）"
+      },
+      "detailsLabel": "运动详情",
+      "detailsPlaceholder": "例如：每周跑步3次，每天瑜伽"
+    }
+  },
+  "buttons": {
+    "continue": "继续",
+    "back": "返回",
+    "complete": "完成设置",
+    "saving": "保存中..."
+  },
+  "errors": {
+    "saveFailed": "健康档案保存失败：{{message}}"
+  },
+  "required": "*"
+}

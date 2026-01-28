@@ -1,0 +1,154 @@
+{
+  "nav": {
+    "dashboard": "Bảng Điều Khiển",
+    "cases": "Ca Bệnh",
+    "activeCases": "Ca Đang Hoạt Động",
+    "history": "Lịch Sử",
+    "earnings": "Thu Nhập",
+    "profile": "Hồ Sơ",
+    "settings": "Cài Đặt"
+  },
+  "auth": {
+    "signup": {
+      "title": "Tham Gia HeyDoc Với Tư Cách Bác Sĩ",
+      "subtitle": "Giúp bệnh nhân nhận được sự chăm sóc cần thiết",
+      "name": "Họ và Tên",
+      "email": "Địa Chỉ Email",
+      "password": "Mật Khẩu",
+      "specialties": "Chuyên Khoa",
+      "licenseNumber": "Số Giấy Phép Hành Nghề",
+      "licenseState": "Tiểu Bang Cấp Giấy Phép",
+      "yearsExperience": "Số Năm Kinh Nghiệm",
+      "bio": "Tiểu Sử Nghề Nghiệp",
+      "uploadLicense": "Tải Lên Giấy Phép",
+      "button": "Nộp Đơn Đăng Ký"
+    },
+    "login": {
+      "title": "Cổng Bác Sĩ",
+      "subtitle": "Đăng nhập vào tài khoản của bạn",
+      "email": "Email",
+      "password": "Mật Khẩu",
+      "button": "Đăng Nhập",
+      "noAccount": "Chưa đăng ký?",
+      "applyNow": "Đăng ký ngay"
+    },
+    "pending": {
+      "title": "Đơn Đăng Ký Đang Chờ Xử Lý",
+      "message": "Đơn đăng ký của bạn đang được xem xét. Chúng tôi sẽ thông báo qua email khi được phê duyệt.",
+      "checkStatus": "Kiểm Tra Trạng Thái"
+    },
+    "rejected": {
+      "title": "Đơn Đăng Ký Không Được Phê Duyệt",
+      "message": "Rất tiếc, đơn đăng ký của bạn không được phê duyệt.",
+      "reason": "Lý do: {{reason}}",
+      "contact": "Liên hệ bộ phận hỗ trợ để biết thêm thông tin."
+    }
+  },
+  "dashboard": {
+    "title": "Bảng Điều Khiển Bác Sĩ",
+    "welcome": "Xin chào, Bác sĩ {{name}}",
+    "stats": {
+      "pendingCases": "Ca Đang Chờ",
+      "activeCases": "Ca Đang Hoạt Động",
+      "completedToday": "Hoàn Thành Hôm Nay",
+      "totalEarnings": "Tổng Thu Nhập"
+    },
+    "quickActions": {
+      "title": "Hành Động Nhanh",
+      "viewQueue": "Xem Hàng Đợi Ca Bệnh",
+      "activeCases": "Ca Đang Hoạt Động",
+      "earnings": "Xem Thu Nhập"
+    }
+  },
+  "cases": {
+    "queue": {
+      "title": "Hàng Đợi Ca Bệnh",
+      "empty": "Không có ca bệnh trong hàng đợi",
+      "claim": "Nhận Ca",
+      "view": "Xem Chi Tiết"
+    },
+    "active": {
+      "title": "Ca Đang Hoạt Động",
+      "empty": "Không có ca đang hoạt động",
+      "respond": "Phản Hồi",
+      "complete": "Đánh Dấu Hoàn Thành"
+    },
+    "history": {
+      "title": "Lịch Sử Ca Bệnh",
+      "empty": "Không có ca đã hoàn thành",
+      "viewDetails": "Xem Chi Tiết"
+    },
+    "details": {
+      "patient": "Bệnh Nhân",
+      "age": "Tuổi",
+      "sex": "Giới Tính",
+      "complaint": "Lý Do Khám",
+      "symptoms": "Triệu Chứng",
+      "medicalHistory": "Tiền Sử Bệnh",
+      "attachments": "Tệp Đính Kèm"
+    },
+    "tiers": {
+      "standard": "Tiêu Chuẩn",
+      "priority": "Ưu Tiên"
+    }
+  },
+  "chat": {
+    "title": "Tư Vấn Bệnh Nhân",
+    "placeholder": "Nhập phản hồi của bạn...",
+    "send": "Gửi",
+    "endConsultation": "Kết Thúc Tư Vấn",
+    "patientInfo": "Thông Tin Bệnh Nhân"
+  },
+  "earnings": {
+    "title": "Bảng Thu Nhập",
+    "available": "Số Dư Khả Dụng",
+    "pending": "Đang Chờ",
+    "totalEarned": "Tổng Đã Nhận",
+    "withdraw": "Rút Tiền",
+    "history": "Lịch Sử Thanh Toán",
+    "setupStripe": "Thiết Lập Stripe"
+  },
+  "profile": {
+    "title": "Hồ Sơ Bác Sĩ",
+    "edit": "Chỉnh Sửa Hồ Sơ",
+    "photo": "Ảnh Đại Diện",
+    "displayName": "Tên Hiển Thị",
+    "specialties": "Chuyên Khoa",
+    "credentials": "Bằng Cấp",
+    "bio": "Tiểu Sử",
+    "availability": "Tình Trạng Sẵn Sàng",
+    "available": "Sẵn sàng nhận ca",
+    "unavailable": "Không sẵn sàng"
+  },
+  "settings": {
+    "title": "Cài Đặt",
+    "notifications": {
+      "title": "Thông Báo",
+      "emailNewCase": "Email khi có ca mới",
+      "emailCaseAssigned": "Email khi được giao ca",
+      "emailPayoutSent": "Email khi thanh toán được gửi",
+      "emailWeeklyDigest": "Email tổng hợp hàng tuần",
+      "pushNewCase": "Thông báo đẩy khi có ca mới",
+      "pushMessages": "Thông báo đẩy tin nhắn bệnh nhân"
+    },
+    "account": {
+      "title": "Tài Khoản",
+      "email": "Email",
+      "changePassword": "Đổi Mật Khẩu",
+      "deleteAccount": "Xóa Tài Khoản"
+    }
+  },
+  "specialties": {
+    "family_medicine": "Y Học Gia Đình",
+    "internal_medicine": "Nội Khoa",
+    "pediatrics": "Nhi Khoa",
+    "dermatology": "Da Liễu",
+    "psychiatry": "Tâm Thần",
+    "obgyn": "Sản Phụ Khoa",
+    "cardiology": "Tim Mạch",
+    "orthopedics": "Chấn Thương Chỉnh Hình",
+    "neurology": "Thần Kinh",
+    "emergency_medicine": "Cấp Cứu",
+    "other": "Khác"
+  }
+}

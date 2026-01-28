@@ -1,0 +1,38 @@
+{
+  "banner": {
+    "title": "응급 증상 감지됨",
+    "subtitle": "귀하의 증상에 따르면 즉각적인 의료 조치가 필요할 수 있습니다.",
+    "actionTitle": "지금 바로 조치를 취하세요:",
+    "actions": {
+      "call911": "즉시 119(한국) 또는 현지 응급 전화로 연락하세요",
+      "goToER": "안전하다면 가장 가까운 응급실로 가세요",
+      "stayWithSomeone": "가능하면 곁에 누군가 있게 하세요",
+      "noSelfTreat": "응급 상황에서는 자가 치료를 시도하지 마세요"
+    },
+    "disclaimer": "HeyDoc은 응급 의료 서비스를 대체할 수 없습니다. 귀하의 안전이 최우선입니다."
+  },
+  "numbers": {
+    "us": "911",
+    "uk": "999",
+    "eu": "112",
+    "label": "응급 전화번호"
+  },
+  "symptoms": {
+    "chestPain": "가슴 통증 또는 압박감",
+    "breathingDifficulty": "심한 호흡 곤란",
+    "severeBleeding": "심하거나 멈추지 않는 출혈",
+    "unconscious": "의식 상실",
+    "stroke": "뇌졸중 증상",
+    "headInjury": "심각한 두부 손상",
+    "seizure": "발작 또는 경련",
+    "suicidal": "자살 충동",
+    "allergicReaction": "심한 알레르기 반응 (아나필락시스)",
+    "poisoning": "중독 또는 약물 과다복용",
+    "fracture": "심한 골절",
+    "burns": "심한 화상"
+  },
+  "mentalHealth": {
+    "crisisLine": "자살에 대한 생각이 있으시면 자살예방상담전화 1393(한국) 또는 현지 위기 상담 전화로 연락해 주세요.",
+    "notAlone": "당신은 혼자가 아닙니다. 도움을 받을 수 있습니다."
+  }
+}

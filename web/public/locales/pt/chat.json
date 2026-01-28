@@ -1,0 +1,68 @@
+{
+  "welcome": {
+    "title": "Bem-vindo ao HeyDoc!",
+    "subtitle": "Seu primeiro passo para um melhor cuidado - com orientação sobre remédios naturais.",
+    "describeSymptoms": {
+      "title": "Descreva os Sintomas",
+      "description": "Compartilhe o que você está sentindo"
+    },
+    "getGuidance": {
+      "title": "Receba Orientação",
+      "description": "Receba conselhos personalizados"
+    }
+  },
+  "header": {
+    "title": "HeyDoc",
+    "subtitle": "Seu Assistente de Saúde com IA",
+    "profile": "{{age}} anos, {{sex}}"
+  },
+  "loading": {
+    "profile": "Carregando seu perfil..."
+  },
+  "dropZone": {
+    "title": "Solte a imagem aqui",
+    "formats": "JPG, PNG, HEIC ou WebP (máx 10MB)"
+  },
+  "input": {
+    "placeholder": "Descreva seus sintomas...",
+    "emergencyPlaceholder": "Por favor, ligue para os serviços de emergência imediatamente",
+    "imagePlaceholder": "Adicione uma descrição (opcional)...",
+    "send": "Enviar",
+    "attachImage": "Anexar imagem"
+  },
+  "speakToDoctor": "Falar com um Médico",
+  "message": {
+    "emergencyDetected": "Palavras-chave de emergência detectadas"
+  },
+  "sources": {
+    "title": "Fontes ({{count}})",
+    "webSearch": "Pesquisa na web"
+  },
+  "sidebar": {
+    "newConversation": "Nova Conversa",
+    "emergency": "Emergência",
+    "delete": "Excluir",
+    "cancel": "Cancelar",
+    "noConversations": "Nenhuma conversa ainda",
+    "startNew": "Inicie uma nova conversa para começar",
+    "platformDashboard": "Painel da Plataforma",
+    "orgDashboard": "Painel da Organização",
+    "healthProfile": "Perfil de Saúde",
+    "signOut": "Sair"
+  },
+  "doctorConsult": {
+    "title": "Fale com um Médico de Verdade",
+    "subtitle": "Obtenha aconselhamento médico profissional",
+    "standard": {
+      "title": "Consulta Padrão",
+      "price": "$25",
+      "description": "Próximo médico disponível responde em até 24 horas"
+    },
+    "priority": {
+      "title": "Consulta Prioritária",
+      "price": "$45",
+      "description": "Escolha seu médico, resposta em até 2 horas"
+    }
+  },
+  "disclaimer": "HeyDoc fornece apenas orientação informativa, não aconselhamento médico. Sempre consulte um profissional de saúde para decisões médicas."
+}

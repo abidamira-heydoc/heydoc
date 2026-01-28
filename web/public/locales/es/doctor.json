@@ -1,0 +1,154 @@
+{
+  "nav": {
+    "dashboard": "Panel",
+    "cases": "Casos",
+    "activeCases": "Casos Activos",
+    "history": "Historial",
+    "earnings": "Ganancias",
+    "profile": "Perfil",
+    "settings": "Configuración"
+  },
+  "auth": {
+    "signup": {
+      "title": "Únete a HeyDoc como Doctor",
+      "subtitle": "Ayuda a los pacientes a obtener la atención que necesitan",
+      "name": "Nombre Completo",
+      "email": "Correo Electrónico",
+      "password": "Contraseña",
+      "specialties": "Especialidades",
+      "licenseNumber": "Número de Licencia",
+      "licenseState": "Estado de la Licencia",
+      "yearsExperience": "Años de Experiencia",
+      "bio": "Biografía Profesional",
+      "uploadLicense": "Subir Licencia",
+      "button": "Enviar Solicitud"
+    },
+    "login": {
+      "title": "Portal de Doctores",
+      "subtitle": "Inicia sesión en tu cuenta",
+      "email": "Correo",
+      "password": "Contraseña",
+      "button": "Iniciar Sesión",
+      "noAccount": "¿Aún no estás registrado?",
+      "applyNow": "Aplica ahora"
+    },
+    "pending": {
+      "title": "Solicitud Pendiente",
+      "message": "Tu solicitud está siendo revisada. Te notificaremos por correo una vez aprobada.",
+      "checkStatus": "Verificar Estado"
+    },
+    "rejected": {
+      "title": "Solicitud No Aprobada",
+      "message": "Desafortunadamente, tu solicitud no fue aprobada.",
+      "reason": "Razón: {{reason}}",
+      "contact": "Contacta a soporte para más información."
+    }
+  },
+  "dashboard": {
+    "title": "Panel del Doctor",
+    "welcome": "Bienvenido, Dr. {{name}}",
+    "stats": {
+      "pendingCases": "Casos Pendientes",
+      "activeCases": "Casos Activos",
+      "completedToday": "Completados Hoy",
+      "totalEarnings": "Ganancias Totales"
+    },
+    "quickActions": {
+      "title": "Acciones Rápidas",
+      "viewQueue": "Ver Cola de Casos",
+      "activeCases": "Casos Activos",
+      "earnings": "Ver Ganancias"
+    }
+  },
+  "cases": {
+    "queue": {
+      "title": "Cola de Casos",
+      "empty": "No hay casos en cola",
+      "claim": "Reclamar Caso",
+      "view": "Ver Detalles"
+    },
+    "active": {
+      "title": "Casos Activos",
+      "empty": "No hay casos activos",
+      "respond": "Responder",
+      "complete": "Marcar Completo"
+    },
+    "history": {
+      "title": "Historial de Casos",
+      "empty": "No hay casos completados",
+      "viewDetails": "Ver Detalles"
+    },
+    "details": {
+      "patient": "Paciente",
+      "age": "Edad",
+      "sex": "Sexo",
+      "complaint": "Queja Principal",
+      "symptoms": "Síntomas",
+      "medicalHistory": "Historial Médico",
+      "attachments": "Adjuntos"
+    },
+    "tiers": {
+      "standard": "Estándar",
+      "priority": "Prioritario"
+    }
+  },
+  "chat": {
+    "title": "Consulta con Paciente",
+    "placeholder": "Escribe tu respuesta...",
+    "send": "Enviar",
+    "endConsultation": "Terminar Consulta",
+    "patientInfo": "Información del Paciente"
+  },
+  "earnings": {
+    "title": "Panel de Ganancias",
+    "available": "Saldo Disponible",
+    "pending": "Pendiente",
+    "totalEarned": "Total Ganado",
+    "withdraw": "Retirar",
+    "history": "Historial de Pagos",
+    "setupStripe": "Configurar Stripe"
+  },
+  "profile": {
+    "title": "Perfil del Doctor",
+    "edit": "Editar Perfil",
+    "photo": "Foto de Perfil",
+    "displayName": "Nombre para Mostrar",
+    "specialties": "Especialidades",
+    "credentials": "Credenciales",
+    "bio": "Biografía",
+    "availability": "Disponibilidad",
+    "available": "Disponible para casos",
+    "unavailable": "No disponible"
+  },
+  "settings": {
+    "title": "Configuración",
+    "notifications": {
+      "title": "Notificaciones",
+      "emailNewCase": "Correo para nuevos casos",
+      "emailCaseAssigned": "Correo cuando se asigna caso",
+      "emailPayoutSent": "Correo cuando se envía pago",
+      "emailWeeklyDigest": "Resumen semanal por correo",
+      "pushNewCase": "Push para nuevos casos",
+      "pushMessages": "Push para mensajes de pacientes"
+    },
+    "account": {
+      "title": "Cuenta",
+      "email": "Correo",
+      "changePassword": "Cambiar Contraseña",
+      "deleteAccount": "Eliminar Cuenta"
+    }
+  },
+  "specialties": {
+    "family_medicine": "Medicina Familiar",
+    "internal_medicine": "Medicina Interna",
+    "pediatrics": "Pediatría",
+    "dermatology": "Dermatología",
+    "psychiatry": "Psiquiatría",
+    "obgyn": "Ginecología/Obstetricia",
+    "cardiology": "Cardiología",
+    "orthopedics": "Ortopedia",
+    "neurology": "Neurología",
+    "emergency_medicine": "Medicina de Emergencia",
+    "other": "Otro"
+  }
+}

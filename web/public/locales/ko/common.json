@@ -1,0 +1,78 @@
+{
+  "app": {
+    "name": "HeyDoc",
+    "tagline": "AI 건강 도우미",
+    "subtitle": "AI 기반 건강 도우미"
+  },
+  "nav": {
+    "home": "홈",
+    "chat": "채팅",
+    "profile": "프로필",
+    "settings": "설정",
+    "admin": "관리자",
+    "logout": "로그아웃"
+  },
+  "buttons": {
+    "continue": "계속",
+    "back": "뒤로",
+    "cancel": "취소",
+    "save": "저장",
+    "submit": "제출",
+    "delete": "삭제",
+    "edit": "편집",
+    "close": "닫기",
+    "confirm": "확인",
+    "next": "다음",
+    "previous": "이전",
+    "loading": "로딩 중...",
+    "saving": "저장 중...",
+    "sending": "전송 중...",
+    "validating": "확인 중..."
+  },
+  "errors": {
+    "generic": "문제가 발생했습니다. 다시 시도해 주세요.",
+    "network": "네트워크 오류입니다. 연결 상태를 확인해 주세요.",
+    "unauthorized": "이 작업을 수행할 권한이 없습니다.",
+    "notFound": "요청하신 항목을 찾을 수 없습니다.",
+    "required": "이 항목은 필수입니다.",
+    "invalidEmail": "올바른 이메일 주소를 입력해 주세요.",
+    "invalidPassword": "비밀번호는 최소 6자 이상이어야 합니다.",
+    "mustBeLoggedIn": "로그인이 필요합니다."
+  },
+  "validation": {
+    "required": "이 항목은 필수입니다",
+    "minLength": "최소 {{min}}자 이상이어야 합니다",
+    "maxLength": "최대 {{max}}자까지 입력 가능합니다",
+    "email": "올바른 이메일을 입력해 주세요",
+    "number": "올바른 숫자를 입력해 주세요"
+  },
+  "status": {
+    "active": "활성",
+    "inactive": "비활성",
+    "pending": "대기 중",
+    "approved": "승인됨",
+    "rejected": "거부됨",
+    "completed": "완료됨",
+    "cancelled": "취소됨"
+  },
+  "time": {
+    "now": "방금 전",
+    "minutesAgo": "{{count}}분 전",
+    "minutesAgo_plural": "{{count}}분 전",
+    "hoursAgo": "{{count}}시간 전",
+    "hoursAgo_plural": "{{count}}시간 전",
+    "daysAgo": "{{count}}일 전",
+    "daysAgo_plural": "{{count}}일 전"
+  },
+  "language": {
+    "select": "언어 선택",
+    "change": "언어 변경",
+    "current": "현재: {{language}}"
+  },
+  "accessibility": {
+    "menuOpen": "메뉴 열기",
+    "menuClose": "메뉴 닫기",
+    "loading": "콘텐츠 로딩 중",
+    "newWindow": "새 창에서 열림"
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "welcome": {
+    "title": "Welcome to HeyDoc!",
+    "subtitle": "Your first step to better care — with natural remedy guidance.",
+    "describeSymptoms": {
+      "title": "Describe Symptoms",
+      "description": "Share what you're experiencing"
+    },
+    "getGuidance": {
+      "title": "Get Guidance",
+      "description": "Receive personalized advice"
+    }
+  },
+  "header": {
+    "title": "HeyDoc",
+    "subtitle": "Your AI Health Assistant",
+    "profile": "{{age}}yo {{sex}}"
+  },
+  "loading": {
+    "profile": "Loading your profile..."
+  },
+  "dropZone": {
+    "title": "Drop image here",
+    "formats": "JPG, PNG, HEIC, or WebP (max 10MB)"
+  },
+  "input": {
+    "placeholder": "Describe your symptoms...",
+    "emergencyPlaceholder": "Please call emergency services immediately",
+    "imagePlaceholder": "Add a description (optional)...",
+    "send": "Send",
+    "attachImage": "Attach image"
+  },
+  "speakToDoctor": "Speak to a Doctor",
+  "message": {
+    "emergencyDetected": "Emergency Keywords Detected"
+  },
+  "sources": {
+    "title": "Sources ({{count}})",
+    "webSearch": "Web search"
+  },
+  "sidebar": {
+    "newConversation": "New Conversation",
+    "emergency": "Emergency",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "noConversations": "No conversations yet",
+    "startNew": "Start a new chat to begin",
+    "platformDashboard": "Platform Dashboard",
+    "orgDashboard": "Org Dashboard",
+    "healthProfile": "Health Profile",
+    "signOut": "Sign Out"
+  },
+  "doctorConsult": {
+    "title": "Talk to a Real Doctor",
+    "subtitle": "Get professional medical advice",
+    "standard": {
+      "title": "Standard Consultation",
+      "price": "$25",
+      "description": "Next available doctor responds within 24 hours"
+    },
+    "priority": {
+      "title": "Priority Consultation",
+      "price": "$45",
+      "description": "Choose your doctor, response within 2 hours"
+    }
+  },
+  "disclaimer": "HeyDoc provides informational guidance only, not medical advice. Always consult a healthcare provider for medical decisions."
+}

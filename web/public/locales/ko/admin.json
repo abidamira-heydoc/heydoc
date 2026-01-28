@@ -1,0 +1,71 @@
+{
+  "nav": {
+    "dashboard": "대시보드",
+    "analytics": "분석",
+    "users": "사용자",
+    "reports": "보고서",
+    "settings": "설정"
+  },
+  "dashboard": {
+    "title": "조직 대시보드",
+    "welcome": "안녕하세요, {{name}}님",
+    "stats": {
+      "totalUsers": "전체 사용자",
+      "activeUsers": "활성 사용자",
+      "totalConversations": "전체 대화",
+      "emergencyAlerts": "응급 알림"
+    }
+  },
+  "users": {
+    "title": "사용자 관리",
+    "search": "사용자 검색...",
+    "addUser": "사용자 추가",
+    "columns": {
+      "name": "이름",
+      "email": "이메일",
+      "role": "역할",
+      "status": "상태",
+      "lastActive": "마지막 활동",
+      "actions": "작업"
+    },
+    "roles": {
+      "user": "사용자",
+      "orgAdmin": "조직 관리자",
+      "platformAdmin": "플랫폼 관리자"
+    }
+  },
+  "analytics": {
+    "title": "분석 대시보드",
+    "dateRange": "기간 선택",
+    "metrics": {
+      "conversations": "대화",
+      "messages": "메시지",
+      "avgSessionTime": "평균 세션 시간",
+      "userSatisfaction": "사용자 만족도"
+    }
+  },
+  "reports": {
+    "title": "영향 보고서",
+    "generate": "보고서 생성",
+    "download": "다운로드",
+    "types": {
+      "monthly": "월간 요약",
+      "quarterly": "분기 보고서",
+      "annual": "연간 보고서"
+    }
+  },
+  "settings": {
+    "title": "조직 설정",
+    "general": {
+      "title": "일반 설정",
+      "orgName": "조직명",
+      "orgCode": "조직 코드",
+      "maxUsers": "최대 사용자 수"
+    },
+    "notifications": {
+      "title": "알림 설정",
+      "emailAlerts": "이메일 알림",
+      "emergencyAlerts": "응급 알림"
+    }
+  }
+}

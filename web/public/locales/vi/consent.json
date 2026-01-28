@@ -1,0 +1,26 @@
+{
+  "title": "Quyền Riêng Tư & Đồng Ý",
+  "subtitle": "Trước khi tiếp tục, vui lòng xem xét và chấp nhận các chính sách quyền riêng tư của chúng tôi.",
+  "hipaa": {
+    "title": "Thông Báo Quyền Riêng Tư HIPAA",
+    "description": "Tôi hiểu rằng thông tin sức khỏe của tôi sẽ được lưu trữ an toàn và mã hóa theo quy định HIPAA. Dữ liệu của tôi chỉ được sử dụng để cung cấp hướng dẫn sức khỏe và sẽ không bao giờ được chia sẻ mà không có sự đồng ý rõ ràng của tôi."
+  },
+  "gdpr": {
+    "title": "Bảo Vệ Dữ Liệu GDPR",
+    "description": "Tôi thừa nhận các quyền của mình theo GDPR, bao gồm quyền truy cập, sửa chữa và xóa dữ liệu cá nhân của tôi bất cứ lúc nào. Tôi có thể rút lại sự đồng ý này bất cứ lúc nào bằng cách xóa tài khoản của mình."
+  },
+  "dataCollection": {
+    "title": "Thu Thập & Sử Dụng Dữ Liệu",
+    "description": "Tôi đồng ý cho HeyDoc thu thập và xử lý thông tin sức khỏe của tôi, bao gồm triệu chứng, tiền sử bệnh và các cuộc trò chuyện, chỉ nhằm mục đích cung cấp hướng dẫn sức khỏe được cá nhân hóa và các khuyến nghị liệu pháp tự nhiên."
+  },
+  "privacyNotice": {
+    "title": "Quyền Riêng Tư Của Bạn Quan Trọng:",
+    "description": "Tất cả dữ liệu sức khỏe của bạn được mã hóa đầu cuối. Chúng tôi sử dụng bảo mật cấp ngân hàng để bảo vệ thông tin của bạn. Bạn có thể yêu cầu xem, xuất hoặc xóa dữ liệu của mình bất cứ lúc nào."
+  },
+  "button": "Tôi Đồng Ý - Tiếp Tục Đến Hồ Sơ Sức Khỏe",
+  "saving": "Đang Lưu...",
+  "errors": {
+    "mustAgree": "Bạn phải đồng ý với tất cả các điều khoản để tiếp tục",
+    "saveFailed": "Không thể lưu sự đồng ý. Vui lòng thử lại."
+  }
+}

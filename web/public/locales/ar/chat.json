@@ -1,0 +1,68 @@
+{
+  "welcome": {
+    "title": "!مرحباً بك في HeyDoc",
+    "subtitle": "خطوتك الأولى نحو رعاية أفضل — مع إرشادات العلاجات الطبيعية.",
+    "describeSymptoms": {
+      "title": "صف الأعراض",
+      "description": "شارك ما تشعر به"
+    },
+    "getGuidance": {
+      "title": "احصل على التوجيه",
+      "description": "تلقَّ نصائح مخصصة"
+    }
+  },
+  "header": {
+    "title": "HeyDoc",
+    "subtitle": "مساعدك الصحي بالذكاء الاصطناعي",
+    "profile": "{{age}} سنة، {{sex}}"
+  },
+  "loading": {
+    "profile": "جاري تحميل ملفك الشخصي..."
+  },
+  "dropZone": {
+    "title": "أسقط الصورة هنا",
+    "formats": "JPG، PNG، HEIC أو WebP (الحد الأقصى 10 ميجابايت)"
+  },
+  "input": {
+    "placeholder": "صف أعراضك...",
+    "emergencyPlaceholder": "يرجى الاتصال بخدمات الطوارئ فوراً",
+    "imagePlaceholder": "أضف وصفاً (اختياري)...",
+    "send": "إرسال",
+    "attachImage": "إرفاق صورة"
+  },
+  "speakToDoctor": "تحدث مع طبيب",
+  "message": {
+    "emergencyDetected": "تم اكتشاف كلمات طوارئ"
+  },
+  "sources": {
+    "title": "المصادر ({{count}})",
+    "webSearch": "بحث الويب"
+  },
+  "sidebar": {
+    "newConversation": "محادثة جديدة",
+    "emergency": "طوارئ",
+    "delete": "حذف",
+    "cancel": "إلغاء",
+    "noConversations": "لا توجد محادثات بعد",
+    "startNew": "ابدأ محادثة جديدة",
+    "platformDashboard": "لوحة المنصة",
+    "orgDashboard": "لوحة المنظمة",
+    "healthProfile": "الملف الصحي",
+    "signOut": "تسجيل الخروج"
+  },
+  "doctorConsult": {
+    "title": "تحدث مع طبيب حقيقي",
+    "subtitle": "احصل على استشارة طبية متخصصة",
+    "standard": {
+      "title": "استشارة عادية",
+      "price": "$25",
+      "description": "الطبيب المتاح التالي يرد خلال 24 ساعة"
+    },
+    "priority": {
+      "title": "استشارة أولوية",
+      "price": "$45",
+      "description": "اختر طبيبك، رد خلال ساعتين"
+    }
+  },
+  "disclaimer": "HeyDoc يقدم إرشادات معلوماتية فقط، وليس نصيحة طبية. استشر دائماً مقدم رعاية صحية للقرارات الطبية."
+}

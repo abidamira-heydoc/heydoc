@@ -1,0 +1,26 @@
+{
+  "title": "Privacy & Consent",
+  "subtitle": "Before we continue, please review and accept our privacy policies.",
+  "hipaa": {
+    "title": "HIPAA Privacy Notice",
+    "description": "I understand that my health information will be stored securely and encrypted in compliance with HIPAA regulations. My data will only be used to provide me with health guidance and will never be shared without my explicit consent."
+  },
+  "gdpr": {
+    "title": "GDPR Data Protection",
+    "description": "I acknowledge my rights under GDPR, including the right to access, correct, and delete my personal data at any time. I can withdraw this consent at any time by deleting my account."
+  },
+  "dataCollection": {
+    "title": "Data Collection & Usage",
+    "description": "I consent to HeyDoc collecting and processing my health information, including symptoms, medical history, and chat conversations, solely for the purpose of providing personalized health guidance and natural remedy recommendations."
+  },
+  "privacyNotice": {
+    "title": "Your Privacy Matters:",
+    "description": "All your health data is encrypted end-to-end. We use bank-level security to protect your information. You can request to view, export, or delete your data at any time."
+  },
+  "button": "I Agree - Continue to Health Profile",
+  "saving": "Saving...",
+  "errors": {
+    "mustAgree": "You must agree to all consents to continue",
+    "saveFailed": "Failed to save consent. Please try again."
+  }
+}

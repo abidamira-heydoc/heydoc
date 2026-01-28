@@ -1,0 +1,71 @@
+{
+  "nav": {
+    "dashboard": "Bảng Điều Khiển",
+    "analytics": "Phân Tích",
+    "users": "Người Dùng",
+    "reports": "Báo Cáo",
+    "settings": "Cài Đặt"
+  },
+  "dashboard": {
+    "title": "Bảng Điều Khiển Tổ Chức",
+    "welcome": "Chào mừng trở lại, {{name}}",
+    "stats": {
+      "totalUsers": "Tổng Số Người Dùng",
+      "activeUsers": "Người Dùng Hoạt Động",
+      "totalConversations": "Tổng Số Cuộc Trò Chuyện",
+      "emergencyAlerts": "Cảnh Báo Cấp Cứu"
+    }
+  },
+  "users": {
+    "title": "Quản Lý Người Dùng",
+    "search": "Tìm kiếm người dùng...",
+    "addUser": "Thêm Người Dùng",
+    "columns": {
+      "name": "Tên",
+      "email": "Email",
+      "role": "Vai Trò",
+      "status": "Trạng Thái",
+      "lastActive": "Hoạt Động Lần Cuối",
+      "actions": "Hành Động"
+    },
+    "roles": {
+      "user": "Người Dùng",
+      "orgAdmin": "Quản Trị Viên Tổ Chức",
+      "platformAdmin": "Quản Trị Viên Nền Tảng"
+    }
+  },
+  "analytics": {
+    "title": "Bảng Phân Tích",
+    "dateRange": "Khoảng Thời Gian",
+    "metrics": {
+      "conversations": "Cuộc Trò Chuyện",
+      "messages": "Tin Nhắn",
+      "avgSessionTime": "Thời Gian Phiên TB",
+      "userSatisfaction": "Mức Độ Hài Lòng"
+    }
+  },
+  "reports": {
+    "title": "Báo Cáo Tác Động",
+    "generate": "Tạo Báo Cáo",
+    "download": "Tải Xuống",
+    "types": {
+      "monthly": "Tóm Tắt Hàng Tháng",
+      "quarterly": "Báo Cáo Hàng Quý",
+      "annual": "Báo Cáo Hàng Năm"
+    }
+  },
+  "settings": {
+    "title": "Cài Đặt Tổ Chức",
+    "general": {
+      "title": "Cài Đặt Chung",
+      "orgName": "Tên Tổ Chức",
+      "orgCode": "Mã Tổ Chức",
+      "maxUsers": "Số Người Dùng Tối Đa"
+    },
+    "notifications": {
+      "title": "Cài Đặt Thông Báo",
+      "emailAlerts": "Cảnh Báo Email",
+      "emergencyAlerts": "Cảnh Báo Cấp Cứu"
+    }
+  }
+}

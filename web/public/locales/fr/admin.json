@@ -1,0 +1,71 @@
+{
+  "nav": {
+    "dashboard": "Tableau de bord",
+    "analytics": "Analytiques",
+    "users": "Utilisateurs",
+    "reports": "Rapports",
+    "settings": "Parametres"
+  },
+  "dashboard": {
+    "title": "Tableau de bord de l'organisation",
+    "welcome": "Bon retour, {{name}}",
+    "stats": {
+      "totalUsers": "Total des utilisateurs",
+      "activeUsers": "Utilisateurs actifs",
+      "totalConversations": "Total des conversations",
+      "emergencyAlerts": "Alertes d'urgence"
+    }
+  },
+  "users": {
+    "title": "Gestion des utilisateurs",
+    "search": "Rechercher des utilisateurs...",
+    "addUser": "Ajouter un utilisateur",
+    "columns": {
+      "name": "Nom",
+      "email": "E-mail",
+      "role": "Role",
+      "status": "Statut",
+      "lastActive": "Derniere activite",
+      "actions": "Actions"
+    },
+    "roles": {
+      "user": "Utilisateur",
+      "orgAdmin": "Administrateur d'organisation",
+      "platformAdmin": "Administrateur de plateforme"
+    }
+  },
+  "analytics": {
+    "title": "Tableau de bord analytique",
+    "dateRange": "Periode",
+    "metrics": {
+      "conversations": "Conversations",
+      "messages": "Messages",
+      "avgSessionTime": "Duree moy. de session",
+      "userSatisfaction": "Satisfaction utilisateur"
+    }
+  },
+  "reports": {
+    "title": "Rapports d'impact",
+    "generate": "Generer un rapport",
+    "download": "Telecharger",
+    "types": {
+      "monthly": "Resume mensuel",
+      "quarterly": "Rapport trimestriel",
+      "annual": "Rapport annuel"
+    }
+  },
+  "settings": {
+    "title": "Parametres de l'organisation",
+    "general": {
+      "title": "Parametres generaux",
+      "orgName": "Nom de l'organisation",
+      "orgCode": "Code de l'organisation",
+      "maxUsers": "Nombre maximum d'utilisateurs"
+    },
+    "notifications": {
+      "title": "Parametres de notification",
+      "emailAlerts": "Alertes par e-mail",
+      "emergencyAlerts": "Alertes d'urgence"
+    }
+  }
+}

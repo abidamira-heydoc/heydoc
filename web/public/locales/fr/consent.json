@@ -1,0 +1,26 @@
+{
+  "title": "Confidentialite et consentement",
+  "subtitle": "Avant de continuer, veuillez lire et accepter nos politiques de confidentialite.",
+  "hipaa": {
+    "title": "Avis de confidentialite HIPAA",
+    "description": "Je comprends que mes informations de sante seront stockees de maniere securisee et chiffrees conformement aux reglementations HIPAA. Mes donnees seront uniquement utilisees pour me fournir des conseils de sante et ne seront jamais partagees sans mon consentement explicite."
+  },
+  "gdpr": {
+    "title": "Protection des donnees RGPD",
+    "description": "Je reconnais mes droits en vertu du RGPD, y compris le droit d'acceder, de corriger et de supprimer mes donnees personnelles a tout moment. Je peux retirer ce consentement a tout moment en supprimant mon compte."
+  },
+  "dataCollection": {
+    "title": "Collecte et utilisation des donnees",
+    "description": "Je consens a ce que HeyDoc collecte et traite mes informations de sante, y compris les symptomes, les antecedents medicaux et les conversations de chat, uniquement dans le but de fournir des conseils de sante personnalises et des recommandations de remedes naturels."
+  },
+  "privacyNotice": {
+    "title": "Votre vie privee compte :",
+    "description": "Toutes vos donnees de sante sont chiffrees de bout en bout. Nous utilisons une securite de niveau bancaire pour proteger vos informations. Vous pouvez demander a consulter, exporter ou supprimer vos donnees a tout moment."
+  },
+  "button": "J'accepte - Continuer vers le profil de sante",
+  "saving": "Enregistrement...",
+  "errors": {
+    "mustAgree": "Vous devez accepter tous les consentements pour continuer",
+    "saveFailed": "Echec de l'enregistrement du consentement. Veuillez reessayer."
+  }
+}

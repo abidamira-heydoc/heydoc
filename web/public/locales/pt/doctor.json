@@ -1,0 +1,154 @@
+{
+  "nav": {
+    "dashboard": "Painel",
+    "cases": "Casos",
+    "activeCases": "Casos Ativos",
+    "history": "Historico",
+    "earnings": "Ganhos",
+    "profile": "Perfil",
+    "settings": "Configuracoes"
+  },
+  "auth": {
+    "signup": {
+      "title": "Junte-se ao HeyDoc como Medico",
+      "subtitle": "Ajude pacientes a obter o cuidado que precisam",
+      "name": "Nome Completo",
+      "email": "Endereco de E-mail",
+      "password": "Senha",
+      "specialties": "Especialidades",
+      "licenseNumber": "Numero do CRM",
+      "licenseState": "Estado do CRM",
+      "yearsExperience": "Anos de Experiencia",
+      "bio": "Biografia Profissional",
+      "uploadLicense": "Enviar CRM",
+      "button": "Enviar Candidatura"
+    },
+    "login": {
+      "title": "Portal do Medico",
+      "subtitle": "Entre na sua conta",
+      "email": "E-mail",
+      "password": "Senha",
+      "button": "Entrar",
+      "noAccount": "Ainda nao e cadastrado?",
+      "applyNow": "Cadastre-se agora"
+    },
+    "pending": {
+      "title": "Candidatura Pendente",
+      "message": "Sua candidatura esta sendo analisada. Voce sera notificado por e-mail assim que for aprovada.",
+      "checkStatus": "Verificar Status"
+    },
+    "rejected": {
+      "title": "Candidatura Nao Aprovada",
+      "message": "Infelizmente, sua candidatura nao foi aprovada.",
+      "reason": "Motivo: {{reason}}",
+      "contact": "Entre em contato com o suporte para mais informacoes."
+    }
+  },
+  "dashboard": {
+    "title": "Painel do Medico",
+    "welcome": "Bem-vindo, Dr(a). {{name}}",
+    "stats": {
+      "pendingCases": "Casos Pendentes",
+      "activeCases": "Casos Ativos",
+      "completedToday": "Concluidos Hoje",
+      "totalEarnings": "Ganhos Totais"
+    },
+    "quickActions": {
+      "title": "Acoes Rapidas",
+      "viewQueue": "Ver Fila de Casos",
+      "activeCases": "Casos Ativos",
+      "earnings": "Ver Ganhos"
+    }
+  },
+  "cases": {
+    "queue": {
+      "title": "Fila de Casos",
+      "empty": "Nenhum caso na fila",
+      "claim": "Assumir Caso",
+      "view": "Ver Detalhes"
+    },
+    "active": {
+      "title": "Casos Ativos",
+      "empty": "Nenhum caso ativo",
+      "respond": "Responder",
+      "complete": "Marcar como Concluido"
+    },
+    "history": {
+      "title": "Historico de Casos",
+      "empty": "Nenhum caso concluido",
+      "viewDetails": "Ver Detalhes"
+    },
+    "details": {
+      "patient": "Paciente",
+      "age": "Idade",
+      "sex": "Sexo",
+      "complaint": "Queixa Principal",
+      "symptoms": "Sintomas",
+      "medicalHistory": "Historico Medico",
+      "attachments": "Anexos"
+    },
+    "tiers": {
+      "standard": "Padrao",
+      "priority": "Prioritario"
+    }
+  },
+  "chat": {
+    "title": "Consulta do Paciente",
+    "placeholder": "Digite sua resposta...",
+    "send": "Enviar",
+    "endConsultation": "Encerrar Consulta",
+    "patientInfo": "Informacoes do Paciente"
+  },
+  "earnings": {
+    "title": "Painel de Ganhos",
+    "available": "Saldo Disponivel",
+    "pending": "Pendente",
+    "totalEarned": "Total Ganho",
+    "withdraw": "Sacar",
+    "history": "Historico de Pagamentos",
+    "setupStripe": "Configurar Stripe"
+  },
+  "profile": {
+    "title": "Perfil do Medico",
+    "edit": "Editar Perfil",
+    "photo": "Foto de Perfil",
+    "displayName": "Nome de Exibicao",
+    "specialties": "Especialidades",
+    "credentials": "Credenciais",
+    "bio": "Biografia",
+    "availability": "Disponibilidade",
+    "available": "Disponivel para casos",
+    "unavailable": "Nao disponivel"
+  },
+  "settings": {
+    "title": "Configuracoes",
+    "notifications": {
+      "title": "Notificacoes",
+      "emailNewCase": "E-mail para novos casos",
+      "emailCaseAssigned": "E-mail quando caso atribuido",
+      "emailPayoutSent": "E-mail quando pagamento enviado",
+      "emailWeeklyDigest": "E-mail de resumo semanal",
+      "pushNewCase": "Notificacao push para novos casos",
+      "pushMessages": "Notificacao push para mensagens de pacientes"
+    },
+    "account": {
+      "title": "Conta",
+      "email": "E-mail",
+      "changePassword": "Alterar Senha",
+      "deleteAccount": "Excluir Conta"
+    }
+  },
+  "specialties": {
+    "family_medicine": "Medicina de Familia",
+    "internal_medicine": "Clinica Medica",
+    "pediatrics": "Pediatria",
+    "dermatology": "Dermatologia",
+    "psychiatry": "Psiquiatria",
+    "obgyn": "Ginecologia e Obstetricia",
+    "cardiology": "Cardiologia",
+    "orthopedics": "Ortopedia",
+    "neurology": "Neurologia",
+    "emergency_medicine": "Medicina de Emergencia",
+    "other": "Outra"
+  }
+}
